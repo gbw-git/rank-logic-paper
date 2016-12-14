@@ -1,0 +1,2453 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=prv_paper 2016.12.8)  8 DEC 2016 16:03
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**&prv_paper _region_.tex
+(./_region_.tex
+LaTeX2e <2016/02/01>
+Babel <3.9q> and hyphenation patterns for 3 language(s) loaded.
+CUSTOMISED FORMAT. Preloaded files:
+        .
+  report.cls    2014/09/29 v1.4h Standard LaTeX document class
+  size12.clo    2014/09/29 v1.4h Standard LaTeX file (size option)
+geometry.sty    2010/09/12 v5.6 Page Geometry
+  keyval.sty    2014/10/28 v1.15 key=value parser (DPC)
+   ifpdf.sty    2011/01/30 v2.3 Provides the ifpdf switch (HO)
+  ifvtex.sty    2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+ ifxetex.sty    2010/09/12 v0.6 Provides ifxetex conditional
+graphicx.sty    2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+graphics.sty    2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+    trig.sty    2016/01/03 v1.10 sin cos tan (DPC)
+graphics.cfg    2010/04/23 v1.9 graphics configuration of TeX Live
+  pdftex.def    2011/05/27 v0.06d Graphics/color for pdfTeX
+infwarerr.sty    2010/04/08 v1.3 Providing info/warning/error messages (HO)
+ ltxcmds.sty    2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+ amsmath.sty    2016/03/03 v2.15a AMS math features
+ amstext.sty    2000/06/29 v2.01 AMS text
+  amsgen.sty    1999/11/30 v2.0 generic functions
+  amsbsy.sty    1999/11/29 v1.2d Bold Symbols
+  amsopn.sty    1999/12/14 v2.01 operator names
+amsfonts.sty    2013/01/14 v3.01 Basic AMSFonts support
+  amsthm.sty    2015/03/04 v2.20.2
+    umsa.fd    2013/01/14 v3.01 AMS symbols A
+    umsb.fd    2013/01/14 v3.01 AMS symbols B
+        .
+No file _region_.aux.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+(/usr/share/texmf/tex/latex/preview/preview.sty
+Package: preview 2010/02/14 11.88 (AUCTeX/preview-latex)
+
+(/usr/share/texmf/tex/latex/preview/prtightpage.def
+\PreviewBorder=\dimen122
+)
+(/usr/share/texmf/tex/latex/preview/prauctex.def
+No auxiliary output files.
+
+
+\hbadness=\count108
+\hfuzz=\dimen123
+(/usr/share/texmf/tex/latex/preview/prauctex.cfg))
+(/usr/share/texmf/tex/latex/preview/prfootnotes.def)
+\pr@snippet=\count109
+\pr@box=\box28
+\pr@output=\toks27
+
+Preview: Fontsize 12pt
+Preview: PDFoutput 1
+)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=469.75502pt
+* \textheight=650.43001pt
+* \oddsidemargin=0.0pt
+* \evensidemargin=0.0pt
+* \topmargin=-37.0pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=44.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count110
+\scratchdimen=\dimen124
+\scratchbox=\box29
+\nofMPsegments=\count111
+\nofMParguments=\count112
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count113
+\MPscratchDim=\dimen125
+\MPnumerator=\count114
+\makeMPintoPDFobject=\count115
+\everyMPtoPDFconversion=\toks29
+) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+ !name(paper.tex) !offset(540) 
+! Preview: Snippet 1 started.
+<-><->
+      
+l.51 \section
+             {Translating to Formulas of FPC}
+Not a real error.
+
+Preview: Tightpage -32891 -32891 32891 32891
+! Preview: Snippet 1 ended.(786431+220200x30785865).
+<-><->
+      
+l.51 \section{Translating to Formulas of FPC}
+                                             
+Not a real error.
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+]
+! Preview: Snippet 2 started.
+<-><->
+      
+l.52 Let $
+          C = (C_n)_{n \in \mathbb{N}}$ be a P-uniform family of polynomial-...
+
+Not a real error.
+
+! Preview: Snippet 2 ended.(589824+196608x4284633).
+<-><->
+      
+l.52 Let $C = (C_n)_{n \in \mathbb{N}}$
+                                        be a P-uniform family of polynomial-...
+
+Not a real error.
+
+[2]
+! Preview: Snippet 3 started.
+<-><->
+      
+l.53 symmetric $
+                (\SB, \MB, \tau)$ circuits, and where $\MB$ is the rank basis.
+Not a real error.
+
+! Preview: Snippet 3 ended.(589824+219909x6456857).
+<-><->
+      
+l.53 symmetric $(\SB, \MB, \tau)$
+                                  circuits, and where $\MB$ is the rank basis.
+Not a real error.
+
+[3]
+! Preview: Snippet 4 started.
+<-><->
+      
+l.53 ...c $(\SB, \MB, \tau)$ circuits, and where $
+                                                  \MB$ is the rank basis.
+Not a real error.
+
+! Preview: Snippet 4 ended.(541764+219909x2957696).
+<-><->
+      
+l.53 ...\SB, \MB, \tau)$ circuits, and where $\MB$
+                                                   is the rank basis.
+Not a real error.
+
+[4]
+! Preview: Snippet 5 started.
+<-><->
+      
+l.55 It remains to show that there is a formula $
+                                                 Q$ when interpreted in the ...
+
+Not a real error.
+
+! Preview: Snippet 5 ended.(537395+152916x609879).
+<-><->
+      
+l.55 ...emains to show that there is a formula $Q$
+                                                   when interpreted in the s...
+
+Not a real error.
+
+[5]
+! Preview: Snippet 6 started.
+<-><->
+      
+l.56 $
+      \mathcal{A}^\leq \uplus \langle [n], \leq \rangle$. Since $C$ is p-uni...
+
+Not a real error.
+
+! Preview: Snippet 6 ended.(635935+196608x4423560).
+<-><->
+      
+l.56 ...{A}^\leq \uplus \langle [n], \leq \rangle$
+                                                  . Since $C$ is p-uniform, by
+Not a real error.
+
+[6]
+! Preview: Snippet 7 started.
+<-><->
+      
+l.56 ...\uplus \langle [n], \leq \rangle$. Since $
+                                                  C$ is p-uniform, by
+Not a real error.
+
+! Preview: Snippet 7 ended.(537395+0x607403).
+<-><->
+      
+l.56 ...plus \langle [n], \leq \rangle$. Since $C$
+                                                   is p-uniform, by
+Not a real error.
+
+[7]
+
+LaTeX Warning: Reference `' on page 1 undefined on input line 57.
+
+! Preview: Snippet 8 started.
+<-><->
+      
+l.58 ... a rigid symmetric circuit equivalent to $
+                                                  C_n$ (also called $C_n$) over
+
+Not a real error.
+
+! Preview: Snippet 8 ended.(537395+117964x921693).
+<-><->
+      
+l.58 ...igid symmetric circuit equivalent to $C_n$
+                                                   (also called $C_n$) over
+Not a real error.
+
+[8]
+! Preview: Snippet 9 started.
+<-><->
+      
+l.58 ...circuit equivalent to $C_n$ (also called $
+                                                  C_n$) over
+Not a real error.
+
+! Preview: Snippet 9 ended.(537395+117964x921693).
+<-><->
+      
+l.58 ...uit equivalent to $C_n$ (also called $C_n$
+                                                  ) over
+Not a real error.
+
+[9]
+! Preview: Snippet 10 started.
+<-><->
+      
+l.59 the number sort of $
+                         \mathcal{A}^\leq$, where $\Phi = (\phi_G,\phi_W,
+Not a real error.
+
+! Preview: Snippet 10 ended.(635935+0x1093983).
+<-><->
+      
+l.59 the number sort of $\mathcal{A}^\leq$
+                                          , where $\Phi = (\phi_G,\phi_W,
+Not a real error.
+
+[10]
+! Preview: Snippet 11 started.
+<-><->
+      
+l.59 ...number sort of $\mathcal{A}^\leq$, where $
+                                                  \Phi = (\phi_G,\phi_W,
+Not a real error.
+
+! Misplaced \crcr.
+\endtabular ->\crcr 
+                    \egroup \egroup $\egroup 
+l.61 (\phi_{\and
+                _R})_{R \in \tau}, \phi_L)$, where:
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Extra }, or forgotten $.
+\endtabular ->\crcr \egroup \egroup 
+                                    $\egroup 
+l.61 (\phi_{\and
+                _R})_{R \in \tau}, \phi_L)$, where:
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Preview: Snippet 11 ended.(589824+287996x14845045).
+<-><->
+      
+l.61 (\phi_{\and
+                _R})_{R \in \tau}, \phi_L)$, where:
+Not a real error.
+
+[11]
+! Too many }'s.
+\endtabular ->\crcr \egroup \egroup $\egroup 
+                                             
+l.61 (\phi_{\and
+                _R})_{R \in \tau}, \phi_L)$, where:
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+
+! LaTeX Error: \begin{document} ended by \end{tabular}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.61 (\phi_{\and
+                _R})_{R \in \tau}, \phi_L)$, where:
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.61 (\phi_{\and
+                _R})_{R \in \tau}, \phi_L)$, where:
+Things are pretty mixed up, but I think the worst is over.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.61 (\phi_{\and_
+                 R})_{R \in \tau}, \phi_L)$, where:
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+l.61 (\phi_{\and_R}
+                   )_{R \in \tau}, \phi_L)$, where:
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Preview: Snippet 12 started.
+<-><->
+      
+l.61 (\phi_{\and_R})_{R \in \tau}, \phi_L)$
+                                           , where:
+Not a real error.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.62 \begin{itemize}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.62 \begin{itemize}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Preview: Snippet 12 ended.(546132+152916x2874406).
+<-><->
+      
+l.62 \begin{itemize}
+                    
+Not a real error.
+
+[12]
+
+! LaTeX Error: Command \item invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.63 \item $
+            \phi_G(\bar{x})$ holds iff $x$ encodes a gate
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.63 \item $
+            \phi_G(\bar{x})$ holds iff $x$ encodes a gate
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.63 \item $
+            \phi_G(\bar{x})$ holds iff $x$ encodes a gate
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.63 \item $
+            \phi_G(\bar{x})$ holds iff $x$ encodes a gate
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.63 \item $
+            \phi_G(\bar{x})$ holds iff $x$ encodes a gate
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Preview: Snippet 13 started.
+<-><->
+      
+l.63 \item $
+            \phi_G(\bar{x})$ holds iff $x$ encodes a gate
+Not a real error.
+
+! Preview: Snippet 13 ended.(589824+196608x1959088).
+<-><->
+      
+l.63 \item $\phi_G(\bar{x})$
+                             holds iff $x$ encodes a gate
+Not a real error.
+
+[13]
+! Preview: Snippet 14 started.
+<-><->
+      
+l.63 \item $\phi_G(\bar{x})$ holds iff $
+                                        x$ encodes a gate
+Not a real error.
+
+! Preview: Snippet 14 ended.(338603+0x437586).
+<-><->
+      
+l.63 \item $\phi_G(\bar{x})$ holds iff $x$
+                                           encodes a gate
+Not a real error.
+
+[14]
+
+! LaTeX Error: Command \item invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.64 \item $
+            \phi_W(\bar{x},\bar{y})$ holds iff $\bar{x}$ and $\bar{y}$ encod...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.64 \item $
+            \phi_W(\bar{x},\bar{y})$ holds iff $\bar{x}$ and $\bar{y}$ encod...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.64 \item $
+            \phi_W(\bar{x},\bar{y})$ holds iff $\bar{x}$ and $\bar{y}$ encod...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.64 \item $
+            \phi_W(\bar{x},\bar{y})$ holds iff $\bar{x}$ and $\bar{y}$ encod...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.64 \item $
+            \phi_W(\bar{x},\bar{y})$ holds iff $\bar{x}$ and $\bar{y}$ encod...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Preview: Snippet 15 started.
+<-><->
+      
+l.64 \item $
+            \phi_W(\bar{x},\bar{y})$ holds iff $\bar{x}$ and $\bar{y}$ encod...
+
+Not a real error.
+
+! Preview: Snippet 15 ended.(589824+196608x2876605).
+<-><->
+      
+l.64 \item $\phi_W(\bar{x},\bar{y})$
+                                     holds iff $\bar{x}$ and $\bar{y}$ encod...
+
+Not a real error.
+
+[15]
+! Preview: Snippet 16 started.
+<-><->
+      
+l.64 \item $\phi_W(\bar{x},\bar{y})$ holds iff $
+                                                \bar{x}$ and $\bar{y}$ encod...
+
+Not a real error.
+
+! Preview: Snippet 16 ended.(444186+0x437586).
+<-><->
+      
+l.64 ...hi_W(\bar{x},\bar{y})$ holds iff $\bar{x}$
+                                                   and $\bar{y}$ encode gates
+Not a real error.
+
+[16]
+! Preview: Snippet 17 started.
+<-><->
+      
+l.64 ...bar{x},\bar{y})$ holds iff $\bar{x}$ and $
+                                                  \bar{y}$ encode gates
+Not a real error.
+
+! Preview: Snippet 17 ended.(444186+152916x403679).
+<-><->
+      
+l.64 ...bar{y})$ holds iff $\bar{x}$ and $\bar{y}$
+                                                   encode gates
+Not a real error.
+
+[17]
+! Preview: Snippet 18 started.
+<-><->
+      
+l.65   and if $
+               g_{\bar{x}}$ and $g_{\bar{y}}$ are these two encoded gates
+Not a real error.
+
+! Preview: Snippet 18 ended.(338603+152916x715070).
+<-><->
+      
+l.65   and if $g_{\bar{x}}$
+                            and $g_{\bar{y}}$ are these two encoded gates
+Not a real error.
+
+[18]
+! Preview: Snippet 19 started.
+<-><->
+      
+l.65   and if $g_{\bar{x}}$ and $
+                                 g_{\bar{y}}$ are these two encoded gates
+Not a real error.
+
+! Preview: Snippet 19 ended.(338603+219909x695652).
+<-><->
+      
+l.65   and if $g_{\bar{x}}$ and $g_{\bar{y}}$
+                                              are these two encoded gates
+Not a real error.
+
+[19]
+! Preview: Snippet 20 started.
+<-><->
+      
+l.66   respectively then $
+                          W(g_{\bar{x}}, g_{\bar{y}})$.
+Not a real error.
+
+! Preview: Snippet 20 ended.(589824+219909x3188549).
+<-><->
+      
+l.66 ...ctively then $W(g_{\bar{x}}, g_{\bar{y}})$
+                                                  .
+Not a real error.
+
+[20]
+
+! LaTeX Error: Command \item invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.67 \item $
+            \phi_{\Omega}(\bar{x},\bar{y})$
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.67 \item $
+            \phi_{\Omega}(\bar{x},\bar{y})$
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.67 \item $
+            \phi_{\Omega}(\bar{x},\bar{y})$
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.67 \item $
+            \phi_{\Omega}(\bar{x},\bar{y})$
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.67 \item $
+            \phi_{\Omega}(\bar{x},\bar{y})$
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Preview: Snippet 21 started.
+<-><->
+      
+l.67 \item $
+            \phi_{\Omega}(\bar{x},\bar{y})$
+Not a real error.
+
+! Preview: Snippet 21 ended.(589824+196608x2675989).
+<-><->
+      
+l.67 \item $\phi_{\Omega}(\bar{x},\bar{y})$
+                                           
+Not a real error.
+
+[21]
+
+! LaTeX Error: Command \item invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 \item F
+            or all $s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}$ we...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 \item F
+            or all $s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}$ we...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 \item F
+            or all $s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}$ we...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 \item F
+            or all $s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}$ we...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 \item F
+            or all $s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}$ we...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Preview: Snippet 22 started.
+<-><->
+      
+l.68 \item For all $
+                    s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}$ we...
+
+Not a real error.
+
+! Preview: Snippet 22 ended.(589824+219909x10502698).
+<-><->
+      
+l.68 ...uplus \{rank\} \uplus \tau \uplus \{0,1\}$
+                                                   we have
+Not a real error.
+
+[22]
+! Preview: Snippet 23 started.
+<-><->
+      
+l.69   that $
+             \phi_s (\bar{x})$ holds iff $\bar{x}$ encodes a gate with a lab...
+
+Not a real error.
+
+! Preview: Snippet 23 ended.(589824+196608x1782612).
+<-><->
+      
+l.69   that $\phi_s (\bar{x})$
+                               holds iff $\bar{x}$ encodes a gate with a lab...
+
+Not a real error.
+
+[23]
+! Preview: Snippet 24 started.
+<-><->
+      
+l.69   that $\phi_s (\bar{x})$ holds iff $
+                                          \bar{x}$ encodes a gate with a lab...
+
+Not a real error.
+
+! Preview: Snippet 24 ended.(444186+0x437586).
+<-><->
+      
+l.69   that $\phi_s (\bar{x})$ holds iff $\bar{x}$
+                                                   encodes a gate with a lab...
+
+Not a real error.
+
+[24]
+! Preview: Snippet 25 started.
+<-><->
+      
+l.70   corresponding to $
+                         s$.
+Not a real error.
+
+! Preview: Snippet 25 ended.(338603+0x362721).
+<-><->
+      
+l.70   corresponding to $s$
+                           .
+Not a real error.
+
+[25]
+
+! LaTeX Error: Command \item invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.71 \item F
+            or all $R \in \tau$ we have $\phi_{\and_R}(\bar{x}, \bar{y})$ ho...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.71 \item F
+            or all $R \in \tau$ we have $\phi_{\and_R}(\bar{x}, \bar{y})$ ho...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.71 \item F
+            or all $R \in \tau$ we have $\phi_{\and_R}(\bar{x}, \bar{y})$ ho...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.71 \item F
+            or all $R \in \tau$ we have $\phi_{\and_R}(\bar{x}, \bar{y})$ ho...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.71 \item F
+            or all $R \in \tau$ we have $\phi_{\and_R}(\bar{x}, \bar{y})$ ho...
+
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Preview: Snippet 26 started.
+<-><->
+      
+l.71 \item For all $
+                    R \in \tau$ we have $\phi_{\and_R}(\bar{x}, \bar{y})$ ho...
+
+Not a real error.
+
+! Preview: Snippet 26 ended.(537395+30747x1976034).
+<-><->
+      
+l.71 \item For all $R \in \tau$
+                                we have $\phi_{\and_R}(\bar{x}, \bar{y})$ ho...
+
+Not a real error.
+
+[26]
+! Preview: Snippet 27 started.
+<-><->
+      
+l.71 \item For all $R \in \tau$ we have $
+                                         \phi_{\and_R}(\bar{x}, \bar{y})$ ho...
+
+Not a real error.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.71 ...m For all $R \in \tau$ we have $\phi_{\and
+                                                  _R}(\bar{x}, \bar{y})$ hol...
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Extra }, or forgotten $.
+<template> \unskip \hfil }
+                          \hskip \tabcolsep \endtemplate 
+l.71 ...m For all $R \in \tau$ we have $\phi_{\and
+                                                  _R}(\bar{x}, \bar{y})$ hol...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.71 ...m For all $R \in \tau$ we have $\phi_{\and
+                                                  _R}(\bar{x}, \bar{y})$ hol...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Preview: Snippet 27 ended.(546132+152916x881726).
+<-><->
+      
+l.71 ...m For all $R \in \tau$ we have $\phi_{\and
+                                                  _R}(\bar{x}, \bar{y})$ hol...
+
+Not a real error.
+
+[27]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.71 ...m For all $R \in \tau$ we have $\phi_{\and
+                                                  _R}(\bar{x}, \bar{y})$ hol...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.71 ...m For all $R \in \tau$ we have $\phi_{\and
+                                                  _R}(\bar{x}, \bar{y})$ hol...
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.71 ... For all $R \in \tau$ we have $\phi_{\and_
+                                                  R}(\bar{x}, \bar{y})$ hold...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+l.71 ...or all $R \in \tau$ we have $\phi_{\and_R}
+                                                  (\bar{x}, \bar{y})$ holds iff
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Preview: Snippet 28 started.
+<-><->
+      
+l.71 ... we have $\phi_{\and_R}(\bar{x}, \bar{y})$
+                                                   holds iff
+Not a real error.
+
+
+! LaTeX Error: Command \item invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.72 \item
+           $\phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $L(g_{\bar{x}})(u,v) =
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.72 \item $
+            \phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $L(g_{\bar{x}})(u,v) =
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Preview: Snippet 28 ended.(546132+152916x3012725).
+<-><->
+      
+l.72 \item $
+            \phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $L(g_{\bar{x}})(u,v) =
+Not a real error.
+
+[28]
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.72 \item $
+            \phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $L(g_{\bar{x}})(u,v) =
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.72 \item $
+            \phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $L(g_{\bar{x}})(u,v) =
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.72 \item $
+            \phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $L(g_{\bar{x}})(u,v) =
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.72 \item $
+            \phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $L(g_{\bar{x}})(u,v) =
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+! Preview: Snippet 29 started.
+<-><->
+      
+l.72 \item $
+            \phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $L(g_{\bar{x}})(u,v) =
+Not a real error.
+
+! Preview: Snippet 29 ended.(589824+196608x4181205).
+<-><->
+      
+l.72 \item $\phi_L(\bar{x}, \bar{y}, u, v)$
+                                            holds iff $L(g_{\bar{x}})(u,v) =
+Not a real error.
+
+[29]
+! Preview: Snippet 30 started.
+<-><->
+      
+l.72 ...phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $
+                                                  L(g_{\bar{x}})(u,v) =
+Not a real error.
+
+! Preview: Snippet 30 ended.(589824+219909x5352031).
+<-><->
+      
+l.73   g_{\bar{y}}$
+                   .
+Not a real error.
+
+[30]
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 \end{itemize}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Command \end{tabular} invalid in math mode.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 \end{itemize}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 \end{itemize}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 \end{itemize}
+                  
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \begin{tabular} on input line 71 ended by \end{itemize}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.74 \end{itemize}
+                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.74 \end{itemize}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.74 \end{itemize}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.74 \end{itemize}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing \cr inserted.
+<inserted text> 
+                \cr 
+l.74 \end{itemize}
+                  
+I'm guessing that you meant to end an alignment here.
+
+! Missing { inserted.
+<inserted text> 
+                {
+l.74 \end{itemize}
+                  
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.74 \end{itemize}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.74 \end{itemize}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.74 \end{itemize}
+                  
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Preview: Snippet 31 started.
+<-><->
+      
+l.76 ...h circuit we could check if a given gate $
+                                                  g$ is a
+Not a real error.
+
+! Preview: Snippet 31 ended.(338603+152916x396944).
+<-><->
+      
+l.76 ...circuit we could check if a given gate $g$
+                                                   is a
+Not a real error.
+
+[31]
+! Preview: Snippet 32 started.
+<-><->
+      
+l.77 rank gate, and check $
+                           \Sigma(g)$ in polynomial time. Thus, using the
+Not a real error.
+
+! Preview: Snippet 32 ended.(589824+196608x1552004).
+<-><->
+      
+l.77 rank gate, and check $\Sigma(g)$
+                                      in polynomial time. Thus, using the
+Not a real error.
+
+[32]
+! Preview: Snippet 33 started.
+<-><->
+      
+l.78 ...n-Vardi Theorem, we can define a formula $
+                                                  \text{CHAR}$ such that $\l...
+
+Not a real error.
+
+! Preview: Snippet 33 ended.(537395+0x2277353).
+<-><->
+      
+l.78 ...rem, we can define a formula $\text{CHAR}$
+                                                   such that $\langle
+Not a real error.
+
+[33]
+! Preview: Snippet 34 started.
+<-><->
+      
+l.78 ...define a formula $\text{CHAR}$ such that $
+                                                  \langle
+Not a real error.
+
+! Preview: Snippet 34 ended.(589824+196608x8195753).
+<-><->
+      
+l.79 [n], \leq\rangle \models \text{CHAR}[g,p,u]$
+                                                  iff $\langle [n], \leq\rangle
+
+Not a real error.
+
+[34]
+! Preview: Snippet 35 started.
+<-><->
+      
+l.79 ...q\rangle \models \text{CHAR}[g,p,u]$ iff $
+                                                  \langle [n], \leq\rangle
+Not a real error.
+
+! Preview: Snippet 35 ended.(589824+196608x8718116).
+<-><->
+      
+l.80 \models \phi_G[g] \land \phi_{rank}[g]$
+                                             and the rank gate $g$ (as per the
+Not a real error.
+
+[35]
+! Preview: Snippet 36 started.
+<-><->
+      
+l.80 ... \land \phi_{rank}[g]$ and the rank gate $
+                                                  g$ (as per the
+Not a real error.
+
+! Preview: Snippet 36 ended.(338603+152916x396944).
+<-><->
+      
+l.80 ...land \phi_{rank}[g]$ and the rank gate $g$
+                                                   (as per the
+Not a real error.
+
+[36]
+! Preview: Snippet 37 started.
+<-><->
+      
+l.81 interpretation) is over characteristic $
+                                             p$ and has threshold $u$.
+Not a real error.
+
+! Preview: Snippet 37 ended.(338603+152916x386477).
+<-><->
+      
+l.81 interpretation) is over characteristic $p$
+                                                and has threshold $u$.
+Not a real error.
+
+[37]
+! Preview: Snippet 38 started.
+<-><->
+      
+l.81 ...ver characteristic $p$ and has threshold $
+                                                  u$.
+Not a real error.
+
+! Preview: Snippet 38 ended.(338603+0x438267).
+<-><->
+      
+l.81 ...r characteristic $p$ and has threshold $u$
+                                                  .
+Not a real error.
+
+[38]
+
+LaTeX Warning: Reference `' on page 1 undefined on input line 83.
+
+! Preview: Snippet 39 started.
+<-><->
+      
+l.84 construct a formula $
+                          \text{SUPP}$ such $\langle [n], \leq \rangle \models
+Not a real error.
+
+! Preview: Snippet 39 ended.(537395+0x2052895).
+<-><->
+      
+l.84 construct a formula $\text{SUPP}$
+                                       such $\langle [n], \leq \rangle \models
+Not a real error.
+
+[39]
+! Preview: Snippet 40 started.
+<-><->
+      
+l.84 construct a formula $\text{SUPP}$ such $
+                                             \langle [n], \leq \rangle \models
+Not a real error.
+
+! Preview: Snippet 40 ended.(589824+196608x7239848).
+<-><->
+      
+l.85 \text{SUPP}[g,u]$
+                       iff $\langle [n], \leq \rangle \models \phi_G[g]$ and...
+
+Not a real error.
+
+[40]
+! Preview: Snippet 41 started.
+<-><->
+      
+l.85 \text{SUPP}[g,u]$ iff $
+                            \langle [n], \leq \rangle \models \phi_G[g]$ and...
+
+Not a real error.
+
+! Preview: Snippet 41 ended.(589824+196608x5326298).
+<-><->
+      
+l.85 ...angle [n], \leq \rangle \models \phi_G[g]$
+                                                   and $u$ is
+Not a real error.
+
+[41]
+! Preview: Snippet 42 started.
+<-><->
+      
+l.85 ...[n], \leq \rangle \models \phi_G[g]$ and $
+                                                  u$ is
+Not a real error.
+
+! Preview: Snippet 42 ended.(338603+0x438267).
+<-><->
+      
+l.85 ...], \leq \rangle \models \phi_G[g]$ and $u$
+                                                   is
+Not a real error.
+
+[42]
+! Preview: Snippet 43 started.
+<-><->
+      
+l.86 in $
+         sp(g)$. This formula can be used as in \cite{} to inductively define
+Not a real error.
+
+! Preview: Snippet 43 ended.(589824+196608x1745062).
+<-><->
+      
+l.86 in $sp(g)$
+               . This formula can be used as in \cite{} to inductively define
+Not a real error.
+
+[43]
+! Preview: Snippet 44 started.
+<-><->
+      
+l.87 $
+      \text{SUPP}_i(g,u)$ for each $i \in [n]$ which holds iff $u$ is the $i$th
+
+Not a real error.
+
+! Preview: Snippet 44 ended.(589824+196608x4054422).
+<-><->
+      
+l.87 $\text{SUPP}_i(g,u)$
+                          for each $i \in [n]$ which holds iff $u$ is the $i$th
+
+Not a real error.
+
+[44]
+! Preview: Snippet 45 started.
+<-><->
+      
+l.87 $\text{SUPP}_i(g,u)$ for each $
+                                    i \in [n]$ which holds iff $u$ is the $i$th
+
+Not a real error.
+
+! Preview: Snippet 45 ended.(589824+196608x2111341).
+<-><->
+      
+l.87 $\text{SUPP}_i(g,u)$ for each $i \in [n]$
+                                               which holds iff $u$ is the $i$th
+
+Not a real error.
+
+[45]
+! Preview: Snippet 46 started.
+<-><->
+      
+l.87 ...u)$ for each $i \in [n]$ which holds iff $
+                                                  u$ is the $i$th
+Not a real error.
+
+! Preview: Snippet 46 ended.(338603+0x438267).
+<-><->
+      
+l.87 ...$ for each $i \in [n]$ which holds iff $u$
+                                                   is the $i$th
+Not a real error.
+
+[46]
+! Preview: Snippet 47 started.
+<-><->
+      
+l.87 ...h $i \in [n]$ which holds iff $u$ is the $
+                                                  i$th
+Not a real error.
+
+! Preview: Snippet 47 ended.(515577+0x262695).
+<-><->
+      
+l.87 ...$i \in [n]$ which holds iff $u$ is the $i$
+                                                  th
+Not a real error.
+
+[47]
+! Preview: Snippet 48 started.
+<-><->
+      
+l.88 element of the support of $
+                                g$.
+Not a real error.
+
+! Preview: Snippet 48 ended.(338603+152916x396944).
+<-><->
+      
+l.88 element of the support of $g$
+                                  .
+Not a real error.
+
+[48]
+! Preview: Snippet 49 started.
+<-><->
+      
+l.90 Define the $
+                 \text{AGREE}$ and $\theta_s$ formulas for all $s \in \SB \u...
+
+Not a real error.
+
+! Preview: Snippet 49 ended.(537395+0x2774604).
+<-><->
+      
+l.90 Define the $\text{AGREE}$
+                               and $\theta_s$ formulas for all $s \in \SB \u...
+
+Not a real error.
+
+[49]
+! Preview: Snippet 50 started.
+<-><->
+      
+l.90 Define the $\text{AGREE}$ and $
+                                    \theta_s$ formulas for all $s \in \SB \u...
+
+Not a real error.
+
+! Preview: Snippet 50 ended.(546132+117964x649215).
+<-><->
+      
+l.90 Define the $\text{AGREE}$ and $\theta_s$
+                                              formulas for all $s \in \SB \u...
+
+Not a real error.
+
+[50]
+! Preview: Snippet 51 started.
+<-><->
+      
+l.90 ...{AGREE}$ and $\theta_s$ formulas for all $
+                                                  s \in \SB \uplus \tau
+Not a real error.
+
+! Preview: Snippet 51 ended.(589824+219909x7183273).
+<-><->
+      
+l.91 \uplus \{0,1\}$
+                     as in \cite{}.
+Not a real error.
+
+[51]
+! Preview: Snippet 52 started.
+<-><->
+      
+l.94 \begin{align*}
+                   
+Not a real error.
+
+
+! Undefined control sequence.
+<argument> ..._j \wedge \forall \bar {y} \( \[\rk 
+                                                  (x \leq \phi _{mr}, y \leq...
+l.98   \end{\align*}
+                    
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Extra \else.
+\align* ...@checkend {#2}\addto@envbody {#1}\else 
+                                                  \addto@envbody {#1\end {#2...
+l.98   \end{\align*}
+                    
+I'm ignoring this; it doesn't match any \if.
+
+! Undefined control sequence.
+<argument> ..._j \wedge \forall \bar {y} \( \[\rk 
+                                                  (x \leq \phi _{mr}, y \leq...
+l.98   \end{\align*}
+                    
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+! Missing \endcsname inserted.
+<to be read again> 
+                   \let 
+l.98   \end{\align*}
+                    
+(That makes 100 errors; please try again.) 
+Here is how much of TeX's memory you used:
+ 816 strings out of 492783
+ 12547 string characters out of 6153171
+ 105402 words of memory out of 5000000
+ 6203 multiletter control sequences out of 15000+600000
+ 11299 words of font info for 42 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 101i,14n,102p,245b,222s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+!  ==> Fatal error occurred, no output PDF file produced!

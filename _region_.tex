@@ -1,0 +1,112 @@
+\message{ !name(paper.tex)}\documentclass[12pt]{report}
+
+% This first part of the file is called the PREAMBLE. It includes
+% customizations and command definitions. The preamble is everything
+% between \documentclass and \begin{document}.
+
+\usepackage[margin=1in]{geometry} % set the margins to 1in on all sides
+\usepackage{graphicx} % to include figures
+\usepackage{amsmath} % great math stuff
+\usepackage{amsfonts} % for blackboard bold, etc
+\usepackage{amsthm} % better theorem environments
+
+
+% various theorems, numbered by section
+
+\newtheorem{thm}{Theorem} \newtheorem{claim}{Claim}
+\newtheorem{remark}{Remark} \newtheorem{definition}{Definition}
+\newtheorem{lem}[thm]{Lemma} \newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary} \newtheorem{conj}[thm]{Conjecture}
+
+\DeclareMathOperator{\id}{id}
+
+\newcommand{\bd}[1]{\mathbf{#1}} % for bolding symbols
+\newcommand{\RR}{\mathbb{R}} % for Real numbers
+\newcommand{\ZZ}{\mathbb{Z}} % for Integers
+\newcommand{\MB}{\mathbb{B}_{\matsym}} % for Integers
+\newcommand{\SB}{\mathbb{B}_{\sym}} % for Integers
+\newcommand{\col}[1]{\begin{matrix} #1 \end{matrix} \right]}
+\newcommand{\comb}[2]{\binom{#1^2 + #2^2}{#1+#2}}
+\newcommand{\stab}{\text{\textbf{Stab}}}
+\newcommand{\setstab}{\text{\textbf{SetStab}}}
+\newcommand{\matstab}{\text{\textbf{MatStab}}}
+\newcommand{\inv}{\text{\textbf{inv}}}
+\newcommand{\aut}{\text{\textbf{Aut}}}
+\newcommand{\kernal}{\text{\textbf{ker}}}
+\newcommand{\alt}{\text{\textbf{Alt}}}
+\newcommand{\sym}{\text{\textbf{Sym}}}
+\newcommand{\rank}{\text{\textbf{rk}}}
+\newcommand{\orb}{\text{\textbf{Orb}}}
+\newcommand{\SP}{\text{\textbf{SP}}}
+\newcommand{\maj}{\text{\textbf{Maj}}}
+\newcommand{\dom}{\text{\textbf{Dom}}}
+\newcommand{\child}{\text{child}}
+\newcommand{\countgate}{\text{count}}
+
+\newcommand{\Alpha}{A}
+\newcommand{\matsym}{\text{\textbf{MatSym}}}
+\begin{document}
+
+\message{ !name(paper.tex) !offset(540) }
+\section{Translating to Formulas of FPC}
+Let $C = (C_n)_{n \in \mathbb{N}}$ be a P-uniform family of polynomial-size
+symmetric $(\SB, \MB, \tau)$ circuits, and where $\MB$ is the rank basis.
+
+It remains to show that there is a formula $Q$ when interpreted in the structure
+$\mathcal{A}^\leq \uplus \langle [n], \leq \rangle$. Since $C$ is p-uniform, by
+the Immerman-Vardi theorem and Lemma \ref{}, we have an FP interpretation
+defining a rigid symmetric circuit equivalent to $C_n$ (also called $C_n$) over
+the number sort of $\mathcal{A}^\leq$, where $\Phi = (\phi_G,\phi_W,
+\phi_\Omega, (\phi_s)_{s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}},
+(\phi_{\and_R})_{R \in \tau}, \phi_L)$, where:
+\begin{itemize}
+\item $\phi_G(\bar{x})$ holds iff $x$ encodes a gate
+\item $\phi_W(\bar{x},\bar{y})$ holds iff $\bar{x}$ and $\bar{y}$ encode gates
+  and if $g_{\bar{x}}$ and $g_{\bar{y}}$ are these two encoded gates
+  respectively then $W(g_{\bar{x}}, g_{\bar{y}})$.
+\item $\phi_{\Omega}(\bar{x},\bar{y})$
+\item For all $s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}$ we have
+  that $\phi_s (\bar{x})$ holds iff $\bar{x}$ encodes a gate with a labelling
+  corresponding to $s$.
+\item For all $R \in \tau$ we have $\phi_{\and_R}(\bar{x}, \bar{y})$ holds iff
+\item $\phi_L(\bar{x}, \bar{y}, u, v)$ holds iff $L(g_{\bar{x}})(u,v) =
+  g_{\bar{y}}$.
+\end{itemize}
+
+Moreover, note that for any such circuit we could check if a given gate $g$ is a
+rank gate, and check $\Sigma(g)$ in polynomial time. Thus, using the
+Immerman-Vardi Theorem, we can define a formula $\text{CHAR}$ such that $\langle
+[n], \leq\rangle \models \text{CHAR}[g,p,u]$ iff $\langle [n], \leq\rangle
+\models \phi_G[g] \land \phi_{rank}[g]$ and the rank gate $g$ (as per the
+interpretation) is over characteristic $p$ and has threshold $u$.
+
+Similarly, using Lemma \ref{} and using the Immerman-Vardi theorem, we can
+construct a formula $\text{SUPP}$ such $\langle [n], \leq \rangle \models
+\text{SUPP}[g,u]$ iff $\langle [n], \leq \rangle \models \phi_G[g]$ and $u$ is
+in $sp(g)$. This formula can be used as in \cite{} to inductively define
+$\text{SUPP}_i(g,u)$ for each $i \in [n]$ which holds iff $u$ is the $i$th
+element of the support of $g$.
+
+Define the $\text{AGREE}$ and $\theta_s$ formulas for all $s \in \SB \uplus \tau
+\uplus \{0,1\}$ as in \cite{}.
+
+Now we define the formula
+\begin{align*}
+  theta_{rank}(\mu, \bar{x}) := \bigwedge_{1 \leq i < j \leq k} x_i
+  \neq x_j \wedge \forall \bar{y} \( \[\rk (x \leq \phi_{mr}, y \leq
+  \phi_{mc}, \pi \leq r) \theta^' \]\),
+  \end{\align*}
+
+      \begin{align*}
+        \theta(a,b):= \exists \nu \(W(\nu, \mu) \and \agree (\mu,\nu, \bar{x}, \bar{y}) \and \phi_L (\mu, \nu, a, b) \and V(\nu, y)\) 
+      \end{align*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\message{ !name(paper.tex) !offset(683) }
+
+\end{document}
