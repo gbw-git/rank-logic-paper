@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.9.21)  9 DEC 2016 13:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.9.21)  6 MAR 2017 17:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -165,18 +165,18 @@ Package: amsthm 2015/03/04 v2.20.2
  (./paper.aux)
 \openout1 = `paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -269,12 +269,12 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 61.
+LaTeX Font Info:    Try loading font information for U+msa on input line 62.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 61.
+LaTeX Font Info:    Try loading font information for U+msb on input line 62.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -288,27 +288,1720 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 Chapter 1.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 106.
+[2
+
+]
+Chapter 2.
+[3
+
+]
+Chapter 3.
+[4
+
+]
+Chapter 4.
+[5
+
+]
+Chapter 5.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 119.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 106.
- [2
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 119.
+ [6
 
-] [3] [4] [5]
-[6] [7]
+] [7] [8] [9]
+[10] [11]
+./paper.tex:608: Missing $ inserted.
+<inserted text> 
+                $
+l.608   U^{\underbar{\sp(g)}
+                            }$, and suppose $\gamma_1, \gamma_2: U \rightarr...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-LaTeX Warning: Reference `' on page 8 undefined on input line 602.
+./paper.tex:608: Extra }, or forgotten $.
+\sbox ...hbox {\color@setgroup #2\color@endgroup }
+                                                  
+l.608   U^{\underbar{\sp(g)}
+                            }$, and suppose $\gamma_1, \gamma_2: U \rightarr...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:608: Extra }, or forgotten $.
+\underline #1->\relax \ifmmode \@@underline {#1}
+                                                \else $\@@underline {\hbox {...
+l.608   U^{\underbar{\sp(g)}
+                            }$, and suppose $\gamma_1, \gamma_2: U \rightarr...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:608: Extra }, or forgotten $.
+l.608   U^{\underbar{\sp(g)}}
+                             $, and suppose $\gamma_1, \gamma_2: U \rightarr...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
 
-LaTeX Warning: Reference `' on page 8 undefined on input line 602.
+./paper.tex:616: LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.616 \end{lem}
+               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./paper.tex:616: LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.616 \end{lem}
+               
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+./paper.tex:616: Missing } inserted.
+<inserted text> 
+                }
+l.616 \end{lem}
+               
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:616: Missing } inserted.
+<inserted text> 
+                }
+l.616 \end{lem}
+               
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:616: Missing } inserted.
+<inserted text> 
+                }
+l.616 \end{lem}
+               
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:616: Missing $ inserted.
+<inserted text> 
+                $
+l.616 \end{lem}
+               
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:638: Missing $ inserted.
+<inserted text> 
+                $
+l.638   U^{\underbar{\sp(g)}
+                            }$ and $\gamma: U \rightrrow [n]$ such that
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:638: Extra }, or forgotten $.
+\sbox ...hbox {\color@setgroup #2\color@endgroup }
+                                                  
+l.638   U^{\underbar{\sp(g)}
+                            }$ and $\gamma: U \rightrrow [n]$ such that
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:638: Extra }, or forgotten $.
+\underline #1->\relax \ifmmode \@@underline {#1}
+                                                \else $\@@underline {\hbox {...
+l.638   U^{\underbar{\sp(g)}
+                            }$ and $\gamma: U \rightrrow [n]$ such that
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:638: Extra }, or forgotten $.
+l.638   U^{\underbar{\sp(g)}}
+                             $ and $\gamma: U \rightrrow [n]$ such that
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:638: Undefined control sequence.
+l.638 ...erbar{\sp(g)}}$ and $\gamma: U \rightrrow
+                                                   [n]$ such that
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+./paper.tex:646: LaTeX Error: Environment cases* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.646   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:646: Extra }, or forgotten \endgroup.
+<template> }
+            $}\ifmeasuring@ \savefieldlength@ \fi \set@field \endtemplate 
+l.646   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:646: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing $ inserted.
+<inserted text> 
+                $
+l.646   \end{align*}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:646: Undefined control sequence.
+<argument> ...begin {cases*} 1 & if $A_h \cap \EV 
+                                                  _h \neq \emptyset $ 0 & ot...
+l.646   \end{align*}
+                    
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./paper.tex:646: Missing { inserted.
+<inserted text> 
+                {
+l.646   \end{align*}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+./paper.tex:646: Extra }, or forgotten $.
+<recently read> }
+                 
+l.646   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:646: Missing $ inserted.
+<inserted text> 
+                $
+l.646   \end{align*}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+./paper.tex:646: LaTeX Error: \begin{align*} on input line 641 ended by \end{ca
+ses*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.646   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing $ inserted.
+<inserted text> 
+                $
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing \cr inserted.
+<inserted text> 
+                \cr 
+l.646   \end{align*}
+                    
+I'm guessing that you meant to end an alignment here.
+
+./paper.tex:646: Missing { inserted.
+<inserted text> 
+                {
+l.646   \end{align*}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+./paper.tex:646: Missing { inserted.
+<inserted text> 
+                {
+l.646   \end{align*}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+./paper.tex:646: Extra }, or forgotten $.
+<recently read> }
+                 
+l.646   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:646: Missing $ inserted.
+<inserted text> 
+                $
+l.646   \end{align*}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Misplaced \omit.
+\math@cr@@@ ...@ \@ne \add@amps \maxfields@ \omit 
+                                                  \kern -\alignsep@ \iftag@ ...
+l.646   \end{align*}
+                    
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./paper.tex:646: Misplaced \cr.
+\math@cr@@@ ...wtrue \fi \global \lineht@ \z@ \cr 
+                                                  
+l.646   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:646: Misplaced \cr.
+\measure@ ...olumn@ \z@ \add@amps \maxfields@ \cr 
+                                                  }}\restorecounters@ \ifodd...
+l.646   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:646: Extra }, or forgotten \endgroup.
+\measure@ ...lumn@ \z@ \add@amps \maxfields@ \cr }
+                                                  }\restorecounters@ \ifodd ...
+l.646   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:646: Extra }, or forgotten \endgroup.
+\measure@ ...umn@ \z@ \add@amps \maxfields@ \cr }}
+                                                  \restorecounters@ \ifodd \...
+l.646   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:646: Missing number, treated as zero.
+<to be read again> 
+                   >
+l.646   \end{align*}
+                    
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+./paper.tex:646: Illegal unit of measure (pt inserted).
+<to be read again> 
+                   >
+l.646   \end{align*}
+                    
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: You can't use `\halign' in math mode.
+<recently read> \halign 
+                        
+l.646   \end{align*}
+                    
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./paper.tex:646: Misplaced \span.
+\align@ ...bskip \eqnshift@ \halign \bgroup \span 
+                                                  \align@preamble \crcr #2
+l.646   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:646: Misplaced alignment tab character &.
+\align@preamble ->&
+                   \hfil \strut@ \setboxz@h {\@lign $\m@th \displaystyle {##...
+l.646   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:646: You can't use `macro parameter character #' in math mode.
+\align@preamble ...\@lign $\m@th \displaystyle {##
+                                                  }$}\ifmeasuring@ \savefiel...
+l.646   \end{align*}
+                    
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./paper.tex:646: Misplaced alignment tab character &.
+\align@preamble ...i \set@field \tabskip \z@skip &
+                                                  \setboxz@h {\@lign $\m@th ...
+l.646   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:646: You can't use `macro parameter character #' in math mode.
+\align@preamble ...lign $\m@th \displaystyle {{}##
+                                                  }$}\ifmeasuring@ \savefiel...
+l.646   \end{align*}
+                    
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./paper.tex:646: Misplaced \crcr.
+<recently read> \crcr 
+                      
+l.646   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+./paper.tex:646: LaTeX Error: Environment cases* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.646   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:646: Misplaced alignment tab character &.
+<argument> ...}_\alpha (a,b):= \begin {cases*} 1 &
+                                                   if $A_h \cap \EV _h \neq ...
+l.646   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:646: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing } inserted.
+<inserted text> 
+                }
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Missing $ inserted.
+<inserted text> 
+                $
+l.646   \end{align*}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:646: Undefined control sequence.
+<argument> ...begin {cases*} 1 & if $A_h \cap \EV 
+                                                  _h \neq \emptyset $ 0 & ot...
+l.646   \end{align*}
+                    
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./paper.tex:646: Misplaced alignment tab character &.
+<argument> ...A_h \cap \EV _h \neq \emptyset $ 0 &
+                                                   otherwise \end {cases*}, 
+l.646   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+./paper.tex:646: LaTeX Error: \begin{lem} on input line 636 ended by \end{cases
+*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.646   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:646: Misplaced \cr.
+\math@cr@@@ ->\cr 
+                  
+l.646   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:646: Misplaced \noalign.
+\math@cr@@ ... \iffalse }\fi \math@cr@@@ \noalign 
+                                                  {\vskip #1\relax }
+l.646   \end{align*}
+                    
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Overfull \hbox (28.56554pt too wide) in paragraph at lines 637--646
+\OT1/cmr/bx/n/12 Lemma 11. \OT1/cmr/m/it/12 Let $\OML/cmm/m/it/12 g$ \OT1/cmr/m
+/it/12 be a ma-trix sym-met-ric gate in $\OML/cmm/m/it/12 C[]$ \OT1/cmr/m/it/12
+ with chil-dren $\OML/cmm/m/it/12 H$\OT1/cmr/m/it/12 . Let $\OML/cmm/m/it/12  
+\OMS/cmsy/m/n/12 2 \OML/cmm/m/it/12 U[]$\OT1/cmr/m/it/12 A$[]\OMS/cmsy/m/n/12 \
+[] 6\OT1/cmr/m/n/12 =
+ []
+
+./paper.tex:646: Misplaced \noalign.
+\black@ #1->\noalign 
+                     {\ifdim #1>\displaywidth \dimen@ \prevdepth \nointerlin...
+l.646   \end{align*}
+                    
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./paper.tex:646: Too many }'s.
+\endalign ->\math@cr \black@ \totwidth@ \egroup 
+                                                \ifingather@ \restorealignst...
+l.646   \end{align*}
+                    
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+
+./paper.tex:646: LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.646   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:646: Missing $ inserted.
+<inserted text> 
+                $
+l.646   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:646: Display math should end with $$.
+<to be read again> 
+                   \endgroup 
+l.646   \end{align*}
+                    
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+./paper.tex:646: Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.646   \end{align*}
+                    
+Things are pretty mixed up, but I think the worst is over.
+
+./paper.tex:648: Undefined control sequence.
+l.648 ...amma = L^{EV}_\alpha$ and $\alpha \in \EV
+                                                  (g)$ iff
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./paper.tex:649: Undefined control sequence.
+<recently read> \rk 
+                    
+l.649   $\rk
+            ^u_p(L^0_\gamma)$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+./paper.tex:650: LaTeX Error: \begin{document} ended by \end{lem}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.650 \end{lem}
+               
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:650: Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.650 \end{lem}
+               
+Things are pretty mixed up, but I think the worst is over.
+
+./paper.tex:657: Missing $ inserted.
+<inserted text> 
+                $
+l.657   \in U^{\underbar{\sp(g)}
+                                }$ and let $\gamma: U \rightarrow [n]$ such ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:657: Extra }, or forgotten $.
+\sbox ...hbox {\color@setgroup #2\color@endgroup }
+                                                  
+l.657   \in U^{\underbar{\sp(g)}
+                                }$ and let $\gamma: U \rightarrow [n]$ such ...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:657: Extra }, or forgotten $.
+\underline #1->\relax \ifmmode \@@underline {#1}
+                                                \else $\@@underline {\hbox {...
+l.657   \in U^{\underbar{\sp(g)}
+                                }$ and let $\gamma: U \rightarrow [n]$ such ...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:657: Extra }, or forgotten $.
+l.657   \in U^{\underbar{\sp(g)}}
+                                 $ and let $\gamma: U \rightarrow [n]$ such ...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+./paper.tex:666: LaTeX Error: Environment cases* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.666   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:666: Extra }, or forgotten \endgroup.
+<template> }
+            $}\ifmeasuring@ \savefieldlength@ \fi \set@field \endtemplate 
+l.666   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:666: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing $ inserted.
+<inserted text> 
+                $
+l.666   \end{align*}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:666: Undefined control sequence.
+<argument> ...begin {cases*} 1 & if $A_h \cap \EV 
+                                                  _h \neq \emptyset $ 0 & ot...
+l.666   \end{align*}
+                    
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./paper.tex:666: Missing { inserted.
+<inserted text> 
+                {
+l.666   \end{align*}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+./paper.tex:666: Extra }, or forgotten $.
+<recently read> }
+                 
+l.666   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:666: Missing $ inserted.
+<inserted text> 
+                $
+l.666   \end{align*}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+./paper.tex:666: LaTeX Error: \begin{align*} on input line 661 ended by \end{ca
+ses*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.666   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing $ inserted.
+<inserted text> 
+                $
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing \cr inserted.
+<inserted text> 
+                \cr 
+l.666   \end{align*}
+                    
+I'm guessing that you meant to end an alignment here.
+
+./paper.tex:666: Missing { inserted.
+<inserted text> 
+                {
+l.666   \end{align*}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+./paper.tex:666: Missing { inserted.
+<inserted text> 
+                {
+l.666   \end{align*}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+./paper.tex:666: Extra }, or forgotten $.
+<recently read> }
+                 
+l.666   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:666: Missing $ inserted.
+<inserted text> 
+                $
+l.666   \end{align*}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Misplaced \omit.
+\math@cr@@@ ...@ \@ne \add@amps \maxfields@ \omit 
+                                                  \kern -\alignsep@ \iftag@ ...
+l.666   \end{align*}
+                    
+I expect to see \omit only after tab marks or the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./paper.tex:666: Misplaced \cr.
+\math@cr@@@ ...wtrue \fi \global \lineht@ \z@ \cr 
+                                                  
+l.666   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:666: Misplaced \cr.
+\measure@ ...olumn@ \z@ \add@amps \maxfields@ \cr 
+                                                  }}\restorecounters@ \ifodd...
+l.666   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:666: Extra }, or forgotten \endgroup.
+\measure@ ...lumn@ \z@ \add@amps \maxfields@ \cr }
+                                                  }\restorecounters@ \ifodd ...
+l.666   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:666: Extra }, or forgotten \endgroup.
+\measure@ ...umn@ \z@ \add@amps \maxfields@ \cr }}
+                                                  \restorecounters@ \ifodd \...
+l.666   \end{align*}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:666: Missing number, treated as zero.
+<to be read again> 
+                   >
+l.666   \end{align*}
+                    
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+./paper.tex:666: Illegal unit of measure (pt inserted).
+<to be read again> 
+                   >
+l.666   \end{align*}
+                    
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: You can't use `\halign' in math mode.
+<recently read> \halign 
+                        
+l.666   \end{align*}
+                    
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./paper.tex:666: Misplaced \span.
+\align@ ...bskip \eqnshift@ \halign \bgroup \span 
+                                                  \align@preamble \crcr #2
+l.666   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:666: Misplaced alignment tab character &.
+\align@preamble ->&
+                   \hfil \strut@ \setboxz@h {\@lign $\m@th \displaystyle {##...
+l.666   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:666: You can't use `macro parameter character #' in math mode.
+\align@preamble ...\@lign $\m@th \displaystyle {##
+                                                  }$}\ifmeasuring@ \savefiel...
+l.666   \end{align*}
+                    
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./paper.tex:666: Misplaced alignment tab character &.
+\align@preamble ...i \set@field \tabskip \z@skip &
+                                                  \setboxz@h {\@lign $\m@th ...
+l.666   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:666: You can't use `macro parameter character #' in math mode.
+\align@preamble ...lign $\m@th \displaystyle {{}##
+                                                  }$}\ifmeasuring@ \savefiel...
+l.666   \end{align*}
+                    
+Sorry, but I'm not programmed to handle this case;
+I'll just pretend that you didn't ask for it.
+If you're in the wrong mode, you might be able to
+return to the right one by typing `I}' or `I$' or `I\par'.
+
+./paper.tex:666: Misplaced \crcr.
+<recently read> \crcr 
+                      
+l.666   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+./paper.tex:666: LaTeX Error: Environment cases* undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.666   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:666: Misplaced alignment tab character &.
+<argument> ...}_\alpha (a,b):= \begin {cases*} 1 &
+                                                   if $A_h \cap \EV _h \neq ...
+l.666   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:666: Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing } inserted.
+<inserted text> 
+                }
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Missing $ inserted.
+<inserted text> 
+                $
+l.666   \end{align*}
+                    
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:666: Undefined control sequence.
+<argument> ...begin {cases*} 1 & if $A_h \cap \EV 
+                                                  _h \neq \emptyset $ 0 & ot...
+l.666   \end{align*}
+                    
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./paper.tex:666: Misplaced alignment tab character &.
+<argument> ...A_h \cap \EV _h \neq \emptyset $ 0 &
+                                                   otherwise \end {cases*}, 
+l.666   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+./paper.tex:666: LaTeX Error: \begin{lem} on input line 655 ended by \end{cases
+*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.666   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:666: Misplaced \cr.
+\math@cr@@@ ->\cr 
+                  
+l.666   \end{align*}
+                    
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+./paper.tex:666: Misplaced \noalign.
+\math@cr@@ ... \iffalse }\fi \math@cr@@@ \noalign 
+                                                  {\vskip #1\relax }
+l.666   \end{align*}
+                    
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+
+Overfull \hbox (33.64992pt too wide) in paragraph at lines 656--666
+\OT1/cmr/bx/n/12 Lemma 12. \OT1/cmr/m/it/12 Let $\OML/cmm/m/it/12 g$ \OT1/cmr/m
+/it/12 be a matrix-symmetric gate in $\OML/cmm/m/it/12 C[]$ \OT1/cmr/m/it/12 wi
+th chil-dren $\OML/cmm/m/it/12 W[]$\OT1/cmr/m/it/12 . $\OML/cmm/m/it/12 Let \O
+MS/cmsy/m/n/12 2 \OML/cmm/m/it/12 U[]$\OT1/cmr/m/it/12 A$[]\OMS/cmsy/m/n/12 \[]
+ 6\OT1/cmr/m/n/12 =
+ []
+
+./paper.tex:666: Misplaced \noalign.
+\black@ #1->\noalign 
+                     {\ifdim #1>\displaywidth \dimen@ \prevdepth \nointerlin...
+l.666   \end{align*}
+                    
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+./paper.tex:666: Too many }'s.
+\endalign ->\math@cr \black@ \totwidth@ \egroup 
+                                                \ifingather@ \restorealignst...
+l.666   \end{align*}
+                    
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+
+./paper.tex:666: LaTeX Error: \begin{document} ended by \end{align*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.666   \end{align*}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:666: Missing $ inserted.
+<inserted text> 
+                $
+l.666   \end{align*}
+                    
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:666: Display math should end with $$.
+<to be read again> 
+                   \endgroup 
+l.666   \end{align*}
+                    
+The `$' that I just saw supposedly matches a previous `$$'.
+So I shall assume that you typed `$$' both times.
+
+./paper.tex:666: Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.666   \end{align*}
+                    
+Things are pretty mixed up, but I think the worst is over.
+
+./paper.tex:668: Undefined control sequence.
+l.668   \sim \beta\}$. Then $\alpha \in \EV
+                                           _g$ iff $f(L^\EV_\alpha)$.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./paper.tex:668: Undefined control sequence.
+l.668 ...\}$. Then $\alpha \in \EV_g$ iff $f(L^\EV
+                                                  _\alpha)$.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./paper.tex:668: Missing { inserted.
+<to be read again> 
+                   _
+l.668 ...}$. Then $\alpha \in \EV_g$ iff $f(L^\EV_
+                                                  \alpha)$.
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+./paper.tex:668: Missing } inserted.
+<inserted text> 
+                }
+l.668 ... $\alpha \in \EV_g$ iff $f(L^\EV_\alpha)$
+                                                  .
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+./paper.tex:669: LaTeX Error: \begin{document} ended by \end{lem}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.669 \end{lem}
+               
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+./paper.tex:669: Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.669 \end{lem}
+               
+Things are pretty mixed up, but I think the worst is over.
+
+./paper.tex:671: Missing $ inserted.
+<inserted text> 
+                $
+l.671 ... that if $\alpha \in U^{\underbar{\sp{g}}
+                                                  }$ then $\alpha \in \EV_g$
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+./paper.tex:671: Extra }, or forgotten $.
+\sbox ...hbox {\color@setgroup #2\color@endgroup }
+                                                  
+l.671 ... that if $\alpha \in U^{\underbar{\sp{g}}
+                                                  }$ then $\alpha \in \EV_g$
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:671: Extra }, or forgotten $.
+\underline #1->\relax \ifmmode \@@underline {#1}
+                                                \else $\@@underline {\hbox {...
+l.671 ... that if $\alpha \in U^{\underbar{\sp{g}}
+                                                  }$ then $\alpha \in \EV_g$
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:671: Extra }, or forgotten $.
+l.671 ...that if $\alpha \in U^{\underbar{\sp{g}}}
+                                                  $ then $\alpha \in \EV_g$
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+./paper.tex:671: Undefined control sequence.
+l.671 ...{\underbar{\sp{g}}}$ then $\alpha \in \EV
+                                                  _g$
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `' on page 12 undefined on input line 673.
+
+./paper.tex:676: Undefined control sequence.
+l.676   We now show that $L^\EV
+                               _\alpha = L^0_\gamma$, and so complete the pr...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./paper.tex:676: Missing { inserted.
+<to be read again> 
+                   _
+l.676   We now show that $L^\EV_
+                                \alpha = L^0_\gamma$, and so complete the pr...
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+./paper.tex:676: Missing } inserted.
+<inserted text> 
+                }
+l.676 ...now show that $L^\EV_\alpha = L^0_\gamma$
+                                                  , and so complete the proof.
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:678: Undefined control sequence.
+l.678 ...(a,b) \in A \times B$ we have that $L^\EV
+                                                  _\alpha(a,b) = 1$. Let
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+./paper.tex:678: Missing { inserted.
+<to be read again> 
+                   _
+l.678 ...a,b) \in A \times B$ we have that $L^\EV_
+                                                  \alpha(a,b) = 1$. Let
+A left brace was mandatory here, so I've put one in.
+You might want to delete and/or insert some corrections
+so that I will find a matching right brace soon.
+(If you're confused by all this, try typing `I}' now.)
+
+./paper.tex:678: Missing } inserted.
+<inserted text> 
+                }
+l.678 ...s B$ we have that $L^\EV_\alpha(a,b) = 1$
+                                                  . Let
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:679: Undefined control sequence.
+l.679 ...L(g)(a,b)$. It follows that $A_h \cap \EV
+                                                  _h \neq \emptyset$, i.e there
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `' on page 12 undefined on input line 682.
+
+
+./paper.tex:688: LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.688 \end{proof}
+                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+./paper.tex:688: LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.688 \end{proof}
+                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+./paper.tex:688: Missing } inserted.
+<inserted text> 
+                }
+l.688 \end{proof}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:688: Missing } inserted.
+<inserted text> 
+                }
+l.688 \end{proof}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:688: Missing } inserted.
+<inserted text> 
+                }
+l.688 \end{proof}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+./paper.tex:688: Missing $ inserted.
+<inserted text> 
+                $
+l.688 \end{proof}
+                 
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+[12]
+
+LaTeX Warning: Reference `' on page 13 undefined on input line 700.
+
+
+LaTeX Warning: Reference `' on page 13 undefined on input line 700.
 
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 612.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 710.
 
-Overfull \hbox (26.84023pt too wide) in paragraph at lines 627--632
+Overfull \hbox (26.84023pt too wide) in paragraph at lines 725--730
 []$\OML/cmm/m/it/12 ^^^[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 ^^W; ^^V; ^^W[]; nu[
 ]\OT1/cmr/m/n/12 )$ holds iff $\OML/cmm/m/it/12 ^^W$ \OT1/cmr/m/n/12 and $\OML/
 cmm/m/it/12 ^^V$ \OT1/cmr/m/n/12 en-code gates and $\OML/cmm/m/it/12 ^^W[]; ^^W
@@ -317,47 +2010,67 @@ OML/cmm/m/it/12 g[]\OT1/cmr/m/n/12 )(\OML/cmm/m/it/12 ^^W[]; ^^W[]\OT1/cmr/m/n/
 12 ) =
  []
 
+./paper.tex:738: Undefined control sequence.
+<recently read> \rankpara 
+                          
+l.738 $\rankpara
+                $ such that $\langle [n], \leq\rangle \models \rankpara[g,p,...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-LaTeX Warning: Reference `' on page 8 undefined on input line 650.
+./paper.tex:738: Undefined control sequence.
+l.738 ...langle [n], \leq\rangle \models \rankpara
+                                                  [g,p,u]$ iff
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
-[8] [9]
-Chapter 2.
-[10
+
+LaTeX Warning: Reference `' on page 13 undefined on input line 748.
+
+[13] [14]
+Chapter 6.
+[15
 
 ]
 
-LaTeX Warning: Reference `prop:function-maj' on page 11 undefined on input line
- 739.
+LaTeX Warning: Reference `prop:function-maj' on page 16 undefined on input line
+ 837.
 
-[11]
-Chapter 3.
+[16]
+Chapter 7.
 
 Package amsmath Warning: Foreign command \atopwithdelims;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 775.
+(amsmath)                 on input line 873.
 
-LaTeX Font Info:    Try loading font information for U+euf on input line 788.
+LaTeX Font Info:    Try loading font information for U+euf on input line 886.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-) [12
+) [17
 
 ]
 
-LaTeX Warning: Reference `' on page 13 undefined on input line 813.
+LaTeX Warning: Reference `' on page 18 undefined on input line 911.
 
-[13] (./paper.aux)
+[18] (./paper.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2867 strings out of 494953
- 38587 string characters out of 6180977
- 111608 words of memory out of 5000000
- 6099 multiletter control sequences out of 15000+600000
+ 2873 strings out of 494953
+ 38623 string characters out of 6180977
+ 111619 words of memory out of 5000000
+ 6105 multiletter control sequences out of 15000+600000
  16801 words of font info for 63 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 38i,15n,32p,600b,246s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,15n,32p,600b,248s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texliv
@@ -376,10 +2089,10 @@ texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive
 -dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/share/texlive/texmf-di
 st/fonts/type1/public/amsfonts/euler/eufm7.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on paper.pdf (14 pages, 245760 bytes).
+Output written on paper.pdf (19 pages, 252819 bytes).
 PDF statistics:
- 126 PDF objects out of 1000 (max. 8388607)
- 90 compressed objects within 1 object stream
+ 143 PDF objects out of 1000 (max. 8388607)
+ 101 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
