@@ -10,7 +10,6 @@
 \usepackage{amsfonts} % for blackboard bold, etc
 \usepackage{amsthm} % better theorem environments
 
-
 % various theorems, numbered by section
 
 \newtheorem{thm}{Theorem} \newtheorem{claim}{Claim}
@@ -45,6 +44,13 @@
 \newcommand{\agree}{\text{AGREE}}
 \newcommand{\supp}{\text{SUPP}}
 \newcommand{\rankparam}{\text{PARAM}}
+\newcommand{\consp}{\text{sp}}
+\newcommand{\row}{\text{row}}
+\newcommand{\column}{\text{col}}
+\newcommand{\rowsp}{\text{r}}
+\newcommand{\colsp}{\text{c}}
+\newcommand{\EV}{\text{EV}}
+\newcommand{\spstab}[1]{\stab (\consp (#1))}
 
 \newcommand{\Alpha}{A}
 \newcommand{\matsym}{\text{\textbf{MatSym}}}
@@ -605,7 +611,7 @@ where $\omega$ is the matrix labelling associated with $g$.
 
 \begin{lem}
   Let $g$ be a matrix-symmetric gate in $C_n$ with children $H$. Let $\alpha \in
-  U^{\underbar{\sp(g)}}$, and suppose $\gamma_1, \gamma_2: U \rightarrow [n]$
+  U^{\underbar{\consp(g)}}$, and suppose $\gamma_1, \gamma_2: U \rightarrow [n]$
   with $\gamma^{-1}_1 \sim \alpha$ and $\alpha \sim \gamma^{-1}_2$. Let $A
   \times B = \dom (L(g))$.
 
@@ -633,59 +639,59 @@ where $\omega$ is the matrix labelling associated with $g$.
 
 \end{proof}
 
-\begin{lem}
-  Let $g$ be a matrix symmetric gate in $C_n$ with children $H$. Let $\alpha \in
-  U^{\underbar{\sp(g)}}$ and $\gamma: U \rightrrow [n]$ such that
-  $gamma^{-1}\sim \alpha$. Let $A \times B = \dom (L(g))$ and define
-  $L^{EV}_\alpha: A \times B \rightarrow \{0,1\}$ by
-  \begin{align*}
-    L^{EV}_\alpha (a,b):=
-    \begin{cases*}
-      1 & if $A_h \cap \EV_h \neq \emptyset$ 0 & otherwise
-    \end{cases*},
-  \end{align*}
-  where for $h \in W_g, A_h:= \{\beta \in U^{\underline{\sp(h)}} \vert \alpha
-  \sim \beta\}$. Then $L^0_\gamma = L^{EV}_\alpha$ and $\alpha \in \EV(g)$ iff
-  $\rk^u_p(L^0_\gamma)$
-\end{lem}
-\begin{proof}
-  
-\end{proof}
+% \begin{lem}
+%   Let $g$ be a matrix symmetric gate in $C_n$ with children $H$. Let $\alpha \in
+%   U^{\underbar{\consp(g)}}$ and $\gamma: U \rightarrow [n]$ such that
+%   $gamma^{-1}\sim \alpha$. Let $A \times B = \dom (L(g))$ and define
+%   $L^{EV}_\alpha: A \times B \rightarrow \{0,1\}$ by
+  % \begin{align*}
+  %   L^{EV}_\alpha (a,b):=
+    % \begin{cases*}
+    %   1 & if $A_h \cap \EV_h \neq \emptyset$ 0 & otherwise
+   % \end{cases*},
+%  \end{align*}
+%  where for $h \in W_g, A_h:= \{\beta \in U^{\underline{\sp(h)}} \vert \alpha
+%  \sim \beta\}$. Then $L^0_\gamma = L^{EV}_\alpha$ and $\alpha \in \EV(g)$ iff
+%  $\rk^u_p(L^0_\gamma)$
+%\end{lem}
+%\begin{proof}
+%  
+%\end{proof}
 
-\begin{lem}
-  Let $g$ be a matrix-symmetric gate in $C_n$ with children $W_g$. $Let \alpha
-  \in U^{\underbar{\sp(g)}}$ and let $\gamma: U \rightarrow [n]$ such that
-  $\gamma^{-1} \sim \alpha$. Let $A \times B = \dom (L(g))$, and let
-  $f:\{0,1\}^{A \times B} \rightarrow \{0,1\}$ be the matrix-symmetric function
-  associated with $g$. Define $L^{EV}_\alpha: A \times B \rightarrow \{0,1\}$ by
-  \begin{align*}
-    L^{EV}_\alpha (a,b):=
-    \begin{cases*}
-      1 & if $A_h \cap \EV_h \neq \emptyset$ 0 & otherwise
-    \end{cases*},
-  \end{align*}
-  where for $h \in W_g, A_h:= \{\beta \in U^{\underline{\sp(h)}} \vert \alpha
-  \sim \beta\}$. Then $\alpha \in \EV_g$ iff $f(L^\EV_\alpha)$.
-\end{lem}
-\begin{proof}
-  First note that if $\alpha \in U^{\underbar{\sp{g}}}$ then $\alpha \in \EV_g$
-  iff we have that $C_n[\gamma \mathcal{A}](g)= f (L^0_\gamma) = 1$. Notice that
-  from Lemma \ref{} that this holds for any particular $\gamma$ iff it holds for
-  all such $\gamma$.
+% \begin{lem}
+%   Let $g$ be a matrix-symmetric gate in $C_n$ with children $W_g$. $Let \alpha
+%   \in U^{\underbar{\consp(g)}}$ and let $\gamma: U \rightarrow [n]$ such that
+%   $\gamma^{-1} \sim \alpha$. Let $A \times B = \dom (L(g))$, and let
+%   $f:\{0,1\}^{A \times B} \rightarrow \{0,1\}$ be the matrix-symmetric function
+%   associated with $g$. Define $L^{EV}_\alpha: A \times B \rightarrow \{0,1\}$ by
+  % \begin{align*}
+  %   L^{EV}_\alpha (a,b):=
+%     \begin{cases*}
+%       1 & if $A_h \cap \EV_h \neq \emptyset$ 0 & otherwise
+%     \end{cases*},
+%   \end{align*}
+%   where for $h \in W_g, A_h:= \{\beta \in U^{\underline{\sp(h)}} \vert \alpha
+%   \sim \beta\}$. Then $\alpha \in \EV_g$ iff $f(L^\EV_\alpha)$.
+% \end{lem}
+% \begin{proof}
+%   First note that if $\alpha \in U^{\underbar{\sp{g}}}$ then $\alpha \in \EV_g$
+%   iff we have that $C_n[\gamma \mathcal{A}](g)= f (L^0_\gamma) = 1$. Notice that
+%   from Lemma \ref{} that this holds for any particular $\gamma$ iff it holds for
+%   all such $\gamma$.
 
-  We now show that $L^\EV_\alpha = L^0_\gamma$, and so complete the proof.
+%   We now show that $L^\EV_\alpha = L^0_\gamma$, and so complete the proof.
 
-  Suppose for $(a,b) \in A \times B$ we have that $L^\EV_\alpha(a,b) = 1$. Let
-  $h:= L(g)(a,b)$. It follows that $A_h \cap \EV_h \neq \emptyset$, i.e there
-  exits $\beta \in \sp(h)$ such that $\beta \sim \alpha$ and there exists
-  $\gamma_h \in \Gamma(h)$ such that $\gamma^{-1}_h \sim \beta$. It follows from
-  transitivity and Lemma \ref{} that $\gamma_h \sim \alpha$ and so
-  $L^0_\alpha(a,b) = C_n[\gamma \mathcal{A}](h) = C_n[\gamma_h \mathcal{A}](h) =
-  1$.
+%   Suppose for $(a,b) \in A \times B$ we have that $L^\EV_\alpha(a,b) = 1$. Let
+%   $h:= L(g)(a,b)$. It follows that $A_h \cap \EV_h \neq \emptyset$, i.e there
+%   exits $\beta \in \sp(h)$ such that $\beta \sim \alpha$ and there exists
+%   $\gamma_h \in \Gamma(h)$ such that $\gamma^{-1}_h \sim \beta$. It follows from
+%   transitivity and Lemma \ref{} that $\gamma_h \sim \alpha$ and so
+%   $L^0_\alpha(a,b) = C_n[\gamma \mathcal{A}](h) = C_n[\gamma_h \mathcal{A}](h) =
+%   1$.
 
 
-  Now suppose that $L^0_\gamma (a,b) = 1$
-\end{proof}
+%   Now suppose that $L^0_\gamma (a,b) = 1$
+% \end{proof}
 
 
 \section{Translating to Formulas of FPC}
@@ -735,7 +741,7 @@ and $g_\nu$ for the gates encoded by these sequence, while simply identifying
 the sequence $\nu_i$ with the number it encodes.
 
 Using the Immerman-Vardi Theorem, we can define an FP($\leq$) formula
-$\rankpara$ such that $\langle [n], \leq\rangle \models \rankpara[g,p,u]$ iff
+$\rankparam$ such that $\langle [n], \leq\rangle \models \rankparam,a[g,p,u]$ iff
 $\langle [n], \leq\rangle \models \phi_G[g] \land \phi_{\rank}[g]$ and the rank
 gate $g$ (as per the interpretation) computes the rank over characteristic $p$
 and has threshold $u$.
@@ -763,6 +769,241 @@ Now we define the formula
 \begin{align*}
   \theta^{'}(a,b):= \exists \nu (W(\nu, \mu) \wedge \agree (\mu,\nu, \bar{x}, \bar{y}) \wedge \phi_L (\mu, \nu, a, b) \wedge V(\nu, y))
 \end{align*}
+
+\pagebreak
+
+\section{Computing the Rank of a Labelling in FPR}
+
+In this section I discuss how to determine the rank a matrix labelling at some
+gate $g$. This is a rough copy written for the purpose of discussion. In this
+section we fix some circuit $C_n$ and some rank gate $g$ in $C_n$, with matrix
+labelling $\omega$.
+
+\begin{definition}
+  Let $h \in H$, then $S \subseteq [n]$ is a row support iff $\forall \sigma \in
+  \stab (\consp(g))$ whenever $\forall i \in S, \sigma i = i$ then $\row (\sigma
+  h) = \row (h)$.
+  \\~\\
+  Similarly we can define the notion of a column support.
+  \\~\\
+  Let $r_h$ be the canonical row support and $c_h$ be the canonical column
+  support.
+\end{definition}
+
+\begin{remark}
+  Let $\sigma \in \spstab{g}$, then we know that $\sigma$ induces an action on
+  the rows and columns such that the result is a row column permutation. We may
+  associate with $\sigma$ a pair $(\sigma_r, \sigma_c) \in \sym_A \times
+  \sym_B$, where $\sigma_r (i) = \row (\sigma h)$, for some $h \in H$, $\row (h
+  = i)$ and similarly $\sigma_c (j) = \column (\sigma h)$, for some $h \in H$,
+  $\column (h) = j$. The definition of a permutation on a circuit, and the
+  stability group for $g$ gives us that such permutations must exist.
+\end{remark}
+
+The following lemma asserts a few basic facts about the (canonical) row and
+column supports.
+
+\begin{lem}
+  Let $h \in H$, then $r_h \subset \consp(h)$, $c_h \subset \consp(h)$ and $c_r
+  \cup r_h = \consp(h)$.
+\end{lem}
+
+We introduce here some useful notation.
+
+\begin{definition}
+  Let $S^r_h = \{ \sigma \in \stab (\consp(g)) : \sigma \vec{r_h} = \vec{r_h}
+  \}$ and $G^r_h = \{ \sigma \in \stab(\consp(g)) : \row(\sigma h) = \row(h)\}$.
+  Let $S^c_h = \{ \sigma \in \stab (\consp(g)) : \sigma \vec{c_h} = \vec{c_h}
+  \}$ and $G^c_h = \{ \sigma \in \stab(\consp(g)) : \column(\sigma h) =
+  \column(h)\}$.
+\end{definition}
+
+Clearly, by definition of a row and column support, $S^r_h \subseteq G^r_h$ and
+$S^c_h \subseteq G^c_h$.
+\\~\\
+In this section some simplifying assumptions are made.
+
+\begin{remark}
+  In this section I assume for the moment that:
+  \begin{itemize}
+  \item $\consp (g) = \{\}$,
+  \item $S^r_h = G^r_h$ and $S^c_h = G^c_h$, and
+  \item $\forall h,h' \in H$ we have $\vert r_h \vert = \vert r_{h'} \vert$ and
+    $\vert c_h \vert = \vert c_{h'} \vert$.
+  \end{itemize}
+\end{remark}
+
+Let $k_r = \vert r_h \vert$ and $k_c = \vert c_h \vert$. In the following we let
+$\vec{x} \in U^{k_r}$ and $\vec{y} \in U^{k_c}$. These vectors are thought of as
+generic assignments to the row and column supports of some element $h \in H$. Of
+course, the structure of the row and column supports of a particular $h \in H$
+does matter, and two assignments may be valid or invalid depending on that
+stricture. We now consider ways of `choosing' a particular element of $H$ that
+has the `correct' structure for such a pair.
+\\~\\
+Then let for $h \in H$, let $\vec{x}_h: r_h \rightarrow U$ be defined by
+$\vec{x}_h(i) = \vec{x}(\vec{r_h}^{-1}(i))$. Similarly, let $\vec{y}_h: c_h
+\rightarrow U$ be defined by $\vec{y}_h(i) = \vec{y}(\vec{c_h}^{-1}(i))$. We can
+think of the functions $(h, \vec{x}) \mapsto \vec{x}_h$ and $(h, \vec{y})
+\mapsto \vec{y}_h$ as taking these respective tuples and assigning them to the
+row and column supports of $h$.
+
+\begin{lem}
+  For each pair $(\vec{x}, \vec{y})$ there is an $h \in H$ such that $\vec{x}_h
+  \sim \vec{y}_h$.
+\end{lem}
+
+Let us then define a function $\mu : U^{k_r} \times U^{k_c} \rightarrow H$,
+where $\mu(\vec{x}, \vec{y})$ is the minimal $h \in H$ (in the order of the
+structure) such that $\vec{x}_h \sim \vec{y}_h$. The above lemma tells us that
+this function is indeed well-defined (in particular, it's total).
+
+We note that if $\vec{x}_h \sim \vec{y}_h$ it follows that we can define
+$(\vec{x}, \vec{y})$ an assignment to the support of $h$.
+
+We then define the matrix $M(\vec{x}, \vec{y}) := (\vec{x}, \vec{y}) \in
+\EV_{\mu(\vec{x}, \vec{y})}$.
+
+
+We now define what it means for two matrices to be row-column equivalent.
+
+\begin{definition}
+  Let $M_1$ and $M_2$ be matrices over some field, with row and column indexes
+  given by $(A_1, B_1)$ and $(A_2, B_2)$, respectively. We say that $M_1$ and
+  $M_2$ are row-column equivalent iff there exists bijections $\alpha: A_1
+  \rightarrow A_2$ and $\beta: B_1 \rightarrow B_2$ such that for all $(a,b) \in
+  A_1 \times B_1$ we have that $M_1(a,b) = M_2 (\alpha (a), \beta (b))$. If
+  $M_1$ and $M_2$ are row-column equivalent we say that $M_1 \sim M_2$.
+\end{definition}
+
+Suppose $\alpha_g \in U^{\sp(g)}$ an injection and fix a bijection $\gamma: U
+\rightarrow [n]$ such that $\alpha_g \sim \gamma^{-1}$. We can then define
+$L^\gamma: A \times B \rightarrow \{0,1\}$ by $L^\gamma(a,b) = C[\gamma
+\mathcal{A}](\omega (a,b))$.
+\\~\\
+We note that, in fact, it is the choice of the assignment to the support of $g$,
+i.e. $\alpha_g$, that really matters in the sense that for any two global
+assignments that agree on the support of $g$ will produce row-column equivalent
+matrices. The following lemma formalises this observation.
+
+\begin{lem}
+  Let $g$ be a matrix-symmetric gate in $C_n$ with children $H$ and matrix
+  labelling $L(g)$. Let $\alpha_g \in U^{\consp(g)}$, and suppose $\gamma_1,
+  \gamma_2: U \rightarrow [n]$ with $\gamma^{-1}_1 \sim \alpha$ and $\alpha \sim
+  \gamma^{-1}_2$. Let $A \times B = \dom (L(g))$.
+
+  For an input structure $\mathcal{A}$, let $L^\gamma: A \times B \rightarrow
+  \{0,1\}$, where $L^{\gamma_2} (a,b):= C[\gamma \mathcal{A}] (L(g)(a,b))$.
+
+  Then $L^{\gamma_1} \sim L^{\gamma_2}$.
+\end{lem}
+\begin{proof}
+  We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
+  \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
+  consistent with $\alpha$, it follows that $\pi$ must fix $\sp(g)$. Thus $L(g)
+  \sim \pi L(g)$, and so there exists $(\sigma, \lambda)$ such that $\pi L(g) =
+  L(g) \cdot (\sigma, \lambda)$.
+
+  We then have that,
+  \begin{align*}
+    L^{\gamma_1} (a,b) &= C_n[\gamma_1 \mathcal{A}](L(g)(a,b))\\
+                       & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(a,b)] \\
+                       & = C_n[\gamma_2 \mathcal{A}][L(g)((\sigma, \lambda)(a,b))]\\
+                       & = L^{\gamma_2} ((\sigma, \lambda) (a,b)),
+  \end{align*}
+  and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
+\end{proof}
+
+\begin{lem}
+  Let $h_1, h_2 \in H$ and $\sigma_1, \sigma_2 \in \spstab{g}$. Suppose
+  $\sigma_1 \vec{r_{h_1}} = \sigma_2 \vec{r_{h_2}}$. Then $\row (\sigma_1 h_1) =
+  \row (\sigma_2 h_2)$.
+\end{lem}
+\begin{proof}
+  There exists $\sigma \in \spstab{g}$ such that $\sigma \vec{r_{h_1}} =
+  \vec{r_{h_2}}$, and so $\sigma_1 \vec{r_{h_1}} = \sigma_2 \sigma
+  \vec{r_{h_1}}$, and thus $(\sigma_2 \sigma)^{-1} \sigma_1 \vec{r_{h_1}} =
+  \vec{r_{h_1}}$. It follows that $(\sigma_2 \sigma)^{-1} \sigma_1 \in S^r_{h_1}
+  \subseteq G^r_{h_1}$, and so $\row ((\sigma_2 \sigma)^{-1} \sigma_1 h_1) =
+  \row (h_1)$. Thus $((\sigma_2)_r \sigma_r)^{-1} (\sigma_1)_r \row (h_1) = \row
+  (h_1)$.
+
+  It follows that $\row (\sigma_1 h ) = (\sigma_1)_r \row (h_1) = (\sigma_2)_r
+  \sigma_r\row (h_1) = (\sigma_2)_r \row (\sigma h_1) = (\sigma_2)_r \row (h_2)
+  = \row (\sigma_2 h_2)$.
+
+  
+  % Uses assumption (-check-)
+  
+\end{proof}
+
+\begin{claim}
+  For $h \in H$ and $\sigma \in \stab(\consp (g))$, we have that
+  $\vec{r}_{\sigma h_1} = \sigma \vec{r}_{h_1}$.
+\end{claim}
+\begin{proof}
+  Proof needed, proof strategy in book
+\end{proof}
+
+\begin{lem}
+  Let $h_1, h_2 \in H$ and $\sigma_1, \sigma_2 \in \stab (\consp(g))$ such that
+  $\sigma_1 \vec{r}_{h_1} = \sigma_2 \vec{r}_{h_2}$ and there exists $\sigma \in
+  \stab(\consp (g))$ such that $\row (\sigma h_1) = \row (\sigma h_2)$, then
+  $\row (\sigma_1 h_1) = \row (\sigma_2 h_2)$.
+\end{lem}
+\begin{proof}
+  proof in book
+  % So $\row (\sigma h_1) = \row (h_2)$, and so $\sigma \vec{r} = \vec{r}_{\sigma h_1} =
+  % \vec{r}_{h_2}$.
+\end{proof}
+
+Let $\Pi^\gamma_{(\vec{x}), \vec{y}}(\mu(\vec{x}, \vec{y}))$ be the action on
+$\mu (\vec{x}, \vec{y})$ defined the action on the support given by
+$\Pi^\gamma_{(\vec{x}, \vec{y})}(\vec{\sp(h)}) = \gamma ((\vec{x}, \vec{y})$.
+
+
+\begin{claim}
+  Let $\vec{y}, \vec{y}' \in U^{k_r}$ and $\vec{x}, \vec{x} \in U^{k_c }$ then
+  \begin{align*}
+    \row (\Pi^\gamma_{(\vec{x}, \vec{y})}(\mu(\vec{x}, \vec{y}))) = \row (\Pi^\gamma_{(\vec{x}, \vec{y}')}(\mu(\vec{x}, \vec{y}'),
+  \end{align*}
+  and
+  \begin{align*}
+    \column(\Pi^\gamma_{(\vec{x}, \vec{y})}(\mu(\vec{x}, \vec{y}))) = \column
+    (\Pi^\gamma_{(\vec{x}', \vec{y})}(\mu(\vec{x}', \vec{y}).
+  \end{align*}
+\end{claim}
+\begin{proof}
+  proof in book
+\end{proof}
+
+We let $\alpha: U^{k_r} \rightarrow A$, $\beta: U^{k_c} \rightarrow B$ be
+defined by $\alpha (\vec{x}) = \row (\Pi^\gamma_{(\vec{x}, \vec{y})} (\mu
+(\vec{x}, \vec{y})$ for some $\vec{y} \in U^{k_c}$. Similarly we can define
+$\beta (\vec{y})$.
+
+The above claim tells us that this definition is well defined.
+
+\begin{claim} 
+  Both $\alpha$ and $\beta$ are bijections.
+\end{claim}
+\begin{proof}
+ proof in book 
+\end{proof}
+
+\begin{thm}
+  $L$ is row-column equivalent to $M$.
+\end{thm}
+\begin{proof}[proof of above theorem]
+  \begin{align*}
+    M(\vec{x}, \vec{y}) &\iff (\vec{x}, \vec{y}) \in \EV_{\mu({\vec{x}, \vec{y}})} \\  
+                        &\iff C_n [\gamma \mathcal{A}] (\Pi^\gamma_{(\vec{x}, \vec{y})} (\mu (\vec{x}, \vec{y}))) \\
+                        &\iff C_n [\gamma \mathcal{A}] (\omega (\alpha (\vec{x}), \beta (\vec{y}))) \\
+                        &\iff L^\gamma (\alpha (\vec{x}), \beta (\vec{y}))
+  \end{align*}
+  The above calculation, combined with the fact that $\alpha$ and $\beta$ are
+  bijections, proves the result.
+\end{proof}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -915,4 +1156,6 @@ capture CPT.
   formula of FPC that decides the CFI query for $(G_n)$ contradicting
   our assumption.
 \end{proof}
+
+
 \end{document}
