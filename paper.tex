@@ -9,15 +9,28 @@
 \usepackage{amsmath} % great math stuff
 \usepackage{amsfonts} % for blackboard bold, etc
 \usepackage{amsthm} % better theorem environments
+\usepackage{xspace}
 
 % various theorems, numbered by section
 
-\newtheorem{thm}{Theorem} \newtheorem{claim}{Claim}
-\newtheorem{remark}{Remark} \newtheorem{definition}{Definition}
+\newtheorem{thm}{Theorem} \newtheorem{claim}[thm]{Claim}
+\newtheorem{remark}[thm]{Remark} \newtheorem{definition}[thm]{Definition}
 \newtheorem{lem}[thm]{Lemma} \newtheorem{prop}[thm]{Proposition}
 \newtheorem{cor}[thm]{Corollary} \newtheorem{conj}[thm]{Conjecture}
 
 \DeclareMathOperator{\id}{id}
+
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\nats}{\mathbb{N}}
+
+\newcommand{\logic}[1]{\text{\upshape #1}\xspace}
+\newcommand{\FPC}{\logic{FPC}}
+\newcommand{\FO}{\logic{FO}}
+\newcommand{\FP}{\logic{FP}}
+\newcommand{\FPR}{\logic{FPrk}}
+\newcommand{\CPTC}{\logic{$\tilde{\text C}$PT(Card)}}
+
+\newcommand{\PT}{\ensuremath{\mathrm{P}}\xspace}
 
 \newcommand{\bd}[1]{\mathbf{#1}} % for bolding symbols
 \newcommand{\RR}{\mathbb{R}} % for Real numbers
@@ -34,22 +47,28 @@
 \newcommand{\kernal}{\text{\textbf{ker}}}
 \newcommand{\alt}{\text{\textbf{Alt}}}
 \newcommand{\sym}{\text{\textbf{Sym}}}
+\newcommand{\std}{\text{\textbf{std}}}
 \newcommand{\rank}{\text{\textbf{rk}}}
 \newcommand{\orb}{\text{\textbf{Orb}}}
 \newcommand{\SP}{\text{\textbf{SP}}}
-\newcommand{\maj}{\text{\textbf{Maj}}}
+\newcommand{\SPs}{\text{\textbf{SPs}}}
+\newcommand{\maj}{\text{\textbf{maj}}}
 \newcommand{\dom}{\text{\textbf{Dom}}}
+\newcommand{\img}{\text{\textbf{Img}}}
 \newcommand{\child}{\text{child}}
 \newcommand{\countgate}{\text{count}}
 \newcommand{\agree}{\text{AGREE}}
 \newcommand{\supp}{\text{SUPP}}
 \newcommand{\rankparam}{\text{PARAM}}
 \newcommand{\consp}{\text{sp}}
+\newcommand{\consps}{\text{sps}}
 \newcommand{\row}{\text{row}}
 \newcommand{\column}{\text{col}}
 \newcommand{\rowsp}{\text{r}}
 \newcommand{\colsp}{\text{c}}
 \newcommand{\EV}{\text{EV}}
+\newcommand{\type}{\text{type}}
+\newcommand{\types}{\text{types}}
 \newcommand{\spstab}[1]{\stab (\consp (#1))}
 
 \newcommand{\Alpha}{A}
@@ -57,11 +76,9 @@
 \begin{document}
 
 
-\nocite{*}
+\title{Symmetric Circuits for Rank Gates}
 
-\title{Circuits}
-
-\author{Gregory Wilsenach \\ 
+\author{Anuj Dawar and Gregory Wilsenach \\ 
 Computer Laboratory \\
 University of Cambridge}
 
@@ -71,49 +88,254 @@ University of Cambridge}
 
 \chapter{Introduction}
 
+A finite relational structure, such as a graph, can be represented as a binary
+string in a standard way (for instance, by enumerating its adjacency matrix).
+When we speak of the computational complexity of properties of graphs, we assume
+such an encoding in order to present the structure as input to a machine or
+circuit or other appropriate computational model. The properties of structures
+we are interested in studying are invariant under isomorphisms. This requirement
+translates into an invariance condition on sets of strings---say that a language
+$L \subseteq \{0,1\}^\star$ is a \emph{graph property} if, whenever $x \in L$
+for a string $x$ representing a graph $G$, we have $y\in L$ for any string $y$
+obtained from $x$ by re-ordering the vertices of $G$. The central open question
+in descriptive complexity---whether there is a logical characterisation of the
+polynomial-time decidable properties of finite relational structures--- can then
+be understood as the question of characterizing those languages $L$ that are in
+$\PT$ and are graph properties.
+
+Anderson and Dawar~\cite{AndersonD17} study this question through the lens of circuit
+complexity, by considering \emph{symmetric circuits}. These are circuits that
+necessarily accept graph properties, with this fact explicitly witnessed by
+automorphisms of the circuit. To be precise, we can think of a property of
+(directed) graphs on $n$ vertices as being given by a Boolean function $f:
+\{0,1\}^{n^2} \rightarrow \{0,1\}$ which takes as input the $n^2$ potential
+edges and outputs $1$ if the property is satisfied by the graph given on the
+input. The function $f$ is \emph{graph-symmetric} in the sense that any permutation of
+its inputs induced by a permutation of the $n$ vertices leaves $f$ unchanged
+(note this is not the same thing as requiring that $f$ is invariant under all
+permutations of its inputs). A symmetric circuit is a circuit computing a
+Boolean function of $n^2$ inputs where each permutation of $[n]$ can be extended
+to an automorphism of the circuit. Such a circuit necessarily computes an
+invariant function.
+
+The results of~\cite{AndersonD17} show a tight relationship between the decdability of
+a graph property by means of a polynomial-size family of symmetric circuits and
+its definability in extensions of fixed-point logic. In particular, they show
+that a property is definable in fixed-point logic with counting ($\FPC$) if, and
+only if, it is decidable by a polynomially-uniform family of symmetric circuits
+using Boolean and majority gates (or, equivalently, threshold gates). Without
+the symmetry restriction, polynomial-size families of circuits have the same
+computational power whether we restrict ourselves to Boolean gates only or allow
+richer bases such as threshold gates. One consequence of the results
+in~\cite{AD14} is that, with the requirement of symmetry, these different bases
+do yield different expressive power, suggesting some lack of robustness to the
+model. One of the results in the present paper shows that the model with
+majority circuits is robust in the sense that it is able to simulate, by means
+of symmetric circuits, any symmetric circuit composed of gates computing Boolean
+functions that are themselves symmetric (in the sense that they are invariant
+under \emph{all} permutations of their inputs. Thus, any property decidable by a
+polynomially-uniform family of such circuits is definable in $\FPC$.
+
+This motivates the study of symmetric circuit families that involve gates which
+themselves may compute non-symmetric functions. In particular, motivated by the
+study of rank logic~\cite{DGHL09,GP15}, we consider gates that are
+\emph{matrix-symmetric}. These are gates computing a Boolean function $f:
+\{0,1\}^{A \times B} \rightarrow \{0,1\}$ which is invariant under arbitrary
+permutations of $A$ and $B$. A typical example is the function computing the
+rank of an $A \times B$ $0$-$1$ matrix. We show that the support theorem of
+Anderson and Dawar can be shown to hold, even in the presence of
+matrix-symmetric gates. This allows us to show that definability in the logic
+fixed-point with rank ($\FPR$) is the same as decidability by
+polynomially-uniform families of symmetric circuits with rank gates.
+
+% Another extension of $\FPC$ that has received much attention in the descriptive
+% complexity literature is the class $\CPTC$ of \emph{choiceless polynomial time
+%   with counting}. The work of~\cite{AD14} leaves open the question of obtaining
+% a circuit characterization of this class and it was suggested there that this
+% would require a relaxation of the notion of symmetry used in defining symmetric
+% circuits. In particular, while $\CPTC$ is based on a machine model designed to
+% preserve symmetry by forbidding choices, the polynomial time and space
+% restrictions apply int he context of the symmetries fo a \emph{single input
+%   structure}. In this paper, we consider a relaxation of the notion of symmetric
+% circuit intended to capture exactly this intuition. However, we are able to show
+% that this does not yield a characterization of $\CPTC$. In particular, we show
+% that no family in this class of relaxed symmetric circuits can distinguish odd
+% from even Cai-F\"urer-Immerman graphs, something we know is do-able in
+% $\CPTC$~\cite{DRR08}.
+
 \chapter{Background}
+In this section we present basic background on logics, first-order structures,
+and symmetric circuits.
+
+\section{Logic and Structures}
+A \emph{relational vocabulary} (usually denoted by $\tau$) is a finite sequence
+of relation symbols $R_1, \ldots, R_k$, such that for all $i \in [k]$, $R_i$ has
+arity of $r_i \in \nats$.
+
+A $\tau$-structure $\mathcal{A}$ is a tuple $\langle U, R^{\mathcal{A}}_1 ,
+\ldots , R^{\mathcal{A}}_k \rangle$, where $U$ is a set and called the
+\emph{universe} of $\mathcal{A}$ and for all $i \in [k]$ the relations
+$R^{\mathcal{A}}_i \subseteq U^{r_i}$. The elements of $U$ are called the
+elements of $\mathcal{A}$. A \emph{multi-sorted} structure is one whose universe
+is a disjoint union, where each set in the union is called a \emph{sort}. The
+size of a structure is the cardinality of its universe.
+
+All structures in this paper are finite.
+
+\section{First Order, Fixed-Point, Counting}
+
+Let $\FO(\tau)$ denote \emph{first order logic} with respect to the vocabulary
+$\tau$. \emph{Fixed-Point Logic} is the extension of $\FO(\tau)$ with an
+inflationary fixed-point operator (see \cite{} for details). For logic
+$\mathcal{L}$, a formula $\phi \in \mathcal{L}(\tau)$, $x$ a $k$-length tuple of
+variables, $\mathcal{A}$ a (finite) structure, and $a \in U^k$, we have that
+$\phi (x)$ denotes that the variables in $x$ are free in $\phi$ and we write
+$\mathcal{A} \models_{\mathcal{L}} \phi[a]$ iff the the formula $\phi$ is true
+in $\mathcal{A}$ with respect to $\mathcal{L}$ with the variables $x$ assigned
+to $a$. The context usually makes the logic obvious, and in that case we usually
+drop the subscript.
+
+We also recall the definition of \emph{fixed-point logic with counting} $\FPC$,
+an extension $\FP$ with counting quantifiers. For a structure $\mathcal{A}$,
+Formulas of this logic are evaluated over a structure $\mathcal{A}$ by extending
+that structure to $\mathcal{A}^\leq$, a two sorted extension of $\mathcal{A}$ by
+an ordered number sort $\{1, \ldots, \vert U\vert \}$. Variables are taken to be
+either point variables, ranging over $U$ or number variables ranging over
+$[\vert U \vert]$. The counting quantifiers are of the form $\#_x$, where $x$ is
+either a point or number variable and for $\phi(x) \in \FPC(\tau)$, $\#_x
+\phi(x)$ is a term denoting the element of the number sort corresponding to
+$\vert \{a \in \mathcal{A} | \mathcal{A} \models \phi[a]\}\vert$. Note
+additionally that $k$-tuples of number variables can be used to encode numbers
+in $\FPC$ of size up to $\vert U\vert^k$. For more details on $\FPC$ please see
+\cite{}.
+
+\section{Rank Logic}
+This still needs to be filled in
+
+\section{Symmetric Circuits}
+This still needs to be filled in
 
 \chapter{Symmetric Circuits}
+In this section we discuss symmetric circuits, their limitations and extensions
+of this model.
 
-\chapter{Extending Symmetric Circuits}
+\section{Symmetric Circuits and Limitations}
+Symmetric circuits, as developed by Anderson and Dawar, are, importantly defined
+over (complete) Boolean basis consisting of symmetric functions. The following
+result shows that once a majority gate has been included in this basis any
+symmetric function can be computed using polynomial-size symmetric circuits, and
+as such no additional symmetric function added to the Basis improves the power
+of the model.
 
-\chapter{Matrix-Symmetric Circuits}
+Recall from Anderson and Dawar \cite{AndersonD17} we have that $\mathbb{B}_{\std} = \{
+\neg , \wedge , \lor \}$ and $\mathbb{B}_\maj = \{ \maj \} \cup \mathbb{B}$.
 
-The symmetric circuits of Anderson and Dawar \cite{} have been shown to express
-$FPC$.
+Let $F: \{0,1\}^* \rightarrow \{0,1\}$ be a symmetric Boolean function. Since
+$F$ is symmetric we note that for a fixed size input the output of $F$ is
+entirely determined by the number of 1's in its input. Then let
+$c_{F}:\mathbb{N} \rightarrow 2^{\mathbb{N}}$ define a function where $c_{F}(n)$
+is the set of all $m \leq n$ such that for all $\vec{x} \in \{ 0,1 \}^n$ with
+$m$ 1's we have $F (\vec{x}) = 1$. Clearly any symmetric Boolean function $F$ is
+entirely determined by $c_{F}$.
+ 
+\begin{prop}
+  \label{prop:fuctions-maj}
+  There is a polynomial $p(k)$ such that for any symmetric function $F$ and a
+  given $k \in \mathbb{N}$ there is a circuit $C_k$ on $k$ inputs over the basis
+  $\mathbb{B}_\maj$ which is symmetric, constant depth and with width bounded by
+  $p(k)$.
+\end{prop}
 
-In this section we develop a notion of a matrix-symmetric circuit, an extension
-of the symmetric circuit defined by Anderson and Dawar \cite{}. This is my
-latest version of the support and circuit capturing result.
+\begin{proof}
+  We define the circuit $C_k$ for inputs $\vec{x} = ( x_1, \ldots, x_k )$.
 
-\section{Circuits and Symmetry}
+  For $a \in \mathbb{N}$ we define a get $\countgate_a$ by
+  \begin{align*}
+    &\countgate_a = \maj (x_1, \ldots, x_k, \underbrace {0, \ldots, 0}_{2a -
+      k}) \land \neg \maj (x_1, \ldots , x_k, \underbrace{0, \ldots,  0}_{2a - k + 2})\text{ if $a \geq \frac{k}{2}$,} \\
+    &\countgate_a = \maj (x_1, \ldots, x_k, \underbrace {1, \ldots, 1}_{x -
+      2a}) \land \neg \maj (x_1, \ldots , x_k, \underbrace{1, \ldots,
+      1}_{k - 2a -2}) \text{ if $a < \frac{k}{2}$. }
+  \end{align*}
+
+  Then let $g = \bigvee_{a \in c_{F_i}(k)}\countgate_a$ and let $C_{k}$ be the
+  circuit with input gates labeled by $\vec{x}$ and output gate $g$.
+
+  t is easy to see that $C_k$ is constant depth and it's width is a polynomial
+  in $k$. We have that in each layer of $C_{g'}$ each gate is connected to all
+  gates in the previous layer, and as such the circuit is symmetric.
+\end{proof}
+
+The above proposition has a straight forward application to circuit
+characterisations.
+
+\begin{thm}
+  Let $F = \{F_i : i \in I \}$ be a family of symmetric Boolean functions where
+  $F_i: \{0,1\}^* \rightarrow \{ 0,1 \}$.
+
+  Let $(C_n)_{n \in \mathbb{N}}$ be family of symmetric circuits over the
+  Boolean basis $\mathbb{B} \cup F$, where $C_n$ is a circuit on structures of
+  size $n$, and the size of each circuit in the family is bounded by some
+  function $f(n)$. Then there exists a polynomial $q(n)$ and a family of
+  symmetric circuits $(C_n')_{n \in \mathbb{N}}$ over $\mathbb{B}_\maj$, where
+  $C_n'$ is a circuit on structures of size $n$ and $\vert C_n' \vert \leq
+  q(f(n))$.
+\end{thm}
+
+\begin{proof}
+  From $C_n$ we construct $C_n'$ in the obvious way. For each gate $g \in C_n$
+  of type $F_i$ we have a symmetric circuit $C_g$ from Proposition
+  \ref{prop:function-maj} that computes the same function as $g$. Then let
+  $C_n'$ be $C_n$ but with each gate $g$ replaced by $C_g$. It is easy to see
+  that $C_n'$ is symmetric. We also have that each gate $g$ must have at most
+  $f(n)$ inputs, and the size of $C_g$ is bounded by $p(f(n))$. Thus the size of
+  $C_n'$ is bounded by $f(n)p(f(n))$.
+\end{proof}
+
+\section{G-Symmetric Functions}
+In order to extend the notion of a circuit by extending the basis we need to
+consider functions that are not symmetric in the full sense of the term but have
+some weakened notion of symmetry.
+
 \begin{definition}
-  Let $A$ and $B$ be sets, say that a function $f: \{ 0,1 \}^{A \times B}
-  \rightarrow \{ 0,1 \}$ is matrix-symmetric if for any $\omega: A \times B
-  \rightarrow \{0, 1\}$ and $(\alpha, \beta) \in \sym_A \times \sym_B$ we have
-  $f((\alpha, \beta)\cdot \omega) = f (\omega)$.
-  \\
-  A function $f: \{0,1\}^* \rightarrow \{0,1\}$ is matrix-symmetric iff for any
-  two finite sets $A$, $B$ we have that that $f|_{A \times B}$ is
-  matrix-symmetric (where $f|_{A \times B}$ is the restriction of the function
-  $f$ to inputs sequences of size $\vert A \times B \vert$ and where elements of
-  the input sequence are labelled by elements of $A \times B$).
+  Let $f: \{0,1\}^X \rightarrow \{0,1\}$ be a function. Let $G \subseteq \sym_X$
+  be a subgroup. We say that $f$ is \emph{$G$-symmetric} if for all $\sigma \in
+  G$, $x \in X$, $f(\sigma x) = f(x)$.
 \end{definition}
 
+We can also introduce similar notions in the case of a two dimensional Boolean
+string.
 
-\section{The Support Theorem}
+\begin{definition}
+  Let $f: \{0,1\}^{A \times B} \rightarrow \{0,1\}$ be a function. Let $G
+  \subseteq \sym_{A \times B}$ be a subgroup. We say that $f$ is
+  \emph{matrix-symmetric} if it is $\sym_A \times \sym_B$-symmetric and we say
+  that $f$ is \emph{graph-symmetric} if $A = B$ and it is $\sym_A$-symmetric
+  (with $\sym_A$ acting on both $A$ and $B$).
+\end{definition}
 
-Without a loss of generality we assume that $A$ and $B$ are always initial
-segments of the natural numbers.
+So if we think of $f: \{0,1\}^{A \times B} \rightarrow \{0,1\}$ as representing
+a matrix, then matrix-symmetry corresponds to the property of the function being
+invariant under row-column permutations. If, instead, we have that $A = B$ and
+we then think of $f$ as encoding the adjacency matrix of a graph, then
+graph-symmetry corresponds to the function being constant on isomorphism
+classes.
 
-% Let $C$ be a circuit over some Boolean basis. For each gate $g \in C$ we
-% associate a relation $\omega_g$ (or just $\omega$ when the context makes it
-% clear). We say a gate is symmetric if that relation
+Importantly, many natural functions of interest are matrix symmetric. For
+example, the function that computes the rank of the matrix over $\mathbb{F}_2$.
+or a thresholded rank function, for example the rank of the matrix over
+$\mathbb{F}_p$ being larger then $r$, for some particular $(p, r) \in
+\mathbb{N}$.
 
-% So far we have defined a circuit over a Boolean basis where the circuit
-% elements all compute symmetric functions. The definition of an induced
-% automorphism only makes. As such, we begin by augmenting the definition of a
-% circuit and automorphism.
+\section{Symmetric Circuits with Matrix-Symmetric Gates}
+
+In this section we develop the corresponding notion of a symmetric circuit, ones
+which allow for the inclusion of matrix-symmetric gates. In particular, these
+circuits are defined using two sets of Boolean functions. The first, denoted by
+$\mathbb{B}_\sym$, is taken to be the symmetric Boolean basis (either
+$\mathbb{B}_\std$ or $\mathbb{B}_\maj$). The second, denoted by
+$\mathbb{B}_\matsym$ is taken to be the matrix-symmetric basis, consisting of a
+collection of matrix-symmetric functions.
 
 \begin{definition}[Circuits on Structures]
   For $\mathbb{B}_{\sym}$ a basis of Boolean symmetric functions,
@@ -122,6 +344,7 @@ segments of the natural numbers.
   \mathbb{B}_\sym, \tau)$-circuit $C_n$ computing a $q$-ary query $Q$ is a
   structure $\langle G, W, \Omega, \Sigma, \Lambda, L\rangle$.
   \begin{itemize}
+    \setlength\itemsep{0mm}
   \item $G$ is called the set of gates of $C_n$ and $\vert C_n \vert := \vert G
     \vert$.
   \item $W \subseteq G \times G$, where $W$ is called the wires of the circuit.
@@ -141,66 +364,429 @@ segments of the natural numbers.
     $g$ with $R = \Sigma (g)$ to the tuple $\Lambda_R (g) \in [n]^r$, where $r$
     is the arity of the symbol $R$. When no ambiguity arises we write $\Lambda
     (g)$ for $\Lambda_R (g)$.
-  \item $L$ is the set of labelings of $C_n$. Let $g \in G$ be an internal gate
-    and $H$ be the children of $g$. Then let $S$ be a set where $\{0,1\}^S =
-    \dom(\Sigma (g))$. Then $L$ is a function that assigns to $g$ an onto
-    function $\omega_g:S \rightarrow H$. We call this the matrix labelling of
-    $g$.
+  \item $L$ assigns labels to the gates (and their inputs) in $C_n$. Let $g \in
+    G$ be an internal gate and $H$ be the gates input to $g$. Then $L(g) : A
+    \times B \rightarrow H$, where $L(g)$ must be surjective and $A, B \subseteq
+    [n]$. We call this the \emph{matrix labelling} of $g$.
   \end{itemize}
 \end{definition}
 
-% \begin{definition}
-%   let $C = \langle G, W, \Omega, \Sigma, \Lambda, L\rangle$ be a
-%   $(\mathbb{B}_\sym, \mathbb{B}_\sym, \tau)$-circuit, then take $g_1,g_2 \in
-%   G$ such that $\Sigma (g_1) \Sigma(g_2) \in \mathbb{B}_\matsym$.
+Note the additional requirement that each gate have an associated labelling in
+order to facilitate the evaluation of the gate.
 
-\begin{definition}
-  Let $\omega_1: A \times B \rightarrow H$ and $\omega_2: A' \times B'
-  \rightarrow H'$ define the equivalence relation $\sim$ as $\omega_1 \sim
-  \omega_2$ iff $\omega_1$ and $\omega_2$ have the same domain and co-domain and
-  there exists $(\alpha, \beta) \in \sym_A \times \sym_B$ and for all $(a,b) \in
-  A \times B$ we have $\omega_1 = \omega_2 \circ (\alpha, \beta)$.
+Given some finite $\tau$-structure $\mathcal{A}$ of size $n$ and some bijection
+$\gamma: U \rightarrow [n]$, the evaluation of some $(\mathbb{B}_\sym,
+\mathbb{B}_\sym, \tau)$-circuit) circuit $C$ proceeds by recursively evaluating
+gates. Here the evaluation of the gate $g$ is denoted by $C[\gamma
+\mathcal{A}](g)$. If $g$ is anything but a matrix-symmetric gate, then the
+evaluation is as per the symmetric circuits of Anderson and Dawar \cite{}. If
+$g$ is matrix-symmetric then the evaluation is given by applying the Boolean
+operation $\Sigma(g)$ to the matrix $L^{\gamma}:\dom(L(g)) \rightarrow \{0,1\}$
+defined by $L^{\gamma}(i,j) = C[\gamma \mathcal{A}](L(g)(i,j))$.
+
+
+\begin{definition}[Invariant Circuit\cite{AndersonD17}]
+  Let $C_n$ be a $(\mathbb{B}_\sym, \mathbb{B}_\sym, \tau)$-circuit, computing
+  some $q$-ary query. We say $C_n$ is \emph{invariant} if for every
+  $\tau$-structure $\mathcal{A}$ of size $n$, $a \in \mathcal{A}^q$, and
+  bijections $\gamma_1, \gamma_2: U \rightarrow [n]$ we have that $C[\gamma_1
+  \mathcal{A}](\Omega (\gamma_1 a)) = C[\gamma_2 \mathcal{A}](\Omega (\gamma_2
+  a))$.
 \end{definition}
 
-% \begin{definition}
-%   Let $\omega_1: A \rightarrow H$ and $omega_2:A' \rightarrow H'$. Define the
-%   equivalence relation $\sim$ as $\omega_1 \sim \omega_2$ iff $\omega_1$ and
-%   $\omega_2$ have the same domain and co-domain, and
-% \end{definition}
 
 \begin{definition}[Automorphism]
   let $C = \langle G, W, \Omega, \Sigma, \Lambda, L\rangle$ be a
-  $(\mathbb{B}_\sym, \mathbb{B}_\sym, \tau)$-circuit computing at $q$-ary query
-  on structures of size $n$. Let $\sigma \in \sym_n$ and $\pi: G \rightarrow G$
-  be a bijection such that
+  $(\mathbb{B}_\sym, \mathbb{B}_\matsym, \tau)$-circuit computing at $q$-ary
+  query on structures of size $n$. Let $\sigma \in \sym_n$ and $\pi: G
+  \rightarrow G$ be a bijection such that
   \begin{itemize}
+    \setlength\itemsep{0mm}
   \item for all gates $g, h \in G$, $W(g,h)$ iff $W(\pi g, \pi h)$,
   \item for all output tuples $x \in [n]^q$, $\pi \Omega (x) = \Omega (\sigma
     x)$,
-  \item for all gates $g \in G$, $\Sigma (g) = \Sigma (\pi g)$, and
+  \item for all gates $g \in G$, $\Sigma (g) = \Sigma (\pi g)$,
   \item for each relational gate $g \in G$, $\sigma \Lambda (g) = \Lambda (\pi
-    g)$
-  \item for each internal gate $g$ if $\Sigma (g) \in \mathbb(B)_\matsym$. Then
-    we have that $L(\pi g) \sim \pi \circ L(g)$.
+    g)$, and
+  \item for each internal gate $g$ if $\Sigma (g) \in \mathbb(B)_\matsym$ then
+    we have that $L(\pi g) \sim \pi \cdot L(g)$.
   \end{itemize}
+
+  We call $\pi$ an \emph{automorphism} of $C$, and we say that $\sigma$
+  \emph{induces the automorphism} $\pi$. The group of automorphisms of $C$ is
+  called $\aut_n (C)$.
+\end{definition}
+
+\begin{definition}[Symmetric\cite{AndersonD17}]
+  A circuit $C$ on structures of size $n$ is called \emph{symmetric} if every
+  $\sigma \in \sym_n$ induces an automorphism on $C$.
+\end{definition}
+
+It follows for any symmetric circuit $C_n$ there is a mapping from $\sym_n$ to
+$\aut_n(C)$, from $ \sigma$ to the induced automorphism. This homomorphism is
+injective so long as a single element of $[n]$ appears in the in the label of
+some input gate of $C$ (as then all elements appear by
+symmetry)\cite{AndersonD17}. In this paper we always assume that there is always
+one such element as otherwise all inputs are constant, and so the circuit just
+computes a constant function. In order to assure this homomorphism is surjective
+Anderson and Dawar \cite{AndersonD17} introduce the notion of a \emph{rigid}
+circuit.
+
+\begin{definition}[Rigidity]
+  Let C be a $(\mathbb{B}_\sym, \mathbb{B}_\sym, \tau)$-circuit, where $C =
+  \langle G, W, \Omega, \Sigma, \Lambda, L\rangle$. Say that $C$ is rigid if
+  there are no internal gates $g, g' \in G$ such that $\Sigma(g) = \Sigma (g')$,
+  $\Omega^{-1}(g) = \Omega^{-1}(g')$, and for every $g'' \in G$, $W(g'', g')$
+  and $W(g,g'')$ iff $W(g', g'')$.
+\end{definition}
+
+Another property which simplifies our analysis is the property of having
+\emph{bijective labels}.
+
+\begin{definition}
+  We say that a circuit $C$ has bijective labels if for each gate $g$ in $C$,
+  $L(g)$ is a bijection.
+\end{definition}
+
+We prove in a later section that a circuit may be transformed in polynomial time
+into an equivalent circuit that is both rigid and has bijective labelings. Hence
+we may assume these two properties without a loss of generality.
+
+With the assumption of rigidity in place, we abuse notation for permutations and
+let $\sigma \in \sym_n$ also denote the induced automorphism.
+
+We finally want to define symmetric circuits with rank gates.
+
+\begin{definition}
+  Let $\mathbb{B}_{\matsym}$ consist of functions of the form $f_{p,r}:
+  \{0,1\}^{A \times B} \rightarrow \{0,1\}$ for $A, B$ initial segments of
+  $\mathbb{N}$ and $f, p \in \mathbb{N}$, with $p$ prime, and such that for
+  $f_{p,r}(M) = 1$ iff the matrix $M: A \times B \rightarrow \{0,1\}$ has rank
+  at least $r$ over the field $\mathbb{F}_p$. A \emph{symmetric circuit with
+    rank gates} is a $(\mathbb{B}_\maj, \mathbb{B}_\matsym, \tau)$-circuit, for some
+  vocabulary $\tau$.
+\end{definition}
+
+The natural restriction to consider on families of circuits is uniformity.
+
+\begin{definition}
+  Let $(C_n)_{n \in \mathbb{N}}$ be a family of Boolean circuits. We say that
+  $(C_n)_{n \in \mathbb{N}}$ is \emph{$P$-uniform} if the mapping $n \mapsto C_n$ is
+  computable in polynomial time.
+\end{definition}
+
+We are now ready to state what will be the main theorem of this paper.
+
+\begin{thm}[Main Theorem]
+ A graph property is decidable by a $P$-uniform family of symmetric circuits
+ with rank gates if, and only if, it is definable by an FPR sentence.
+\end{thm}
+
+% \section{Circuits to FPR}
+
+% In this section I discuss how to determine the rank a matrix labelling at some
+% gate $g$. This is a rough copy written for the purpose of discussion. In this
+% section we fix some circuit $C_n$ and some rank gate $g$ in $C_n$ with a set
+% of children $H$ and matrix labelling $L: [a] \times [b] \rightarrow H$ (which
+% we assume WLOG is a bijection).
+
+\chapter{Symmetry and Support}
+In order to analyse families of symmetric circuits we will need to develop some
+theory for analysing symmetries. In this section we define the terms needed
+(e.g. the notion of a support) and prove basic results. We then prove the first
+important theorem in this paper, the support theorem, using these tools. It is
+worth noting that we prove the support theorem for arbitrary symmetric circuits
+with matrix-symmetric gates, not just for rank gates.
+
+\section{Supports and Supporting Partitions}
+In this section we formally define a support and the related notion of a
+supporting partition.
+
+\begin{definition}
+  Let $G$ be a subgroup of $\sym_n$ and let $S \subseteq [n]$. Then $S$ is a
+  \emph{support} for $G$ if $\stab(S) \subset G$.
+\end{definition}
+
+\begin{definition}
+  Let $G$ be a subgroup of $\sym_n$ and $\mathcal{P}$ be a partition of $[n]$.
+  Then $\mathcal{P}$ is a \emph{supporting partition} for $G$ if
+  $\stab(\mathcal{P}) \subseteq [n]$.
+\end{definition}
+
+Notice that if $\mathcal{P}$ is a supporting partition for $G$ and $P \in
+\mathcal{P}$ then $\stab([n] \setminus P) \subseteq \stab(\mathcal{P}) \subset
+G$, i.e. $[n] \setminus P$ is a support for $G$.
+
+These supporting partitions admits a natural partial order in terms of
+coarseness. If $\mathcal{P}, \mathcal{P}'$ we say that $\mathcal{P}'$ is as
+course as $\mathcal{P}$ (denoted by $\mathcal{P}' \supseteq \mathcal{P}$) if for
+all $x \in \mathcal{P}$ there exists $y \in \mathcal{P}'$ such that $x \subseteq
+y$ \cite{AndersonD17}.
+
+Anderson and Dawar \cite{AndersonD17} show that for any permutation group $G
+\subseteq \sym_n$ a unique coarsest partition can always be found. We call this
+partition the \emph{canonical supporting partition}, and denote it by $\SP (G)$.
+This canonical supporting partition, along with the above observation about
+supports, will allow us to construct for each group a canonical support.
+
+\begin{definition}
+  Let $G$ be a subgroup of $\sym_n$. Let $\| SP(G) \| = \min \{\vert [n]
+  \setminus P \vert : P \in SP(G) \}$. We say that $G$ has small support if $\|
+  SP(G) \| < \frac{n}{2}$.
+\end{definition}
+
+\begin{definition}
+  Let $G$ be a subgroup of $\sym_n$ such that $G$ has small support. Let
+  $\consp(G) = [n] \setminus P$, where $P$ is the maximal element of $\SP(G)$.
+  We call $\consp(G)$ the canonical support of $G$.
 \end{definition}
 
 \begin{remark}
-  I also need a new notion of robustness here in order to collapse gates that
-  have the same children and equivalent labelings are properly regarded as being
-  the same gate.
+  Include a remark about the importance of asserting the size consideration. Use
+  the alternating group as an example.
 \end{remark}
+
+We state the following two results from Anderson and Dawar \cite{AndersonD17}.
+
+\begin{lem}
+  \label{lem:SP_conjugation}
+  Let $G \leq \sym_n$ and $\sigma \in \sym_n$ then $\sigma \SP (G) = \SP(\sigma
+  G \sigma^{-1})$.
+\end{lem}
+
+\begin{lem}
+  For any $G \leq \sym_n$ we have that $\stab (\SP (G)) \subseteq G
+  \setstab(\SP(G))$.
+\end{lem}
+
+\section{Group Action on Supports}
+In this paper, distinct the case of Anderson and Dawar \cite{AndersonD17}, we
+will need to develop theory and terminology for dealing with group actions (and
+supports) on more than just gates in the circuit. In particular, we use this
+theory for understanding the actions on the rows and columns of a labelling of a
+gate.
+
+\begin{definition}
+  Let $G$ be a subgroup of $\sym_n$ and $X$ be a set on which a left group
+  action of $G$ on $X$ is defined. We denote the canonical supporting partition
+  of $x\in X$ by $\SP (x) = \SP (\stab(x))$. We say that $x \in X$ has small
+  support if $\stab(x)$ has small support. We say that $X$ has small supports if
+  all $x \in X$, $x$ have small support.
+
+  If $x \in X$ has small support, we denote the \emph{canonical support} of $x$
+  by $\consp(x) = \consp (stab(x))$.
+\end{definition}
+
+\begin{definition}
+  Let $G$ be a group and $X$ be a set on which a left group action of $G$ on $X$
+  is defined. Then $\stab_G (x) = \{\pi \in G : \pi x = x\}$ and $\orb_G (x) =
+  \{\pi x : \pi \in G\}$. In the event that the context makes the group obvious
+  we omit the subscript.
+\end{definition}
+
+\begin{lem}
+  \label{lem:stab_conjugation}
+  Let $G$ be a subgroup of $\sym_n$, $X$ be a set on which a left group action
+  of $G$ on $X$ is defined and $\sigma \in G$. Then for any $x \in X$ it follows
+  that $\sigma \stab (x) \sigma^{-1} = \stab(\sigma x)$.
+\end{lem}
+
+\begin{proof}
+  Let $\pi \in \stab(x)$, then $\sigma \pi \sigma^{-1}(\sigma x) = \sigma \pi
+  (x) = \sigma (x)$, and so $\sigma \pi \sigma^{-1} \in \stab(\sigma x)$. Let
+  $\pi \in \stab(\sigma (x))$ then $\pi \sigma (x) = \sigma (x)$ and so
+  $\sigma^{-1} \pi \sigma (x) = x$. It follows that $\sigma^{-1} \pi \sigma \in
+  \stab(x)$ and so $\pi = \sigma (\sigma^{-1} \pi \sigma) \sigma ^{-1} \in
+  \sigma \stab(x) \sigma^{-1}$.
+\end{proof}
+
+\begin{lem}
+  \label{lem:support_mapping}
+  Let $G $ be a subgroup of $\sym_n$, $X$ be a set on which a left group action
+  of $G$ on $X$ is defined and $\sigma \in G$. Then for any $x \in X$ it follows
+  that $\sigma \SP (x) = \SP (\sigma x)$ and, if $x$ has small support, $\sigma
+  \consp (x) = \consp (\sigma x)$.
+\end{lem}
+\begin{proof}
+  From Lemma \ref{lem:SP_conjugation} and Lemma \ref{lem:stab_conjugation} have
+  that $\sigma \SP (x) = \SP(\sigma \stab(h) \sigma^{-1}) = \SP (\stab(\sigma
+  x)) = \SP (\sigma x)$. Thus proving the first part of the statement.
+
+  From the fact that $\| \SP(x) \| < \frac{n}{2}$ it follows there exists a
+  unique $P_1 \in \SP(x)$ such that $\vert P_1 \vert > \frac{n}{2}$ and
+  $\consp(x) = [n] \setminus P_1$. But then $\sigma \consp (x) = \sigma([n]
+  \setminus P_1) = [n] \setminus (\sigma P_1)$. We note that $\sigma P_1 \in
+  \sigma \SP (x) = \SP(\sigma x)$ and $\vert \sigma P_1 \vert > \frac{n}{2}$.
+  Thus $\sigma P_1$ is the unique largest partition in $\SP(\sigma x)$, and so
+  $\consp(\sigma x) = [n]\setminus (\sigma P_1) = \sigma (consp(x))$. Thus
+  proving the second part of the statement.
+\end{proof}
+
+\begin{lem}
+  Let $G$ be a subgroup of $\sym_n$, $X$ be a set on which a left group action
+  of $G$ on $X$ is defined. Then for any $x \in X$ with small support, and
+  $\sigma, \sigma' \in G$ such that $\sigma (vec{\consp}(x)) = \sigma'
+  (\vec{\consp}((x))$ we have that $\sigma (x) = \sigma'(x)$.
+\end{lem}
+\begin{proof}
+  We have that $(\sigma')^{-1}\sigma(\vec{\consp}(x)) = \vec{\consp}(x)$ and so
+  $(\sigma')^{-1} \sigma (x) = x$ and thus $\sigma (x) = \sigma' (x)$.
+\end{proof}
+
+% \begin{lem}
+%   Let $G \leq \sym_n$, $X$ be a set on which a left group action of $G$ on $X$
+%   is defined and $\sigma \in G$. Then if $y \in \orb_{G} (x)$ and $\consp (x)
+%   = \consp (y)$ then $x = y$.
+% \end{lem}
+
+% \begin{proof}
+%   Let $\sigma \in G$ be such that $\sigma x = y$. Then $\consp(x) = \consp (y)
+%   = \consp (\sigma x) = \sigma \consp (x)$. Thus $\sigma (\sp (x))$
+% \end{proof}
+
 % \begin{definition}
-%   Let $C$ be a circuit, $g$ be a gate in $C$, $H$ be $g$'s set of children and
-%   let $\omega: A \times B \rightarrow H$ be a surjection, where $A$ and $B$
-%   are sets and $g$ takes $\vert A \vert \cdot \vert B \vert$ inputs. Call such
-%   an $\omega$ a matrix labeling for $g$.
+%   Let $h \in H$. Let $\stab_r(h)$ be a subgroup of $\stab(\consp(g))$
+%   consisting of exactly those permutations $\sigma$ such that $\row (\sigma h)
+%   = \row (h)$. Let $\stab_c(h)$ be a subgroup of $\stab(\consp(g))$ consisting
+%   of exactly those permutations $\sigma$ such that $\column (\sigma h) =
+%   \column(h)$.
 % \end{definition}
 
 % \begin{definition}
-%   Let $C$ be a circuit and $g_1$ and $g_2$ be gates in $C$. Let $\sigma \in
-%   \sym_n$ be a permutation such
+%   A set $S \subseteq [n]$ is called a row-support for $h$ if $S$ is a support
+%   for $\stab_r(h)$. A set $S \subseteq [n]$ is called a column-support for $h$
+%   iff $S$ is a support for $\stab_c(h)$.
 % \end{definition}
+
+% \begin{definition}
+%   A partition $\mathcal{P}_r$ is called a row-supporting partition iff
+%   $\mathcal{P}_r$ is a support for $\stab_r(h)$. A partition $\mathcal{P}_c$
+%   is called a column-supporting partition iff $\mathcal{P}_c$ is a support for
+%   $\stab_c(h)$.
+% \end{definition}
+
+% \begin{definition}
+%   Let $\SP^r(h)$ denote the conical supporting partition and $r_h$ the
+%   canonical support of $\stab_r(h)$. Similarly, let $\SP^c(h)$ denote the
+%   conical supporting partition and $c_h$ the canonical support of
+%   $\stab_c(h)$.
+% \end{definition}
+
+% \begin{definition}
+%   Let $G \subseteq \sym_n$ be a subgroup. Then let $\SPs(G)$ be the set of all
+%   supporting partitions of $G$ and $\consps(G)$ be the set of all supports of
+%   $G$.
+% \end{definition}
+
+% We now prove a few important lemmas on supports.
+
+% \begin{lem}
+%   Let $A, B \leq \sym_n$ then $\SP(A \cap B) \subseteq \SP (A) $.
+% \end{lem}
+% \begin{proof}
+%   Let $\mathcal{P}$ be a supporting partition of $A \cap B$. Then
+%   $\mathcal{P}$ is a supporting partition of $A$. Since $\SP(A)$ is coarser
+%   than all such partitions the result follows.
+% \end{proof}
+
+% \begin{lem}
+%   Let $h \in H$, then $\SP(\stab(h)) \subseteq \SP (\stab (\row (h)))$ and
+%   $\SP (\stab(h)) \subseteq \SP (\stab (\column(h)))$.
+% \end{lem}
+% \begin{proof}
+%   It can be shown that $\stab (h)$
+% \end{proof}
+
+% The following lemma will be used to prove the relationship between the support
+% of a gate and the supports of its row and columns.
+% % Use this lemma + a support type theorem in order to get the result.
+% \begin{lem}
+%   Let $G \leq \sym_n$, $X_1$ and $X_2$ be sets on which left group actions of
+%   $G$ on $X_1$ and $X_2$ are defined. Let $x_1 \in X_1$ and $x_2 \in X_2$ and
+%   suppose $\vert \consp(x_1) \vert < \frac{n}{2}$ and $ \vert \consp(x_2)
+%   \vert < \frac{n}{2}$. Then if $\SP(\stab(x_1)) \subseteq \SP (\stab(x_2))$
+%   then $\consp (x_2) \subseteq \consp (x_1)$.
+% \end{lem}
+% \begin{proof}
+%   Since $\vert \consp(x_1) \vert = \| \SP (\stab(x_1)) \| < \frac{n}{2}$ it
+%   follows that there a unique maximal $P_1 \in \SP (\stab(x_1))$ such that
+%   $\vert P_1 \vert > \frac{n}{2}$. Similarly there is a unique maximal $P_2
+%   \in \SP (\stab(x_2))$. Moreover, from the fact that $\SP (\stab(x_2))$ is
+%   coarser than $\SP (\stab(x_1))$, it follows that there exists $P \in
+%   \SP(\stab(x_2))$ such that $P_1 \subseteq P$. From the fact that
+%   $\frac{n}{2} < \vert P_1 \vert \leq \vert P \vert$ and $P_2$ is the only
+%   part such that $\frac{n}{2} < \vert P_2 \vert$, it follows that $P_1
+%   \subseteq P = P_2$ and so $\consp(x_2) = [n] - P_2 \subseteq [n] - P_1 =
+%   \consp(x_1)$.
+% \end{proof}
+
+\section{Support Theorems}
+In this section we develop an analogous theorem to the support theorem of
+Anderson and Dawar \cite{AndersonD17}.
+%
+%\begin{lem}[Support Lemma]
+%  For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and
+%  $n \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric, rigid circuit on
+%  structures of size $n$ and $s := \max_{g \in C} \vert \orb (g)\vert \leq
+%  2^{n^{1-\epsilon}}$, then, for all $g \in C$, $\vert \SP (g) \vert \leq
+%  \frac{n}{2}$.
+% \end{lem}
+
+% \begin{thm}[Support Theorem]
+%   For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and
+%   $n \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric, rigid circuit on
+%   structures of size $n$ and $s := \max_{g \in C} \vert \orb (g)\vert \leq
+%   2^{n^{1-\epsilon}}$, then, $SP(C) \leq \frac{33}{\epsilon}\frac{\log s}{\log
+%   n}$.
+% \end{thm}
+
+% \begin{lem}
+%   For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and
+%   $n \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric, rigid circuit on
+%   structures of size $n$ and $s := \max_{g \in C} \vert \orb (g)\vert \leq
+%   2^{n^{1-\epsilon}}$, then, for all $g \in C$, we have for all $(i,j) \in
+%   \dom (L_g)$ that $\consp(i) \subseteq \consp (L_g(i,j))$ and $\consp(j)
+%   \subseteq \consp(L_g (i,j)))$.
+% \end{lem}
+
+
+
+% \begin{lem}
+%   Let $\mathcal{P}_1$ and $\mathcal{P}_2$ be partitions of $[n]$ such that
+%   $\mathcal{P}_1 = A \cup S_1$ and $\mathcal{P}_2 = B \cup S_2$, and
+%   \begin{enumerate}
+%   \item for all $X \in A$ and $Y \in B$ we have that $X \cap Y = \emptyset$,
+%     and
+%   \item for all $x \in S_1 \cup S_2$, x is a singleton.
+%   \end{enumerate}
+%   It follows that $\varepsilon(\mathcal{P}_1, \mathcal{P}_2) = A \cup B \cup
+%   S$, where $S$ is a set of singletons.
+% \end{lem}
+% \begin{proof}
+% \end{proof}
+
+% \begin{lem}
+%   Let $G_1$ and $G_2$ be subgroups of $\sym_n$. Then $\SP^S(G_1) = \SP^S(G_2)$
+%   iff $\consp^S(G_1) = \consp^S(G_2)$.
+% \end{lem}
+% \begin{proof}
+  
+% \end{proof}
+
+% \begin{lem}
+%   Let $G_1$ and $G_2$ be subgroups of $\sym_n$. Then $\consp^S(G_1) =
+%   \consp^S(G_2)$ implies that $\consp (G_1) = \consp (G_2)$.
+% \end{lem}
+% \begin{proof}
+% \end{proof}
+
+% The following lemma asserts a few basic facts about the canonical row and
+% column supports.
+
+% \begin{lem}
+%   Let $h \in H$, then $r_h \subset \consp(h)$, $c_h \subset \consp(h)$ and
+%   $c_r \cup r_h = \consp(h)$.
+% \end{lem}
 
 \begin{definition}
   Let $\omega$ be a matrix labeling for $g$. Define the matrix stabilizer for
@@ -259,14 +845,15 @@ segments of the natural numbers.
   incompatible with $(\sigma, \omega)$.
 
   Say that two distinct pairs $(\sigma_1, h_1, h_1'), (\sigma_2, h_2, h_2') \in
-  \sym([n]) \times H^2$ are mutually independent if
+  \sym_n\times H^2$ are mutually independent if
   \begin{itemize}
+    \setlength\itemsep{0mm}
   \item $\sigma_2 h_1 = h_1$,
   \item $\sigma_2 \sigma_1 h_1 = \sigma_1 h_1$,
   \item $\sigma_2 h_1' = h_1'$,
   \item $\sigma_2 \sigma_1 h_1' = \sigma h_1'$,
   \end{itemize}
-  We say that a set $S \subseteq \sym([n]) \times H^2$ is useful if each pair in
+  We say that a set $S \subseteq \sym_n \times H^2$ is useful if each pair in
   it is useful. We say that S is independent if each pair of distinct pairs in
   $S$ are mutually independent.
 \end{definition}
@@ -319,8 +906,8 @@ $\matstab(\omega)$ by $\sim_\omega$.
   \sigma_Q$, and the result follows.
 \end{proof}
 
-The following two lemmas proved by Anderson and Dawar \cite{} are both of use in
-proving the following theorem.
+The following two lemmas proved by Anderson and Dawar \cite{AndersonD17} are
+both of use in proving the following theorem.
 
 \begin{lem}
   \label{lem:big-or-small}
@@ -368,7 +955,7 @@ where $\omega$ is the matrix labelling associated with $g$.
   We now consider the case for internal gates. Let $g$ be the topologically
   first internal gate with $\vert \SP(g) \vert > \frac{n}{2}$. If $g$ is not a
   matrix-symmetric gate then the result follows from the argument presented by
-  Anderson and Dawar \cite{}. Suppose $g$ is a matrix-symmetric gate, and
+  Anderson and Dawar \cite{AndersonD17}. Suppose $g$ is a matrix-symmetric gate, and
   suppose $g$ has a labelling $\omega$. We now argue that this leads to a
   contradiction.
 
@@ -434,7 +1021,22 @@ where $\omega$ is the matrix labelling associated with $g$.
 \end{proof}
 
 
-\section{Rigid Circuits}
+
+\chapter{Translating Circuits into Formulas}
+In this section we develop the theory for defining a formula of FPR from a
+family of $P$-uniform family of symmetric circuits with rank gates. We first
+show prove results on the generality of rigid circuits and circuits with
+bijective labelings. Second, we prove that there are polynomial time algorithms
+for determining canonical supports of gates. Third, we develop a FPR definable
+way of evaluating a rank gate in the circuit. Finally, we complete the result by
+explicitly defining an FPR formula corresponding to a given family of symmetric
+circuits with rank gates.
+
+We note that most of these results are for the more general case of symmetric
+circuits with matrix-symmetric gates.
+
+\section{Rigid Circuits and Labelings}
+
 
 \begin{definition}
   We say that a circuit $C$ has bijective labels if for each gate $g$ in $C$,
@@ -511,22 +1113,6 @@ where $\omega$ is the matrix labelling associated with $g$.
 
 \end{proof}
 
-% If $h$ is a binary $\and$ gate, then we say that $h$ has height $k+1$ if it
-% has a $k$-height tower of binary $and$ gates connected above it, with a
-% non-$\and$ gate $p$ connected to the final binary $\and$ gate, and all other
-% inputs connected to $1$. We then say that $h$ is the base of a tower of height
-% $k$ and type $p$.
-
-% Then for each $h \in W_g$, if $h$ is not a binary $\and$ gate, the let $k$ be
-% the largest integer such that there a gate $h' \in W(h, \cdot)$ which is the
-% base of a tower of height $k$ and type $h$. it's output directly connected to
-% one of the gates in $W(h^k, \cdot)$ (with k = 0 corresponding to just $h$).
-% Then each $i \in \{1, \ldots , \vert \omega^{-1}(h)\vert\}$ add into the
-% circuit $h^{k+i}$ and wire it to $g$. Notice that this step requires adding
-% $\vert \omega^{-1}(h) \vert -1$ gates to the circuit. For some assumed
-% ordering $\dom(\omega)$, let $\{s_0, \cdot, s_m\} = \omega^{-1}(h)$. Define
-% $L'(g)(s_i) = h^{k+i}$. Now continue on to the next gate topologically where
-% $L(g)$ is not a bijection, and execute the same process
 
 \begin{lem}
   There is an algorithm that runs in polynomial time that takes in a circuit $C$
@@ -563,250 +1149,128 @@ where $\omega$ is the matrix labelling associated with $g$.
   \end{proof}
 
   \section{Computing Supports}
-  \begin{lem}
-    Let $C$ be a rigid $(\SB, MB, \tau)$-circuit on structures of size $n$ and
-    $\sigma \in \sym_n$. There is a deterministic algorithm which runs in time
-    Poly($\vert C \vert$) and outputs for each gate $g$ its image under the
-    automorphism $\pi$ induced by $\sigma$, if it exists.
-  \end{lem}
-  \begin{proof}
-    The proof proceeds by recursively going through the circuit and building the
-    mapping $\pi$ induced by $\sigma$.
+  
+ \begin{lem}
+   Let $C$ be a rigid $(\SB, MB, \tau)$-circuit on structures of size $n$ and
+   $\sigma \in \sym_n$. There is a deterministic algorithm which runs in time
+   Poly($\vert C \vert$) and outputs for each gate $g$ its image under the
+   automorphism $\pi$ induced by $\sigma$, if it exists.
+ \end{lem}
+ \begin{proof}
+   The proof proceeds by recursively going through the circuit and building the
+   mapping $\pi$ induced by $\sigma$.
 
-    Suppose $g$ is a constant gate, then $\pi g := g$. Suppose $g$ is a
-    relational gate, then there is at most one gate $g'$ such that $\Sigma (g) =
-    \Sigma (g')$ and $\sigma\Lambda (g') = \Lambda (g)$. If such a $g'$ exists
-    assign $\pi g := g'$, else terminate with failure.
+   Suppose $g$ is a constant gate, then $\pi g := g$. Suppose $g$ is a
+   relational gate, then there is at most one gate $g'$ such that $\Sigma (g) =
+   \Sigma (g')$ and $\sigma\Lambda (g') = \Lambda (g)$. If such a $g'$ exists
+   assign $\pi g := g'$, else terminate with failure.
 
-    If $g$ is an symmetric internal gate then (from rigidity) there is at most
-    one gate $g'$ such that $\Sigma (g) = \Sigma(g')$ and $W_{g'} = \pi W_g$.
-    Assign $\pi g := g'$ if such a gate exists, or else terminate with failure.
+   If $g$ is an symmetric internal gate then (from rigidity) there is at most
+   one gate $g'$ such that $\Sigma (g) = \Sigma(g')$ and $W_{g'} = \pi W_g$.
+   Assign $\pi g := g'$ if such a gate exists, or else terminate with failure.
 
-    If $g$ is a matrix-symmetric internal gate then consider the set of gates
-    $g'$ such that $g'$ has children $\pi W_g$ and $\Sigma(g) = \Sigma(g')$, and
-    let $A \times B = \dom (Sigma(g))$. If no such gate $g'$ exists, terminate
-    with failure. Define $\sigma_{\pi, g'}:A \times B \rightarrow A \times B$ by
-    $\sigma_{\pi, g'} = \omega^{-1}_{g'} \pi \omega_{g}$. Then clearly
-    $\omega_{g'} \sigma_{\pi, g'} = \pi \omega_{g}$, and it's easy to show that
-    $\pi \omega_g \sim \omega_{g'}$ iff $\sigma_{\pi,g'} \in \sym_A \times
-    \sym_B$. But this just involves checking that $\sigma$ acts as a bijection
-    on $A$ and $B$ separately and, given that $\vert A \vert$ and $\vert B
-    \vert$ are both bounded by $\vert C \vert$, the algorithm which just
-    iterates through $A$ and $B$ is sufficient. If for every $g'$ it is found
-    that $\pi_{\sigma,g'}$ is not in $\sym_A \times \sym_B$ then terminate with
-    failure. If there is a $g'$ for which $\pi_{\sigma, g'} \in \sym_A \times
-    \sym_B$ then it is unique by rigidity and so set $\pi g := g'$.
+   If $g$ is a matrix-symmetric internal gate then consider the set of gates
+   $g'$ such that $g'$ has children $\pi W_g$ and $\Sigma(g) = \Sigma(g')$, and
+   let $A \times B = \dom (Sigma(g))$. If no such gate $g'$ exists, terminate
+   with failure. Define $\sigma_{\pi, g'}:A \times B \rightarrow A \times B$ by
+   $\sigma_{\pi, g'} = \omega^{-1}_{g'} \pi \omega_{g}$. Then clearly
+   $\omega_{g'} \sigma_{\pi, g'} = \pi \omega_{g}$, and it's easy to show that
+   $\pi \omega_g \sim \omega_{g'}$ iff $\sigma_{\pi,g'} \in \sym_A \times
+   \sym_B$. But this just involves checking that $\sigma$ acts as a bijection on
+   $A$ and $B$ separately and, given that $\vert A \vert$ and $\vert B \vert$
+   are both bounded by $\vert C \vert$, the algorithm which just iterates
+   through $A$ and $B$ is sufficient. If for every $g'$ it is found that
+   $\pi_{\sigma,g'}$ is not in $\sym_A \times \sym_B$ then terminate with
+   failure. If there is a $g'$ for which $\pi_{\sigma, g'} \in \sym_A \times
+   \sym_B$ then it is unique by rigidity and so set $\pi g := g'$.
 
-    If $g$ is an output gate, then check that for all tuples in $[n]^{q}$ we
-    have that $\pi \Omega (x) = \Omega (\sigma (x))$, and terminate with failure
-    if the condition is not met.
+   If $g$ is an output gate, then check that for all tuples in $[n]^{q}$ we have
+   that $\pi \Omega (x) = \Omega (\sigma (x))$, and terminate with failure if
+   the condition is not met.
 
-    If the algorithm has not terminated with failure, output the automorphism.
+   If the algorithm has not terminated with failure, output the automorphism.
 
-    The algorithm clearly runs in Poly($\vert C \vert$)
-  \end{proof}
+   The algorithm clearly runs in Poly($\vert C \vert$)
+ \end{proof}
 
-  \section{Evaluating Symmetric Circuits}
-  We need to extend two Lemmas in this section.
+
+
+\section {Evaluating Circuits}
+Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a family of polynomial-size
+rigid symmetric circuits with matrix-symmetric gates. that compute a $q$-ary
+query. Let $n_0$ the constant in the hypothesis of the Support Theorem.
+
+Let $\mathcal{A}$ be a structure of size $n$ over the universe $U$, and let $g$
+be a matrix-symmetric gate in $C_n$. In this section we develop the theory which
+will allow us to evaluate this gate in FPR and (using results from Anderson and
+Dawar \cite{}) recursively evaluate the circuit.
+
+We recall that in order to evaluate the gate $g$ we need to consider a bijection
+$\gamma: U \rightarrow [n]$, with the evaluation of $g$ given by $C_n[\gamma
+\mathcal{A}](g)$. We first show that the evaluation of $g$ depends only on which
+elements of $U$ are mapped to $\consp(g)$.
+
+\begin{definition}
+  Let $f: X \rightarrow Y$ and $g : X' \rightarrow Y'$. We say that $f$ is
+  \emph{compatible} with $g$, or $f \sim g$, if for all $a \in S_1 \cap S_2$,
+  $f(a) = g(a)$ and for all $a \in S_1 \setminus S_2$ and $b \in S_2 \setminus
+  S_1$, $f(a) \neq g(b)$.
+\end{definition}
+
+\begin{definition}
+  Let $f: A \times B \rightarrow H$ and $p: A' \times B' \rightarrow H$. We say
+  that $f$ and $p$ are \emph{row-column equivalent} if there exist bijections
+  $\alpha: A \rightarrow A'$ and $\beta: B \rightarrow B'$ such that for all
+  $(a, b) \in A \times B$, $f(a,b)g(\alpha(a), \beta(b))$. In this case we write
+  $f \sim p$.
+\end{definition}
+
+For a given bijection $\gamma: U \rightarrow [n]$ we can define a matrix
+$L^{\gamma} : \dom (g) \rightarrow \{0,1\}$ by $L^{\gamma} (a,b) := C[\gamma
+\mathcal{A}](L(g)(a,b))$. In the following Lemma we show that the the matrix
+symmetry of the gate $g$ ensures that for any two bijections $\gamma_1,
+\gamma_2$, if they agree on the support of $g$ then $L^{\gamma_1}_g$ is
+row-column equivalent to $L^{\gamma_2}_g$. This implies that the evaluation of
+$g$ depends only on the assignment to its support.
 
 \begin{lem}
-  Let $g$ be a matrix-symmetric gate in $C_n$ with children $H$. Let $\alpha \in
-  U^{\underbar{\consp(g)}}$, and suppose $\gamma_1, \gamma_2: U \rightarrow [n]$
-  with $\gamma^{-1}_1 \sim \alpha$ and $\alpha \sim \gamma^{-1}_2$. Let $A
-  \times B = \dom (L(g))$.
-
-  For an input structure $\mathcal{A}$, let $L^0_\gamma: A \times B \rightarrow
-  \{0,1\}$, where $L^0_\gamma (a,b):= C[\gamma \mathcal{A}] (L(g)(a,b))$.
-
-  Then $L^0_{\gamma_1} \sim L^0_{\gamma_2}$.
+  Let $g$ be a matrix-symmetric gate in $C_n$ with children $H$. Let $\eta:
+  \consp(g) \rightarrow U$ be an injection, and suppose $\gamma_1, \gamma_2: U
+  \rightarrow [n]$ with $\gamma^{-1}_1 \sim \eta$ and $\eta \sim \gamma^{-1}_2$.
+  Let $A \times B = \dom (L(g))$. Then $L^{\gamma_1}$ and $L^{\gamma_2}$ are
+  row-column equivalent.
 \end{lem}
 
 \begin{proof}
   We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
   \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
-  consistent with $\alpha$, it follows that $\pi$ must fix $\sp(g)$. Thus $L(g)
-  \sim \pi L(g)$, and so there exists $(\sigma, \lambda)$ such that $\pi L(g) =
-  L(g) (\sigma, \lambda)$.
+  consistent with $\alpha$, it follows that $\pi$ must fix $\consp(g)$. Thus
+  $L(g) \sim \pi \cdot L(g)$, and so there exists $(\sigma, \lambda)$ such that
+  $\pi L(g) = L(g) (\sigma, \lambda)$.
 
   We then have that,
   \begin{align*}
-    L^0_{\gamma_1} (a,b) &= C_n[\gamma_1 \mathcal{A}](L(g)(a,b))\\
-                         & = C_n[\pi gamma_1 \mathcal{A}][\pi L(g)(a,b)] \\
-                         & = C_n[gamma_2 \mathcal{A}][L(g)((\sigma, \lambda)(a,b))]\\
-                         & = L^0_{\gamma_2} ((\sigma, \lambda) (a,b)),
+    L^{\gamma_1} (a,b) &= C_n[\gamma_1 \mathcal{A}](L(g)(a,b))\\
+                       & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(a,b)] \\
+                       & = C_n[\gamma_2 \mathcal{A}][L(g)((\sigma, \lambda)(a,b))]\\
+                       & = L^{\gamma_2} ((\sigma, \lambda) (a,b)),
   \end{align*}
-  and it follows that $L^0_{\gamma_1} \sim L^0_{\gamma_2}$.
-
+  and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
 \end{proof}
 
-% \begin{lem}
-%   Let $g$ be a matrix symmetric gate in $C_n$ with children $H$. Let $\alpha \in
-%   U^{\underbar{\consp(g)}}$ and $\gamma: U \rightarrow [n]$ such that
-%   $gamma^{-1}\sim \alpha$. Let $A \times B = \dom (L(g))$ and define
-%   $L^{EV}_\alpha: A \times B \rightarrow \{0,1\}$ by
-  % \begin{align*}
-  %   L^{EV}_\alpha (a,b):=
-    % \begin{cases*}
-    %   1 & if $A_h \cap \EV_h \neq \emptyset$ 0 & otherwise
-   % \end{cases*},
-%  \end{align*}
-%  where for $h \in W_g, A_h:= \{\beta \in U^{\underline{\sp(h)}} \vert \alpha
-%  \sim \beta\}$. Then $L^0_\gamma = L^{EV}_\alpha$ and $\alpha \in \EV(g)$ iff
-%  $\rk^u_p(L^0_\gamma)$
-%\end{lem}
-%\begin{proof}
-%  
-%\end{proof}
+For each gate we define the set of all assignments to support of that gate which
+cause the evaluate to true: $\EV_g := \{ \alpha: U^{\underline{\consp(g)}} :
+\exists \gamma \in U^{\underline{[n]}} C_n [\gamma \mathcal{A}](g) = 1 \wedge
+\alpha \sim \gamma^{-1}\}$. We now construct $\EV_g$ using $\EV_h$ for each $h
+\in H_g$. In doing so we entirely characterise exactly which bijections $\gamma:
+U \rightarrow [n]$ cause $g$ to evaluate to true.
 
-% \begin{lem}
-%   Let $g$ be a matrix-symmetric gate in $C_n$ with children $W_g$. $Let \alpha
-%   \in U^{\underbar{\consp(g)}}$ and let $\gamma: U \rightarrow [n]$ such that
-%   $\gamma^{-1} \sim \alpha$. Let $A \times B = \dom (L(g))$, and let
-%   $f:\{0,1\}^{A \times B} \rightarrow \{0,1\}$ be the matrix-symmetric function
-%   associated with $g$. Define $L^{EV}_\alpha: A \times B \rightarrow \{0,1\}$ by
-  % \begin{align*}
-  %   L^{EV}_\alpha (a,b):=
-%     \begin{cases*}
-%       1 & if $A_h \cap \EV_h \neq \emptyset$ 0 & otherwise
-%     \end{cases*},
-%   \end{align*}
-%   where for $h \in W_g, A_h:= \{\beta \in U^{\underline{\sp(h)}} \vert \alpha
-%   \sim \beta\}$. Then $\alpha \in \EV_g$ iff $f(L^\EV_\alpha)$.
-% \end{lem}
-% \begin{proof}
-%   First note that if $\alpha \in U^{\underbar{\sp{g}}}$ then $\alpha \in \EV_g$
-%   iff we have that $C_n[\gamma \mathcal{A}](g)= f (L^0_\gamma) = 1$. Notice that
-%   from Lemma \ref{} that this holds for any particular $\gamma$ iff it holds for
-%   all such $\gamma$.
-
-%   We now show that $L^\EV_\alpha = L^0_\gamma$, and so complete the proof.
-
-%   Suppose for $(a,b) \in A \times B$ we have that $L^\EV_\alpha(a,b) = 1$. Let
-%   $h:= L(g)(a,b)$. It follows that $A_h \cap \EV_h \neq \emptyset$, i.e there
-%   exits $\beta \in \sp(h)$ such that $\beta \sim \alpha$ and there exists
-%   $\gamma_h \in \Gamma(h)$ such that $\gamma^{-1}_h \sim \beta$. It follows from
-%   transitivity and Lemma \ref{} that $\gamma_h \sim \alpha$ and so
-%   $L^0_\alpha(a,b) = C_n[\gamma \mathcal{A}](h) = C_n[\gamma_h \mathcal{A}](h) =
-%   1$.
-
-
-%   Now suppose that $L^0_\gamma (a,b) = 1$
-% \end{proof}
-
-
-\section{Translating to Formulas of FPC}
-Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a P-uniform family of
-polynomial-size symmetric $(\SB, \MB, \tau)$ circuits, and where $\MB$ is the
-rank basis. It remains to show that there is a formula $Q$ in the vocabulary
-$\tau \uplus \{\leq\}$ such that for any $n$ and $\tau$-structure $\mathcal{A}$
-with a universe $U$ of carnality $n$, the $q$-ary query defined by $C_n$ on the
-input $\mathcal{A}$ is defined by the formula $Q$ when interpreted in the
-structure $\mathcal{A}^\leq = \mathcal{A} \uplus \langle [n], \leq \rangle$.
-
-Since $\mathcal{C}$ is $P$-uniform, and from Lemmas \ref{} and \ref{} and the
-Immerman-Vardi theorem, we have an FP interpretation defining a rigid symmetric
-circuit with bijective labels equivalent to $C_n$ (which we also call $C_n$)
-over the the number sort of $\mathcal{A}^\leq$, where $\Phi = (\phi_G,\phi_W,
-\phi_\Omega, (\phi_s)_{s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}},
-(\phi_{\and_R})_{R \in \tau}, \phi_L)$. We note that $Phi$ is a $t$-width
-interpretation over the universe $[n]$. So if $\mu, \nu, \nu_1, \ldots \in
-[n]^t$, the formulas are defined such that:
-
-\begin{itemize}
-\item $\phi_G(\mu)$ holds iff $\mu$ encodes a gate
-\item $\phi_W(\nu,\mu)$ holds iff $\nu$ and $\mu$ encode gates and if $g_{\nu}$
-  and $g_{\mu}$ are these two encoded gates respectively then $W(g_{\nu},
-  g_{\mu})$.
-\item $\phi_{\Omega}(\nu_1, \ldots, \nu_q, \mu)$ holds iff $\nu_1, \ldots, nu_q$
-  each encode numbers less than or equal to $[n]$ and $\Omega(\nu_1, \ldots,
-  \nu_q) = g_\mu$.
-\item For all $s \in \SB \uplus \{rank\} \uplus \tau \uplus \{0,1\}$ we have
-  that $\phi_s (\mu)$ holds iff $\mu$ encodes a gate such that $\Sigma(g_\mu) =
-  s$ (or, in the case that $s = \rank$, we require that $\Sigma(g_\mu)$ is a
-  rank symbol.)
-\item For all $R \in \tau$ with arity $r$ we have that $\phi_{\and_R}(\nu_1,
-  \ldots, \nu_r, \mu)$ holds iff $\nu_1 , \ldots , \nu_r$ encodes numbers less
-  than or equal to $[n]$, $\mu$ encodes a gate such that $\Sigma(g_\mu) = R$ and
-  $\Lambda_R(g_\mu) = (\nu_1, \ldots, \nu_r)$.
-\item $\phi_L(\nu, \mu, \nu_1, nu_2)$ holds iff $\nu$ and $\mu$ encode gates and
-  $\nu_1, \nu_2$ encode numbers, and $L(g_{\mu})(\nu_1,\nu_2) = g_\nu$. If
-  $\dom(L (g_\mu)) = [a] \times [b]$, then the encoding of $[a]$ and $[b]$ are
-  initial segments under the lithographically induced order. Moreover, the
-  encodings of $[a]$ and $[b]$ preserve the order relation.
-\end{itemize}
-
-From now on we use $\mu$ and $\nu$ to stand for $t$-length sequences encoding
-gates, and use $\nu_1, \ldots$ for sequences that encode numbers. We use $g_\mu$
-and $g_\nu$ for the gates encoded by these sequence, while simply identifying
-the sequence $\nu_i$ with the number it encodes.
-
-Using the Immerman-Vardi Theorem, we can define an FP($\leq$) formula
-$\rankparam$ such that $\langle [n], \leq\rangle \models \rankparam,a[g,p,u]$ iff
-$\langle [n], \leq\rangle \models \phi_G[g] \land \phi_{\rank}[g]$ and the rank
-gate $g$ (as per the interpretation) computes the rank over characteristic $p$
-and has threshold $u$.
-
-We can define FP($\leq$) formulas $\max_A$ and $\max_B$ such that $\langle [n],
-\leq \rangle \models \max_A[g, \nu_1]$ iff $\nu_1$ encodes $a$, where
-$\dom(L(g)) = [a]\times [b]$. Similarly, $\langle [n], \leq \rangle \models
-\max_B[g, \nu_1]$ iff $\nu_1$ encodes $b$ where $\dom(L(g)) = [a] \times [b]$.
-
-Again using Lemma \ref{} and the Immerman-Vardi theorem, we can construct a
-formula $\supp$ such $\langle [n], \leq \rangle \models \supp[g,u]$ iff $\langle
-[n], \leq \rangle \models \phi_G[g]$ and $u$ is in $sp(g)$. This formula can be
-used as in \cite{} to inductively define $\supp_i(g,u)$ for each $i \in [n]$
-which holds iff $u$ is the $i$th element of the support of $g$.
-
-Define the $\agree$ and $\theta_s$ formulas for all $s \in \SB \uplus \tau
-\uplus \{0,1\}$ as in \cite{}.
-
-Now we define the formula
-\begin{align*}
-  \theta_{\rank}:= (\mu, \bar{x}) := \bigwedge_{1 \leq i < j \leq k} x_i
-  \neq x_j \wedge \forall \bar{y} ( [ \rank (x \leq \phi_{mr}, y \leq
-  \phi_{mc}, \pi \leq r). \theta^{'} ] ),
-\end{align*}
-\begin{align*}
-  \theta^{'}(a,b):= \exists \nu (W(\nu, \mu) \wedge \agree (\mu,\nu, \bar{x}, \bar{y}) \wedge \phi_L (\mu, \nu, a, b) \wedge V(\nu, y))
-\end{align*}
-
-\pagebreak
-
-\section{Computing the Rank of a Labelling in FPR}
-
-In this section I discuss how to determine the rank a matrix labelling at some
-gate $g$. This is a rough copy written for the purpose of discussion. In this
-section we fix some circuit $C_n$ and some rank gate $g$ in $C_n$, with matrix
-labelling $\omega$.
-
-\begin{definition}
-  Let $h \in H$, then $S \subseteq [n]$ is a row support iff $\forall \sigma \in
-  \stab (\consp(g))$ whenever $\forall i \in S, \sigma i = i$ then $\row (\sigma
-  h) = \row (h)$.
-  \\~\\
-  Similarly we can define the notion of a column support.
-  \\~\\
-  Let $r_h$ be the canonical row support and $c_h$ be the canonical column
-  support.
-\end{definition}
-
-\begin{remark}
-  Let $\sigma \in \spstab{g}$, then we know that $\sigma$ induces an action on
-  the rows and columns such that the result is a row column permutation. We may
-  associate with $\sigma$ a pair $(\sigma_r, \sigma_c) \in \sym_A \times
-  \sym_B$, where $\sigma_r (i) = \row (\sigma h)$, for some $h \in H$, $\row (h
-  = i)$ and similarly $\sigma_c (j) = \column (\sigma h)$, for some $h \in H$,
-  $\column (h) = j$. The definition of a permutation on a circuit, and the
-  stability group for $g$ gives us that such permutations must exist.
-\end{remark}
-
-The following lemma asserts a few basic facts about the (canonical) row and
-column supports.
-
-\begin{lem}
-  Let $h \in H$, then $r_h \subset \consp(h)$, $c_h \subset \consp(h)$ and $c_r
-  \cup r_h = \consp(h)$.
-\end{lem}
+% \begin{remark}
+%   Let $\sigma \in \spstab{g}$, then we know that there exists $(\sigma_r,
+%   \sigma_c) \in \sym_A \times \sym_B$ and $\sigma_r (i) = \row (\sigma h)$,
+%   for any $h \in H$ such that $\row (h) = i$ and similarly $\sigma_c (j) =
+%   \column (\sigma h)$, for any $h \in H$ such that $\column (h) = j$.
+% \end{remark}
 
 We introduce here some useful notation.
 
@@ -820,342 +1284,566 @@ We introduce here some useful notation.
 
 Clearly, by definition of a row and column support, $S^r_h \subseteq G^r_h$ and
 $S^c_h \subseteq G^c_h$.
-\\~\\
-In this section some simplifying assumptions are made.
 
-\begin{remark}
-  In this section I assume for the moment that:
-  \begin{itemize}
-  \item $\consp (g) = \{\}$,
-  \item $S^r_h = G^r_h$ and $S^c_h = G^c_h$, and
-  \item $\forall h,h' \in H$ we have $\vert r_h \vert = \vert r_{h'} \vert$ and
-    $\vert c_h \vert = \vert c_{h'} \vert$.
-  \end{itemize}
-\end{remark}
+% \begin{remark}
+%   In this section I assume for the moment that:
+%   \begin{itemize}
+%   \item $\consp (g) = \{\}$,
+%   \item $S^r_h = G^r_h$ and $S^c_h = G^c_h$,
+%   \item $\forall h,h' \in H$ we have $\vert r_h \vert = \vert r_{h'} \vert$
+%     and $\vert c_h \vert = \vert c_{h'} \vert$,
+%   \item For all $i,i' \in A$ $\exists \sigma \in \stab(\consp (g))$ such that
+%     $\sigma_r i = i'$. Similarly for all $j, j' \in B$ $\sigma \exists \in
+%     \spstab{g}$ such that $\sigma_c j = j'$.
+%   \item $\forall h \in H$, $\orb (h) = H$
+%   \end{itemize}
+% \end{remark}
 
-Let $k_r = \vert r_h \vert$ and $k_c = \vert c_h \vert$. In the following we let
-$\vec{x} \in U^{k_r}$ and $\vec{y} \in U^{k_c}$. These vectors are thought of as
-generic assignments to the row and column supports of some element $h \in H$. Of
-course, the structure of the row and column supports of a particular $h \in H$
-does matter, and two assignments may be valid or invalid depending on that
-stricture. We now consider ways of `choosing' a particular element of $H$ that
-has the `correct' structure for such a pair.
-\\~\\
-Then let for $h \in H$, let $\vec{x}_h: r_h \rightarrow U$ be defined by
-$\vec{x}_h(i) = \vec{x}(\vec{r_h}^{-1}(i))$. Similarly, let $\vec{y}_h: c_h
-\rightarrow U$ be defined by $\vec{y}_h(i) = \vec{y}(\vec{c_h}^{-1}(i))$. We can
-think of the functions $(h, \vec{x}) \mapsto \vec{x}_h$ and $(h, \vec{y})
-\mapsto \vec{y}_h$ as taking these respective tuples and assigning them to the
-row and column supports of $h$.
+% Let $k_r = \vert r_h \vert$ and $k_c = \vert c_h \vert$. Let $\mathcal{G}_r =
+% \{\sigma_r : \sigma \in \spstab{g}\}$ and $\mathcal{G}_c = \{sigma_c : \sigma
+% \in \spstab{g}\}$.
 
-\begin{lem}
-  For each pair $(\vec{x}, \vec{y})$ there is an $h \in H$ such that $\vec{x}_h
-  \sim \vec{y}_h$.
-\end{lem}
+% \begin{definition}
+%   Let $\mathcal{G} \leq \sym_n$ and $x$ be an element of a set on which an
+%   action of $\sym_n$ is defined. Then $\orb_{\mathcal{G}}(x) = \{x^\pi: \pi
+%   \in \mathcal{G}\}$.
 
-Let us then define a function $\mu : U^{k_r} \times U^{k_c} \rightarrow H$,
-where $\mu(\vec{x}, \vec{y})$ is the minimal $h \in H$ (in the order of the
-structure) such that $\vec{x}_h \sim \vec{y}_h$. The above lemma tells us that
-this function is indeed well-defined (in particular, it's total).
+%   For $i \in [a]$ let $\orb_r(i) = \orb_{\mathcal{G}_r}(i)$ and for $j \in
+%   [b]$ let $\orb_c (j) = \orb_{\mathcal{G}_c}(j)$.
+% \end{definition}
 
-We note that if $\vec{x}_h \sim \vec{y}_h$ it follows that we can define
-$(\vec{x}, \vec{y})$ an assignment to the support of $h$.
+% \begin{definition}
+%   Let $A, B \subseteq [n]$ and let $t = (t_1, t_2, t_3) \in \mathbb{N}^3$. We
+%   say that $(A,B)$ has \emph{type} $t$ if $\vert A \vert = t_1$, $\vert B
+%   \vert = t_2$ and $\vert A \cap B \vert = t_{3}$. We say that $\type (A,B) =
+%   t$.
+% \end{definition}
 
-We then define the matrix $M(\vec{x}, \vec{y}) := (\vec{x}, \vec{y}) \in
-\EV_{\mu(\vec{x}, \vec{y})}$.
-
-
-We now define what it means for two matrices to be row-column equivalent.
+For the sake of brevity, for sets $Z,X,Y$, where $f : Z \rightarrow X$ and $p :
+Z \rightarrow Y$ are injections, let $f_p = f \cdot p^{-1}$.
 
 \begin{definition}
-  Let $M_1$ and $M_2$ be matrices over some field, with row and column indexes
-  given by $(A_1, B_1)$ and $(A_2, B_2)$, respectively. We say that $M_1$ and
-  $M_2$ are row-column equivalent iff there exists bijections $\alpha: A_1
-  \rightarrow A_2$ and $\beta: B_1 \rightarrow B_2$ such that for all $(a,b) \in
-  A_1 \times B_1$ we have that $M_1(a,b) = M_2 (\alpha (a), \beta (b))$. If
-  $M_1$ and $M_2$ are row-column equivalent we say that $M_1 \sim M_2$.
+  Let $\vec{x}, \vec{y} : Z \rightarrow X$ and $\vec{r}, \vec{c}: Z \rightarrow
+  Y$ be injections. If $\vec{x} \cdot \vec{r}^{-1} \sim \vec{y} \cdot
+  \vec{c}^{-1}$ we say that $(\vec{x}, \vec{y})$ and $(\vec{r} \vec{c})$ have
+  the same \emph{type}.
 \end{definition}
 
-Suppose $\alpha_g \in U^{\sp(g)}$ an injection and fix a bijection $\gamma: U
-\rightarrow [n]$ such that $\alpha_g \sim \gamma^{-1}$. We can then define
-$L^\gamma: A \times B \rightarrow \{0,1\}$ by $L^\gamma(a,b) = C[\gamma
-\mathcal{A}](\omega (a,b))$.
-\\~\\
-We note that, in fact, it is the choice of the assignment to the support of $g$,
-i.e. $\alpha_g$, that really matters in the sense that for any two global
-assignments that agree on the support of $g$ will produce row-column equivalent
-matrices. The following lemma formalises this observation.
+We note that if we have $f : X \rightarrow Y$ and $p: X' \rightarrow Y'$ and $f
+\sim p$ then define $(f \vert p): X \cup X' \rightarrow Y \cup Y'$ by
+
+\begin{align*}
+  (f \vert p) (x) =
+  \begin{cases}
+    f (x) & x \in X \\
+    p (x) & x \in Y.
+  \end{cases}
+\end{align*}
+
+The compatibility of these two functions ensures that this function is well
+defined.
+
+% \begin{claim}
+%   Let $A_1,B_1, A_2, B_2 \subseteq [n]$. Then $(A_1, B_1)$ and $(A_2, B_2)$
+%   have the same type iff $\exists \pi \in \sym_n$ such that $A_1 = A^\pi_2$
+%   and $B_1 = B^\pi_2$.
+% \end{claim}
+
+% \begin{definition}
+%   Let $f: A \rightarrow S$ and $g: B \rightarrow S$ be injections, with $A$
+%   and $B$ being finite sets. Then $(f,g)$ has \emph{type} $t= (t_1 , t_2, t_3)
+%   \in \mathbb{N}^3$ if $\vert A \vert = t_1$ and $\vert B \vert = t_2$ $\vert
+%   \{i \in A \cap B : f(i) = g(i)\} \vert = t_3$. We say that $\type (f,g) =
+%   t$.
+% \end{definition}
+
+% \begin{definition}
+%   Let $h \in H$ the \emph{type} of $h$ is the type of $(r_h, c_h)$. We denote
+%   the type of $h$ by $\type (h)$.
+% \end{definition}
+
+We now fix an injection $\eta : \consp(g) \rightarrow U$ and describe an
+approach for determining if $\eta \in EV_g$.
+
+Let $X$ be a set on which the left group action on $\sym_n$ is defined and $s
+\in X$. We denote $\vec{x}$ then $A_s = \{\vec{x} \in U^{\underline{[\vert
+    \sp(s) \vert ]}} : \eta \sim \vec{x} \cdot \vec{\consp}(s)^{-1} \}$, where
+$\vec{\consp}(s): [\vert \consp(s) \vert] \rightarrow \consp(s)$ maps $i \in
+[\vert \consp(s) \vert]$ to the $i$th element of $\consp(s)$. For $\vec{x} \in
+A_s$, we use $\vec{x}_s$ from here forward to denote $\vec{x} \cdot
+\vec{\consp(s)^{-1}}$.
+
+% Let $L(g)(i,j) = h \in H$, $\vec{x} \in A_i$ and $\vec{y} \in A_j$. Let
+% $\vec{r} \in ^{\underline{\consp(i)}}$ and $\vec{c}
+% \in\consp{j}^{\underline(\consp(j))}$. Suppose $(\vec{r}, \vec{c})$ has the
+% type of $(\vec{x}, \vec{y})$. Then we can define $(\vec{x}\vert \vec{y}):
+% \consp(i) \cup \consp(j) \rightarrow U$ by
+% \begin{align*}
+%   (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) (z) =
+%   \begin{cases}
+%     \vec{x} (\vec{r}^{-1}(z)) \text{ if } z \in \consp(i) \\
+%     \vec{y} (\vec{r}^{-1}(z)) \text{ if } z \in \consp(j). \\
+%   \end{cases}
+% \end{align*}
+
+This mapping allows us to combine two assignments into a single assignment. This
+will be useful when combining the row and column supports of a gate.
+
+% \begin{claim}
+%   Let $f: A \rightarrow S$ and $g B \rightarrow S$ be injections. Then $(f,g)$
+%   has the same type as $(A,B)$. It follows that if $h \in H$, and $(i,j) =
+%   L^{-1}(h)$,with $f \in A^r_i$ and $ g \in A^c_j$ then $h$ has the same type
+%   as $(f,g)$.
+% \end{claim}
+
+% For $(i,j) \in [a] \times [b]$ let $H_{i,j} = \{L(p,q): (p,q) \in \orb_r(i)
+% \times \orb_c(j)]\}$.
+
+% \begin{claim}
+%   For all $(i', j') \in \orb_r(i) \times \orb_c(j)$ and $\sigma \in
+%   \spstab{g}$, $(\sigma_r i', \sigma_cj') \in \orb_r(i) \times \orb_c(j)$.
+% \end{claim}
+
+% \begin{claim}
+%   For all $(i,j) \in [a] \times [b]$, $H_{i,j}$ is a union of orbits.
+% \end{claim}
+
+% \begin{lem}
+%   Let $(i,j) \in [a] \times [b]$. If $h, h' \in H_{i,j}$ and $h, h'$ are the
+%   same type then $h' \in \orb(h)$.
+% \end{lem}
+
+We now define a matrix that we later be shown to be definable in FPR. We then
+show that this matrix is row-column equivalent to $L^{\gamma}$, for any
+bijection $\gamma: U \rightarrow [n]$, and hence allowing us to determine the
+rank of the matrix input to $g$ in FPR.
+
+Let $R^{\min} = \{\min (\orb(\row(h))) : h \in H\}$ and $C^{\min} = \{ \min
+(\orb (\column(h))) : h \in H\}$ and let
+\begin{align*}
+  I = \{(i, \vec{x}): i \in R^{\min}, \vec{x} \in A_i\},
+\end{align*}
+and
+\begin{align*}
+  J = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j \}.
+\end{align*}
+
+% \begin{align*}
+%   M ((i, \vec{x}), (j, \vec{y})) := \bigvee_{t \in \types} ((\vec{x},
+%   \vec{y}) \text{ has type } t) \land (\vec{x} | \vec{y}) \in \EV_{\mu_{i,j}(t)}.
+% \end{align*}
+
+Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$.
+
+Let $u_1 , \ldots , u_{2k}$ be the first $2k$ elements of $[n] \setminus
+\consp(g)$ in the natural order on the structure. Then let
+\[r = \eta^{-1} (\img(\vec{x}) \cap \eta (\consp(g))) \cup
+  \{u_{\vec{x}^{-1}(a)}: a \in \img(x) \setminus \eta (\consp (g))\} \] and
+\[s = \eta^{-1} (y \cap \eta (\consp(g))) \cup (x \cap y) \cup \{ u_{k +
+    \vec{x}^{-1}(a)} : a \in y \setminus (x \cup \eta (\consp (g))) \}). \]
+Define
+\[
+  \vec{r} (a) =
+  \begin{cases}
+    \eta^{-1} (\vec{x} (a)) & a \in \vec{x}^{-1} (x \cap \eta (\consp(g))) \\
+    u_{a} & a \in \vec{x}^{-1} (x \setminus \eta(\consp(g)),
+  \end{cases}
+\]
+and
+\[
+  \vec{c} (a) =
+  \begin{cases}
+    \eta^{-1} (\vec{y} (a)) & a \in \vec{y}^{-1}(y \cap \eta (\consp (g))) \\
+    \vec{r} (a) & a \in \vec{y}^{-1} (x \cap y \setminus \eta (\consp (g))) \\
+    u_{k+a} & \text{otherwise}.
+  \end{cases}
+\]
 
 \begin{lem}
-  Let $g$ be a matrix-symmetric gate in $C_n$ with children $H$ and matrix
-  labelling $L(g)$. Let $\alpha_g \in U^{\consp(g)}$, and suppose $\gamma_1,
-  \gamma_2: U \rightarrow [n]$ with $\gamma^{-1}_1 \sim \alpha$ and $\alpha \sim
-  \gamma^{-1}_2$. Let $A \times B = \dom (L(g))$.
-
-  For an input structure $\mathcal{A}$, let $L^\gamma: A \times B \rightarrow
-  \{0,1\}$, where $L^{\gamma_2} (a,b):= C[\gamma \mathcal{A}] (L(g)(a,b))$.
-
-  Then $L^{\gamma_1} \sim L^{\gamma_2}$.
+  \label{lem:permutation_row-column}
+  There exists $\sigma_1, \sigma_2 \in \spstab{g}$ such that $\sigma_1 \cdot
+  \vec{\consp(i)} = \vec{r}$ and $\sigma_2 \cdot \vec{\consp(j)} = \vec{c}$.
 \end{lem}
 \begin{proof}
-  We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
+  To be added from the book
+\end{proof}
+
+Let $h = L(g)(\sigma_1(i), \sigma_2 (j))$. Then we can define the matrix $M : I
+\times J \rightarrow \{0,1\}$ by
+
+\begin{align*}
+  M((i , \vec{x}), (j, \vec{y})) := (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in EV_h.
+\end{align*}
+
+It remains to show that $M \sim L^{\gamma}$ for some (and so all) bijections
+$\gamma: U \rightarrow [n]$.
+% \begin{definition}
+%   Let $M_1$ and $M_2$ be matrices over some field, with row and column indexes
+%   given by $(A_1, B_1)$ and $(A_2, B_2)$, respectively. We say that $M_1$ and
+%   $M_2$ are row-column equivalent iff there exists bijections $\alpha: A_1
+%   \rightarrow A_2$ and $\beta: B_1 \rightarrow B_2$ such that for all $(a,b)
+%   \in A_1 \times B_1$ we have that $M_1(a,b) = M_2 (\alpha (a), \beta (b))$.
+%   If $M_1$ and $M_2$ are row-column equivalent we say that $M_1 \sim M_2$.
+% \end{definition}
+
+% Fix $\gamma: U \rightarrow [n]$ such that $\gamma^{-1} \sim \eta$. We define
+% $L^\gamma: A \times B \rightarrow \{0,1\}$ by $L^\gamma(a,b) = C[\gamma
+% \mathcal{A}](L (a,b))$.
+% \\~\\
+% We note that, in fact, it is the choice of the assignment to the support of
+% $g$, i.e. $\eta$, that really matters in the sense that for any two global
+% assignments that agree on the support of $g$ will produce row-column
+% equivalent matrices. The following lemma formalises this observation.
+
+% \begin{lem}
+%   Let $g$ be a matrix-symmetric gate in $C_n$ with children $H$ and matrix
+%   labelling $L(g)$. Let $\eta \in U^{\consp(g)}$, and suppose $\gamma_1,
+%   \gamma_2: U \rightarrow [n]$ with $\gamma^{-1}_1 \sim \alpha$ and $
+%   \gamma^{-1}_2 \sim \alpha$. Let $A \times B = \dom (L(g))$.
+
+%   Then for an input structure $\mathcal{A}$, $L^{\gamma_1} \sim L^{\gamma_2}$.
+% \end{lem}
+% \begin{proof}
+%   We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1
+%   = \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
+%   consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$. Thus
+%   $L(g) \sim \pi L(g)$, and so there exists $(\alpha, \beta)$ such that $\pi
+%   L(g) = L(g) \cdot (\alpha, \beta)$.
+
+%   We then have that,
+%   \begin{align*}
+%     L^{\gamma_1} (a,b) &= C_n[\gamma_1 \mathcal{A}](L(g)(a,b))\\
+%                        & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(a,b)] \\
+%                        & = C_n[\gamma_2 \mathcal{A}][L(g)((\alpha, \beta)(a,b))]\\
+%                        & = L^{\gamma_2} ((\alpha, \beta) (a,b)),
+%   \end{align*}
+%   and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
+% \end{proof}
+
+\begin{claim}
+  Let $\sigma \in \spstab{g}$, $\eta \in U^{\underline{\consp(g)}}$, $\gamma: U
+  \rightarrow [n]$ a bijection such that $\gamma^{-1} \sim \eta$. Then
+  $\gamma^{-1} \cdot \sigma \sim \eta$.
+\end{claim}
+\begin{proof}
+  Suppose $a \in \consp(g)$, then $\sigma (a) = a$ and so $\gamma^{-1} (\sigma
+  (a)) = \gamma^{-1} (a) = \eta (a)$.
+\end{proof}
+
+% \begin{claim}
+%   For $h \in H$ and $\sigma \in \stab(\consp (g))$, we have that
+%   $\vec{r}_{\sigma h_1} = \sigma \vec{r}_{h_1}$.
+% \end{claim}
+% \begin{proof}
+%   Proof in book
+% \end{proof}
+
+The following result shows that the action on the support of an object
+determines the action on that object.
+
+\begin{lem}
+  \label{lem:support_determine_action}
+  Let $\sigma, \sigma' \in \spstab{g}$, $a$ be an object on which on the action
+  of these two permutations is defined, and $\consp(a) \subset [n]$ be a support
+  of $a$. Then if $\sigma (\vec{\consp}(a)) = \sigma' (\vec{\consp}(a))$ then
+  $\sigma (a) = \sigma' (a)$.
+\end{lem}
+\begin{proof}
+  From $\sigma (\vec{\consp(a)}) = \sigma' (\vec{\consp(a)})$, it follows that
+  $\pi = (\sigma')^{-1} \sigma$ fixes $\vec{\consp}(a)$. Thus $\sigma (a) =
+  \sigma' (\pi (a)) = \sigma' (a)$.
+\end{proof}
+
+% \begin{lem}
+%   \label{lem:map_same_support_same_row}
+%   Let $\sigma, \sigma' \in \spstab{g}$ and suppose for some $i \in [a]$ we
+%   have that $\sigma (\vec{r}_i) = \sigma (\vec{r}_i)$. It follows that
+%   $\sigma_r (i) = \sigma'_r (i)$.
+% \end{lem}
+% \begin{proof}
+%   Let $pi = (\sigma^{-1} \sigma')_r \in G^r_i$. Then $ (\sigma^{-1} \sigma')_r
+%   (i) = \sigma^{-1}_r \sigma'_r (i) = i$, and so $\sigma_r (i) = \sigma'_r
+%   (i)$.
+% \end{proof}
+
+% Let $X$ be a set on which the left group action on which the left group action
+% of $\sym_n$ is defined and let $a \in X$. Let $\vec{x} \in A_i$ and $f \in
+% U^{\underline{[\vert \consp{a} \vert]}}$. Then $\Pi^{\gamma}_{\vec{x}_f} (a)$
+% is the action on $a$ defined by $\Pi^{\gamma}_{\vec{x}_f} (z) =
+% \gamma(\vec{x_f}(z))$, for all $z \in \consp (a)$. Lemma
+% \ref{lem:support_determine_action} tells us that this action is well defined.
+
+
+% Let $(i, j) \in A \times B$, let $\vec{x} \in A^r_i$ and $\vec{y} \in A^c_j$.
+% Define permutations $\Pi^{\gamma}_{\vec{x}}$ and $\Pi^{{\gamma},c}_{\vec{y}}$
+% such that $\Pi^{\gamma,r}_{\vec{x}}(\vec{r}_i) = \gamma (\vec{x})$ and
+% $\Pi^{\gamma,c}_{\vec{y}}(\vec{c}_j) = \gamma (\vec{y})$. From Lemma
+% \ref{lem:support_determine_action} we have that the choice of $\vec{x}$ and
+% $\vec{y}$ uniquely determine the mappings $\Pi^{\gamma,r}_{\vec{x}}(i)$ and
+% $\Pi^{\gamma,c}_{\vec{y}}(j)$
+
+Let $\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
+defined by $\alpha^{\gamma} (i, \vec{x}) = \Pi^{\gamma}_{\vec{x}_{i}}(i)$ and
+$\beta^{\gamma} (j, \vec{y}) = \Pi^{\gamma}_{\vec{y}_{j}}(j)$.
+
+We now show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ act as witnesses to the
+row-column of equivalence of $M$ and $L^{\gamma}$. The following lemma proves
+surjectivity.
+
+\begin{lem} 
+  For any bijection $\gamma : U \rightarrow [n]$ both $\alpha^{\delta}$ and
+  $\beta^{\delta}$ are surjective.
+\end{lem}
+\begin{proof}
+  We show that $\alpha$ is surjective, with the same result for $\beta$
+  following similarly. Let $q \in A$ and let $i = \min (\orb (q))$. Then there
+  exists $\sigma \in \spstab{g}$ such that $\sigma i = q$. Let $\vec{x} =
+  \gamma^{-1} (\sigma(\vec{\consp}(i)))$. Notice that for $a \in \consp(i)$ we
+  have that $\vec{x}_i(a) = \gamma^{-1} (\sigma (a))$, and since $\gamma^{-1}
+  \cdot \sigma \sim \eta$, it follows that $\vec{x} \in A_i$.
+
+  For $a \in \consp(i)$ we have $\Pi^{\gamma}_{\vec{x}_i} (a) = \gamma
+  (\vec{x}_i(a)) = \gamma \cdot \gamma^{-1} \sigma (a) = \sigma (a)$. From Lemma
+  \ref{lem:support_determine_action} it follows that $\alpha(i, \vec{x}) = q$.
+\end{proof}
+
+The following lemma allows us to factor through permutations.
+\begin{lem}
+  \label{lem:alpha_and_gamma}
+  Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma: U \rightarrow
+  [n]$ be a bijection such that $\gamma^{-1} \sim \eta$ and $\pi \in spstab{g}$.
+  Then $\pi \alpha^{\gamma}(i, \vec{x}) = \alpha^{\pi \gamma}(i, \vec{x})$ and
+  $\pi \beta^{\gamma}(j, \vec{y}) = \beta^{\pi \gamma}(j, \vec{y})$.
+\end{lem}
+\begin{proof}
+  We have that $\pi \alpha^{\gamma}(i, \vec{x}) = \pi
+  \Pi^{\gamma}_{\vec{x}_i}(i)$ and $(\pi
+  \Pi^{\gamma}_{\vec{x}_{i}}(\vec{\consp}(i)) = \pi \cdot \gamma (\vec{x}) =
+  \Pi^{\pi \gamma}_{\vec{x}_i}(\vec{\consp}(i))$. Since
+  $\Pi^{\gamma}_{\vec{x}_i}$ and $\Pi^{\pi \gamma}_{\vec{x}_i}$ are in
+  $\spstab{g}$, it follows from Lemma \ref{lem:support_determine_action}, that
+  $\pi \alpha^{\gamma}(i, \vec{x}) = \pi \Pi^{\gamma}_{\vec{x}_i} (i) = \Pi^{\pi
+    \gamma}_{\vec{x}_i}(i) = \alpha^{\pi \gamma}(i, \vec{x})$. Similarly, $\pi
+  \beta^{\gamma}(j, \vec{y}) = \beta^{\pi \gamma} (j, \vec{y})$.
+\end{proof}
+
+\begin{lem}
+  \label{lem:alpha_ind_gamma}
+  Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma_1, \gamma_2: U
+  \rightarrow [n]$ be bijections such that $\gamma^{-1}_1 \sim \eta$ and
+  $\gamma^{-1}_2 \sim \eta$. Let $\mathcal{A}$ be a structure. Then
+  $C_n[\gamma_1 \mathcal{A}] (L(\alpha^{\gamma_1}(i, \vec{x}),
+  \beta^{\gamma_1}(j, \vec{y}))) = C_n[\gamma_2 \mathcal{A}]
+  (L(\alpha^{\gamma_2}(i, \vec{x}), \beta^{\gamma_2}(j, \vec{y})))$.
+\end{lem}
+\begin{proof}
+  We note that there exists $\pi \in \sym_n$ such that $\gamma_1 = \pi
   \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
-  consistent with $\alpha$, it follows that $\pi$ must fix $\sp(g)$. Thus $L(g)
-  \sim \pi L(g)$, and so there exists $(\sigma, \lambda)$ such that $\pi L(g) =
-  L(g) \cdot (\sigma, \lambda)$.
-
-  We then have that,
+  consistent with $\eta$, it follows that $\pi \in \spstab{g}$. We then have
+  that
   \begin{align*}
-    L^{\gamma_1} (a,b) &= C_n[\gamma_1 \mathcal{A}](L(g)(a,b))\\
-                       & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(a,b)] \\
-                       & = C_n[\gamma_2 \mathcal{A}][L(g)((\sigma, \lambda)(a,b))]\\
-                       & = L^{\gamma_2} ((\sigma, \lambda) (a,b)),
-  \end{align*}
-  and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
+    C_n[\gamma_1 \mathcal{A}](L(\alpha^{\gamma_1}(i, \vec{x}), \beta^{\gamma_1}(j,
+    \vec{y})) &= C_n[\pi \gamma_1 \mathcal{A}](\pi L(\alpha^{\gamma_1}(i, \vec{x}),
+                \beta^{\gamma_1}(j, \vec{y})) \\
+              &= C_n[\pi \gamma_1 \mathcal{A}](L(\pi
+                \alpha^{\gamma_1}(i, \vec{x}), \pi \beta^{\gamma_1}(j, \vec{y}))\\
+              &= C_n[\pi
+                \gamma_1 \mathcal{A}](L(\alpha^{\pi \gamma_1}(i, \vec{x}), \pi \beta^{\pi
+                \gamma_1}(j, \vec{y})\\
+              &= C_n[\gamma_2 \mathcal] (L(\alpha^{\gamma_2}(i,
+                \vec{x}), \beta^{\gamma_2}(j, \vec{y})))\\
+  \end{align*}The third equality follows from Lemma \ref{lem:alpha_and_gamma}.
 \end{proof}
 
 \begin{lem}
-  Let $h_1, h_2 \in H$ and $\sigma_1, \sigma_2 \in \spstab{g}$. Suppose
-  $\sigma_1 \vec{r_{h_1}} = \sigma_2 \vec{r_{h_2}}$. Then $\row (\sigma_1 h_1) =
-  \row (\sigma_2 h_2)$.
+  \label{lem:defining_h_from_IJ}
+  Let $(i, \vec{x}) \in I$ and $j, \vec{y} \in J$. Let $\vec{r}$ and $\vec{c}$
+  be described as above. Let $\sigma_1$ and $\sigma_2$ be as from Lemma
+  \ref{lem:permutation_row-colum}. Let $h = L(g) (\sigma_1 (i), \sigma_2 (j))$.
+  Then $\alpha^{\gamma'} (i, \vec{x}) = \row (h)$ and $\beta^{\gamma'}
+  (i,\vec{y}) = \column(h)$.
 \end{lem}
 \begin{proof}
-  There exists $\sigma \in \spstab{g}$ such that $\sigma \vec{r_{h_1}} =
-  \vec{r_{h_2}}$, and so $\sigma_1 \vec{r_{h_1}} = \sigma_2 \sigma
-  \vec{r_{h_1}}$, and thus $(\sigma_2 \sigma)^{-1} \sigma_1 \vec{r_{h_1}} =
-  \vec{r_{h_1}}$. It follows that $(\sigma_2 \sigma)^{-1} \sigma_1 \in S^r_{h_1}
-  \subseteq G^r_{h_1}$, and so $\row ((\sigma_2 \sigma)^{-1} \sigma_1 h_1) =
-  \row (h_1)$. Thus $((\sigma_2)_r \sigma_r)^{-1} (\sigma_1)_r \row (h_1) = \row
-  (h_1)$.
+  $\alpha^{\gamma'}(i, \vec{x}) = \Pi^{\gamma'}_{\vec{x}_i} (i)$. It is
+  sufficient to show that for all $a \in sp(g)$, $\Pi^{\gamma}_{\vec{x}_i} (a) =
+  \sigma_1 (a)$. Note that $\Pi^{\gamma'}_{\vec{x}_i} (a) =
+  (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})})^{-1} \gamma
+  (\vec{x}_i (a))$, and if $b = \sigma_1 (a)$ we have that $\gamma (\vec{x}_i
+  (a)) = \gamma (\vec{x} (\vec{\consp}(i)^{-1} (a))) = \gamma (\vec{x}
+  (\vec{\consp}(i)^{-1} (\sigma^{-1}_1 b))) = \gamma (\vec{x} ((\sigma_1 \cdot
+  \vec{\consp}(i))^{-1} (b))) = \gamma (\vec{x} (\vec{r}^{-1}(b))) =
+  \Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})}(b)$. So
+  $\Pi^{\gamma'}_{\vec{x}} (a) = b = \sigma_1 (a)$. Similarly for
+  $\beta^{\gamma'}$.
+\end{proof}
 
-  It follows that $\row (\sigma_1 h ) = (\sigma_1)_r \row (h_1) = (\sigma_2)_r
-  \sigma_r\row (h_1) = (\sigma_2)_r \row (\sigma h_1) = (\sigma_2)_r \row (h_2)
-  = \row (\sigma_2 h_2)$.
+\begin{thm}
+  Let $\delta: U \rightarrow [n]$, $M$ is row-column equivalent to $L^{\gamma}$.
+  This equivalence is witnessed by $\alpha^{\gamma}$ and $\beta^{\gamma}$.
+\end{thm}
+\begin{proof}
+  We have that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective. Let
+  $\gamma' = (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})})^{-1}
+  \gamma$.
+
+  \begin{align*}
+    M((i, \vec{x}), (j, \vec{y}))
+    &= (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in \EV_h \\
+    &= C_n[\gamma \mathcal{A}] (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})} (h)) \\
+    &= C_n[\gamma' \mathcal{A}] (h) \\
+    &= C_n[\gamma' \mathcal{A}](L(\row(h), \column (h)))\\
+    &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y})))\\
+    &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))y)\\
+    &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))
+  \end{align*}
+  The second equality follows from Lemma \ref{}. The fifth equality follows from
+  Lemma \ref{lem:defining_h_from_IJ}. The sixth equality follows from Lemma
+  \ref{lem:alpha_ind_gamma}.
 
   
-  % Uses assumption (-check-)
-  
 \end{proof}
 
-\begin{claim}
-  For $h \in H$ and $\sigma \in \stab(\consp (g))$, we have that
-  $\vec{r}_{\sigma h_1} = \sigma \vec{r}_{h_1}$.
-\end{claim}
-\begin{proof}
-  Proof needed, proof strategy in book
-\end{proof}
+\section{FPR Formulas}
 
-\begin{lem}
-  Let $h_1, h_2 \in H$ and $\sigma_1, \sigma_2 \in \stab (\consp(g))$ such that
-  $\sigma_1 \vec{r}_{h_1} = \sigma_2 \vec{r}_{h_2}$ and there exists $\sigma \in
-  \stab(\consp (g))$ such that $\row (\sigma h_1) = \row (\sigma h_2)$, then
-  $\row (\sigma_1 h_1) = \row (\sigma_2 h_2)$.
-\end{lem}
-\begin{proof}
-  proof in book
-  % So $\row (\sigma h_1) = \row (h_2)$, and so $\sigma \vec{r} = \vec{r}_{\sigma h_1} =
-  % \vec{r}_{h_2}$.
-\end{proof}
-
-Let $\Pi^\gamma_{(\vec{x}), \vec{y}}(\mu(\vec{x}, \vec{y}))$ be the action on
-$\mu (\vec{x}, \vec{y})$ defined the action on the support given by
-$\Pi^\gamma_{(\vec{x}, \vec{y})}(\vec{\sp(h)}) = \gamma ((\vec{x}, \vec{y})$.
-
-
-\begin{claim}
-  Let $\vec{y}, \vec{y}' \in U^{k_r}$ and $\vec{x}, \vec{x} \in U^{k_c }$ then
-  \begin{align*}
-    \row (\Pi^\gamma_{(\vec{x}, \vec{y})}(\mu(\vec{x}, \vec{y}))) = \row (\Pi^\gamma_{(\vec{x}, \vec{y}')}(\mu(\vec{x}, \vec{y}'),
-  \end{align*}
-  and
-  \begin{align*}
-    \column(\Pi^\gamma_{(\vec{x}, \vec{y})}(\mu(\vec{x}, \vec{y}))) = \column
-    (\Pi^\gamma_{(\vec{x}', \vec{y})}(\mu(\vec{x}', \vec{y}).
-  \end{align*}
-\end{claim}
-\begin{proof}
-  proof in book
-\end{proof}
-
-We let $\alpha: U^{k_r} \rightarrow A$, $\beta: U^{k_c} \rightarrow B$ be
-defined by $\alpha (\vec{x}) = \row (\Pi^\gamma_{(\vec{x}, \vec{y})} (\mu
-(\vec{x}, \vec{y})$ for some $\vec{y} \in U^{k_c}$. Similarly we can define
-$\beta (\vec{y})$.
-
-The above claim tells us that this definition is well defined.
-
-\begin{claim} 
-  Both $\alpha$ and $\beta$ are bijections.
-\end{claim}
-\begin{proof}
- proof in book 
-\end{proof}
-
-\begin{thm}
-  $L$ is row-column equivalent to $M$.
-\end{thm}
-\begin{proof}[proof of above theorem]
-  \begin{align*}
-    M(\vec{x}, \vec{y}) &\iff (\vec{x}, \vec{y}) \in \EV_{\mu({\vec{x}, \vec{y}})} \\  
-                        &\iff C_n [\gamma \mathcal{A}] (\Pi^\gamma_{(\vec{x}, \vec{y})} (\mu (\vec{x}, \vec{y}))) \\
-                        &\iff C_n [\gamma \mathcal{A}] (\omega (\alpha (\vec{x}), \beta (\vec{y}))) \\
-                        &\iff L^\gamma (\alpha (\vec{x}), \beta (\vec{y}))
-  \end{align*}
-  The above calculation, combined with the fact that $\alpha$ and $\beta$ are
-  bijections, proves the result.
-\end{proof}
+% \begin{lem}
+%   Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $h \in H$ such that
+%   $\row (h) \in \orb_r (i)$, $\column (h) \in \orb_c(j)$, and $\type(h) =
+%   \type(\vec{x}, \vec{y})$. Let $\gamma: U \rightarrow [n]$ be a bijection and
+%   $\mathcal{A}$ a structure. Then $C_n[\gamma
+%   \mathcal{A}](\Pi^{\gamma}_{\vec{x} \vert \vec{y}} (h)) = C_n[\gamma
+%   \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y})))$.
+% \end{lem}
+% \begin{proof}
+%   Let $\gamma' = (\Pi^{\gamma}_{\vec{x} \vert \vec{y}})^{-1} \gamma$. First we
+%   show that $h = L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j,
+%   \vec{y}))$. Notice that $\Pi^{\gamma'}_{\vec{x}}(\vec{r}_i) =
+%   \gamma'(\vec{x}) = (\Pi^{\gamma}_{\vec{x} \vert \vec{y}})^{-1} \gamma
+%   (\vec{x}) = \vec{r}_h$. But $\row(h) \in \orb_r(i)$ and so there exists
+%   $\vec{x}' \in A^r_i$ such that $\Pi^{\gamma'}_{vec{x}'}(i) = \row{h}$ From
+%   Lemma \ref{lem:support_determine_action} it follows that $\row (h) =
+%   \Pi^{\gamma'}_{\vec{x}}(i) = \alpha^{\gamma'}(i, \vec{x})$. Similarly, we
+%   can show that $\column(h) = \beta^{\gamma'}(j, \vec{y})$. It follows that $h
+%   = L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y}))$, and so
+%   \begin{align*}
+%     C_n[\gamma \mathcal{A}](\Pi^{\gamma}_{\vec{x}
+%     \vert \vec{y}} (h))
+%     &= C_n[\gamma' \mathcal{A}](h)\\
+%     &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y})))\\
+%     &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))).
+%   \end{align*}
+%   The final equality follows from Lemma \ref{lem:alpha_ind_gamma}.
+% \end{proof}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \chapter{New Stuff}
+% Let $x,y \subset U$ such that $\vert x \vert = \vert y \vert = k \in
+% \mathbb{N}$. Let $\vec{x}: [k] \rightarrow x$ and $\vec{y}: [k] \rightarrow y$
+% be bijections.
 
-\chapter{October 27th: Counting Gates Simulate Symmetric Gates}
+% We need to define $r, c \subset [n]$ such that $\vert r \vert = \vert c \vert
+% = k$ and there exists bijections $\vec {r}: [k] \rightarrow r$ and $\vec{c}:
+% [k] \rightarrow c$.
 
-In this chapter we prove that symmetric circuits with majority gates are at
-least as powerful as symmetric circuits over any other Boolean basis consisting
-of symmetric functions.
+% Let $u_1 , \ldots , u_{2k}$ be the first $2k$ elements of $[n] \setminus
+% \SP(g)$ in order. Then let
+% \[r = \eta^{-1} (x \cap \eta (\SP(g))) \cup \{u_{\vec{x}^{-1}(a)}: a \in x
+%   \setminus \alpha (\SP (g))\} \] and
+% \[s = \eta^{-1} (y \cap \eta (\SP(g))) \cup (x \cap y) \cup \{ u_{k +
+%   \vec{x}^{-1}(a)} : a \in y \setminus (x \cup \alpha (\SP (g))) \}). \]
+% Define
+% \[
+%   \vec{r} (a) =
+%   \begin{cases}
+%     \eta^{-1} (\vec{x} (a)) & a \in \vec{x}^{-1} (x \cap \eta (\SP(g))) \\
+%     u_{a} & a \in \vec{x}^{-1} (x \setminus \eta(\SP(g)),
+%   \end{cases}
+% \]
+% and
 
-Recall the following that $\mathbb{B} = \{ \neg , \wedge , \lor \}$ and
-$\mathbb{B}_\maj = \{ \maj \} \cup \mathbb{B}$.
+% \[
+%   \vec{c} (a) =
+%   \begin{cases}
+%     \eta^{-1} (\vec{y} (a)) & a \in \vec{y}^{-1}(y \cap \eta (\SP (g))) \\
+%     \vec{r} (a) & a \in \vec{y}^{-1} (x \cap y \setminus \eta (\SP (g))) \\
+%     u_{k+a} & \text{otherwise}.
+%   \end{cases}
+% \]
 
-Let $F: \{0,1\}^* \rightarrow \{0,1\}$ be a symmetric Boolean function. Since
-$F$ is symmetric we note that for a fixed size input the output of $F$ is
-entirely determined by the number of 1's in its input. Then let
-$c_{F}:\mathbb{N} \rightarrow 2^{\mathbb{N}}$ define a function where $c_{F}(n)$
-is the set of all $m \leq n$ such that for all $\vec{x} \in \{ 0,1 \}^n$ with
-$m$ 1's we have $F (\vec{x}) = 1$. Clearly a symmetric Boolean function $F$ is
-entirely determined by $c_{F}$.
- 
-\begin{prop}
-  \label{prop:fuctions-maj}
-  There is a polynomial $p(k)$ such that for any symmetric function $F$ and a
-  given $k \in \mathbb{N}$ there is a circuit $C_k$ on $k$ inputs over the basis
-  $\mathbb{B}_\maj$ which is symmetric, constant depth and with width bounded by
-  $p(k)$.
-\end{prop}
+% \begin{lem}
+%   $x_r \sim \eta$ and $x_c \sim \eta$
+% \end{lem}
 
-\begin{proof}
-  We define the circuit $C_k$ for inputs $\vec{x} = ( x_1, \ldots, x_k )$.
+% \begin{lem}
+%   $\SP(g) \cap \SP(i) = \SP(g) \cap r$ and $\SP (g) \cap SP (j) = \SP (g) \cap
+%   c$.
+% \end{lem}
 
-  For $a \in \mathbb{N}$ we define a get $\countgate_a$ by
-  \begin{align*}
-    &\countgate_a = \maj (x_1, \ldots, x_k, \underbrace {0, \ldots, 0}_{2a -
-      k}) \land \neg \maj (x_1, \ldots , x_k, \underbrace{0, \ldots,  0}_{2a - k + 2})\text{ if $a \geq \frac{k}{2}$,} \\
-    &\countgate_a = \maj (x_1, \ldots, x_k, \underbrace {1, \ldots, 1}_{x -
-      2a}) \land \neg \maj (x_1, \ldots , x_k, \underbrace{1, \ldots,
-      1}_{k - 2a -2}) \text{ if $a < \frac{k}{2}$. }
-  \end{align*}
+% Let $(\vec{x}, \vec{y})_{\vec{r}, \vec{c}}: r \cup c \rightarrow U$ be defined
+% by
+% \[
+%   (\vec{x}, \vec{y})_{\vec{r}, \vec{c}}(a) =
+%   \begin{cases}
+%     \vec{x}(\vec{r}^{-1}(a)) & a \in r \\
+%     \vec{y}(\vec{c}^{-1}(a)) & a \in c
+%   \end{cases}
+% \]
 
-  Then let $g = \bigvee_{a \in c_{F_i}(k)}\countgate_a$ and let $C_{k}$ be the
-  circuit with input gates labeled by $\vec{x}$ and output gate $g$.
+% This function is well defined.
 
-  t is easy to see that $C_k$ is constant depth and it's width is a polynomial
-  in $k$. We have that in each layer of $C_{g'}$ each gate is connected to all
-  gates in the previous layer, and as such the circuit is symmetric.
-\end{proof}
+% % \begin{lem}
+% %   Let $r, c \subset U$ and let $r_1, r_2 : [k_1] \rightarrow r$ and $c_1, c_2 :
+% %   [k_2] \rightarrow c$ then $\type(\vec{r}_1, \vec{c}_1) = \type (\vec{r}_2 ,
+% %   \vec{c}_2)$.
+% % \end{lem}
 
-The above proposition has a straight forward application to circuit
-characterizations.
+% \begin{lem}
+%   $(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{y}}) \sim \eta$
+% \end{lem}
 
-\begin{prop}
-  Let $F = \{F_i : i \in I \}$ be a family of symmetric Boolean functions where
-  $F_i: \{0,1\}^* \rightarrow \{ 0,1 \}$.
+% \begin{lem}
+%   There exists $\sigma_1, \sigma_2 \in \spstab{g}$ such that $\sigma_1 \cdot
+%   \vec{\consp(i)} = \vec{r}$ and $\sigma_2 \cdot \vec{\consp(j)} = \vec{c}$.
+% \end{lem}
 
-  Let $(C_n)_{n \in \mathbb{N}}$ be family of symmetric circuits over the
-  Boolean basis $\mathbb{B} \cup F$, where $C_n$ is a circuit on structures of
-  size $n$, and the size of each circuit in the family is bounded by some
-  function $f(n)$. Then there exists a polynomial $q(n)$ and a family of
-  symmetric circuits $(C_n')_{n \in \mathbb{N}}$ over $\mathbb{B}_\maj$, where
-  $C_n'$ is a circuit on structures of size $n$ and $\vert C_n' \vert \leq
-  q(f(n))$.
-\end{prop}
+% \begin{lem}
+%   Let $(i, \vec{x}) \in I$ and $j, \vec{y} \in J$. Let $\vec{r}$ and $\vec{c}$
+%   be described as above. Let $\sigma_1$ and $\sigma_2$ be as from Lemma
+%   \ref{}. Let $h = L(g) (\sigma_1 (i), \sigma_2 (j))$. Then $\alpha^{\gamma'}
+%   (i, \vec{x}) = \row (h)$ and $\beta^{\gamma'} (i,\vec{y}) = \column(h)$.
+% \end{lem}
+% \begin{proof}
+%   $\alpha^{\gamma'}(i, \vec{x}) = \Pi^{\gamma'}_{\vec{x}} (i)$. It is
+%   sufficient to show that for all $a \in sp(g)$, $\Pi^{\gamma}_{\vec{x}} (a) =
+%   \sigma_1 (a)$. Note that $\Pi^{\gamma'}_{\vec{x}_i} (a) =
+%   (\Pi^{\gamma}_{(\vec{x}, \vec{y})_{\vec{r}, \vec{c}}})^{-1} \gamma
+%   (\vec{x}_i (a))$, and if $b = \sigma_1 (a)$ we have that $\gamma (\vec{x}_i
+%   (a)) = \gamma (\vec{x} (\vec{\consp}(i)^{-1} (a))) = \gamma (\vec{x}
+%   (\vec{\consp}(i)^{-1} (\sigma^{-1}_1 b))) = \gamma (\vec{x} ((\sigma_1 \cdot
+%   \vec{\consp}(i))^{-1} (b))) = \gamma (\vec{x} (\vec{r}^{-1}(b))) =
+%   \Pi^{\gamma}_{(\vec{x}, \vec{y})_{\vec{r}, \vec{c}}}(b)$. So
+%   $\Pi^{\gamma'}_{\vec{x}} (a) = b = \sigma_1 (a)$. Similarly for
+%   $\beta^{\gamma'}$.
+% \end{proof}
 
-\begin{proof}
-  From $C_n$ we construct $C_n'$ in the obvious way. For each gate $g \in C_n$
-  of type $F_i$ we have a symmetric circuit $C_g$ from Proposition
-  \ref{prop:function-maj} that computes the same function as $g$. Then let
-  $C_n'$ be $C_n$ but with each gate $g$ replaced by $C_g$. It is easy to see
-  that $C_n'$ is symmetric. We also have that each gate $g$ must have at most
-  $f(n)$ inputs, and the size of $C_g$ is bounded by $p(f(n))$. Thus the size of
-  $C_n'$ is bounded by $f(n)p(f(n))$.
-\end{proof}
+% \begin{lem}
+%   Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. There exists $h \in H$
+%   such that $h$ has type $(\vec{x}, \vec{y})$ and for any bijection $\gamma: U
+%   \rightarrow [n]$ and structure $\mathcal{A}$ then $C_n[\gamma \mathcal{A}]
+%   (\Pi^{\gamma}_{(\vec{x} \vert \vec{y})_{h}}) = C_n [\gamma
+%   \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y})))$.
+% \end{lem}
 
-\chapter{October 29th: Symmetric Circuits and CPT}
+% \begin{lem}
+%   Let $h \in H$ and $\vec{z} \in A_h$ and $\Pi^{\delta}_h$ be a permutation
+%   such that $\Pi^{\delta}_{\vec{z}}(a) = \delta(\vec{z}(a))$ for all $a \in
+%   \sp(h)$. Then $C_n[\gamma \mathcal{A}](\Pi^{delta}_{\vec{z}} (h))$ iff
+%   $\vec{z} \in \EV_h$.
+% \end{lem}
 
-We already have that that the set of queries decidable by symmetric
-circuits (respectively with counting) is exactly the set of queries
-expressible in Fixed-Point Logic. We know that the CFI query is not
-expressible in FPC, and so there is no symmetric circuit that can
-compute the query. 
+% \begin{thm}
+%   The matrix $M$ is equivalent to $L$.
+% \end{thm}
 
-In our attempts to find a circuit characterisation of CPT, we might try and weaken the requirement of symmetry in our notion of symmetric circuits in order to express the CFI query (and perhaps the whole of CPT). One approach would be to weaken the requirement of having small orbits, to rather only having small orbits with respect to our particular input structure. We formalise this notion below.
-
-
-\begin{definition}
-Let $C$ be a circuit on structures of size $n$. Let $g$ be a gate in $C$ and let $X$ be a set of input strings closed under the action of the symmetric group. The $inv_X = \{ \sigma \in \sym_n : \forall x \in X g \circ H (x) = g \circ H (\sigma x)$.
-\end{definition}
-\begin{definition}
-  Let $(C_n)_{n \in \mathbb{N}}$ be a family of circuits. For any
-  finite structure $\mathcal{A}$ let $X_{\mathcal{A}}$ be the set of
-  all string encodings of $\mathcal{A}$. We say a circuit family has
-  small isomorphism orbits if there is a polynomial $p(n)$ such that
-  for any sufficiently large $n$, finite structure $\mathcal{A}$ of
-  cardinality $n$ and any $g \in C_n$ we have
-  $\vert S_n : \inv_{X_{\mathcal{A}}}(g) \vert \leq p(n)$.
-\end{definition}
-
-\begin{thm}
-  \label{thm:simple_group}
-  Let $n \in \mathbb{N}$, $n \geq 5$. Let $r \in \mathbb{N}$ such that
-  $r \leq n/2$. Suppose that $G$ is a subgroup of $\sym(n)$, then
-  there is a constant $k \in mathbb{N}$ such that for all $n \geq k$
-  if $\vert \sym(n):G \vert \leq {{n}\choose {r}}$ then there exists
-  $X \subseteq [n]$ with $\vert X \vert \leq r$ and such that
-  $\alt([n] \setminus X) \leq G$.
-\end{thm}
-
-The following result shows that even this weakened definition fails to
-capture CPT.
-\begin{thm}
-  There is no family of circuits with small isomorphism orbits that
-  expresses the CFI query.
-\end{thm}
-\begin{proof}
-  Let $(G_n)_{n \in \mathbb{N}}$ be a family of ordered graphs such that each $G_n$ has
-  odd and even CFI graphs $\mathfrak{G}$ and $\tilde{\mathfrak{G}}$ respectively, each of
-  cardinality $n$. Furthermore, suppose the CFI query for $(G_n)$ is not expressible in
-  FPC (the existence of such a family is guaranteed by
-  \cite{}). Suppose there exists a family of circuits $(C_n)_{n \in \mathbb{N}}$ with
-  small isomorphism orbits that decides the CFI query for $(G_n)$.
-  Then we have that $C_n(\mathfrak{G}) = 1$ and
-  $C_n(\tilde{\mathfrak{G}}) = 0$, and for any $g \in C_n$
-
-  \begin{align*}
-    \vert S_n : \inv_{X_{\mathcal{G}}}(g) \vert &\leq p(n),\\
-    \vert S_n : \inv_{X_{\tilde{\mathcal{G}}}}(g) \vert &\leq p(n)
-  \end{align*}.
-  Let $k$ be such that $p(n) \leq n^k$ for all sufficiently large $n$. Then we have that $p(n) \leq n^k \leq {{n}\choose{k+1}}$ for all sufficiently large $n$, and (again, taking $n$ large enough) we have that $k \leq n/2$. Taking $n$ larger than the constant in Theorem \ref{thm:simple_group} it follows that there exists an $X_1, X_2 \subseteq [n]$ such that $\vert X_1 \vert, \vert X_2 \vert \leq k$ and $\alt ([n] \setminus X_1) \subseteq  \inv_{X_{\mathfrak{G}}}(g)$, $\alt ([n] \setminus X_2) \subseteq  \inv_{X_{\tilde{\mathfrak{G}}}}(g)$. It follows that
-  \begin{align*}
-    \alt ([n] \setminus (X_1 \cup X_2)) &\subseteq \alt ([n] \setminus X_1) \cap \alt ([n] \setminus X_2)\\
-                                        &\subseteq \inv_{X_{\mathfrak{G}}}(g) \cap \inv_{X_{\tilde{\mathfrak{G}}}}(g) \\
-                                        &\subseteq \inv_{X_{\mathfrak{G} \cup \tilde{\mathfrak{G}}}}(g) =  \inv_{CFI(G)}(g),
-  \end{align*}
-  where $CFI(G)$ is set of all encodings of all CFI graphs of $G_n$.
-
-  We then have that
-  \begin{align*}
-    \vert S_n : \inv_{CFI(G)}(g) \vert \leq \vert S_n : \alt ([n] \setminus (X_1 \cup X_2)) \leq  \frac{n!}{(n-2k)!/2} \leq n^{2k+1},
-  \end{align*}
-  with the last inequality following for large enough $n$. We thus
-  have from Theorem \ref{} that there is a symmetric circuit $D_n$
-  that decides the CFI problem for $G_n$, and hence a family $(D_n)$
-  that decides the CFI problem for the family of graphs $(G_n)$. From
-  the theorem of Dawar et al. \cite{}, it follows that there is as
-  formula of FPC that decides the CFI query for $(G_n)$ contradicting
-  our assumption.
-\end{proof}
-
-
+\chapter{Concluding Remarks}
+\bibliographystyle{plain} \bibliography{references}
 \end{document}
