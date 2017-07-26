@@ -1,78 +1,78 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
-A finite relational structure, such as a graph, can be represented as a binary
-string in a standard way (for instance, by enumerating its adjacency matrix).
-When we speak of the computational complexity of properties of graphs, we assume
-such an encoding in order to present the structure as input to a machine or
-circuit or other appropriate computational model. The properties of structures
-we are interested in studying are invariant under isomorphisms. This requirement
-translates into an invariance condition on sets of strings---say that a language
-$L \subseteq \{0,1\}^\star$ is a \emph{graph property} if, whenever $x \in L$
-for a string $x$ representing a graph $G$, we have $y\in L$ for any string $y$
-obtained from $x$ by re-ordering the vertices of $G$. The central open question
-in descriptive complexity---whether there is a logical characterisation of the
-polynomial-time decidable properties of finite relational structures--- can then
-be understood as the question of characterizing those languages $L$ that are in
-$\PT$ and are graph properties.
+% A finite relational structure, such as a graph, can be represented as a binary
+% string in a standard way (for instance, by enumerating its adjacency matrix).
+% When we speak of the computational complexity of properties of graphs, we assume
+% such an encoding in order to present the structure as input to a machine or
+% circuit or other appropriate computational model. The properties of structures
+% we are interested in studying are invariant under isomorphisms. This requirement
+% translates into an invariance condition on sets of strings---say that a language
+% $L \subseteq \{0,1\}^\star$ is a \emph{graph property} if, whenever $x \in L$
+% for a string $x$ representing a graph $G$, we have $y\in L$ for any string $y$
+% obtained from $x$ by re-ordering the vertices of $G$. The central open question
+% in descriptive complexity---whether there is a logical characterisation of the
+% polynomial-time decidable properties of finite relational structures--- can then
+% be understood as the question of characterizing those languages $L$ that are in
+% $\PT$ and are graph properties.
 
-Anderson and Dawar~\cite{AndersonD17} study this question through the lens of
-circuit complexity, by considering \emph{symmetric circuits}. These are circuits
-that necessarily accept graph properties, with this fact explicitly witnessed by
-automorphisms of the circuit. To be precise, we can think of a property of
-(directed) graphs on $n$ vertices as being given by a Boolean function $f:
-\{0,1\}^{n^2} \rightarrow \{0,1\}$ which takes as input the $n^2$ potential
-edges and outputs $1$ if the property is satisfied by the graph given on the
-input. The function $f$ is \emph{graph-symmetric} in the sense that any
-permutation of its inputs induced by a permutation of the $n$ vertices leaves
-$f$ unchanged (note this is not the same thing as requiring that $f$ is
-invariant under all permutations of its inputs). A symmetric circuit is a
-circuit computing a Boolean function of $n^2$ inputs where each permutation of
-$[n]$ can be extended to an automorphism of the circuit. Such a circuit
-necessarily computes an invariant function.
+% Anderson and Dawar~\cite{AndersonD17} study this question through the lens of
+% circuit complexity, by considering \emph{symmetric circuits}. These are circuits
+% that necessarily accept graph properties, with this fact explicitly witnessed by
+% automorphisms of the circuit. To be precise, we can think of a property of
+% (directed) graphs on $n$ vertices as being given by a Boolean function $f:
+% \{0,1\}^{n^2} \rightarrow \{0,1\}$ which takes as input the $n^2$ potential
+% edges and outputs $1$ if the property is satisfied by the graph given on the
+% input. The function $f$ is \emph{graph-symmetric} in the sense that any
+% permutation of its inputs induced by a permutation of the $n$ vertices leaves
+% $f$ unchanged (note this is not the same thing as requiring that $f$ is
+% invariant under all permutations of its inputs). A symmetric circuit is a
+% circuit computing a Boolean function of $n^2$ inputs where each permutation of
+% $[n]$ can be extended to an automorphism of the circuit. Such a circuit
+% necessarily computes an invariant function.
 
-The results of~\cite{AndersonD17} show a tight relationship between the
-decdability of a graph property by means of a polynomial-size family of
-symmetric circuits and its definability in extensions of fixed-point logic. In
-particular, they show that a property is definable in fixed-point logic with
-counting ($\FPC$) if, and only if, it is decidable by a polynomially-uniform
-family of symmetric circuits using Boolean and majority gates (or, equivalently,
-threshold gates). Without the symmetry restriction, polynomial-size families of
-circuits have the same computational power whether we restrict ourselves to
-Boolean gates only or allow richer bases such as threshold gates. One
-consequence of the results in~\cite{AD14} is that, with the requirement of
-symmetry, these different bases do yield different expressive power, suggesting
-some lack of robustness to the model. One of the results in the present paper
-shows that the model with majority circuits is robust in the sense that it is
-able to simulate, by means of symmetric circuits, any symmetric circuit composed
-of gates computing Boolean functions that are themselves symmetric (in the sense
-that they are invariant under \emph{all} permutations of their inputs. Thus, any
-property decidable by a polynomially-uniform family of such circuits is
-definable in $\FPC$.
+% The results of~\cite{AndersonD17} show a tight relationship between the
+% decdability of a graph property by means of a polynomial-size family of
+% symmetric circuits and its definability in extensions of fixed-point logic. In
+% particular, they show that a property is definable in fixed-point logic with
+% counting ($\FPC$) if, and only if, it is decidable by a polynomially-uniform
+% family of symmetric circuits using Boolean and majority gates (or, equivalently,
+% threshold gates). Without the symmetry restriction, polynomial-size families of
+% circuits have the same computational power whether we restrict ourselves to
+% Boolean gates only or allow richer bases such as threshold gates. One
+% consequence of the results in~\cite{AD14} is that, with the requirement of
+% symmetry, these different bases do yield different expressive power, suggesting
+% some lack of robustness to the model. One of the results in the present paper
+% shows that the model with majority circuits is robust in the sense that it is
+% able to simulate, by means of symmetric circuits, any symmetric circuit composed
+% of gates computing Boolean functions that are themselves symmetric (in the sense
+% that they are invariant under \emph{all} permutations of their inputs. Thus, any
+% property decidable by a polynomially-uniform family of such circuits is
+% definable in $\FPC$.
 
-This motivates the study of symmetric circuit families that involve gates which
-themselves may compute non-symmetric functions. In particular, motivated by the
-study of rank logic~\cite{DGHL09,GP15}, we consider gates that are
-\emph{matrix-symmetric}. These are gates computing a Boolean function $f:
-\{0,1\}^{A \times B} \rightarrow \{0,1\}$ which is invariant under arbitrary
-permutations of $A$ and $B$. A typical example is the function computing the
-rank of an $A \times B$ $0$-$1$ matrix. We show that the support theorem of
-Anderson and Dawar can be shown to hold, even in the presence of
-matrix-symmetric gates. This allows us to show that definability in the logic
-fixed-point with rank ($\FPR$) is the same as decidability by
-polynomially-uniform families of symmetric circuits with rank gates.
-% Another extension of $\FPC$ that has received much attention in the
-% descriptive complexity literature is the class $\CPTC$ of \emph{choiceless
-% polynomial time with counting}. The work of~\cite{AD14} leaves open the
-% question of obtaining a circuit characterization of this class and it was
-% suggested there that this would require a relaxation of the notion of symmetry
-% used in defining symmetric circuits. In particular, while $\CPTC$ is based on
-% a machine model designed to preserve symmetry by forbidding choices, the
-% polynomial time and space restrictions apply int he context of the symmetries
-% fo a \emph{single input structure}. In this paper, we consider a relaxation of
-% the notion of symmetric circuit intended to capture exactly this intuition.
-% However, we are able to show that this does not yield a characterization of
-% $\CPTC$. In particular, we show that no family in this class of relaxed
-% symmetric circuits can distinguish odd from even Cai-F\"urer-Immerman graphs,
-% something we know is do-able in $\CPTC$~\cite{DRR08}.
+% This motivates the study of symmetric circuit families that involve gates which
+% themselves may compute non-symmetric functions. In particular, motivated by the
+% study of rank logic~\cite{DGHL09,GP15}, we consider gates that are
+% \emph{matrix-symmetric}. These are gates computing a Boolean function $f:
+% \{0,1\}^{A \times B} \rightarrow \{0,1\}$ which is invariant under arbitrary
+% permutations of $A$ and $B$. A typical example is the function computing the
+% rank of an $A \times B$ $0$-$1$ matrix. We show that the support theorem of
+% Anderson and Dawar can be shown to hold, even in the presence of
+% matrix-symmetric gates. This allows us to show that definability in the logic
+% fixed-point with rank ($\FPR$) is the same as decidability by
+% polynomially-uniform families of symmetric circuits with rank gates.
+% % Another extension of $\FPC$ that has received much attention in the
+% % descriptive complexity literature is the class $\CPTC$ of \emph{choiceless
+% % polynomial time with counting}. The work of~\cite{AD14} leaves open the
+% % question of obtaining a circuit characterization of this class and it was
+% % suggested there that this would require a relaxation of the notion of symmetry
+% % used in defining symmetric circuits. In particular, while $\CPTC$ is based on
+% % a machine model designed to preserve symmetry by forbidding choices, the
+% % polynomial time and space restrictions apply int he context of the symmetries
+% % fo a \emph{single input structure}. In this paper, we consider a relaxation of
+% % the notion of symmetric circuit intended to capture exactly this intuition.
+% % However, we are able to show that this does not yield a characterization of
+% % $\CPTC$. In particular, we show that no family in this class of relaxed
+% % symmetric circuits can distinguish odd from even Cai-F\"urer-Immerman graphs,
+% % something we know is do-able in $\CPTC$~\cite{DRR08}.
 
 \end{document}

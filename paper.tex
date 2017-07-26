@@ -1,1 +1,67 @@
+\documentclass[12pt]{article}
+
+% This first part of the file is called the PREAMBLE. It includes customizations
+% and command definitions. The preamble is everything between \documentclass
+% and \begin{document}.
+
+\usepackage[margin=1in]{geometry} % set the margins to 1in on all sides
+\usepackage{graphicx} % to include figures
+\usepackage{amsmath} % great math stuff
+\usepackage{amsfonts} % for blackboard bold, etc
+\usepackage{amsthm} % better theorem environments
+\usepackage{xspace}
+\usepackage{subfiles}%allow for subfiles
+\usepackage{blindtext}
+\usepackage{mymacros}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{remark}[thm]{Remark}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{conj}[thm]{Conjecture}
+
+\DeclareMathOperator{\id}{id}
+
+\begin{document}
+
+\title{Symmetric Circuits for Rank Gates}
+
+\author{Anuj Dawar and Gregory Wilsenach \\ 
+Computer Laboratory \\
+University of Cambridge}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\subfile{sections/introduction}
+\newpage
+
+\section{Background}
+\subfile{sections/background}
+\newpage
+
+\section{Symmetric Circuits}
+\subfile{sections/symmetric-circuits}
+\newpage
+
+\section{Symmetry and Support}
+\subfile{sections/symmetry-and-support}
+\newpage
+
+\section{Translating Circuits into Formulas}
+\subfile{sections/translating-circuits-into-formulas}
+\newpage
+
+\section{Concluding Remarks}
+\subfile{sections/conclusion}
+\newpage
+
+\bibliographystyle{plain} \bibliography{references}
+\end{document}
 
