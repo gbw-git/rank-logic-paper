@@ -1,0 +1,825 @@
+\documentclass[../paper.tex]{subfiles}
+\begin{document}
+
+In this section we develop the theory for defining a formula of FPR from a
+family of $P$-uniform family of symmetric circuits with rank gates. We first
+prove results on the generality of rigid circuits and circuits with
+bijective labelings. Second, we prove that there are polynomial time algorithms
+for determining canonical supports of gates. Third, we develop a FPR definable
+way of evaluating a rank gate in the circuit. Finally, we complete the result by
+explicitly defining an FPR formula corresponding to a given family of symmetric
+circuits with rank gates.
+
+We note that most of these results are for the more general case of symmetric
+circuits with matrix-symmetric gates.
+
+\subsection{Rigid Circuits and Labellings}
+
+In this section we prove important simplifying lemmas which allow for
+assumptions of rigidity and bijective labels.
+
+\begin{definition}
+  We say that a circuit $C$ has bijective labels if for each gate $g$ in $C$,
+  $L(g)$ is a bijection.
+\end{definition}
+
+\begin{lem}
+  \label{lem:bij_labels}
+  There is an algorithm that runs in polynomial time that takes in a circuit $C$
+  and outputs a circuit with unique gates $C'$. Moreover, if $C$ was symmetric
+  then $C'$ is symmetric. If $C$ is rigid then $C'$ is rigid.
+\end{lem}
+
+\begin{proof}
+  Let $S = 2*\vert C \vert$. Recurse through the gates of $C$ topologically and
+  let $h$ be the next gate topologically. If for all $g \in W(h, \cdot)$ we have
+  that $L\vert (g)^{-1}(h) \vert = 1$ continue on to the next gate. If not add
+  in a tower of $S$ $\and$ gates such that $h \rightarrow \and^h_1 \rightarrow
+  \ldots \rightarrow \and^h_S$ (i.e. we have a tower of $\and$ gates with $h$ as
+  input to $\and^h_1$ and the output of each $\and^h_i$ connected to the input
+  of each $\and^h_{i+1}$ for each $1 \leq i < S$). Now for each $g \in W(h,
+  \cdot)$, if $L(g)^{-1}(h) = \{ s_0, \ldots, s_{r}\}$, for each $1 \leq i \leq
+  r$ add in the wires $W(\and^h_i, g)$ and set $L(g)(s_{i}) = \and^h_i$. Now
+  continue on to the next gate topologically and run the above algorithm.
+
+  % First, notice that for a given gate $h$ and $k \in \mathbb{N}$, we can
+  % define
+  % a sub-circuit $h^k = 1 \and \cdots, 1 \and h$ (or rather a $k$-height tower
+  % of
+  % $k$ binary $\and$ gates with $h$ at the top and all other inputs set to
+  % $1$).
+  % We call $h$ the top of the sub-circuit $h^k$ and the bottom $and$ gate (the
+  % output of the sub-circuit) the bottom gate. We may think of this as a
+  % $k$-height copy of the gate $h$, in the sense that it has the same output as
+  % $h$ and similar orbits. We now use different copies to distinguish gates
+  % that
+  % otherwise have the same labelling.
+
+  % Let $h$ be the next gate topologically. Then let $r$ be maximal such that
+  % $W(h,g)$ and $\omega_g^{-1}(h) = \{ s^g_1, s^g_2, \ldots, s^g_r \}$. Then
+  % let
+  % $k$ be the height of the highest tower with $h$ at the top and with it's
+  % bottom connected to a gate in $W(h, \cdot)$. Then create a single
+  % $k+r-1$-height tower by adding in the appropriate number of binary $\and$
+  % gates below $h$.
+
+  % For each $g \in W(h, \cdot)$ and for each $\omega_g^{-1}(h) = \{s^g_1,
+  % s^g_2,\ldots , s^g_{r_g}\}$, set $L'(g)(s^g_1) = h$ each child starting with
+  % the $and$-gate child to $h$ add in a wire from from the $i$th gate in the
+  % tower to $g$ and set $L'(g)(s^g_{i+1}) = \and_i$, where $\and_i$ is the
+  % $i$th
+  % $\and$ gate in the tower starting with the $\and$ gate in the tower child to
+  % $h$. There are enough gates in the tower as $r_g \leq r$.
+
+  We call this updated circuit $C'$.
+  
+  Firstly, note that after running the above algorithm for each $g$ the
+  labelling of $g$ will be a bijection. Moreover, it's easy to see that the
+  output of each gate remains unchanged, and as such the output of the circuit
+  is unchanged.
+
+  Secondly, notice that the size of $C'$ is at most $2*\vert C \vert^2$, and
+  note that the above algorithm runs in polynomial time.
+
+  Now suppose that $C$ is symmetric. Let $\sigma$ be a permutation on the input
+  universe and $\pi_C$ the induced automorphism on $C$. We now define $\pi$, the
+  induced automorphism on $C'$. For each gate $g$ in $C'$, if $g$ is in $C$ then
+  set $\pi(g) := pi_C(g)$. If $g$ is not in $C$ then $g$ must be some
+  $\and^h_i$, for some $h$ in $C$. Then set $\pi(\and^h_i) :=
+  \and^{\pi_C(h)}_i$. It is easy to see that $\pi$ is an automorphism, and $\pi$
+  extends $\sigma$.
+
+  Suppose that $C$ is rigid. It is easy to see that $C'$ will be rigid as well.
+
+\end{proof}
+
+
+\begin{lem}
+  There is an algorithm that runs in polynomial time that takes in a circuit $C$
+  and outputs a circuit $C'$ such that $C'$ is rigid and has bijective labels.
+  Moreover, if $C$ was symmetric it follows that $C'$ will be symmetric.
+\end{lem}
+
+\begin{proof}
+  First run the algorithm from Lemma \ref{lem:bij_labels} on $C$, and call the
+  output circuit $C$.
+  
+  Recurse through the gates of $C$ topologically. For each internal gate $g$,
+  for all $g'$ in $C$ such that $g \neq g'$, $W(\cdot, g) = W(\cdot, g')$, $W(g,
+  \cdot) = W(g', \cdot)$, $\Sigma(g) = \Sigma(g')$, $L(g) \sim L(g')$ and
+  $\Omega^{-1}(g) = \Omega^{-1}(g')$, delete $g'$ and for all $s \in L^{-1}(g')$
+  set $L(s) := g$.
+
+  Now re-run the algorithm from Lemma \ref{lem:bij_labels} on $C$ and output the
+  result.
+\end{proof}
+
+  \begin{lem}
+    Let $C = \langle G, W, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\SB, \MB,
+    \tau)-circuit$ on structures of size $n$. There is a deterministic algorithm
+    which runs in Poly($\vert C \vert$) and outputs a rigid $(\SB, \MB, \tau)
+    circuit$ $C'$ such that $G' = G$ and for any $g \in G$, and any input
+    $\tau$-structure $\mathcal{A}$ and any bijection $\gamma$ from $A$ to $[n]$,
+    $C[\gamma \mathcal{A}](g) = C'[\gamma \mathcal{A}](g)$ and if $C$ is
+    symmetric then so is $C'$.
+  \end{lem}
+
+  \begin{proof}
+  
+  \end{proof}
+
+  \subsection{Computing Supports}
+  
+ \begin{lem}
+   Let $C$ be a rigid $(\SB, MB, \tau)$-circuit on structures of size $n$ and
+   $\sigma \in \sym_n$. There is a deterministic algorithm which runs in time
+   Poly($\vert C \vert$) and outputs for each gate $g$ its image under the
+   automorphism $\pi$ induced by $\sigma$, if it exists.
+ \end{lem}
+ \begin{proof}
+   The proof proceeds by recursively going through the circuit and building the
+   mapping $\pi$ induced by $\sigma$.
+
+   Suppose $g$ is a constant gate, then $\pi g := g$. Suppose $g$ is a
+   relational gate, then there is at most one gate $g'$ such that $\Sigma (g) =
+   \Sigma (g')$ and $\sigma\Lambda (g') = \Lambda (g)$. If such a $g'$ exists
+   assign $\pi g := g'$, else terminate with failure.
+
+   If $g$ is an symmetric internal gate then (from rigidity) there is at most
+   one gate $g'$ such that $\Sigma (g) = \Sigma(g')$ and $W_{g'} = \pi W_g$.
+   Assign $\pi g := g'$ if such a gate exists, or else terminate with failure.
+
+   If $g$ is a matrix-symmetric internal gate then consider the set of gates
+   $g'$ such that $g'$ has children $\pi W_g$ and $\Sigma(g) = \Sigma(g')$, and
+   let $A \times B = \dom (Sigma(g))$. If no such gate $g'$ exists, terminate
+   with failure. Define $\sigma_{\pi, g'}:A \times B \rightarrow A \times B$ by
+   $\sigma_{\pi, g'} = \omega^{-1}_{g'} \pi \omega_{g}$. Then clearly
+   $\omega_{g'} \sigma_{\pi, g'} = \pi \omega_{g}$, and it's easy to show that
+   $\pi \omega_g \sim \omega_{g'}$ iff $\sigma_{\pi,g'} \in \sym_A \times
+   \sym_B$. But this just involves checking that $\sigma$ acts as a bijection on
+   $A$ and $B$ separately and, given that $\vert A \vert$ and $\vert B \vert$
+   are both bounded by $\vert C \vert$, the algorithm which just iterates
+   through $A$ and $B$ is sufficient. If for every $g'$ it is found that
+   $\pi_{\sigma,g'}$ is not in $\sym_A \times \sym_B$ then terminate with
+   failure. If there is a $g'$ for which $\pi_{\sigma, g'} \in \sym_A \times
+   \sym_B$ then it is unique by rigidity and so set $\pi g := g'$.
+
+   If $g$ is an output gate, then check that for all tuples in $[n]^{q}$ we have
+   that $\pi \Omega (x) = \Omega (\sigma (x))$, and terminate with failure if
+   the condition is not met.
+
+   If the algorithm has not terminated with failure, output the automorphism.
+
+   The algorithm clearly runs in Poly($\vert C \vert$)
+ \end{proof}
+
+\subsection {Evaluating Circuits}
+Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a family of polynomial-size
+rigid symmetric circuits with matrix-symmetric gates. that compute a $q$-ary
+query. Let $n_0$ the constant in the hypothesis of the Support Theorem.
+
+Let $\mathcal{A}$ be a structure of size $n$ over the universe $U$, and let $g$
+be a matrix-symmetric gate in $C_n$. In this section we develop the theory which
+will allow us to evaluate this gate in FPR and (using results from Anderson and
+Dawar \cite{}) recursively evaluate the circuit.
+
+We recall that in order to evaluate the gate $g$ we need to consider a bijection
+$\gamma: U \rightarrow [n]$, with the evaluation of $g$ given by $C_n[\gamma
+\mathcal{A}](g)$. We first show that the evaluation of $g$ depends only on which
+elements of $U$ are mapped to $\consp(g)$.
+
+\begin{definition}
+  Let $f: X \rightarrow Y$ and $g : X' \rightarrow Y'$. We say that $f$ is
+  \emph{compatible} with $g$, or $f \sim g$, if for all $a \in S_1 \cap S_2$,
+  $f(a) = g(a)$ and for all $a \in S_1 \setminus S_2$ and $b \in S_2 \setminus
+  S_1$, $f(a) \neq g(b)$.
+\end{definition}
+
+\begin{definition}
+  Let $f: A \times B \rightarrow H$ and $p: A' \times B' \rightarrow H$. We say
+  that $f$ and $p$ are \emph{row-column equivalent} if there exist bijections
+  $\alpha: A \rightarrow A'$ and $\beta: B \rightarrow B'$ such that for all
+  $(a, b) \in A \times B$, $f(a,b)g(\alpha(a), \beta(b))$. In this case we write
+  $f \sim p$.
+\end{definition}
+
+For a given bijection $\gamma: U \rightarrow [n]$ we can define a matrix
+$L^{\gamma} : \dom (g) \rightarrow \{0,1\}$ by $L^{\gamma} (a,b) := C[\gamma
+\mathcal{A}](L(g)(a,b))$. In the following Lemma we show that the the matrix
+symmetry of the gate $g$ ensures that for any two bijections $\gamma_1,
+\gamma_2$, if they agree on the support of $g$ then $L^{\gamma_1}_g$ is
+row-column equivalent to $L^{\gamma_2}_g$. This implies that the evaluation of
+$g$ depends only on the assignment to its support.
+
+\begin{lem}
+  Let $g$ be a matrix-symmetric gate in $C_n$ with children $H$. Let $\eta:
+  \consp(g) \rightarrow U$ be an injection, and suppose $\gamma_1, \gamma_2: U
+  \rightarrow [n]$ with $\gamma^{-1}_1 \sim \eta$ and $\eta \sim \gamma^{-1}_2$.
+  Let $A \times B = \dom (L(g))$. Then $L^{\gamma_1}$ and $L^{\gamma_2}$ are
+  row-column equivalent.
+\end{lem}
+
+\begin{proof}
+  We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
+  \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
+  consistent with $\alpha$, it follows that $\pi$ must fix $\consp(g)$. Thus
+  $L(g) \sim \pi \cdot L(g)$, and so there exists $(\sigma, \lambda)$ such that
+  $\pi L(g) = L(g) (\sigma, \lambda)$.
+
+  We then have that,
+  \begin{align*}
+    L^{\gamma_1} (a,b) &= C_n[\gamma_1 \mathcal{A}](L(g)(a,b))\\
+                       & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(a,b)] \\
+                       & = C_n[\gamma_2 \mathcal{A}][L(g)((\sigma, \lambda)(a,b))]\\
+                       & = L^{\gamma_2} ((\sigma, \lambda) (a,b)),
+  \end{align*}
+  and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
+\end{proof}
+
+For each gate we define the set of all assignments to support of that gate which
+cause the evaluate to true: $\EV_g := \{ \alpha: U^{\underline{\consp(g)}} :
+\exists \gamma \in U^{\underline{[n]}} C_n [\gamma \mathcal{A}](g) = 1 \wedge
+\alpha \sim \gamma^{-1}\}$. We now construct $\EV_g$ using $\EV_h$ for each $h
+\in H_g$. In doing so we entirely characterise exactly which bijections $\gamma:
+U \rightarrow [n]$ cause $g$ to evaluate to true.
+
+% \begin{remark}
+%   Let $\sigma \in \spstab{g}$, then we know that there exists $(\sigma_r,
+%   \sigma_c) \in \sym_A \times \sym_B$ and $\sigma_r (i) = \row (\sigma h)$,
+%   for any $h \in H$ such that $\row (h) = i$ and similarly $\sigma_c (j) =
+%   \column (\sigma h)$, for any $h \in H$ such that $\column (h) = j$.
+% \end{remark}
+
+We introduce here some useful notation.
+
+\begin{definition}
+  Let $S^r_h = \{ \sigma \in \stab (\consp(g)) : \sigma \vec{r_h} = \vec{r_h}
+  \}$ and $G^r_h = \{ \sigma \in \stab(\consp(g)) : \row(\sigma h) = \row(h)\}$.
+  Let $S^c_h = \{ \sigma \in \stab (\consp(g)) : \sigma \vec{c_h} = \vec{c_h}
+  \}$ and $G^c_h = \{ \sigma \in \stab(\consp(g)) : \column(\sigma h) =
+  \column(h)\}$.
+\end{definition}
+
+Clearly, by definition of a row and column support, $S^r_h \subseteq G^r_h$ and
+$S^c_h \subseteq G^c_h$.
+
+% \begin{remark}
+%   In this section I assume for the moment that:
+%   \begin{itemize}
+%   \item $\consp (g) = \{\}$,
+%   \item $S^r_h = G^r_h$ and $S^c_h = G^c_h$,
+%   \item $\forall h,h' \in H$ we have $\vert r_h \vert = \vert r_{h'} \vert$
+%     and $\vert c_h \vert = \vert c_{h'} \vert$,
+%   \item For all $i,i' \in A$ $\exists \sigma \in \stab(\consp (g))$ such that
+%     $\sigma_r i = i'$. Similarly for all $j, j' \in B$ $\sigma \exists \in
+%     \spstab{g}$ such that $\sigma_c j = j'$.
+%   \item $\forall h \in H$, $\orb (h) = H$
+%   \end{itemize}
+% \end{remark}
+
+% Let $k_r = \vert r_h \vert$ and $k_c = \vert c_h \vert$. Let $\mathcal{G}_r =
+% \{\sigma_r : \sigma \in \spstab{g}\}$ and $\mathcal{G}_c = \{sigma_c : \sigma
+% \in \spstab{g}\}$.
+
+% \begin{definition}
+%   Let $\mathcal{G} \leq \sym_n$ and $x$ be an element of a set on which an
+%   action of $\sym_n$ is defined. Then $\orb_{\mathcal{G}}(x) = \{x^\pi: \pi
+%   \in \mathcal{G}\}$.
+
+%   For $i \in [a]$ let $\orb_r(i) = \orb_{\mathcal{G}_r}(i)$ and for $j \in
+%   [b]$ let $\orb_c (j) = \orb_{\mathcal{G}_c}(j)$.
+% \end{definition}
+
+% \begin{definition}
+%   Let $A, B \subseteq [n]$ and let $t = (t_1, t_2, t_3) \in \mathbb{N}^3$. We
+%   say that $(A,B)$ has \emph{type} $t$ if $\vert A \vert = t_1$, $\vert B
+%   \vert = t_2$ and $\vert A \cap B \vert = t_{3}$. We say that $\type (A,B) =
+%   t$.
+% \end{definition}
+
+For the sake of brevity, for sets $Z,X,Y$, where $f : Z \rightarrow X$ and $p :
+Z \rightarrow Y$ are injections, let $f_p = f \cdot p^{-1}$.
+
+\begin{definition}
+  Let $\vec{x}, \vec{y} : Z \rightarrow X$ and $\vec{r}, \vec{c}: Z \rightarrow
+  Y$ be injections. If $\vec{x} \cdot \vec{r}^{-1} \sim \vec{y} \cdot
+  \vec{c}^{-1}$ we say that $(\vec{x}, \vec{y})$ and $(\vec{r} \vec{c})$ have
+  the same \emph{type}.
+\end{definition}
+
+We note that if we have $f : X \rightarrow Y$ and $p: X' \rightarrow Y'$ and $f
+\sim p$ then define $(f \vert p): X \cup X' \rightarrow Y \cup Y'$ by
+
+\begin{align*}
+  (f \vert p) (x) =
+  \begin{cases}
+    f (x) & x \in X \\
+    p (x) & x \in Y.
+  \end{cases}
+\end{align*}
+
+The compatibility of these two functions ensures that this function is well
+defined.
+
+% \begin{claim}
+%   Let $A_1,B_1, A_2, B_2 \subseteq [n]$. Then $(A_1, B_1)$ and $(A_2, B_2)$
+%   have the same type iff $\exists \pi \in \sym_n$ such that $A_1 = A^\pi_2$
+%   and $B_1 = B^\pi_2$.
+% \end{claim}
+
+% \begin{definition}
+%   Let $f: A \rightarrow S$ and $g: B \rightarrow S$ be injections, with $A$
+%   and $B$ being finite sets. Then $(f,g)$ has \emph{type} $t= (t_1 , t_2, t_3)
+%   \in \mathbb{N}^3$ if $\vert A \vert = t_1$ and $\vert B \vert = t_2$ $\vert
+%   \{i \in A \cap B : f(i) = g(i)\} \vert = t_3$. We say that $\type (f,g) =
+%   t$.
+% \end{definition}
+
+% \begin{definition}
+%   Let $h \in H$ the \emph{type} of $h$ is the type of $(r_h, c_h)$. We denote
+%   the type of $h$ by $\type (h)$.
+% \end{definition}
+
+We now fix an injection $\eta : \consp(g) \rightarrow U$ and describe an
+approach for determining if $\eta \in EV_g$.
+
+Let $X$ be a set on which the left group action on $\sym_n$ is defined and $s
+\in X$. We denote $\vec{x}$ then $A_s = \{\vec{x} \in U^{\underline{[\vert
+    \sp(s) \vert ]}} : \eta \sim \vec{x} \cdot \vec{\consp}(s)^{-1} \}$, where
+$\vec{\consp}(s): [\vert \consp(s) \vert] \rightarrow \consp(s)$ maps $i \in
+[\vert \consp(s) \vert]$ to the $i$th element of $\consp(s)$. For $\vec{x} \in
+A_s$, we use $\vec{x}_s$ from here forward to denote $\vec{x} \cdot
+\vec{\consp(s)^{-1}}$.
+
+% Let $L(g)(i,j) = h \in H$, $\vec{x} \in A_i$ and $\vec{y} \in A_j$. Let
+% $\vec{r} \in ^{\underline{\consp(i)}}$ and $\vec{c}
+% \in\consp{j}^{\underline(\consp(j))}$. Suppose $(\vec{r}, \vec{c})$ has the
+% type of $(\vec{x}, \vec{y})$. Then we can define $(\vec{x}\vert \vec{y}):
+% \consp(i) \cup \consp(j) \rightarrow U$ by
+% \begin{align*}
+%   (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) (z) =
+%   \begin{cases}
+%     \vec{x} (\vec{r}^{-1}(z)) \text{ if } z \in \consp(i) \\
+%     \vec{y} (\vec{r}^{-1}(z)) \text{ if } z \in \consp(j). \\
+%   \end{cases}
+% \end{align*}
+
+This mapping allows us to combine two assignments into a single assignment. This
+will be useful when combining the row and column supports of a gate.
+
+% \begin{claim}
+%   Let $f: A \rightarrow S$ and $g B \rightarrow S$ be injections. Then $(f,g)$
+%   has the same type as $(A,B)$. It follows that if $h \in H$, and $(i,j) =
+%   L^{-1}(h)$,with $f \in A^r_i$ and $ g \in A^c_j$ then $h$ has the same type
+%   as $(f,g)$.
+% \end{claim}
+
+% For $(i,j) \in [a] \times [b]$ let $H_{i,j} = \{L(p,q): (p,q) \in \orb_r(i)
+% \times \orb_c(j)]\}$.
+
+% \begin{claim}
+%   For all $(i', j') \in \orb_r(i) \times \orb_c(j)$ and $\sigma \in
+%   \spstab{g}$, $(\sigma_r i', \sigma_cj') \in \orb_r(i) \times \orb_c(j)$.
+% \end{claim}
+
+% \begin{claim}
+%   For all $(i,j) \in [a] \times [b]$, $H_{i,j}$ is a union of orbits.
+% \end{claim}
+
+% \begin{lem}
+%   Let $(i,j) \in [a] \times [b]$. If $h, h' \in H_{i,j}$ and $h, h'$ are the
+%   same type then $h' \in \orb(h)$.
+% \end{lem}
+
+We now define a matrix that we later be shown to be definable in FPR. We then
+show that this matrix is row-column equivalent to $L^{\gamma}$, for any
+bijection $\gamma: U \rightarrow [n]$, and hence allowing us to determine the
+rank of the matrix input to $g$ in FPR.
+
+Let $R^{\min} = \{\min (\orb(\row(h))) : h \in H\}$ and $C^{\min} = \{ \min
+(\orb (\column(h))) : h \in H\}$ and let
+\begin{align*}
+  I = \{(i, \vec{x}): i \in R^{\min}, \vec{x} \in A_i\},
+\end{align*}
+and
+\begin{align*}
+  J = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j \}.
+\end{align*}
+
+% \begin{align*}
+%   M ((i, \vec{x}), (j, \vec{y})) := \bigvee_{t \in \types} ((\vec{x},
+%   \vec{y}) \text{ has type } t) \land (\vec{x} | \vec{y}) \in \EV_{\mu_{i,j}(t)}.
+% \end{align*}
+
+Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$.
+
+Let $u_1 , \ldots , u_{2k}$ be the first $2k$ elements of $[n] \setminus
+\consp(g)$ in the natural order on the structure. Then let
+\[r = \eta^{-1} (\img(\vec{x}) \cap \eta (\consp(g))) \cup
+  \{u_{\vec{x}^{-1}(a)}: a \in \img(x) \setminus \eta (\consp (g))\} \] and
+\[s = \eta^{-1} (y \cap \eta (\consp(g))) \cup (x \cap y) \cup \{ u_{k +
+    \vec{x}^{-1}(a)} : a \in y \setminus (x \cup \eta (\consp (g))) \}). \]
+Define
+\[
+  \vec{r} (a) =
+  \begin{cases}
+    \eta^{-1} (\vec{x} (a)) & a \in \vec{x}^{-1} (x \cap \eta (\consp(g))) \\
+    u_{a} & a \in \vec{x}^{-1} (x \setminus \eta(\consp(g)),
+  \end{cases}
+\]
+and
+\[
+  \vec{c} (a) =
+  \begin{cases}
+    \eta^{-1} (\vec{y} (a)) & a \in \vec{y}^{-1}(y \cap \eta (\consp (g))) \\
+    \vec{r} (a) & a \in \vec{y}^{-1} (x \cap y \setminus \eta (\consp (g))) \\
+    u_{k+a} & \text{otherwise}.
+  \end{cases}
+\]
+
+\begin{lem}
+  \label{lem:permutation_row-column}
+  There exists $\sigma_1, \sigma_2 \in \spstab{g}$ such that $\sigma_1 \cdot
+  \vec{\consp(i)} = \vec{r}$ and $\sigma_2 \cdot \vec{\consp(j)} = \vec{c}$.
+\end{lem}
+\begin{proof}
+  To be added from the book
+\end{proof}
+
+Let $h = L(g)(\sigma_1(i), \sigma_2 (j))$. Then we can define the matrix $M : I
+\times J \rightarrow \{0,1\}$ by
+
+\begin{align*}
+  M((i , \vec{x}), (j, \vec{y})) := (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in EV_h.
+\end{align*}
+
+It remains to show that $M \sim L^{\gamma}$ for some (and so all) bijections
+$\gamma: U \rightarrow [n]$.
+% \begin{definition}
+%   Let $M_1$ and $M_2$ be matrices over some field, with row and column indexes
+%   given by $(A_1, B_1)$ and $(A_2, B_2)$, respectively. We say that $M_1$ and
+%   $M_2$ are row-column equivalent iff there exists bijections $\alpha: A_1
+%   \rightarrow A_2$ and $\beta: B_1 \rightarrow B_2$ such that for all $(a,b)
+%   \in A_1 \times B_1$ we have that $M_1(a,b) = M_2 (\alpha (a), \beta (b))$.
+%   If $M_1$ and $M_2$ are row-column equivalent we say that $M_1 \sim M_2$.
+% \end{definition}
+
+% Fix $\gamma: U \rightarrow [n]$ such that $\gamma^{-1} \sim \eta$. We define
+% $L^\gamma: A \times B \rightarrow \{0,1\}$ by $L^\gamma(a,b) = C[\gamma
+% \mathcal{A}](L (a,b))$.
+% \\~\\
+% We note that, in fact, it is the choice of the assignment to the support of
+% $g$, i.e. $\eta$, that really matters in the sense that for any two global
+% assignments that agree on the support of $g$ will produce row-column
+% equivalent matrices. The following lemma formalises this observation.
+
+% \begin{lem}
+%   Let $g$ be a matrix-symmetric gate in $C_n$ with children $H$ and matrix
+%   labelling $L(g)$. Let $\eta \in U^{\consp(g)}$, and suppose $\gamma_1,
+%   \gamma_2: U \rightarrow [n]$ with $\gamma^{-1}_1 \sim \alpha$ and $
+%   \gamma^{-1}_2 \sim \alpha$. Let $A \times B = \dom (L(g))$.
+
+%   Then for an input structure $\mathcal{A}$, $L^{\gamma_1} \sim L^{\gamma_2}$.
+% \end{lem}
+% \begin{proof}
+%   We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1
+%   = \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
+%   consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$. Thus
+%   $L(g) \sim \pi L(g)$, and so there exists $(\alpha, \beta)$ such that $\pi
+%   L(g) = L(g) \cdot (\alpha, \beta)$.
+
+%   We then have that,
+%   \begin{align*}
+%     L^{\gamma_1} (a,b) &= C_n[\gamma_1 \mathcal{A}](L(g)(a,b))\\
+%                        & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(a,b)] \\
+%                        & = C_n[\gamma_2 \mathcal{A}][L(g)((\alpha, \beta)(a,b))]\\
+%                        & = L^{\gamma_2} ((\alpha, \beta) (a,b)),
+%   \end{align*}
+%   and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
+% \end{proof}
+
+\begin{claim}
+  Let $\sigma \in \spstab{g}$, $\eta \in U^{\underline{\consp(g)}}$, $\gamma: U
+  \rightarrow [n]$ a bijection such that $\gamma^{-1} \sim \eta$. Then
+  $\gamma^{-1} \cdot \sigma \sim \eta$.
+\end{claim}
+\begin{proof}
+  Suppose $a \in \consp(g)$, then $\sigma (a) = a$ and so $\gamma^{-1} (\sigma
+  (a)) = \gamma^{-1} (a) = \eta (a)$.
+\end{proof}
+
+% \begin{claim}
+%   For $h \in H$ and $\sigma \in \stab(\consp (g))$, we have that
+%   $\vec{r}_{\sigma h_1} = \sigma \vec{r}_{h_1}$.
+% \end{claim}
+% \begin{proof}
+%   Proof in book
+% \end{proof}
+
+The following result shows that the action on the support of an object
+determines the action on that object.
+
+\begin{lem}
+  \label{lem:support_determine_action}
+  Let $\sigma, \sigma' \in \spstab{g}$, $a$ be an object on which on the action
+  of these two permutations is defined, and $\consp(a) \subset [n]$ be a support
+  of $a$. Then if $\sigma (\vec{\consp}(a)) = \sigma' (\vec{\consp}(a))$ then
+  $\sigma (a) = \sigma' (a)$.
+\end{lem}
+\begin{proof}
+  From $\sigma (\vec{\consp(a)}) = \sigma' (\vec{\consp(a)})$, it follows that
+  $\pi = (\sigma')^{-1} \sigma$ fixes $\vec{\consp}(a)$. Thus $\sigma (a) =
+  \sigma' (\pi (a)) = \sigma' (a)$.
+\end{proof}
+
+% \begin{lem}
+%   \label{lem:map_same_support_same_row}
+%   Let $\sigma, \sigma' \in \spstab{g}$ and suppose for some $i \in [a]$ we
+%   have that $\sigma (\vec{r}_i) = \sigma (\vec{r}_i)$. It follows that
+%   $\sigma_r (i) = \sigma'_r (i)$.
+% \end{lem}
+% \begin{proof}
+%   Let $pi = (\sigma^{-1} \sigma')_r \in G^r_i$. Then $ (\sigma^{-1} \sigma')_r
+%   (i) = \sigma^{-1}_r \sigma'_r (i) = i$, and so $\sigma_r (i) = \sigma'_r
+%   (i)$.
+% \end{proof}
+
+% Let $X$ be a set on which the left group action on which the left group action
+% of $\sym_n$ is defined and let $a \in X$. Let $\vec{x} \in A_i$ and $f \in
+% U^{\underline{[\vert \consp{a} \vert]}}$. Then $\Pi^{\gamma}_{\vec{x}_f} (a)$
+% is the action on $a$ defined by $\Pi^{\gamma}_{\vec{x}_f} (z) =
+% \gamma(\vec{x_f}(z))$, for all $z \in \consp (a)$. Lemma
+% \ref{lem:support_determine_action} tells us that this action is well defined.
+
+
+% Let $(i, j) \in A \times B$, let $\vec{x} \in A^r_i$ and $\vec{y} \in A^c_j$.
+% Define permutations $\Pi^{\gamma}_{\vec{x}}$ and $\Pi^{{\gamma},c}_{\vec{y}}$
+% such that $\Pi^{\gamma,r}_{\vec{x}}(\vec{r}_i) = \gamma (\vec{x})$ and
+% $\Pi^{\gamma,c}_{\vec{y}}(\vec{c}_j) = \gamma (\vec{y})$. From Lemma
+% \ref{lem:support_determine_action} we have that the choice of $\vec{x}$ and
+% $\vec{y}$ uniquely determine the mappings $\Pi^{\gamma,r}_{\vec{x}}(i)$ and
+% $\Pi^{\gamma,c}_{\vec{y}}(j)$
+
+Let $\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
+defined by $\alpha^{\gamma} (i, \vec{x}) = \Pi^{\gamma}_{\vec{x}_{i}}(i)$ and
+$\beta^{\gamma} (j, \vec{y}) = \Pi^{\gamma}_{\vec{y}_{j}}(j)$.
+
+We now show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ act as witnesses to the
+row-column of equivalence of $M$ and $L^{\gamma}$. The following lemma proves
+surjectivity.
+
+\begin{lem} 
+  For any bijection $\gamma : U \rightarrow [n]$ both $\alpha^{\delta}$ and
+  $\beta^{\delta}$ are surjective.
+\end{lem}
+\begin{proof}
+  We show that $\alpha$ is surjective, with the same result for $\beta$
+  following similarly. Let $q \in A$ and let $i = \min (\orb (q))$. Then there
+  exists $\sigma \in \spstab{g}$ such that $\sigma i = q$. Let $\vec{x} =
+  \gamma^{-1} (\sigma(\vec{\consp}(i)))$. Notice that for $a \in \consp(i)$ we
+  have that $\vec{x}_i(a) = \gamma^{-1} (\sigma (a))$, and since $\gamma^{-1}
+  \cdot \sigma \sim \eta$, it follows that $\vec{x} \in A_i$.
+
+  For $a \in \consp(i)$ we have $\Pi^{\gamma}_{\vec{x}_i} (a) = \gamma
+  (\vec{x}_i(a)) = \gamma \cdot \gamma^{-1} \sigma (a) = \sigma (a)$. From Lemma
+  \ref{lem:support_determine_action} it follows that $\alpha(i, \vec{x}) = q$.
+\end{proof}
+
+The following lemma allows us to factor through permutations.
+\begin{lem}
+  \label{lem:alpha_and_gamma}
+  Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma: U \rightarrow
+  [n]$ be a bijection such that $\gamma^{-1} \sim \eta$ and $\pi \in spstab{g}$.
+  Then $\pi \alpha^{\gamma}(i, \vec{x}) = \alpha^{\pi \gamma}(i, \vec{x})$ and
+  $\pi \beta^{\gamma}(j, \vec{y}) = \beta^{\pi \gamma}(j, \vec{y})$.
+\end{lem}
+\begin{proof}
+  We have that $\pi \alpha^{\gamma}(i, \vec{x}) = \pi
+  \Pi^{\gamma}_{\vec{x}_i}(i)$ and $(\pi
+  \Pi^{\gamma}_{\vec{x}_{i}}(\vec{\consp}(i)) = \pi \cdot \gamma (\vec{x}) =
+  \Pi^{\pi \gamma}_{\vec{x}_i}(\vec{\consp}(i))$. Since
+  $\Pi^{\gamma}_{\vec{x}_i}$ and $\Pi^{\pi \gamma}_{\vec{x}_i}$ are in
+  $\spstab{g}$, it follows from Lemma \ref{lem:support_determine_action}, that
+  $\pi \alpha^{\gamma}(i, \vec{x}) = \pi \Pi^{\gamma}_{\vec{x}_i} (i) = \Pi^{\pi
+    \gamma}_{\vec{x}_i}(i) = \alpha^{\pi \gamma}(i, \vec{x})$. Similarly, $\pi
+  \beta^{\gamma}(j, \vec{y}) = \beta^{\pi \gamma} (j, \vec{y})$.
+\end{proof}
+
+\begin{lem}
+  \label{lem:alpha_ind_gamma}
+  Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma_1, \gamma_2: U
+  \rightarrow [n]$ be bijections such that $\gamma^{-1}_1 \sim \eta$ and
+  $\gamma^{-1}_2 \sim \eta$. Let $\mathcal{A}$ be a structure. Then
+  $C_n[\gamma_1 \mathcal{A}] (L(\alpha^{\gamma_1}(i, \vec{x}),
+  \beta^{\gamma_1}(j, \vec{y}))) = C_n[\gamma_2 \mathcal{A}]
+  (L(\alpha^{\gamma_2}(i, \vec{x}), \beta^{\gamma_2}(j, \vec{y})))$.
+\end{lem}
+\begin{proof}
+  We note that there exists $\pi \in \sym_n$ such that $\gamma_1 = \pi
+  \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
+  consistent with $\eta$, it follows that $\pi \in \spstab{g}$. We then have
+  that
+  \begin{align*}
+    C_n[\gamma_1 \mathcal{A}](L(\alpha^{\gamma_1}(i, \vec{x}), \beta^{\gamma_1}(j,
+    \vec{y})) &= C_n[\pi \gamma_1 \mathcal{A}](\pi L(\alpha^{\gamma_1}(i, \vec{x}),
+                \beta^{\gamma_1}(j, \vec{y})) \\
+              &= C_n[\pi \gamma_1 \mathcal{A}](L(\pi
+                \alpha^{\gamma_1}(i, \vec{x}), \pi \beta^{\gamma_1}(j, \vec{y}))\\
+              &= C_n[\pi
+                \gamma_1 \mathcal{A}](L(\alpha^{\pi \gamma_1}(i, \vec{x}), \pi \beta^{\pi
+                \gamma_1}(j, \vec{y})\\
+              &= C_n[\gamma_2 \mathcal] (L(\alpha^{\gamma_2}(i,
+                \vec{x}), \beta^{\gamma_2}(j, \vec{y})))\\
+  \end{align*}The third equality follows from Lemma \ref{lem:alpha_and_gamma}.
+\end{proof}
+
+\begin{lem}
+  \label{lem:defining_h_from_IJ}
+  Let $(i, \vec{x}) \in I$ and $j, \vec{y} \in J$. Let $\vec{r}$ and $\vec{c}$
+  be described as above. Let $\sigma_1$ and $\sigma_2$ be as from Lemma
+  \ref{lem:permutation_row-colum}. Let $h = L(g) (\sigma_1 (i), \sigma_2 (j))$.
+  Then $\alpha^{\gamma'} (i, \vec{x}) = \row (h)$ and $\beta^{\gamma'}
+  (i,\vec{y}) = \column(h)$.
+\end{lem}
+\begin{proof}
+  $\alpha^{\gamma'}(i, \vec{x}) = \Pi^{\gamma'}_{\vec{x}_i} (i)$. It is
+  sufficient to show that for all $a \in sp(g)$, $\Pi^{\gamma}_{\vec{x}_i} (a) =
+  \sigma_1 (a)$. Note that $\Pi^{\gamma'}_{\vec{x}_i} (a) =
+  (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})})^{-1} \gamma
+  (\vec{x}_i (a))$, and if $b = \sigma_1 (a)$ we have that $\gamma (\vec{x}_i
+  (a)) = \gamma (\vec{x} (\vec{\consp}(i)^{-1} (a))) = \gamma (\vec{x}
+  (\vec{\consp}(i)^{-1} (\sigma^{-1}_1 b))) = \gamma (\vec{x} ((\sigma_1 \cdot
+  \vec{\consp}(i))^{-1} (b))) = \gamma (\vec{x} (\vec{r}^{-1}(b))) =
+  \Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})}(b)$. So
+  $\Pi^{\gamma'}_{\vec{x}} (a) = b = \sigma_1 (a)$. Similarly for
+  $\beta^{\gamma'}$.
+\end{proof}
+
+\begin{thm}
+  Let $\delta: U \rightarrow [n]$, $M$ is row-column equivalent to $L^{\gamma}$.
+  This equivalence is witnessed by $\alpha^{\gamma}$ and $\beta^{\gamma}$.
+\end{thm}
+\begin{proof}
+  We have that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective. Let
+  $\gamma' = (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})})^{-1}
+  \gamma$.
+
+  \begin{align*}
+    M((i, \vec{x}), (j, \vec{y}))
+    &= (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in \EV_h \\
+    &= C_n[\gamma \mathcal{A}] (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})} (h)) \\
+    &= C_n[\gamma' \mathcal{A}] (h) \\
+    &= C_n[\gamma' \mathcal{A}](L(\row(h), \column (h)))\\
+    &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y})))\\
+    &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))y)\\
+    &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))
+  \end{align*}
+  The second equality follows from Lemma \ref{}. The fifth equality follows from
+  Lemma \ref{lem:defining_h_from_IJ}. The sixth equality follows from Lemma
+  \ref{lem:alpha_ind_gamma}.
+
+  
+\end{proof}
+
+\subsection{FPR Formulas}
+
+% \begin{lem}
+%   Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $h \in H$ such that
+%   $\row (h) \in \orb_r (i)$, $\column (h) \in \orb_c(j)$, and $\type(h) =
+%   \type(\vec{x}, \vec{y})$. Let $\gamma: U \rightarrow [n]$ be a bijection and
+%   $\mathcal{A}$ a structure. Then $C_n[\gamma
+%   \mathcal{A}](\Pi^{\gamma}_{\vec{x} \vert \vec{y}} (h)) = C_n[\gamma
+%   \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y})))$.
+% \end{lem}
+% \begin{proof}
+%   Let $\gamma' = (\Pi^{\gamma}_{\vec{x} \vert \vec{y}})^{-1} \gamma$. First we
+%   show that $h = L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j,
+%   \vec{y}))$. Notice that $\Pi^{\gamma'}_{\vec{x}}(\vec{r}_i) =
+%   \gamma'(\vec{x}) = (\Pi^{\gamma}_{\vec{x} \vert \vec{y}})^{-1} \gamma
+%   (\vec{x}) = \vec{r}_h$. But $\row(h) \in \orb_r(i)$ and so there exists
+%   $\vec{x}' \in A^r_i$ such that $\Pi^{\gamma'}_{vec{x}'}(i) = \row{h}$ From
+%   Lemma \ref{lem:support_determine_action} it follows that $\row (h) =
+%   \Pi^{\gamma'}_{\vec{x}}(i) = \alpha^{\gamma'}(i, \vec{x})$. Similarly, we
+%   can show that $\column(h) = \beta^{\gamma'}(j, \vec{y})$. It follows that $h
+%   = L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y}))$, and so
+%   \begin{align*}
+%     C_n[\gamma \mathcal{A}](\Pi^{\gamma}_{\vec{x}
+%     \vert \vec{y}} (h))
+%     &= C_n[\gamma' \mathcal{A}](h)\\
+%     &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y})))\\
+%     &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))).
+%   \end{align*}
+%   The final equality follows from Lemma \ref{lem:alpha_ind_gamma}.
+% \end{proof}
+
+
+% \chapter{New Stuff}
+% Let $x,y \subset U$ such that $\vert x \vert = \vert y \vert = k \in
+% \mathbb{N}$. Let $\vec{x}: [k] \rightarrow x$ and $\vec{y}: [k] \rightarrow y$
+% be bijections.
+
+% We need to define $r, c \subset [n]$ such that $\vert r \vert = \vert c \vert
+% = k$ and there exists bijections $\vec {r}: [k] \rightarrow r$ and $\vec{c}:
+% [k] \rightarrow c$.
+
+% Let $u_1 , \ldots , u_{2k}$ be the first $2k$ elements of $[n] \setminus
+% \SP(g)$ in order. Then let
+% \[r = \eta^{-1} (x \cap \eta (\SP(g))) \cup \{u_{\vec{x}^{-1}(a)}: a \in x
+%   \setminus \alpha (\SP (g))\} \] and
+% \[s = \eta^{-1} (y \cap \eta (\SP(g))) \cup (x \cap y) \cup \{ u_{k +
+%   \vec{x}^{-1}(a)} : a \in y \setminus (x \cup \alpha (\SP (g))) \}). \]
+% Define
+% \[
+%   \vec{r} (a) =
+%   \begin{cases}
+%     \eta^{-1} (\vec{x} (a)) & a \in \vec{x}^{-1} (x \cap \eta (\SP(g))) \\
+%     u_{a} & a \in \vec{x}^{-1} (x \setminus \eta(\SP(g)),
+%   \end{cases}
+% \]
+% and
+
+% \[
+%   \vec{c} (a) =
+%   \begin{cases}
+%     \eta^{-1} (\vec{y} (a)) & a \in \vec{y}^{-1}(y \cap \eta (\SP (g))) \\
+%     \vec{r} (a) & a \in \vec{y}^{-1} (x \cap y \setminus \eta (\SP (g))) \\
+%     u_{k+a} & \text{otherwise}.
+%   \end{cases}
+% \]
+
+% \begin{lem}
+%   $x_r \sim \eta$ and $x_c \sim \eta$
+% \end{lem}
+
+% \begin{lem}
+%   $\SP(g) \cap \SP(i) = \SP(g) \cap r$ and $\SP (g) \cap SP (j) = \SP (g) \cap
+%   c$.
+% \end{lem}
+
+% Let $(\vec{x}, \vec{y})_{\vec{r}, \vec{c}}: r \cup c \rightarrow U$ be defined
+% by
+% \[
+%   (\vec{x}, \vec{y})_{\vec{r}, \vec{c}}(a) =
+%   \begin{cases}
+%     \vec{x}(\vec{r}^{-1}(a)) & a \in r \\
+%     \vec{y}(\vec{c}^{-1}(a)) & a \in c
+%   \end{cases}
+% \]
+
+% This function is well defined.
+
+% % \begin{lem}
+% %   Let $r, c \subset U$ and let $r_1, r_2 : [k_1] \rightarrow r$ and $c_1, c_2 :
+% %   [k_2] \rightarrow c$ then $\type(\vec{r}_1, \vec{c}_1) = \type (\vec{r}_2 ,
+% %   \vec{c}_2)$.
+% % \end{lem}
+
+% \begin{lem}
+%   $(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{y}}) \sim \eta$
+% \end{lem}
+
+% \begin{lem}
+%   There exists $\sigma_1, \sigma_2 \in \spstab{g}$ such that $\sigma_1 \cdot
+%   \vec{\consp(i)} = \vec{r}$ and $\sigma_2 \cdot \vec{\consp(j)} = \vec{c}$.
+% \end{lem}
+
+% \begin{lem}
+%   Let $(i, \vec{x}) \in I$ and $j, \vec{y} \in J$. Let $\vec{r}$ and $\vec{c}$
+%   be described as above. Let $\sigma_1$ and $\sigma_2$ be as from Lemma
+%   \ref{}. Let $h = L(g) (\sigma_1 (i), \sigma_2 (j))$. Then $\alpha^{\gamma'}
+%   (i, \vec{x}) = \row (h)$ and $\beta^{\gamma'} (i,\vec{y}) = \column(h)$.
+% \end{lem}
+% \begin{proof}
+%   $\alpha^{\gamma'}(i, \vec{x}) = \Pi^{\gamma'}_{\vec{x}} (i)$. It is
+%   sufficient to show that for all $a \in sp(g)$, $\Pi^{\gamma}_{\vec{x}} (a) =
+%   \sigma_1 (a)$. Note that $\Pi^{\gamma'}_{\vec{x}_i} (a) =
+%   (\Pi^{\gamma}_{(\vec{x}, \vec{y})_{\vec{r}, \vec{c}}})^{-1} \gamma
+%   (\vec{x}_i (a))$, and if $b = \sigma_1 (a)$ we have that $\gamma (\vec{x}_i
+%   (a)) = \gamma (\vec{x} (\vec{\consp}(i)^{-1} (a))) = \gamma (\vec{x}
+%   (\vec{\consp}(i)^{-1} (\sigma^{-1}_1 b))) = \gamma (\vec{x} ((\sigma_1 \cdot
+%   \vec{\consp}(i))^{-1} (b))) = \gamma (\vec{x} (\vec{r}^{-1}(b))) =
+%   \Pi^{\gamma}_{(\vec{x}, \vec{y})_{\vec{r}, \vec{c}}}(b)$. So
+%   $\Pi^{\gamma'}_{\vec{x}} (a) = b = \sigma_1 (a)$. Similarly for
+%   $\beta^{\gamma'}$.
+% \end{proof}
+
+% \begin{lem}
+%   Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. There exists $h \in H$
+%   such that $h$ has type $(\vec{x}, \vec{y})$ and for any bijection $\gamma: U
+%   \rightarrow [n]$ and structure $\mathcal{A}$ then $C_n[\gamma \mathcal{A}]
+%   (\Pi^{\gamma}_{(\vec{x} \vert \vec{y})_{h}}) = C_n [\gamma
+%   \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y})))$.
+% \end{lem}
+
+% \begin{lem}
+%   Let $h \in H$ and $\vec{z} \in A_h$ and $\Pi^{\delta}_h$ be a permutation
+%   such that $\Pi^{\delta}_{\vec{z}}(a) = \delta(\vec{z}(a))$ for all $a \in
+%   \sp(h)$. Then $C_n[\gamma \mathcal{A}](\Pi^{delta}_{\vec{z}} (h))$ iff
+%   $\vec{z} \in \EV_h$.
+% \end{lem}
+
+% \begin{thm}
+%   The matrix $M$ is equivalent to $L$.
+% \end{thm}
+
+\end{document}

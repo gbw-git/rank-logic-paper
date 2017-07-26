@@ -1,0 +1,80 @@
+\documentclass[../paper.tex]{subfiles}
+
+\begin{document}
+In this section we present basic background on logics, first-order structures,
+and symmetric circuits.
+
+\subsection{Logic and Structures}
+A \emph{relational vocabulary} (usually denoted by $\tau$) is a finite sequence
+of relation symbols $R_1, \ldots, R_k$, such that for all $i \in [k]$, $R_i$ has
+arity of $r_i \in \nats$.
+
+A $\tau$-structure $\mathcal{A}$ is a tuple $\langle U, R^{\mathcal{A}}_1 ,
+\ldots , R^{\mathcal{A}}_k \rangle$, where $U$ is a set and called the
+\emph{universe} of $\mathcal{A}$ and for all $i \in [k]$ the relations
+$R^{\mathcal{A}}_i \subseteq U^{r_i}$. The elements of $U$ are called the
+elements of $\mathcal{A}$. A \emph{multi-sorted} structure is one whose universe
+is a disjoint union, where each set in the union is called a \emph{sort}. The
+size of a structure is the cardinality of its universe.
+
+All structures in this paper are finite.
+
+\subsection{First Order, Fixed-Point, Counting}
+
+Let $\FO(\tau)$ denote \emph{first order logic} with respect to the vocabulary
+$\tau$. \emph{Fixed-Point Logic} is the extension of $\FO(\tau)$ with an
+inflationary fixed-point operator (see \cite{} for details). For logic
+$\mathcal{L}$, a formula $\phi \in \mathcal{L}(\tau)$, $x$ a $k$-length tuple of
+variables, $\mathcal{A}$ a (finite) structure, and $a \in U^k$, we have that
+$\phi (x)$ denotes that the variables in $x$ are free in $\phi$ and we write
+$\mathcal{A} \models_{\mathcal{L}} \phi[a]$ iff the the formula $\phi$ is true
+in $\mathcal{A}$ with respect to $\mathcal{L}$ with the variables $x$ assigned
+to $a$. The context usually makes the logic obvious, and in that case we usually
+drop the subscript.
+
+We also recall the definition of \emph{fixed-point logic with counting} $\FPC$,
+an extension $\FP$ with counting quantifiers. For a structure $\mathcal{A}$,
+Formulas of this logic are evaluated over a structure $\mathcal{A}$ by extending
+that structure to $\mathcal{A}^\leq$, a two sorted extension of $\mathcal{A}$ by
+an ordered number sort $\{1, \ldots, \vert U\vert \}$. Variables are taken to be
+either point variables, ranging over $U$ or number variables ranging over
+$[\vert U \vert]$. The counting quantifiers are of the form $\#_x$, where $x$ is
+either a point or number variable and for $\phi(x) \in \FPC(\tau)$, $\#_x
+\phi(x)$ is a term denoting the element of the number sort corresponding to
+$\vert \{a \in \mathcal{A} | \mathcal{A} \models \phi[a]\}\vert$. Note
+additionally that $k$-tuples of number variables can be used to encode numbers
+in $\FPC$ of size up to $\vert U\vert^k$. For more details on $\FPC$ please see
+\cite{}.
+
+\subsection{Rank Logic}
+In this paper we use the definition of $\FPR$ given by Grad\"{e}l and Pakusa
+\cite{}, an strictly more expressive extension of the rank logic introduced by
+Dawar et. al. cite{}. We briefly define this logic here. For more detail please
+see \cite{}. $\FPR$ is an extension of $\FPC$ with rank operators, which we now
+define.
+
+Let $\phi (\vec{x}, \vec {\nu} \leq \vec{t}, \vec{y}\vec{\mu} \leq \vec{s})$ be
+a numeric term, where $\vec{x}$ and $\vec{y}$ are tuples of variables ranging
+over the universe of the structure, $\vec{\nu}$ and $\vec{\mu}$ are tuples of
+variables ranging over the number type, and $\vec{s}$ and $\vec{t}$ are tuples
+of closed numeric terms that bound the range of $\vec{\nu}$ and $\vec{\mu}$
+respectively. Then let $\mathcal{A}$ be a structure and let
+$\mathbb{N}^{\leq\vec{t}} := \{\vec{n} \in \mathbb{N}^{\vert \vec{v} \vert}: n_i
+\leq t^{\mathcal{A}}_i\}$, and let $\mathbb{N}^{\leq \vec{s}}$ be defined
+similarly. Let $I:= A^{\vert \vec{x} \vert} \times \mathbb{N}^{\leq \vec{t}}$
+and $J := A^{\vert \vec{y} \vert} \times \mathbb{N}^{\leq \vec{s}}$ Then let
+$M^{\mathcal{A}}_\phi : I \times J \rightarrow \mathbb{N}$ be defined by
+$M^{\mathcal{A}}_\phi (\vec{a}\vec{n}, \vec{b}\vec{m}):=
+\phi^{\mathcal{A}}(\vec{a}\vec{n},\vec{b}\vec{m})$.
+
+The rank operator is then defined as $[rk (\vec{x}, \vec {\nu} \leq \vec{t},
+\vec{y}\vec{\mu} \leq \vec{s}, \pi \leq r). \phi]$, where $\pi$ is a variable
+ranging over the number sort and $r$ is a closed numeric term that bounds $\pi$.
+The value of the rank term for a structure $\mathcal{A}$ and an assignment $\pi
+\mapsto p$, where $p$ is prime, is given by the rank of $M^{\mathcal{A}}_\phi$
+mod $p$, as understood as a matrix over $\mathbb{F}_p$.
+
+\subsection{Symmetric Circuits}
+This still needs to be filled in
+\end{document}
+
