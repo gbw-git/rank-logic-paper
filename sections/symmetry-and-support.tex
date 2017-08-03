@@ -13,12 +13,12 @@ In this section we formally define a support and the related notion of a
 supporting partition.
 
 \begin{definition}
-  Let $G$ be a subgroup of $\sym_n$ and let $S \subseteq [n]$. Then $S$ is a
+  Let $G \leq \sym_n$ and let $S \subseteq [n]$. Then $S$ is a
   \emph{support} for $G$ if $\stab(S) \subset G$.
 \end{definition}
 
 \begin{definition}
-  Let $G$ be a subgroup of $\sym_n$ and $\mathcal{P}$ be a partition of $[n]$.
+  Let $G \leq \sym_n$ and $\mathcal{P}$ be a partition of $[n]$.
   Then $\mathcal{P}$ is a \emph{supporting partition} for $G$ if
   $\stab(\mathcal{P}) \subseteq [n]$.
 \end{definition}
@@ -40,13 +40,13 @@ This canonical supporting partition, along with the above observation about
 supports, will allow us to construct for each group a canonical support.
 
 \begin{definition}
-  Let $G$ be a subgroup of $\sym_n$. Let $\| SP(G) \| = \min \{\vert [n]
+  Let $G \leq \sym_n$. Let $\| SP(G) \| = \min \{\vert [n]
   \setminus P \vert : P \in SP(G) \}$. We say that $G$ has small support if $\|
   SP(G) \| < \frac{n}{2}$.
 \end{definition}
 
 \begin{definition}
-  Let $G$ be a subgroup of $\sym_n$ such that $G$ has small support. Let
+  Let $G \leq \sym_n$ such that $G$ has small support. Let
   $\consp(G) = [n] \setminus P$, where $P$ is the maximal element of $\SP(G)$.
   We call $\consp(G)$ the canonical support of $G$.
 \end{definition}
@@ -77,7 +77,7 @@ theory for understanding the actions on the rows and columns of a labelling of a
 gate.
 
 \begin{definition}
-  Let $G$ be a subgroup of $\sym_n$ and $X$ be a set on which a left group
+  Let $G \leq \sym_n$ and $X$ be a set on which a left group
   action of $G$ on $X$ is defined. We denote the canonical supporting partition
   of $x\in X$ by $\SP (x) = \SP (\stab(x))$. We say that $x \in X$ has small
   support if $\stab(x)$ has small support. We say that $X$ has small supports if
@@ -88,7 +88,7 @@ gate.
 \end{definition}
 
 \begin{definition}
-  Let $G$ be a group and $X$ be a set on which a left group action of $G$ on $X$
+  Let $G \leq X$ be a set on which a left group action of $G$ on $X$
   is defined. Then $\stab_G (x) = \{\pi \in G : \pi x = x\}$ and $\orb_G (x) =
   \{\pi x : \pi \in G\}$. In the event that the context makes the group obvious
   we omit the subscript.
@@ -96,7 +96,7 @@ gate.
 
 \begin{lem}
   \label{lem:stab_conjugation}
-  Let $G$ be a subgroup of $\sym_n$, $X$ be a set on which a left group action
+  Let $G \leq \sym_n$, $X$ be a set on which a left group action
   of $G$ on $X$ is defined and $\sigma \in G$. Then for any $x \in X$ it follows
   that $\sigma \stab (x) \sigma^{-1} = \stab(\sigma x)$.
 \end{lem}
@@ -112,7 +112,7 @@ gate.
 
 \begin{lem}
   \label{lem:support_mapping}
-  Let $G $ be a subgroup of $\sym_n$, $X$ be a set on which a left group action
+  Let $G \leq \sym_n$, $X$ be a set on which a left group action
   of $G$ on $X$ is defined and $\sigma \in G$. Then for any $x \in X$ it follows
   that $\sigma \SP (x) = \SP (\sigma x)$ and, if $x$ has small support, $\sigma
   \consp (x) = \consp (\sigma x)$.
@@ -133,7 +133,7 @@ gate.
 \end{proof}
 
 \begin{lem}
-  Let $G$ be a subgroup of $\sym_n$, $X$ be a set on which a left group action
+  Let $G \leq \sym_n$, $X$ be a set on which a left group action
   of $G$ on $X$ is defined. Then for any $x \in X$ with small support, and
   $\sigma, \sigma' \in G$ such that $\sigma (vec{\consp}(x)) = \sigma'
   (\vec{\consp}((x))$ we have that $\sigma (x) = \sigma'(x)$.
@@ -233,6 +233,16 @@ gate.
 \subsection{Support Theorems}
 In this section we develop an analogous theorem to the support theorem of
 Anderson and Dawar \cite{AndersonD17}.
+
+In this section let $\mathbb{B}$ be a basis of sort-symmetric functions and
+$(C_n)_{n \in \nats}$ always denote a family of symmetric, rigid $(\mathbb{B},
+\tau)$-circuits with bijective labels. For each $g \in C_n$ let $(\tau_g, A_g)
+:= \type(g)$, with sorts $\tau_g = (R, [s], \nu)$ and $A_g = A_1 \sqcup \ldots
+\sqcup A_s$.
+
+We note that for each $g \in C_n$ there is a natural action of $\stab(g)$ on
+$\ind(g)$ is given by $\sigma \cdot \vec{x} := L(g) \cdot \sigma \cdot L(g)^{-1}
+(\vec{x})$.
 %
 %\begin{lem}[Support Lemma]
 %  For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and
@@ -306,64 +316,190 @@ Anderson and Dawar \cite{AndersonD17}.
 %   $\omega (\alpha i, \beta j) = \sigma \omega (i,j)$.
 % \end{definition}
 
+% \begin{definition}
+%   Let $\omega$ be a matrix labeling for $g$. Define the matrix stabilizer for
+%   $\omega$, denoted by $\matstab(\omega)$, to be the set of all $\sigma \in
+%   \sym_n$ such that $\sigma H = H$ and there exists $(\alpha, \beta) \in
+%   \sym_A \times \sym_B$ such that for all $(i,j) \in A \times B$ we have that
+%   $\omega (\alpha i, \beta j) = \sigma \omega (i,j)$.
+% \end{definition}
+
+
+% \begin{definition}
+%   Let $g$ be a gate with matrix labeling $\omega$, $h,h' \in H$ and $\sigma
+%   \in \sym_n$. We say that a pair $(h, h')$ is compatible with $(\sigma,
+%   \omega)$ if $\sigma h, \sigma h' \in H$ and there exists $(\gamma_1,
+%   \gamma_2), (\gamma_1', \gamma_2') \in \sym_A \times \sym_B$ s.t.
+%   \begin{align*}
+%     &(\gamma_1, \gamma_2) \cdot \omega^{-1} (h) = \omega^{-1}(\sigma h), \text{ and} \\ 
+%     &(\gamma_1', \gamma_2') \cdot \omega^{-1} (h') = \omega^{-1}(\sigma h'),
+%   \end{align*}
+%   and for all $\vec{x} \in \L(g)^{-1}(h)$, $\vec{x}' \in \omega^{-1}(h')$ and
+%   all $a \in $
+%   \begin{align*}
+%     &i =i' \implies \gamma_1(i) = \gamma_1'(i'), \text{ and} \\
+%     &j =j' \implies \gamma_2(j) = \gamma_2'(j').
+%   \end{align*}
+
+% \end{definition}
+
+% \begin{definition}
+%   Let $g \in C_n$ and let $h, h' \in H_g$ and $\sigma \in \sym_n$. We say that
+%   a pair $(h, h')$ is \emph{compatible with} $\sigma$ if $\sigma h, \sigma h'
+%   \in H_g$ and there exists $\lambda, \lambda' \in \sym_{A_1} \times \ldots
+%   \times \sym_{A_s}$ such that
+%   \begin{align*}
+%     & \lambda \cdot L(g)^{-1} (h)  = L(g)^{-1} (\sigma \cdot h), \text{ and} \\ 
+%     & \lambda' \cdot L(g)^{-1} (h') = L(g)^{-1} (\sigma \cdot  h'),
+%   \end{align*} 
+%   and for all $\vec{x} \in L(g)^{-1}(h)$. $\vec{x}' \in L(g)^{-1}(h')$, and $i
+%   \in \dom (\vec{x})$, $\vec{x}(i) = \vec{x}'(i)$ iff $\lambda (\vec{x})(i) =
+%   \lambda' (\vec{x}')(i)$.
+% \end{definition}
+
 \begin{definition}
-  Let $\omega$ be a matrix labeling for $g$. Define the matrix stabilizer for
-  $\omega$, denoted by $\matstab(\omega)$, to be the set of all $\sigma \in
-  \sym_n$ such that $\sigma H = H$ and there exists $(\alpha, \beta) \in \sym_A
-  \times \sym_B$ such that for all $(i,j) \in A \times B$ we have that $\omega
-  (\alpha i, \beta j) = \sigma \omega (i,j)$.
+  Let $g \in C_n$, $\vec{x}, \vec{x}' \in \ind(g)$ and $\sigma \in \sym_n$. We
+  say that a pair $(\vec{x}, \vec{x}')$ is \emph{compatible with} $\sigma$ if
+  $(\sigma L(g)(\vec{x}), \sigma L(g)(\vec{x}') \in H_g$ and for all $i \in \dom
+  (\vec{x})$, $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma \cdot \vec{x})(i) =
+  (\sigma \cdot \vec{x}')(i)$. We say that a pair $(h, h')$ is \emph{compatible
+    with} $\sigma$ if $(L(g)^{-1}(h), L(g)^{-1}(h'))$ is compatible with
+  $\sigma$.
 \end{definition}
 
-
-\begin{definition}
-  Let $g$ be a gate with matrix labeling $\omega$, $h,h' \in H$ and $\sigma \in
-  \sym_n$. We say that a pair $(h, h')$ is compatible with $(\sigma, \omega)$ if
-  $\sigma h, \sigma h' \in H$ and there exists $(\gamma_1, \gamma_2),
-  (\gamma_1', \gamma_2') \in \sym_A \times \sym_B$ s.t.
-  \begin{align*}
-    &(\gamma_1, \gamma_2) \cdot \omega^{-1} (h) = \omega^{-1}(\sigma h), \text{ and} \\ 
-    &(\gamma_1', \gamma_2') \cdot \omega^{-1} (h') = \omega^{-1}(\sigma h'),
-  \end{align*}
-  and for all $(i,j) \in \omega^{-1}(h)$, $(i',j') \in \omega^{-1}(h')$ we have
-  that
-  \begin{align*}
-    &i =i' \implies \gamma_1(i) = \gamma_1'(i'), \text{ and} \\
-    &j =j' \implies \gamma_2(j) = \gamma_2'(j').
-  \end{align*}
-
-\end{definition}
+For $g \in C_n$ let $\sortstab (g)$ denote the set of all $\sigma \in
+\stab(H_g)$ such that $\sigma \cdot L(g)$ is sort-equivalent to $L(g)$.
 
 \begin{lem}
-  Let $g$ be a gate, $\omega$ be a matrix labeling of $g$, $\sigma \in \sym_n$.
-  Then $\sigma \in \matstab(\omega)$ iff for all $h,h' \in H$ we have that
-  $(h,h')$ is compatible with $(\sigma, \omega)$.
+  Let $g \in C_n$, and $\sigma \in \stab(H_g)$. Then $\sigma \in \sortstab(g)$
+  iff for all $h, h' \in H_g$, $(h,h')$ is compatible with $\sigma$.
 \end{lem}
-
 \begin{proof}
-  $`\Rightarrow'$: We have that $\sigma \in \matstab(\omega)$ and so there
-  exists $(\alpha, \beta) \in \sym_A \times \sym_B$ such that for all $(i,j) \in
-  A \times B$ we have $\sigma \omega (i,j) = \omega (\alpha i, \beta j)$. From
-  compatibility we have that $h,h' \in H$ Let $h, h' \in H$ . Let $(\gamma_1,
-  \gamma_2) := (\gamma_1', \gamma_2') := (\alpha, \beta)$. This assignment is
-  sufficient to prove the direction.
+  $`\Rightarrow'$: From the hypothesis there exists $\pi \in \sym_{A_1} \times
+  \ldots \times \sym_{A_s}$ such that $L(g) \cdot \pi = \sigma \cdot L(g)$. Then
+  let $h, h' \in H_g$ and let $\vec{x} = L(g)^{-1}(h)$ and $\vec{x}' =
+  L(g)^{-1}(h')$. Let $i \in \dom (\vec{x})$. If $\vec{x}(i) = \vec{x}'(i)$ then
+  $(\sigma \cdot \vec{x}) (i) = (L(g)^{-1} \cdot \sigma \cdot \L(g)
+  (\vec{x}))(i) = (L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}'))(i) = (\sigma
+  \cdot \vec{x}) (i)$. If $(\sigma \cdot \vec{x})(i) = (\sigma \cdot
+  \vec{x}')(i)$ then $(L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}))(i) =
+  (L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}'))(i)$. Cancelling bijections
+  leaves $\vec{x}(i) = \vec{x}'(i)$.
+  
+  $`\Leftarrow'$: We now define an element $\pi \in \sym_{A_1} \times \ldots
+  \sym_{A_s}$. Let $t \in [s]$. We now defined $\pi_t \in \sym_{A_t}$. If there
+  is no tuple in $\ind (g)$ containing an element of sort $t$ then let $\pi_t$
+  be the trivial permutation. Suppose there is an element of sort $t$. Let $a
+  \in A_t$. Let $\vec{x}_a \in \ind(g)$ be such that for each $i \in \dom
+  (\vec{x}_a)$, if $\vec{x}_a(i)$ has sort $t$ then $\vec{x}_a(i) = a$. Let
+  $\pi_t (a) = (\sigma \cdot \vec{x}_a) (i)$. The compatibility condition
+  guarantees that $\pi_t$ is well defined.
 
-  $`\Leftarrow'$: Suppose for all $h,h' \in H$ we have $(\gamma_1, \gamma_2),
-  (\gamma_1, \gamma_2') \in \sym_A \times \sym_B$ satisfying the above
-  requirements. Notice that for a given $i \in A$ and any $j, j' \in B$, let $h
-  = \omega(i,j)$ and $h' = \omega(i,j')$, then we have that $\gamma_1 (i) =
-  \gamma_1'(i)$. It follows that we can define a $\alpha \in \sym_A$ by
-  $\alpha(i) = \gamma_1 (i)$. Similarly we can define $\beta \in \sym_B$ by
-  $\beta (j) = \gamma_2 (j)$.
+  We now show $\pi_t$ is indeed a bijection. Let $a, b \in A_t$ and suppose
+  $\pi_t (a) = \pi_t(b)$, then $(\sigma \cdot \vec{x}_a)(i) = (\sigma \cdot
+  \vec{x}_b)(i)$, and from compatibility $a = \vec{x}_a(i) = \vec{x}_b(i) = b$.
+  Moreover, for $a \in A_t$, let $b = \sigma^{-1} \cdot \vec{x}_a$, then $\pi_t
+  (b) = (\sigma \cdot \vec{x}_b)(i) = (\sigma \cdot (\sigma^{-1} \cdot
+  \vec{x}_a))(i) = a$. So we have that $\pi_t$ is indeed a bijection.
 
+  Let $\pi = \pi_1 \times \ldots \times \pi_s$. Let $\vec{x} \in \ind(g)$, let
+  $i \in \dom (\vec{x})$, let $t$ be the sort of $\vec{x}(i)$ and let $a =
+  \vec{x}(i)$. Then $(\pi \cdot \vec{x})(i) = \pi_t (\vec{x}(i)) = (\sigma \cdot
+  \vec{x}_a)(i) = (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}_a))(i) =
+  (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}))(i)$. It follows that $L(g) \cdot
+  \pi = L(g)^{-1} \cdot \sigma \cdot L(g)$, and the result follows.
+  % If there is no type in $\ind (g)$ containing an element of type $t$ then let
+  % $\pi_t$ be the trivial permutation. Let $a \in A_t$. Let $\vec{x}_a,
+  % \vec{x}_a' \in \ind(g)$ be such that for every $i \in \dom (\vec{x}_a)$ if
+  % $\vec{x}_a(i)$ has sort $t$ then $\vec{x}_a(i) = a = \vec{x}_a'(i)$.
+
+ 
+  % $`\Leftarrow'$: We now define an element $\pi \in \sym_{A_1} \times \ldots
+  % \sym_{A_s}$. Let $t \in [s]$. We now defined $\pi_t \in \sym_{A_t}$. If
+  % there
+  % is no type in $\ind (g)$ containing an element of type $t$ then let $\pi_t$
+  % be
+  % the trivial permutation. Let $a \in A_t$. Let $\vec{x}_a, \vec{x}_a' \in
+  % \ind(g)$ be such that for every $i \in \dom (\vec{x}_a)$ if $\vec{x}_a(i)$
+  % has
+  % sort $t$ then $\vec{x}_a(i) = a = \vec{x}_a'(i)$. From the hypothesis we
+  % have
+  % that $L(g)(\vec{x}_a)$ and $L(g)(\vec{x}_a')$ are compatible with $\sigma$,
+  % and let this compatibility be witnessed by $\lambda_a$ and $\lambda_a'$. Let
+  % $\pi_t (a) = \lambda_a (\vec{x}_a)(i)$. Note that $\lambda_a (\vec{x}_a)(i)
+  % =
+  % \lambda_a' (\vec{x}_a'(i)$ and so this function is well defined.
+
+  % We have that $\pi_t$ is surjective, as for every $a \in A_t$,
+  % $\pi_t(\lambda^{-1}_a(a)) = a$. Let $a, b \in A_t$, and suppose $a \neq b$.
+  % Let $\vec{x}_a, \vec{x}_b$ be defined as above, but choose them such that
+  % they
+  % agree nowhere. We have that $(L(g)(\vec{x}_a), \L(g)(\vec{x}_b))$ are
+  % compatible with $\sigma$, and it is easy to see that $\lambda_a$ and
+  % $\lambda_b$ as defined above witness this compatibility. But then
+  % $\lambda(\vec{x_b})$
+
+  % $\pi_t (a) = \pi_t (b)$ implies $\lambda_a (a) = \lambda_b (b)$, but
+  % $L(g)(\vec{x}_a)$ is compatible with $L(g)(\vec{x}_b)$
+  
+  % Let $\vec{x} \in \ind (g)$ and $i \in \dom(\vec{x})$ and let $t$ be the type
+  % of $\vec{x}(i)$. Then $\pi_t (\vec{x}(i)) = \lambda (\vec{x}(i))$
+
+  % $(\vec{x})$, then $\pi_t (a) = \lambda (\vec{x}_a)(i) = \lambda
+  % (L(g)^{-1}(h_a))(i) = L(g)^{-1}(\sigma \cdot h_a') (i)$.
+
+  % Let $\pi := \pi_1 \times \ldots \times \pi_s$. Let $\vec{x} \in \ind(g)$,
+  % then
+  % $L(g) (\pi \cdot \vec{x}) = $
+
+  % Note that for any pair of $\vec{x}$, $\vec{x}'$ chosen with all entries of
+  % type $t$ being $a$ it is easy to see that $\lambda (a)$
+  
+
+  % It remains to show that $\pi$ witnesses the sort-equivalence of $\sigma
+  % \cdot
+  % L(g)$ and $L(g)$. First note that $\sigma \cdot L(g)(\vec{x}) = \sigma
+  % (h_{\vec{x}}) = $
+
+
+  % Then there exists $\lambda_1, \lambda_2 \in \sym_{A_1} \times \ldots \times
+  % \sym_{A_s}$ witnessing Let $\lambda (\vec{x}) = \$
+
+  % we have $\lambda_1$ and $\lambda_2$ witnessing that $(h, h')$ is compatible
+  % with $\sigma$. We now define $\lambda \in \sym_{A_1} \times \ldots \times
+  % \sym_{A_s}$ by $\lambda (\vec{a}) = \lambda_1(\vec{a})$
 \end{proof}
 
+% \begin{lem}[not reviewed]
+%   Let $g \in C_n$ be a gate, $\sigma \in \sym_n$. Then $\sigma \in
+%   \sortstab(g)$ iff for all $h,h' \in H$ we have that $(h,h')$ is compatible
+%   with $(\sigma, \omega)$.
+% \end{lem}
+
+% \begin{proof}
+%   $`\Rightarrow'$: We have that $\sigma \in \matstab(\omega)$ and so there
+%   exists $(\alpha, \beta) \in \sym_A \times \sym_B$ such that for all $(i,j)
+%   \in A \times B$ we have $\sigma \omega (i,j) = \omega (\alpha i, \beta j)$.
+%   From compatibility we have that $h,h' \in H$ Let $h, h' \in H$ . Let
+%   $(\gamma_1, \gamma_2) := (\gamma_1', \gamma_2') := (\alpha, \beta)$. This
+%   assignment is sufficient to prove the direction.
+
+%   $`\Leftarrow'$: Suppose for all $h,h' \in H$ we have $(\gamma_1, \gamma_2),
+%   (\gamma_1, \gamma_2') \in \sym_A \times \sym_B$ satisfying the above
+%   requirements. Notice that for a given $i \in A$ and any $j, j' \in B$, let
+%   $h = \omega(i,j)$ and $h' = \omega(i,j')$, then we have that $\gamma_1 (i) =
+%   \gamma_1'(i)$. It follows that we can define a $\alpha \in \sym_A$ by
+%   $\alpha(i) = \gamma_1 (i)$. Similarly we can define $\beta \in \sym_B$ by
+%   $\beta (j) = \gamma_2 (j)$.
+
+% \end{proof}
+
 \begin{definition}
-  Let $g$ be a gate with matrix labeling $\omega$. Let $(\sigma, h, h') \in
-  \sym([n]) \times H^2$. Say that $(\sigma, h, h')$ is useful if $(h,h')$ is
-  incompatible with $(\sigma, \omega)$.
+  Let $g \in C_n$. Say $(\sigma, h, h') \in \sym_n \times H^2_g$ is useful if
+  $(h,h')$ is incompatible with $\sigma$.
 
   Say that two distinct pairs $(\sigma_1, h_1, h_1'), (\sigma_2, h_2, h_2') \in
-  \sym_n\times H^2$ are mutually independent if
+  \sym_n\times H^2_g$ are mutually independent if
   \begin{itemize}
     \setlength\itemsep{0mm}
   \item $\sigma_2 h_1 = h_1$,
@@ -371,36 +507,33 @@ Anderson and Dawar \cite{AndersonD17}.
   \item $\sigma_2 h_1' = h_1'$,
   \item $\sigma_2 \sigma_1 h_1' = \sigma h_1'$,
   \end{itemize}
+  
   We say that a set $S \subseteq \sym_n \times H^2$ is useful if each pair in it
-  is useful. We say that S is independent if each pair of distinct pairs in $S$
-  are mutually independent.
+  is useful. We say that $S$ is independent if each pair of distinct pairs in
+  $S$ are mutually independent.
 \end{definition}
 
-We denote the usual equivalence relation on $\sym_n$ from the (right) cosets of
-$\matstab(\omega)$ by $\sim_\omega$.
-
 \begin{lem}
-  Let $\sigma_1, \sigma_1 \in \sym_n$ and suppose $\sigma_1 \sim_\omega
-  \sigma_2$ then for any $(h,h') \in H^2$ we have that $(h,h')$ is compatible
-  with $(\sigma_1, \omega)$ iff $(h,h')$ is compatible with $(\sigma_2,
-  \omega)$.
+  Let $g \in C_n$ and $\sigma_1, \sigma_1 \in \sym_n$ such that $\sigma_1 \cdot
+  L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$. Then for any $h,h' \in H_g$,
+  $(h,h')$ is compatible with $\sigma_1$ iff $(h,h')$ is compatible with
+  $\sigma_2$.
 \end{lem}
-
 \begin{proof}
-  Suppose we have that $\sigma_1 \sim_\omega \sigma_2$. And additionally
-  supposed $(h, h')$ compatible with $(\sigma_1, \omega)$.
+  Suppose $\sigma_1 \cdot L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$.
+  Then there exists $\pi \in \sym_{A_1} \times \ldots \times \sym_{A_s}$ such
+  that $\sigma_1 \cdot L(g) (\pi \cdot \vec{x}) = \sigma_2 \cdot L(g)
+  (\vec{x})$.
 
-  It follows there exists $(\alpha, \beta) \in \sym_A \times \sym_B$ such that
-  $\sigma_1 \omega (i,j) = \sigma_2\omega (\alpha i, \beta j)$, and we have
-  $(\gamma_1, \gamma_2), (\gamma_1', \gamma_2') \in \sym_A \times \sym_B$
-  satisfying the requirements of compatibility. We note that $(\alpha, \beta)
-  \cdot \omega^{-1}(\sigma_1 h) = \omega^{-1}(\sigma_2 h)$. Thus by composition
-  we have that $(\alpha \gamma_1, \beta \gamma_2) \cdot \omega^{-1}(h) =
-  \omega^{-1}(\sigma_2 h)$ and $(\alpha \gamma_1', \beta \gamma_2') \cdot
-  \omega^{-1}(h') = \omega^{-1}(\sigma_2 h')$, and clearly the remaining
-  requirement for compatibility follows from the bijectivity of $\alpha$ and
-  $\beta$. The result follows. The other direction of the implication follows
-  from symmetry.
+  Suppose $(h, h')$ is compatible with $\sigma_1$. Let $\vec{x} = L(g)^{-1}(h)$
+  and $\vec{x}' = L(g)^{-1}(h')$. Then $\sigma_2 \cdot \vec{x} = (L(g)^{-1}
+  \cdot \sigma_2 \cdot L(g)) (\vec{x}) = L(g)^{-1} \cdot \sigma_1 \cdot L(g)(\pi
+  \cdot \vec{x}) = \sigma_1 \cdot (\pi \cdot \vec{x})$. Similarly $\sigma_2
+  \cdot \vec{x}' = \sigma_2 \cdot (\pi \cdot \vec{x}')$. Let $i \in \dom
+  (\vec{x})$, then $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma_1 \cdot \vec{x})(i) =
+  (\sigma_2 \cdot \vec{x}')(i)$ iff $(\sigma_1 \cdot (\pi \vec{x}))(i) =
+  (\sigma_2 \cdot (\pi \vec{x}'))(i)$ iff $(\sigma_2 \cdot \vec{x})(i) =
+  (\sigma_2 \cdot \vec{x}')(i)$. The other direction follows by symmetry.
 \end{proof}
 
 \begin{claim}
@@ -544,8 +677,8 @@ where $\omega$ is the matrix labelling associated with $g$.
 Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a $P$-uniform family of
 symmetric circuits with matrix symmetric gates. Let $s(n)$ be the $s$ for $C_n$
 from the hypothesis of Theorem \ref{thm:support_thm}. The theorem implies that,
-for $n$ large enough, if $s(n)$ is bounded by a polynomial then there exists
-a constant $k$ such that for all $n \in \mathbb{N}$ and $g \in C_n$, $\vert
+for $n$ large enough, if $s(n)$ is bounded by a polynomial then there exists a
+constant $k$ such that for all $n \in \mathbb{N}$ and $g \in C_n$, $\vert
 \consp(g) \vert \leq k$. In other words, gates have constant size supports.
 
 

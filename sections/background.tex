@@ -6,75 +6,219 @@ and symmetric circuits.
 
 \subsection{Logic and Structures}
 A \emph{relational vocabulary} (usually denoted by $\tau$) is a finite sequence
-of relation symbols $R_1, \ldots, R_k$, such that for all $i \in [k]$, $R_i$ has
-arity of $r_i \in \nats$.
+of relation symbols $(R_1, \ldots, R_k)$, such that for all $i \in [k]$, $R_i$
+has arity of $r_i \in \nats$. All vocabularies discussed in this paper are
+relational vocabularies. A \emph{many-sorted vocabulary} is a tuple of the form
+$(R, S, \nu)$, where $R$ is a relational vocabulary, $S$ is a finite sequence of
+\emph{sort} symbols $(s_1, \ldots s_p)$, and $\nu$ is a function that assigns to
+each $R_i \in R$ a tuple $\nu(R_i) := (s^i_1, \ldots, s^i_{r_i})$, where for
+each $j \in [r_i]$, $s^i_j \in S$. We call $\nu$ the \emph{\type function} and
+$\nu(R_i)$ the \emph(type) of $R_i$.
 
-A $\tau$-structure $\mathcal{A}$ is a tuple $\langle U, R^{\mathcal{A}}_1 ,
-\ldots , R^{\mathcal{A}}_k \rangle$, where $U$ is a set and called the
-\emph{universe} of $\mathcal{A}$ and for all $i \in [k]$ the relations
-$R^{\mathcal{A}}_i \subseteq U^{r_i}$. The elements of $U$ are called the
-elements of $\mathcal{A}$. A \emph{multi-sorted} structure is one whose universe
-is a disjoint union, where each set in the union is called a \emph{sort}. The
-size of a structure is the cardinality of its universe.
+Let $\tau$ be a many-sorted vocabulary. A \emph{$\tau$-structure} $\mathcal{A}$
+is a tuple $(U , R^{\mathcal{A}}_1 , \ldots , R^{\mathcal{A}}_k )$, where $U$,
+the \emph{universe} of $\mathcal{A}$, is a disjoint union of non-empty sets
+$U_{s_j}$, one for each sort symbol $s_j \in S$. For each $i \in [k]$, where
+$\nu(R_i) = (s^i_1 , \ldots , s^i_{r_i})$, $R^{\mathcal{A}}_i \subseteq
+U_{s^i_1} \times \ldots \times U_{s^i_{r_i}}$. The elements of $U$ are called
+the elements of $\mathcal{A}$. If $tau$ is a relational vocabulary, a
+$\tau$-structure is a structure over $(\tau, S, \nu)$, where $S$ is a singleton
+and $\nu$ is the only allowable type function. The size of a structure
+$\mathcal{A}$, denoted by $\vert \mathcal{A} \vert$, is the cardinality of its
+universe. The sorted-size of a structure is a vector $\vec{n} := (n_{s_1},
+\ldots , n_{s_p}) \in \mathbb{N}^{S}$ such that $\vert U_{s} \vert = n_{s}$ for
+all $s \in S$. If $a \in U_{s_j}$ for some sort $s_j \in S$, we say that $a$ has
+sort $s_j$. We often use $A$ to denote the universe of a structure
+$\mathcal{A}$. All structures in this paper are finite unless stated otherwise.
 
-All structures in this paper are finite.
+\begin{definition}
+  Let $S = \{s_1, \ldots , s_p\}$ be a set of sort symbols and $A = A_{s_1}
+  \sqcup \ldots \sqcup A_{s_p}$ and $B = B_{s_1}\dotcup \ldots \dotcup
+  B_{s_p}$ be disjoint unions of non-empty sets. A \emph{sorted bijection}
+  between $A$ and $B$ is a bijection $f: A \rightarrow B$ such that $f (A_s) =
+  B_s$ for all $s \in S$.
+\end{definition}
 
-\subsection{First Order, Fixed-Point, Counting}
+If $\tau = (R, S, \nu)$ is a single-sorted vocabulary then we abuse notation and
+identify $\tau$ with $R$.
 
+\subsection{First Order, Fixed-Point and Counting}
 Let $\FO(\tau)$ denote \emph{first order logic} with respect to the vocabulary
 $\tau$. \emph{Fixed-Point Logic} is the extension of $\FO(\tau)$ with an
 inflationary fixed-point operator (see \cite{} for details). For logic
-$\mathcal{L}$, a formula $\phi \in \mathcal{L}(\tau)$, $x$ a $k$-length tuple of
-variables, $\mathcal{A}$ a (finite) structure, and $a \in U^k$, we have that
-$\phi (x)$ denotes that the variables in $x$ are free in $\phi$ and we write
-$\mathcal{A} \models_{\mathcal{L}} \phi[a]$ iff the the formula $\phi$ is true
-in $\mathcal{A}$ with respect to $\mathcal{L}$ with the variables $x$ assigned
-to $a$. The context usually makes the logic obvious, and in that case we usually
-drop the subscript.
+$\mathcal{L}$, a formula $\phi \in \mathcal{L}(\tau)$, $x$ a $k$-tuple of
+variables, $\mathcal{A}$ a (finite) structure, and $a \in U^k$, we write the
+formulas $phi (x)$ to denote that the free variables of $\phi$ are among and we
+write $\mathcal{A} \models_{\mathcal{L}} \phi[a]$ iff the the formula $\phi$ is
+true in $\mathcal{A}$ with respect to $\mathcal{L}$ with the variables $x$
+assigned to $a$. The context often makes the logic obvious, and in that case we
+usually omit the subscript.
 
 We also recall the definition of \emph{fixed-point logic with counting} $\FPC$,
-an extension $\FP$ with counting quantifiers. For a structure $\mathcal{A}$,
-Formulas of this logic are evaluated over a structure $\mathcal{A}$ by extending
-that structure to $\mathcal{A}^\leq$, a two sorted extension of $\mathcal{A}$ by
-an ordered number sort $\{1, \ldots, \vert U\vert \}$. Variables are taken to be
-either point variables, ranging over $U$ or number variables ranging over
-$[\vert U \vert]$. The counting quantifiers are of the form $\#_x$, where $x$ is
-either a point or number variable and for $\phi(x) \in \FPC(\tau)$, $\#_x
-\phi(x)$ is a term denoting the element of the number sort corresponding to
-$\vert \{a \in \mathcal{A} | \mathcal{A} \models \phi[a]\}\vert$. Note
-additionally that $k$-tuples of number variables can be used to encode numbers
-in $\FPC$ of size up to $\vert U\vert^k$. For more details on $\FPC$ please see
-\cite{}.
+an extension $\FP$ with counting terms (see \cite{grohe2017descriptive} for
+details). Variables and terms in $\FPC$ must be of one of two sorts, vertex or
+numeric, where vertex variables are assigned to elements of the universe the
+structure and numeric variables to the elements of $\mathbb{N}$. All atomic
+formula as in $\FP$ are formulas of $\FPC$ (using only vertex sort variables).
+Let $\phi(x)$ be a formula of $\FPC$ with free variables $x$, then $\# x \phi$
+is a numeric, with the term's semantics being the number of elements satisfying
+$\phi$. All numeric variables as well as the symbols 0 and 1 are numeric terms
+with the expected semantics. If $\mu_1 and \mu_2$ are numeric terms, then $\mu_1
++ \mu_2$ and $\mu_1 * \mu_2$ are numeric terms with the expected semantics.
+Moreover, if $\mu_1$ and $\mu_2$ are numeric terms, then $\mu_1 < \mu_2$ and
+$\mu_1 = \mu_2$ are formulas with the expected semantics. If $\vec{x}$ is a
+$k$-tuple of numeric variables and $\vec{\mu}$ is a $k$-tuple of closed numeric
+term (i.e. ones without any free variables) then $\exists \vec{x} \leq \vec{\mu}
+\phi(\vec{x})$ and $\forall \vec{x} \leq \vec{mu} \phi(\vec{x})$ are formulas.
+In the existential case, for a $\tau$-structure $\mathcal{A}$, we say
+$\mathcal{A} \models \exists \vec{x} \leq \vec{\mu} \phi(\vec{x})$ iff there
+exists $\vec{n} \in [\mu^{\mathcal{A}}_1] \times \ldots \times
+[\mu^{\mathcal{A}}_2]$, such that $phi^{\mathcal{A}}$ holds for the assignment
+$\vec{x} \mapsto \vec{n}$. The semantics of the universal case follows
+similarly. The application of the fixed-point operator (but now with the
+relation variables possibly being of mixed type), and Boolean connectives
+similarly define formulas as in $\FP$. The semantics of these formulas is also
+similarly defined.
+
+% Let $\FO(\tau)$ denote \emph{first order logic} with respect to the vocabulary
+% $\tau$. \emph{Fixed-Point Logic} is the extension of $\FO(\tau)$ with an
+% inflationary fixed-point operator (see \cite{} for details). For logic
+% $\mathcal{L}$, a formula $\phi \in \mathcal{L}(\tau)$, $x$ a $k$-length tuple
+% of variables, $\mathcal{A}$ a (finite) structure, and $a \in U^k$, we have
+% that $\phi (x)$ denotes that the variables in $x$ are free in $\phi$ and we
+% write $\mathcal{A} \models_{\mathcal{L}} \phi[a]$ iff the the formula $\phi$
+% is true in $\mathcal{A}$ with respect to $\mathcal{L}$ with the variables $x$
+% assigned to $a$. The context usually makes the logic obvious, and in that case
+% we usually drop the subscript.
+
+% We also recall the definition of \emph{fixed-point logic with counting}
+% $\FPC$, an extension $\FP$ with counting quantifiers. For a structure
+% $\mathcal{A}$, Formulas of this logic are evaluated over a structure
+% $\mathcal{A}$ by extending that structure to $\mathcal{A}^\leq$, a two sorted
+% extension of $\mathcal{A}$ by an ordered number sort $\{1, \ldots, \vert
+% U\vert \}$. Variables are taken to be either point variables, ranging over $U$
+% or number variables ranging over $[\vert U \vert]$. The counting quantifiers
+% are of the form $\#_x$, where $x$ is either a point or number variable and for
+% $\phi(x) \in \FPC(\tau)$, $\#_x \phi(x)$ is a term denoting the element of the
+% number sort corresponding to $\vert \{a \in \mathcal{A} | \mathcal{A} \models
+% \phi[a]\}\vert$. Note additionally that $k$-tuples of number variables can be
+% used to encode numbers in $\FPC$ of size up to $\vert U\vert^k$. For more
+% details on $\FPC$ please see \cite{}.
 
 \subsection{Rank Logic}
 In this paper we use the definition of $\FPR$ given by Grad\"{e}l and Pakusa
-\cite{}, an strictly more expressive extension of the rank logic introduced by
-Dawar et. al. cite{}. We briefly define this logic here. For more detail please
-see \cite{}. $\FPR$ is an extension of $\FPC$ with rank operators, which we now
-define.
+\cite{Gradel2015}, an strictly more expressive extension of the rank logic
+introduced by Dawar et. al. cite{Dawar09logicswith}. We briefly define this
+logic here. For more detail please see \cite{Gradel2015}. $\FPR$ is an extension
+of $\FPC$ with rank operators, which we now define.
 
 Let $\phi (\vec{x}, \vec {\nu} \leq \vec{t}, \vec{y}\vec{\mu} \leq \vec{s})$ be
 a numeric term, where $\vec{x}$ and $\vec{y}$ are tuples of variables ranging
 over the universe of the structure, $\vec{\nu}$ and $\vec{\mu}$ are tuples of
-variables ranging over the number type, and $\vec{s}$ and $\vec{t}$ are tuples
-of closed numeric terms that bound the range of $\vec{\nu}$ and $\vec{\mu}$
-respectively. Then let $\mathcal{A}$ be a structure and let
-$\mathbb{N}^{\leq\vec{t}} := \{\vec{n} \in \mathbb{N}^{\vert \vec{v} \vert}: n_i
-\leq t^{\mathcal{A}}_i\}$, and let $\mathbb{N}^{\leq \vec{s}}$ be defined
-similarly. Let $I:= A^{\vert \vec{x} \vert} \times \mathbb{N}^{\leq \vec{t}}$
-and $J := A^{\vert \vec{y} \vert} \times \mathbb{N}^{\leq \vec{s}}$ Then let
-$M^{\mathcal{A}}_\phi : I \times J \rightarrow \mathbb{N}$ be defined by
-$M^{\mathcal{A}}_\phi (\vec{a}\vec{n}, \vec{b}\vec{m}):=
-\phi^{\mathcal{A}}(\vec{a}\vec{n},\vec{b}\vec{m})$.
+numeric variables , and $\vec{s}$ and $\vec{t}$ are tuples of closed numeric
+terms that bound the range of $\vec{\nu}$ and $\vec{\mu}$ respectively. Then let
+$\mathcal{A}$ be a structure and let $\mathbb{N}^{\leq\vec{t}} := \{\vec{n} \in
+\mathbb{N}^{\vert \vec{v} \vert}: n_i \leq t^{\mathcal{A}}_i\}$, and let
+$\mathbb{N}^{\leq \vec{s}}$ be defined similarly. Let $I:= A^{\vert \vec{x}
+  \vert} \times \mathbb{N}^{\leq \vec{t}}$ and $J := A^{\vert \vec{y} \vert}
+\times \mathbb{N}^{\leq \vec{s}}$ Then let $M^{\mathcal{A}}_\phi : I \times J
+\rightarrow \mathbb{N}$ be defined by $M^{\mathcal{A}}_\phi (\vec{a}\vec{n},
+\vec{b}\vec{m}):= \phi^{\mathcal{A}}(\vec{a}\vec{n},\vec{b}\vec{m})$.
 
 The rank operator is then defined as $[rk (\vec{x}, \vec {\nu} \leq \vec{t},
-\vec{y}\vec{\mu} \leq \vec{s}, \pi \leq r). \phi]$, where $\pi$ is a variable
-ranging over the number sort and $r$ is a closed numeric term that bounds $\pi$.
-The value of the rank term for a structure $\mathcal{A}$ and an assignment $\pi
-\mapsto p$, where $p$ is prime, is given by the rank of $M^{\mathcal{A}}_\phi$
-mod $p$, as understood as a matrix over $\mathbb{F}_p$.
+\vec{y}\vec{\mu} \leq \vec{s}, \pi \leq r). \phi]$, where $\pi$ is a numeric
+variable and $r$ is a closed numeric term that bounds $\pi$. The value of the
+rank term for a structure $\mathcal{A}$ and an assignment $\pi \mapsto p$, where
+$p$ is prime, is given by the rank  of $M^{\mathcal{A}}_\phi$ mod $p$, where the
+matrix is understood to have entries in $\mathbb{F}_p$.
+
+\subsection{Circuits}
+A \emph{Boolean circuit} $C$ defined over some basis $\mathbb{B}$ is a directed
+acyclic graph (DAG) with designated input gates $x_1, \ldots, x_n$, each with
+in-degree $0$, internal gates labelled by elements of $\mathbb{B}$, and a single
+designated output gate with out-degree 0. A Boolean basis consists either of a
+set of Boolean functions or a set of symbols which implicitly define a family of
+Boolean functions.
+
+Let $C$ be a circuit with input gates $x_1, \ldots, x_n$ and output gate $g_o$.
+The evaluation of $C$ for an input $\vec{x}\in \{0,1\}^n$ proceeds inductively
+from the assignment of $\vec{x}$ to the input gates. with the internal and
+output gates evaluated in accordance with the element of the basis labelling
+that gate. We denote the evaluation of a gate $g$ in by $C[\vec{x}](g)$, with
+the out of the circuit then given by $C[\vec{x}](g_o)$. In this way $C$ computes
+a Boolean function of the form $f:\{0,1\}^n \rightarrow \{0,1\}$. It is easy to
+see that for any complete Basis and any Boolean function there is a circuit over
+that basis that computes the function.
+
+% It is worth noting that the input to a gate is an unstructured set, and as
+% such it is implicitly required that the label associated with that gate define
+% a \emph{symmetric function} (a function whose output depends on the number of
+% 1's in its input).
+
+There are many natural properties of a circuit.The \emph{size} of a circuit $C$,
+denoted by $\vert C \vert$ is the number of gates in the circuit. The
+\emph{depth} of a circuit is the length of the longest path from an input gate
+to the output gate. The \emph{width} of a circuit is the maximum size of a set
+of gates all the same distance from the input gates.
+
+We say a family of circuits $(C_n)_{\mathbb{N}}$ \emph{decides} a language $L
+\{0,1\}^{*} \rightarrow \{0,1\}$ if $C_n$ computes the same function as $L$
+restricted to inputs of size $n$. It is common to ask about the class of
+languages that a can be decided by circuit families with certain restrictions.
+The following restriction is of importance in this paper.
+
+Two Boolean bases often considered in this paper are $\mathbb{B}_{\std} = \{
+\neg , \wedge , \lor \}$ and $\mathbb{B}_\maj = \{ \maj \} \cup \mathbb{B}$,
+where $\neg, \wedge and \lor$ are the usual logical connectives and $\maj$ is
+the majority gate, where for a Boolean sequence $\vec{x}$, $\maj(\vec{x}) = 1$
+iff the number of $1$'s in $\vec{x}$ is greater than or equal to
+$\frac{\vert\vec{x}\vert}{2}$.
+
+
+\begin{definition}
+  Let $(C_n)_{n \in \mathbb{N}}$ be a family of Boolean circuits. We say that
+  $(C_n)_{n \in \mathbb{N}}$ is \emph{$\PT$-uniform} if the mapping $n \mapsto
+  C_n$ is polynomial-time computable in $n$.
+\end{definition}
+
+Let $C$ be a circuit with the sets of gates $G$ and edge relation $W$. Let $g
+\in G$, we denote the \emph{children} or \emph{input gates} of $g$ by the set
+$H_g := \{h \in G : W(h,g)\}$.
 
 \subsection{Symmetric Circuits}
-This still needs to be filled in
+A circuit for structures, as given by Anderson and Dawar, is defined for a fixed
+relational vocabulary $\tau$, a Boolean basis of $\mathbb{B}$ \emph{symmetric
+  functions} (function's whose output depends only on the number of 1's in the
+input) and some fixed universe of size $n$. The input gates are taken to be the
+formal graph of the relational symbols over the universe $[n]$, i.e. gates
+labelled by $R(\vec{x})$ where $\vec{x} \in [n]^{\arty(R)}$. The input to the
+circuit is a finite $\tau$-structure $\mathcal{A}$ of cardinality $n$.
+
+Evaluation of the circuit proceeds by first choosing a bijection $\gamma$ from
+the universe of $\mathcal{A}$ to $[n]$ and then, for each input gate, using the
+interpretation of the relevant relational symbol in $\mathcal{A}$ and the
+bijection $\gamma$ to evaluate the gate. Recursing through the circuit and
+evaluating the internal gates using the given semantics for the symbols in the
+Boolean basis allows each gate in the circuit to be evaluated.
+
+A circuit is \emph{invariant} if its output does not depend on the choice of
+$\gamma$. A \emph{symmetric} circuit is a circuit such that every permutation on
+the universe $[n]$, each of which induces a permutation on the input gates,
+extends to an automorphism of the circuit. A symmetric circuit is necessarily
+invariant.
+
+It is important to note that the word `symmetric' is used in two different ways
+here. When applied to a circuit the above definition is used, but when applied
+to a Boolean function it denotes a function whose output depends only on the
+number of 1's in its input.
+
+The main result of~\cite{AndersonD17} is the following characterisation theorem.
+
+\begin{thm}
+  For any relational vocabulary $\tau$, a property of finite $\tau$-structures
+  is decided by a P-uniform family of symmetric circuits with majority gates if,
+  and only if, it is expressible in FPC.
+\end{thm}
+
 \end{document}
 

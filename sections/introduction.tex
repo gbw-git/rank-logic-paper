@@ -1,78 +1,138 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
-% A finite relational structure, such as a graph, can be represented as a binary
-% string in a standard way (for instance, by enumerating its adjacency matrix).
-% When we speak of the computational complexity of properties of graphs, we assume
-% such an encoding in order to present the structure as input to a machine or
-% circuit or other appropriate computational model. The properties of structures
-% we are interested in studying are invariant under isomorphisms. This requirement
-% translates into an invariance condition on sets of strings---say that a language
-% $L \subseteq \{0,1\}^\star$ is a \emph{graph property} if, whenever $x \in L$
-% for a string $x$ representing a graph $G$, we have $y\in L$ for any string $y$
-% obtained from $x$ by re-ordering the vertices of $G$. The central open question
-% in descriptive complexity---whether there is a logical characterisation of the
-% polynomial-time decidable properties of finite relational structures--- can then
-% be understood as the question of characterizing those languages $L$ that are in
-% $\PT$ and are graph properties.
+When we study algorithmic complexity we often study complexity classes defined
+in terms of some restricted class of machines. Circuit complexity, where one
+makes use of similarly restricted families of Boolean circuits rather than
+machines, has long served as an alternative approach. These circuits models have
+a natural attraction for researchers, as their simpler structure seems to make
+them more amendable to analysis and their connections with machine models
+provides an alternative avenue for better understanding fundamental problems in
+complexity theory, including the $\PT$ vs $\NP$ problem.
 
-% Anderson and Dawar~\cite{AndersonD17} study this question through the lens of
-% circuit complexity, by considering \emph{symmetric circuits}. These are circuits
-% that necessarily accept graph properties, with this fact explicitly witnessed by
-% automorphisms of the circuit. To be precise, we can think of a property of
-% (directed) graphs on $n$ vertices as being given by a Boolean function $f:
-% \{0,1\}^{n^2} \rightarrow \{0,1\}$ which takes as input the $n^2$ potential
-% edges and outputs $1$ if the property is satisfied by the graph given on the
-% input. The function $f$ is \emph{graph-symmetric} in the sense that any
-% permutation of its inputs induced by a permutation of the $n$ vertices leaves
-% $f$ unchanged (note this is not the same thing as requiring that $f$ is
-% invariant under all permutations of its inputs). A symmetric circuit is a
-% circuit computing a Boolean function of $n^2$ inputs where each permutation of
-% $[n]$ can be extended to an automorphism of the circuit. Such a circuit
-% necessarily computes an invariant function.
+Descriptive complexity instead concerns the characterisation of complexity
+classes in terms of logics. The central open question in the field -- whether
+there is a logical characterisation of the polynomial-time decidable properties
+of finite relational structures -- essentially asks if there is a logic the
+sentences of which describe all (and only) polynomial-time decidable
+isomorphism-closed classes of graphs (i.e. every \emph{graph property} in
+$\PT$). As in the algorithmic complexity case, the use of circuits in
+descriptive complexity has proved useful, with Otto \cite{Otto1997} and
+Denenberg et al.~\cite{DENENBERG1986216} developing circuit-based
+characterisations for logics. These characterisation are given in terms of
+\emph{symmetric circuits}, circuits that take in finite structures over some
+universe and where permutations of the universe of the input structure are
+reflected by automorphisms of the circuit.
 
-% The results of~\cite{AndersonD17} show a tight relationship between the
-% decdability of a graph property by means of a polynomial-size family of
-% symmetric circuits and its definability in extensions of fixed-point logic. In
-% particular, they show that a property is definable in fixed-point logic with
-% counting ($\FPC$) if, and only if, it is decidable by a polynomially-uniform
-% family of symmetric circuits using Boolean and majority gates (or, equivalently,
-% threshold gates). Without the symmetry restriction, polynomial-size families of
-% circuits have the same computational power whether we restrict ourselves to
-% Boolean gates only or allow richer bases such as threshold gates. One
-% consequence of the results in~\cite{AD14} is that, with the requirement of
-% symmetry, these different bases do yield different expressive power, suggesting
-% some lack of robustness to the model. One of the results in the present paper
-% shows that the model with majority circuits is robust in the sense that it is
-% able to simulate, by means of symmetric circuits, any symmetric circuit composed
-% of gates computing Boolean functions that are themselves symmetric (in the sense
-% that they are invariant under \emph{all} permutations of their inputs. Thus, any
-% property decidable by a polynomially-uniform family of such circuits is
-% definable in $\FPC$.
+% In this way symmetric circuits provide a natural class from which to develop
+% circuit characterisations for logics, taking in abstract structures and
+% ensuring that isomorphism (permutations) on the input structure are reflected
+% in the circuit structure, which consequently implies that the function
+% computed by the circuit is \emph{invariant} (i.e. computes a graph property)
+% makes symmetric circuits a natural class from which to develop circuit
+% characterisations of logics.
 
-% This motivates the study of symmetric circuit families that involve gates which
-% themselves may compute non-symmetric functions. In particular, motivated by the
-% study of rank logic~\cite{DGHL09,GP15}, we consider gates that are
-% \emph{matrix-symmetric}. These are gates computing a Boolean function $f:
-% \{0,1\}^{A \times B} \rightarrow \{0,1\}$ which is invariant under arbitrary
-% permutations of $A$ and $B$. A typical example is the function computing the
-% rank of an $A \times B$ $0$-$1$ matrix. We show that the support theorem of
-% Anderson and Dawar can be shown to hold, even in the presence of
-% matrix-symmetric gates. This allows us to show that definability in the logic
-% fixed-point with rank ($\FPR$) is the same as decidability by
-% polynomially-uniform families of symmetric circuits with rank gates.
-% % Another extension of $\FPC$ that has received much attention in the
-% % descriptive complexity literature is the class $\CPTC$ of \emph{choiceless
-% % polynomial time with counting}. The work of~\cite{AD14} leaves open the
-% % question of obtaining a circuit characterization of this class and it was
-% % suggested there that this would require a relaxation of the notion of symmetry
-% % used in defining symmetric circuits. In particular, while $\CPTC$ is based on
-% % a machine model designed to preserve symmetry by forbidding choices, the
-% % polynomial time and space restrictions apply int he context of the symmetries
-% % fo a \emph{single input structure}. In this paper, we consider a relaxation of
-% % the notion of symmetric circuit intended to capture exactly this intuition.
-% % However, we are able to show that this does not yield a characterization of
-% % $\CPTC$. In particular, we show that no family in this class of relaxed
-% % symmetric circuits can distinguish odd from even Cai-F\"urer-Immerman graphs,
-% % something we know is do-able in $\CPTC$~\cite{DRR08}.
+Anderson and Dawar \cite{AndersonD17} developed a similar
+circuit-characterisation for $\FPC$, proving that families of P-uniform families
+of symmetric circuits defined over a complete Boolean basis with majority gates
+completely characterises \emph{fixed-point logic with counting} ($\FPC$).
 
+While it is known that $\FPC$ does not capture $\PT$ \cite{Cau1992}, $\FPC$ does
+capture $\PT$ over many classes of structures \cite{Grohe2010} and many natural
+$\PT$ problems are expressible in $\FPC$ (e.g.\ Maximum Matching
+\cite{Anderson2013}). While $\FPC$ is thus an important logic of interest for
+its own sake, it also plays a role as a logic from which other important logics
+of study are defined. The particular logic of interest in this paper is
+\emph{fixed-point logic with rank} ($\FPR$), introduced by Dawar et
+al.~\cite{Dawar09logicswith}, and is defined as an extension of $\FPC$ that
+includes operators that can define the rank of a definable matrix over a fixed
+finite field. This extension was prompted by the work of Atserias et
+al.~\cite{Atserias20091666}, who had shown that that some of the most difficult
+to express problems in $\PT$ (that are not expressible in $\FPC$) were reducible
+to the general problem of solving systems of linear equations over prime fields.
+Indeed, problems of this sort have remained the primary source of
+difficult-to-express problems in descriptive complexity, motivating the modern
+study of $\FPR$.
+
+It is worth noting the logic defined by Dawar et al.\cite{} defines for each
+prime a separate operator that computes the rank of the matrix over that prime.
+It was shown by Gr\"{a}del and Pakusa \cite{GradelP15a} that this logic does not
+capture $\PT$. Instead, they present a strictly more expressive alternative rank
+logic which includes only a single rank operator that takes in both the matrix
+and a specific prime over which to compute the rank as input. In this paper when
+we refer to $\FPR$ we are referring to this more expressive version of
+Gra\"{a}del and Pakusa.
+
+In this paper we develop a circuit characterisation of $\FPR$ in terms of
+symmetric circuits that have gates that compute rank. Concretely, a circuit
+$C_n$ for structures of size $n$ is a directed acyclic graph (DAG) whose
+internal gates are marked by elements of some basis. This basis consists of
+operations or, more concretely, Boolean functions such that a gate $g$ in $C_n$
+with $k$ input gates is labelled by a function $f: \{0,1\}^A \rightarrow
+\{0,1\}$, where $\vert A \vert = k$. When evaluating the circuit, $g$ is
+computed by evaluating $f$ with the input given by the binary string formed by
+evaluating the gates input to $g$, implicitly mapping $A$ to the input gates of
+$g$. However, the output of $f$ in general depends on the order (or structure)
+of the binary string taken as input, and as such the evaluation of $g$ depends
+on which gates are assigned to each element of $A$.
+
+This point is often ignored in circuit complexity by ensuring that functions in
+the Boolean basis are \emph{symmetric}, i.e. depend only on the number of 1's in
+it's input, rendering the particular assignment from $A$ to the input gates
+irrelevant. This is the approach taken by Anderson and Dawar \cite{AndersonD17}.
+However, functions that compute an operation like rank, i.e. a function that
+takes in a matrix with Boolean entries and outputs 1 iff that matrix, when
+interpreted in $\mathbb{F}_p$, has rank at least $r$, certainly depend on how
+the input is formed into a matrix, and as such is not a symmetric function.
+
+We introduce the notion of a \emph{structured function}, which allows us to both
+index inputs appropriately and introduce appropriate generalisations of symmetry
+depending on the structure of the input. Each such function $F$ is uses a many-sorted
+structure, with some signature $\tau_F$, in order to index the input. This
+definition allows us to generalise the notion of symmetry to a particular
+labelling, and so introduce the notion of a \emph{$\tau$-symmetric functions}.
+
+We also introduce a generalised symmetric circuit allows, which allows for
+$\tau$-symmetric functions in the Boolean basis, not just symmetric ones. The
+circuit also provides a function $L$ that maps to each internal gate $g$ to a
+labelling on its input corresponding the labelling on the input of the Boolean
+function that labels this gate.
+
+\begin{remark}
+  I'm not sure how much detail to go into here, this could be a major
+  digression.
+\end{remark}
+
+
+
+% That is, eacFor example, if we should like The circuit $C_n$ associates with
+% each internal gate $g$ a structure $\dom (g)$, and each gate input a sequence of
+% elements from each sort $\dom(g)$ in accordance with the sorts of the
+
+% of definition includes an additional function which assosiates for each gate $g$
+% a
+
+
+% require that the Basis over which the circuit is defined are symemtric.. We
+% begin by generalising the notion of a symmetric circuit. A symmetric circuit, as
+% presented in \cite{AndersonD17}, and in many parts of complexity theory,
+% supposes that the in Boolean function that labels in the gate is
+% \emph{symmetric} that labels a particular gate We first generalise the notion of
+% a symmetric circuit so as to allow for gate
+
+
+% In this general notion of a symmetric circuit, a Boolean basis consists not just
+% of a set of Boolean functions, but a set of \emph{structured functions} -- a
+% function indexed A symmetric $\tau$-circuits is defined for some universe size
+% $n$ and Boolean basis $\mathbb{B}$ of Boolean functions. Each Boolean function
+% in $\mathbb{B}$ is a \emph{structured Boolean function} in the sense that
+
+% In this abstract we review the work of Anderson and Dawar on symmetric
+% circuits, and extend their analysis by broadening the basis of functions they
+% consider to include so-called `matrix-symmetric' functions. This class of
+% functions includes important non-symmetric functions, e.g.\ the rank of a
+% matrix, and this allows us to study symmetric circuits with gates that compute
+% rank. Our main result is a circuit characterisation for FPR. In particular, we
+% show that P-uniform families of symmetric circuits with rank gates
+% characterise FPR. This requires a significant advance on the methods
+% of~\cite{AndersonD17}.
 \end{document}
