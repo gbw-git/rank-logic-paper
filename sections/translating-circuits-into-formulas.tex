@@ -3,17 +3,24 @@
 
 In this section we develop the theory for defining a formula of FPR from a
 family of $P$-uniform family of symmetric circuits with rank gates. We first
-prove results on the generality of rigid circuits and circuits with
-bijective labelings. Second, we prove that there are polynomial time algorithms
-for determining canonical supports of gates. Third, we develop a FPR definable
-way of evaluating a rank gate in the circuit. Finally, we complete the result by
+prove results on the generality of rigid circuits and circuits with bijective
+labelings. Second, we prove that there are polynomial time algorithms for
+determining canonical supports of gates. Third, we develop a FPR definable way
+of evaluating a rank gate in the circuit. Finally, we complete the result by
 explicitly defining an FPR formula corresponding to a given family of symmetric
 circuits with rank gates.
 
 We note that most of these results are for the more general case of symmetric
 circuits with matrix-symmetric gates.
 
-\subsection{Rigid Circuits and Labellings}
+\begin{remark}
+  Please ignore the first two sections (Rigid Circuits and Labelings and
+  Computing Supports), and go on to the third section. These subsections are
+  waiting until the second section of the paper (Symmetric Circuits) is complete
+  as the results in these subsections depend on definitions in that section.
+\end{remark}
+
+\subsection{Rigid Circuits and Labelings}
 
 In this section we prove important simplifying lemmas which allow for
 assumptions of rigidity and bijective labels.
@@ -34,13 +41,13 @@ assumptions of rigidity and bijective labels.
   Let $S = 2*\vert C \vert$. Recurse through the gates of $C$ topologically and
   let $h$ be the next gate topologically. If for all $g \in W(h, \cdot)$ we have
   that $L\vert (g)^{-1}(h) \vert = 1$ continue on to the next gate. If not add
-  in a tower of $S$ $\and$ gates such that $h \rightarrow \and^h_1 \rightarrow
-  \ldots \rightarrow \and^h_S$ (i.e. we have a tower of $\and$ gates with $h$ as
-  input to $\and^h_1$ and the output of each $\and^h_i$ connected to the input
-  of each $\and^h_{i+1}$ for each $1 \leq i < S$). Now for each $g \in W(h,
-  \cdot)$, if $L(g)^{-1}(h) = \{ s_0, \ldots, s_{r}\}$, for each $1 \leq i \leq
-  r$ add in the wires $W(\and^h_i, g)$ and set $L(g)(s_{i}) = \and^h_i$. Now
-  continue on to the next gate topologically and run the above algorithm.
+  in a tower of $S$ $\land$ gates such that $h \rightarrow \land^h_1 \rightarrow
+  \ldots \rightarrow \land^h_S$ (i.e. we have a tower of $\land$ gates with $h$
+  as input to $\land^h_1$ and the output of each $\land^h_i$ connected to the
+  input of each $\land^h_{i+1}$ for each $1 \leq i < S$). Now for each $g \in
+  W(h, \cdot)$, if $L(g)^{-1}(h) = \{ s_0, \ldots, s_{r}\}$, for each $1 \leq i
+  \leq r$ add in the wires $W(\land^h_i, g)$ and set $L(g)(s_{i}) = \land^h_i$.
+  Now continue on to the next gate topologically and run the above algorithm.
 
   % First, notice that for a given gate $h$ and $k \in \mathbb{N}$, we can
   % define
@@ -85,9 +92,9 @@ assumptions of rigidity and bijective labels.
   universe and $\pi_C$ the induced automorphism on $C$. We now define $\pi$, the
   induced automorphism on $C'$. For each gate $g$ in $C'$, if $g$ is in $C$ then
   set $\pi(g) := pi_C(g)$. If $g$ is not in $C$ then $g$ must be some
-  $\and^h_i$, for some $h$ in $C$. Then set $\pi(\and^h_i) :=
-  \and^{\pi_C(h)}_i$. It is easy to see that $\pi$ is an automorphism, and $\pi$
-  extends $\sigma$.
+  $\land^h_i$, for some $h$ in $C$. Then set $\pi(\land^h_i) :=
+  \land^{\pi_C(h)}_i$. It is easy to see that $\pi$ is an automorphism, and
+  $\pi$ extends $\sigma$.
 
   Suppose that $C$ is rigid. It is easy to see that $C'$ will be rigid as well.
 
@@ -135,6 +142,7 @@ assumptions of rigidity and bijective labels.
    $\sigma \in \sym_n$. There is a deterministic algorithm which runs in time
    Poly($\vert C \vert$) and outputs for each gate $g$ its image under the
    automorphism $\pi$ induced by $\sigma$, if it exists.
+   \label{lem:computing-supports}
  \end{lem}
  \begin{proof}
    The proof proceeds by recursively going through the circuit and building the
@@ -173,20 +181,23 @@ assumptions of rigidity and bijective labels.
    The algorithm clearly runs in Poly($\vert C \vert$)
  \end{proof}
 
-\subsection {Evaluating Circuits}
-Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a family of polynomial-size
-rigid symmetric circuits with matrix-symmetric gates. that compute a $q$-ary
-query. Let $n_0$ the constant in the hypothesis of the Support Theorem.
+ \subsection {Evaluating Circuits}
+ Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a family of polynomial-size
+ rigid symmetric matrix-circuits that compute a $q$-ary query. Let $n_0$ be the
+ constant in the hypothesis of the Support Theorem.
 
-Let $\mathcal{A}$ be a structure of size $n$ over the universe $U$, and let $g$
-be a matrix-symmetric gate in $C_n$. In this section we develop the theory which
-will allow us to evaluate this gate in FPR and (using results from Anderson and
-Dawar \cite{}) recursively evaluate the circuit.
+ We fix a structure $\mathcal{A}$ of size $n$ over the universe $U$,
+ matrix-symmetric gate $g$ in $C_n$ and let $A \times B := \ind(g)$. We
+ additionally suppose there is a linear-order on the structure $C_n$.
 
-We recall that in order to evaluate the gate $g$ we need to consider a bijection
-$\gamma: U \rightarrow [n]$, with the evaluation of $g$ given by $C_n[\gamma
-\mathcal{A}](g)$. We first show that the evaluation of $g$ depends only on which
-elements of $U$ are mapped to $\consp(g)$.
+ In this section we develop the theory which will allow us to evaluate this gate
+ in FPR and thus (using results from Anderson and Dawar \cite{AndersonD17})
+ recursively evaluate the circuit.
+
+ We recall that in order to evaluate the gate $g$ we need to consider a
+ bijection $\gamma: U \rightarrow [n]$, with the evaluation of $g$ given by
+ $C_n[\gamma \mathcal{A}](g)$. We first show that the evaluation of $g$ depends
+ only on which elements of $U$ are mapped to $\consp(g)$.
 
 \begin{definition}
   Let $f: X \rightarrow Y$ and $g : X' \rightarrow Y'$. We say that $f$ is
@@ -199,32 +210,31 @@ elements of $U$ are mapped to $\consp(g)$.
   Let $f: A \times B \rightarrow H$ and $p: A' \times B' \rightarrow H$. We say
   that $f$ and $p$ are \emph{row-column equivalent} if there exist bijections
   $\alpha: A \rightarrow A'$ and $\beta: B \rightarrow B'$ such that for all
-  $(a, b) \in A \times B$, $f(a,b)g(\alpha(a), \beta(b))$. In this case we write
-  $f \sim p$.
+  $(a, b) \in A \times B$, $f(a,b) = p(\alpha(a), \beta(b))$. In this case we
+  write $f \sim p$.
 \end{definition}
 
 For a given bijection $\gamma: U \rightarrow [n]$ we can define a matrix
-$L^{\gamma} : \dom (g) \rightarrow \{0,1\}$ by $L^{\gamma} (a,b) := C[\gamma
-\mathcal{A}](L(g)(a,b))$. In the following Lemma we show that the the matrix
-symmetry of the gate $g$ ensures that for any two bijections $\gamma_1,
-\gamma_2$, if they agree on the support of $g$ then $L^{\gamma_1}_g$ is
-row-column equivalent to $L^{\gamma_2}_g$. This implies that the evaluation of
-$g$ depends only on the assignment to its support.
+$L^{\gamma} : A times B \rightarrow \{0,1\}$ by $L^{\gamma} (a,b) := C[\gamma
+\mathcal{A}](L(g)(a,b))$. In the following Lemma we show that the the
+matrix-symmetry of the gate $g$ ensures that for any two such bijections
+$\gamma_1, \gamma_2$, if they agree on the support of $g$ then $L^{\gamma_1}$ is
+row-column equivalent to $L^{\gamma_2}$. From this we can conclude that that the
+evaluation of $g$ depends only on the assignment to its support.
 
 \begin{lem}
-  Let $g$ be a matrix-symmetric gate in $C_n$ with children $H$. Let $\eta:
-  \consp(g) \rightarrow U$ be an injection, and suppose $\gamma_1, \gamma_2: U
-  \rightarrow [n]$ with $\gamma^{-1}_1 \sim \eta$ and $\eta \sim \gamma^{-1}_2$.
-  Let $A \times B = \dom (L(g))$. Then $L^{\gamma_1}$ and $L^{\gamma_2}$ are
-  row-column equivalent.
+  Let $g$ be a matrix-symmetric gate in $C_n$. Let $\eta: \consp(g) \rightarrow
+  U$ be an injection, and suppose $\gamma_1, \gamma_2: U \rightarrow [n]$ with
+  $\gamma^{-1}_1 \sim \eta$ and $\eta \sim \gamma^{-1}_2$. Then $L^{\gamma_1}$
+  and $L^{\gamma_2}$ are row-column equivalent.
 \end{lem}
 
 \begin{proof}
   We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
   \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
-  consistent with $\alpha$, it follows that $\pi$ must fix $\consp(g)$. Thus
-  $L(g) \sim \pi \cdot L(g)$, and so there exists $(\sigma, \lambda)$ such that
-  $\pi L(g) = L(g) (\sigma, \lambda)$.
+  consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$ pointwise.
+  Thus $L(g) \sim \pi \cdot L(g)$, and so there exists $(\sigma, \lambda) \in
+  \sym_A \times \sym_B$ such that $\pi L(g) = L(g) (\sigma, \lambda)$.
 
   We then have that,
   \begin{align*}
@@ -236,13 +246,17 @@ $g$ depends only on the assignment to its support.
   and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
 \end{proof}
 
-For each gate we define the set of all assignments to support of that gate which
-cause the evaluate to true: $\EV_g := \{ \alpha: U^{\underline{\consp(g)}} :
-\exists \gamma \in U^{\underline{[n]}} C_n [\gamma \mathcal{A}](g) = 1 \wedge
-\alpha \sim \gamma^{-1}\}$. We now construct $\EV_g$ using $\EV_h$ for each $h
-\in H_g$. In doing so we entirely characterise exactly which bijections $\gamma:
-U \rightarrow [n]$ cause $g$ to evaluate to true.
+We associate with each gate $h$ a set $\EV_h \subseteq
+U^{\underline{\consp(h)}}$ consisting of all assignments to the support of $h$
+which cause the gate to evaluate to true, i.e. $\EV_h := \{ \eta:
+U^{\underline{\consp(h)}} : \exists \gamma \in U^{\underline{[n]}} \text{ s.t.
+}C_n [\gamma \mathcal{A}](h) = 1 \wedge \eta \sim \gamma^{-1})\}$. Note that
+$\EV_h$ completely determines all assignments $\delta \in [n]^{\underline{U}}$
+such that $C_n[\delta \mathcal{A}](h) = 1$.
 
+In this rest of the section we show how to recursively construct $\EV_g$ from
+$\{\EV_h : h \in H_g\}$. For the rest of this section fix an injection $\eta :
+\consp(g) \rightarrow U$.
 % \begin{remark}
 %   Let $\sigma \in \spstab{g}$, then we know that there exists $(\sigma_r,
 %   \sigma_c) \in \sym_A \times \sym_B$ and $\sigma_r (i) = \row (\sigma h)$,
@@ -250,18 +264,18 @@ U \rightarrow [n]$ cause $g$ to evaluate to true.
 %   \column (\sigma h)$, for any $h \in H$ such that $\column (h) = j$.
 % \end{remark}
 
-We introduce here some useful notation.
+% We introduce here some useful notation.
 
-\begin{definition}
-  Let $S^r_h = \{ \sigma \in \stab (\consp(g)) : \sigma \vec{r_h} = \vec{r_h}
-  \}$ and $G^r_h = \{ \sigma \in \stab(\consp(g)) : \row(\sigma h) = \row(h)\}$.
-  Let $S^c_h = \{ \sigma \in \stab (\consp(g)) : \sigma \vec{c_h} = \vec{c_h}
-  \}$ and $G^c_h = \{ \sigma \in \stab(\consp(g)) : \column(\sigma h) =
-  \column(h)\}$.
-\end{definition}
+% \begin{definition}
+%   Let $S^r_h = \{ \sigma \in \stab (\consp(g)) : \sigma \vec{r_h} = \vec{r_h}
+%   \}$ and $G^r_h = \{ \sigma \in \stab(\consp(g)) : \row(\sigma h) =
+%   \row(h)\}$. Let $S^c_h = \{ \sigma \in \stab (\consp(g)) : \sigma \vec{c_h}
+%   = \vec{c_h} \}$ and $G^c_h = \{ \sigma \in \stab(\consp(g)) : \column(\sigma
+%   h) = \column(h)\}$.
+% \end{definition}
 
-Clearly, by definition of a row and column support, $S^r_h \subseteq G^r_h$ and
-$S^c_h \subseteq G^c_h$.
+% Clearly, by definition of a row and column support, $S^r_h \subseteq G^r_h$
+% and $S^c_h \subseteq G^c_h$.
 
 % \begin{remark}
 %   In this section I assume for the moment that:
@@ -297,8 +311,8 @@ $S^c_h \subseteq G^c_h$.
 %   t$.
 % \end{definition}
 
-For the sake of brevity, for sets $Z,X,Y$, where $f : Z \rightarrow X$ and $p :
-Z \rightarrow Y$ are injections, let $f_p = f \cdot p^{-1}$.
+For the sake of brevity, for sets $Z,X,Y$, and a function $f : Z \rightarrow X$
+and injection $p :Z \rightarrow Y$, let $f_p = f \cdot p^{-1}$.
 
 \begin{definition}
   Let $\vec{x}, \vec{y} : Z \rightarrow X$ and $\vec{r}, \vec{c}: Z \rightarrow
@@ -319,7 +333,9 @@ We note that if we have $f : X \rightarrow Y$ and $p: X' \rightarrow Y'$ and $f
 \end{align*}
 
 The compatibility of these two functions ensures that this function is well
-defined.
+defined. This mapping allows us to combine two assignments into a single
+assignment, and will be useful when combining the row and column supports of a
+gate.
 
 % \begin{claim}
 %   Let $A_1,B_1, A_2, B_2 \subseteq [n]$. Then $(A_1, B_1)$ and $(A_2, B_2)$
@@ -340,16 +356,40 @@ defined.
 %   the type of $h$ by $\type (h)$.
 % \end{definition}
 
-We now fix an injection $\eta : \consp(g) \rightarrow U$ and describe an
-approach for determining if $\eta \in EV_g$.
+We define for any set $Y$ with a linear-order $\leq$ on $Y$, a function
+$\ord_\leq: Y \rightarrow \vert Y \vert$ be defined by $\ord_\leq (y) = o_y$,
+where $o_y$ is the position of $y$ in $Y$ in the ordering. We call this function
+the \emph{order map for $Y$}. For a subset $\text{sp} \subseteq [n]$, we use
+$\vec{\text{sp}}$ to denote the inverse of the order map for $\text{sp}$.
 
-Let $X$ be a set on which the left group action on $\sym_n$ is defined and $s
-\in X$. We denote $\vec{x}$ then $A_s = \{\vec{x} \in U^{\underline{[\vert
-    \sp(s) \vert ]}} : \eta \sim \vec{x} \cdot \vec{\consp}(s)^{-1} \}$, where
-$\vec{\consp}(s): [\vert \consp(s) \vert] \rightarrow \consp(s)$ maps $i \in
-[\vert \consp(s) \vert]$ to the $i$th element of $\consp(s)$. For $\vec{x} \in
-A_s$, we use $\vec{x}_s$ from here forward to denote $\vec{x} \cdot
-\vec{\consp(s)^{-1}}$.
+Let $X$ be a set on which the left group action of $\sym_n$ is defined and $s
+\in X$. We let $A_s = \{\vec{x} \in U^{\underline{\consp(s)}} : \eta \sim
+\vec{x} \cdot \vec{\consp}^{-1}(s) \}$. For $\vec{x} \in A_s$, we use
+$\vec{x}_s$ from here forward to denote $\vec{x} \cdot \vec{\consp}^{-1}(s)$.
+
+Let $s \in X$ and $\vec{x}, \vec{x}' \in A_s$ and we say that $\vec{x}$ and
+$\vec{x}'$ are \emph{mutually stable} if there exists $\sigma \in \stab(s) \cap
+\spstab{g}$ such that $\vec{x} = \vec{x}' \cdot \sigma*$, where $\sigma* =
+\vec{\consp}(s)^{-1} \cdot \sigma \cdot \vec{\consp}(s)$. Note that mutual
+stability is an equivalence relation on $A_s$, and we denote the equivalence of
+two vectors $\vec{x}, \vec{x}' \in A_s$ by $\vec{x} \sim_s \vec{x}'$.
+
+\begin{lem}
+  Let $X$ be a set on which the left group action of $\sym_n$ is defined, and
+  let $\gamma: U \rightarrow [n]$ be a bijection such that $\gamma^{-1} \sim
+  \eta$. Let $s \in X$ and let $\sigma, \sigma' \in \stab(\consp(g))$ such that
+  $\sigma (\consp(s)) = \sigma'(\consp(s))$. Then $\sigma(s) = \sigma' (s)$ iff
+  there exists $x \in X$ such that $\gamma^{-1} \cdot \sigma \cdot
+  \vec{\consp}(s) \sim_x \gamma^{-1} \cdot \sigma' \cdot \vec{\consp}(s)$.
+  \label{lem:functions-well-defined}
+\end{lem}
+
+\begin{proof}
+  (removed, to be included later)
+  % Suppose $\sigma(s) = \sigma'(s)$. Take $x := \sigma(s)$. So then
+  % $\gamma^{-1}(\sigma(s))$
+\end{proof}
+
 
 % Let $L(g)(i,j) = h \in H$, $\vec{x} \in A_i$ and $\vec{y} \in A_j$. Let
 % $\vec{r} \in ^{\underline{\consp(i)}}$ and $\vec{c}
@@ -364,8 +404,7 @@ A_s$, we use $\vec{x}_s$ from here forward to denote $\vec{x} \cdot
 %   \end{cases}
 % \end{align*}
 
-This mapping allows us to combine two assignments into a single assignment. This
-will be useful when combining the row and column supports of a gate.
+
 
 % \begin{claim}
 %   Let $f: A \rightarrow S$ and $g B \rightarrow S$ be injections. Then $(f,g)$
@@ -391,34 +430,34 @@ will be useful when combining the row and column supports of a gate.
 %   same type then $h' \in \orb(h)$.
 % \end{lem}
 
-We now define a matrix that we later be shown to be definable in FPR. We then
-show that this matrix is row-column equivalent to $L^{\gamma}$, for any
-bijection $\gamma: U \rightarrow [n]$, and hence allowing us to determine the
-rank of the matrix input to $g$ in FPR.
+We now define a matrix that we later show to be definable in $\FPR$. We then
+show that this matrix is row-column equivalent to $L^{\gamma}$ for any bijection
+$\gamma: U \rightarrow [n]$ compatible with $\eta$. Computing the rank of this
+matrix in $\FPR$ allows us to then evaluate $g$.
 
-Let $R^{\min} = \{\min (\orb(\row(h))) : h \in H\}$ and $C^{\min} = \{ \min
-(\orb (\column(h))) : h \in H\}$ and let
+Let $R^{\min} = \{\min (\orb(\row(h))) : h \in H_g\}$ and $C^{\min} = \{ \min
+(\orb (\column(h))) : h \in H_g\}$ and let
 \begin{align*}
   I = \{(i, \vec{x}): i \in R^{\min}, \vec{x} \in A_i\},
 \end{align*}
 and
 \begin{align*}
-  J = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j \}.
+  J = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j\}.
 \end{align*}
+
 
 % \begin{align*}
 %   M ((i, \vec{x}), (j, \vec{y})) := \bigvee_{t \in \types} ((\vec{x},
 %   \vec{y}) \text{ has type } t) \land (\vec{x} | \vec{y}) \in \EV_{\mu_{i,j}(t)}.
 % \end{align*}
 
-Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$.
-
-Let $u_1 , \ldots , u_{2k}$ be the first $2k$ elements of $[n] \setminus
-\consp(g)$ in the natural order on the structure. Then let
+Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $u_1 , \ldots , u_{2k}$
+be the first $2k$ elements of $[n] \setminus \consp(g)$ in the natural order on
+the structure. Then let
 \[r = \eta^{-1} (\img(\vec{x}) \cap \eta (\consp(g))) \cup
   \{u_{\vec{x}^{-1}(a)}: a \in \img(x) \setminus \eta (\consp (g))\} \] and
 \[s = \eta^{-1} (y \cap \eta (\consp(g))) \cup (x \cap y) \cup \{ u_{k +
-    \vec{x}^{-1}(a)} : a \in y \setminus (x \cup \eta (\consp (g))) \}). \]
+    \vec{x}^{-1}(a)} : a \in y \setminus (x \cup \eta (\consp (g))) \}. \]
 Define
 \[
   \vec{r} (a) =
@@ -437,23 +476,52 @@ and
   \end{cases}
 \]
 
+\begin{remark}
+  The above is quite messy and, while I checked it a few times when I first
+  wrote it, I want to double check on it and look for other ways to write this
+  bit up. Moreover, I think of some of this can be simplified using the new
+  definitions I've added.
+\end{remark}
+
 \begin{lem}
   \label{lem:permutation_row-column}
-  There exists $\sigma_1, \sigma_2 \in \spstab{g}$ such that $\sigma_1 \cdot
-  \vec{\consp(i)} = \vec{r}$ and $\sigma_2 \cdot \vec{\consp(j)} = \vec{c}$.
+  For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ and with $\vec{r}$ and
+  $\vec{c}$ defined as above, there exists $\sigma_1, \sigma_2 \in \spstab{g}$
+  such that $\sigma_1 \cdot \vec{\consp}(i) = \vec{r}$ and $\sigma_2 \cdot
+  \vec{\consp}(j) = \vec{c}$.
 \end{lem}
 \begin{proof}
   To be added from the book
 \end{proof}
 
-Let $h = L(g)(\sigma_1(i), \sigma_2 (j))$. Then we can define the matrix $M : I
-\times J \rightarrow \{0,1\}$ by
+So for any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ we can define $\vec{r}$
+and $\vec{c}$ as above. Let $(\sigma_1, \sigma_2) \in \spstab{g}$ be as in Lemma
+\ref{lem:permutation_row-column} and let $h = L(g)(\sigma_1(i), \sigma_2 (j))$.
+Then we can define the matrix $M : I \times J \rightarrow \{0,1\}$ by
 
 \begin{align*}
   M((i , \vec{x}), (j, \vec{y})) := (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in EV_h.
 \end{align*}
 
-It remains to show that $M \sim L^{\gamma}$ for some (and so all) bijections
+Furthermore, we note the following.
+
+\begin{lem}
+  Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
+  J$ be such that $\vec{x} \sim_i \vec{x}'$ and $\vec{y} \sim_j \vec{y}'$, then
+  $M(((i, \vec{x}), (j, \vec{y}))) = M((i, \vec{x}'), (j, \vec{y}'))$.
+  \label{lem:matrix-quot-well-defined}
+\end{lem}
+\begin{proof}
+  (To be included)
+\end{proof}
+
+Let $I /{\sim} = \{(i, \vec{x}): i \in R^{\min}, \vec{x} \in A_i{\sim_i}\},$ and
+$J/{\sim} = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j/{\sim_j}\}$. Let the
+matrix $M_{~} : I /{\sim} \times J / {\sim} rightarrow \{0,1\}$ be defined by
+$M_{~} ((i, [\vec{x}]) (j, [\vec{y}])) = M(((i, \vec{x}), (j, \vec{y})))$. Lemma
+\ref{lem:matrix-quot-well-defined} gives us that this function is well-defined.
+
+It remains to show that $M_{~} \sim L^{\gamma}$ for some (and so all) bijections
 $\gamma: U \rightarrow [n]$.
 % \begin{definition}
 %   Let $M_1$ and $M_2$ be matrices over some field, with row and column indexes
@@ -521,10 +589,9 @@ determines the action on that object.
 
 \begin{lem}
   \label{lem:support_determine_action}
-  Let $\sigma, \sigma' \in \spstab{g}$, $a$ be an object on which on the action
-  of these two permutations is defined, and $\consp(a) \subset [n]$ be a support
-  of $a$. Then if $\sigma (\vec{\consp}(a)) = \sigma' (\vec{\consp}(a))$ then
-  $\sigma (a) = \sigma' (a)$.
+  Let $X$ be a set on which the left action of $\sym_n$ is defined. Let $\sigma,
+  \sigma' \in \spstab{g}$, $a \in X$. If $\sigma (\vec{\consp}(a)) = \sigma'
+  (\vec{\consp}(a))$ then $\sigma (a) = \sigma' (a)$.
 \end{lem}
 \begin{proof}
   From $\sigma (\vec{\consp(a)}) = \sigma' (\vec{\consp(a)})$, it follows that
@@ -560,13 +627,32 @@ determines the action on that object.
 % $\vec{y}$ uniquely determine the mappings $\Pi^{\gamma,r}_{\vec{x}}(i)$ and
 % $\Pi^{\gamma,c}_{\vec{y}}(j)$
 
+Let $X$ be a set on which the left action of $\sym_n$ is defined, and let $x \in
+X$. Let $f \in U^{\underline{\consp(x)}}$ and $\delta \in [n]^{\underline{U}}$,
+then we let $\Pi^{\delta}_{f} \in \spstab{g}$ be such that $\Pi^{delta}_f (a) =
+\gamma (f(a))$ for all $a \in \consp(x)$. Note that from Lemma
+\ref{lem:support_determine_action}, $\Pi^{\gamma}_f(x)$ is well-defined
+independently of the choice of $\Pi^{\gamma}_f$.
+
 Let $\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
 defined by $\alpha^{\gamma} (i, \vec{x}) = \Pi^{\gamma}_{\vec{x}_{i}}(i)$ and
-$\beta^{\gamma} (j, \vec{y}) = \Pi^{\gamma}_{\vec{y}_{j}}(j)$.
+$\beta^{\gamma} (j, \vec{y}) = \Pi^{\gamma}_{\vec{y}_{j}}(j)$, respectively.
+
+Note that both $\alpha^{\gamma}$ and $\beta^{\gamma}$ can be lifted to functions
+on $I /{\sim}$ and $J /{\sim}$ respectively. Lemma
+\ref{lem:functions-well-defined} gives us that these liftings are well-defined.
+
 
 We now show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ act as witnesses to the
-row-column of equivalence of $M$ and $L^{\gamma}$. The following lemma proves
-surjectivity.
+row-column of equivalence of $M_{~}$ and $L^{\gamma}$. The following lemma
+proves surjectivity.
+
+\begin{remark}
+  I am still in the process of rewriting this section (and figuring out how to
+  restructure it) so as to include this quotienting operation. The remainder of
+  this section should still be looked at, but I have yet to integrate the
+  quotenting operation. I would also like to talk with you about this step.
+\end{remark}
 
 \begin{lem} 
   For any bijection $\gamma : U \rightarrow [n]$ both $\alpha^{\delta}$ and
@@ -576,7 +662,7 @@ surjectivity.
   We show that $\alpha$ is surjective, with the same result for $\beta$
   following similarly. Let $q \in A$ and let $i = \min (\orb (q))$. Then there
   exists $\sigma \in \spstab{g}$ such that $\sigma i = q$. Let $\vec{x} =
-  \gamma^{-1} (\sigma(\vec{\consp}(i)))$. Notice that for $a \in \consp(i)$ we
+  \gamma^{-1} \cdot \sigma \cdot \vec{\consp}(i)$. Notice that for $a \in \consp(i)$ we
   have that $\vec{x}_i(a) = \gamma^{-1} (\sigma (a))$, and since $\gamma^{-1}
   \cdot \sigma \sim \eta$, it follows that $\vec{x} \in A_i$.
 
@@ -637,7 +723,7 @@ The following lemma allows us to factor through permutations.
   \label{lem:defining_h_from_IJ}
   Let $(i, \vec{x}) \in I$ and $j, \vec{y} \in J$. Let $\vec{r}$ and $\vec{c}$
   be described as above. Let $\sigma_1$ and $\sigma_2$ be as from Lemma
-  \ref{lem:permutation_row-colum}. Let $h = L(g) (\sigma_1 (i), \sigma_2 (j))$.
+  \ref{lem:permutation_row-column}. Let $h = L(g) (\sigma_1 (i), \sigma_2 (j))$.
   Then $\alpha^{\gamma'} (i, \vec{x}) = \row (h)$ and $\beta^{\gamma'}
   (i,\vec{y}) = \column(h)$.
 \end{lem}
@@ -655,9 +741,19 @@ The following lemma allows us to factor through permutations.
   $\beta^{\gamma'}$.
 \end{proof}
 
+\begin{lem}
+  Let $\delta \in [n]^{\underline{U}}$ and $h \in C_n$. Then $\nu \in \EV_h$ iff
+  $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_\nu (h)) = 1$.
+  \label{lem:translate_EV_circuits}
+\end{lem}
+\begin{proof}
+  (To be included)
+\end{proof}
+
 \begin{thm}
-  Let $\delta: U \rightarrow [n]$, $M$ is row-column equivalent to $L^{\gamma}$.
-  This equivalence is witnessed by $\alpha^{\gamma}$ and $\beta^{\gamma}$.
+  Let $\delta \in [n]^{\underline{U}}$, $M$ is row-column equivalent to
+  $L^{\gamma}$. This equivalence is witnessed by $\alpha^{\gamma}$ and
+  $\beta^{\gamma}$.
 \end{thm}
 \begin{proof}
   We have that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective. Let
@@ -674,14 +770,17 @@ The following lemma allows us to factor through permutations.
     &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))y)\\
     &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))
   \end{align*}
-  The second equality follows from Lemma \ref{}. The fifth equality follows from
-  Lemma \ref{lem:defining_h_from_IJ}. The sixth equality follows from Lemma
-  \ref{lem:alpha_ind_gamma}.
-
-  
+  The second equality follows from Lemma \ref{lem:translate_EV_circuits}. The
+  fifth equality follows from Lemma \ref{lem:defining_h_from_IJ}. The sixth
+  equality follows from Lemma \ref{lem:alpha_ind_gamma}.
 \end{proof}
 
-\subsection{FPR Formulas}
+\begin{remark}
+  In fact, the above still requires injectivity. This still needs to be integrated.
+\end{remark}
+
+
+%\subsection{FPR Formulas}
 
 % \begin{lem}
 %   Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $h \in H$ such that

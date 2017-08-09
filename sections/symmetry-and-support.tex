@@ -514,9 +514,10 @@ For $g \in C_n$ let $\sortstab (g)$ denote the set of all $\sigma \in
 \end{definition}
 
 \begin{lem}
+  \label{lem:duel-sort-equivalence-compatible}
   Let $g \in C_n$ and $\sigma_1, \sigma_1 \in \sym_n$ such that $\sigma_1 \cdot
-  L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$. Then for any $h,h' \in H_g$,
-  $(h,h')$ is compatible with $\sigma_1$ iff $(h,h')$ is compatible with
+  L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$. Then for any $h,h' \in
+  H_g$, $(h,h')$ is compatible with $\sigma_1$ iff $(h,h')$ is compatible with
   $\sigma_2$.
 \end{lem}
 \begin{proof}
@@ -536,26 +537,46 @@ For $g \in C_n$ let $\sortstab (g)$ denote the set of all $\sigma \in
   (\sigma_2 \cdot \vec{x}')(i)$. The other direction follows by symmetry.
 \end{proof}
 
+
 \begin{claim}
   \label{claim:useful-independant-set}
-  Let $g$ be a rank gate with labeling $\omega$ and child set $H$. Let $S$ be a
-  useful and independent. We then have that $\vert \sym_n: \matstab(\omega)
-  \vert \leq 2^{\vert S \vert}$.
+  Let $g \in C_n$. Let $S$ be a useful and independent. We then have that $\vert
+  \sym_n: \sortstab(g) \vert \leq 2^{\vert S \vert}$.
 \end{claim}
 
 \begin{proof}
   Let $R \subseteq S$ and define $\sigma_R = \Pi_{(\sigma, h, h') \in R} \sigma$
   (with some arbitrary order assumed on $S$). Let $R$ and $Q$ be distinct
   subsets of $S$ and WLOG let $\vert R \vert \geq \vert Q \vert$. We want to
-  show that we don't have $\sigma_R \omega \sim_\omega \sigma_Q \omega$. Pick
-  any $(\sigma, h, h') \in R/Q \neq \emptyset$. Given that $\sigma_R h = \sigma
-  h$ and $\sigma_R h' = \sigma h'$ it is easy to see that the usefulness of
-  $(\sigma, h,h')$ implies the incompatibility of $(h,h')$ with with $(\omega,
-  \sigma_R)$. Moreover, the fact that $\sigma_Q h = h$ and $\sigma_Q h' = h'$
-  makes it easy to see $(h,h')$ is compatible with $(\omega, \sigma_Q)$. From
-  the above lemma we may conclude that that we do not have $\sigma_R \sim_\omega
-  \sigma_Q$, and the result follows.
+  show that $\sigma_R L(g)$ is not sort-equivalent to $ \sigma_Q L(g)$. Pick any
+  $(\sigma, h, h') \in R/Q \neq \emptyset$. Given that $\sigma_R \cdot h =
+  \sigma h$ and $\sigma_R h' = \sigma h'$ it is easy to see that the usefulness
+  of $(\sigma, h,h')$ implies the incompatibility of $(h,h')$ with with
+  $\sigma_R$. Moreover, the fact that $\sigma_Q h = h$ and $\sigma_Q h' = h'$
+  makes it easy to see $(h,h')$ is compatible with $\sigma_Q$. The result then
+  follows from Lemma \ref{lem:duel-sort-equivalence-compatible}.
+
 \end{proof}
+
+% \begin{claim}
+%   \label{claim:useful-independant-set}
+%   Let $g \in C_n$. Let $S$ be a useful and independent. We then have that
+%   $\vert \sym_n: \sortstab(g) \vert \leq 2^{\vert S \vert}$.
+% \end{claim}
+
+% \begin{proof}
+%   Let $R \subseteq S$ and define $\sigma_R = \Pi_{(\sigma, h, h') \in R}
+%   \sigma$ (with some arbitrary order assumed on $S$). Let $R$ and $Q$ be
+%   distinct subsets of $S$ and WLOG let $\vert R \vert \geq \vert Q \vert$. We
+%   want to show that we don't have $\sigma_R \omega \sim_\omega \sigma_Q
+%   \omega$. Pick any $(\sigma, h, h') \in R/Q \neq \emptyset$. Given that
+%   $\sigma_R h = \sigma h$ and $\sigma_R h' = \sigma h'$ it is easy to see that
+%   the usefulness of $(\sigma, h,h')$ implies the incompatibility of $(h,h')$
+%   with with $(\omega, \sigma_R)$. Moreover, the fact that $\sigma_Q h = h$ and
+%   $\sigma_Q h' = h'$ makes it easy to see $(h,h')$ is compatible with
+%   $(\omega, \sigma_Q)$. From the above lemma we may conclude that that we do
+%   not have $\sigma_R \sim_\omega \sigma_Q$, and the result follows.
+% \end{proof}
 
 The following two lemmas proved by Anderson and Dawar \cite{AndersonD17} are
 both of use in proving the following theorem.
@@ -577,8 +598,9 @@ both of use in proving the following theorem.
   with at least $n - \frac{33}{\epsilon} \cdot \frac{\log s} {\log n}$.
 \end{lem}
 
-If $g$ is a symmetric gate (i.e. the usual gates in a circuit) we note that
-$\orb(g) = [\sym_n : \stab (g)]$ by the orbit-stabilizer theorem.
+Let $g \in C_n$ then note that $\vert \orb(g) \vert = [\sym_n : \stab (g)]$ by
+the orbit-stabilizer theorem. We say $g$ is a $\tau$-symmetric gate, if the
+function labelling that gate has vocabulary $\tau$.
 
 If $g$ is a matrix-symmetric gate then $\orb(g) = [\sym_n:\matstab (\omega)]$,
 where $\omega$ is the matrix labelling associated with $g$.
