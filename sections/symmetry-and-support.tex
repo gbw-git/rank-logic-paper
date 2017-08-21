@@ -13,48 +13,109 @@ In this section we formally define a support and the related notion of a
 supporting partition.
 
 \begin{definition}
-  Let $G \leq \sym_n$ and let $S \subseteq [n]$. Then $S$ is a
-  \emph{support} for $G$ if $\stab(S) \subset G$.
+  Let $G \leq \sym_n$ and let $S \subseteq [n]$. Then $S$ is a \emph{support}
+  for $G$ if $\stab(S) \subseteq G$.
 \end{definition}
 
 \begin{definition}
-  Let $G \leq \sym_n$ and $\mathcal{P}$ be a partition of $[n]$.
-  Then $\mathcal{P}$ is a \emph{supporting partition} for $G$ if
-  $\stab(\mathcal{P}) \subseteq [n]$.
+  Let $G \leq \sym_n$ and $\mathcal{P}$ be a partition of $[n]$. Then
+  $\mathcal{P}$ is a \emph{supporting partition} for $G$ if $\stab(\mathcal{P})
+  \subseteq G$.
 \end{definition}
 
 Notice that if $\mathcal{P}$ is a supporting partition for $G$ and $P \in
 \mathcal{P}$ then $\stab([n] \setminus P) \subseteq \stab(\mathcal{P}) \subset
 G$, i.e. $[n] \setminus P$ is a support for $G$.
 
-These supporting partitions admits a natural partial order in terms of
-coarseness. If $\mathcal{P}, \mathcal{P}'$ we say that $\mathcal{P}'$ is as
-course as $\mathcal{P}$ (denoted by $\mathcal{P}' \supseteq \mathcal{P}$) if for
-all $x \in \mathcal{P}$ there exists $y \in \mathcal{P}'$ such that $x \subseteq
-y$ \cite{AndersonD17}.
+We can define a partial order in on these partitions of $[n]$. Let $\mathcal{P},
+\mathcal{P}'$ be partitions of $[n]$. We say that $\mathcal{P}'$ is as
+\emph{coarse} as $\mathcal{P}$ (denoted by $\mathcal{P}' \supseteq \mathcal{P}$)
+if for all $x \in \mathcal{P}$ there exists $y \in \mathcal{P}'$ such that $x
+\subseteq y$ \cite{AndersonD17}.
 
 Anderson and Dawar \cite{AndersonD17} show that for any permutation group $G
-\subseteq \sym_n$ a unique coarsest partition can always be found. We call this
+\leq \sym_n$ a unique coarsest partition can always be found. We call this
 partition the \emph{canonical supporting partition}, and denote it by $\SP (G)$.
 This canonical supporting partition, along with the above observation about
 supports, will allow us to construct for each group a canonical support.
 
 \begin{definition}
-  Let $G \leq \sym_n$. Let $\| SP(G) \| = \min \{\vert [n]
-  \setminus P \vert : P \in SP(G) \}$. We say that $G$ has small support if $\|
-  SP(G) \| < \frac{n}{2}$.
+  Let $G \leq \sym_n$. Let $\| \SP(G) \| = \min \{\vert [n] \setminus P \vert :
+  P \in \SP(G) \}$. We say that $G$ has \emph{small support} if $\| \SP(G) \| <
+  \frac{n}{2}$.
 \end{definition}
 
 \begin{definition}
-  Let $G \leq \sym_n$ such that $G$ has small support. Let
-  $\consp(G) = [n] \setminus P$, where $P$ is the maximal element of $\SP(G)$.
-  We call $\consp(G)$ the canonical support of $G$.
+  Let $G \leq \sym_n$ such that $G$ has small support. Let $\consp(G) = [n]
+  \setminus P$, where $P$ is the maximal element of $\SP(G)$. We call
+  $\consp(G)$ the \emph{canonical support} of $G$.
 \end{definition}
 
-\begin{remark}
-  Include a remark about the importance of asserting the size consideration. Use
-  the alternating group as an example.
-\end{remark}
+% \begin{remark}
+%   Include a remark about the importance of asserting the size consideration.
+%   Use the alternating group as an example.
+% \end{remark}
+
+\begin{lem}
+  Let $G_1, G_2 \leq \sym_n$ such that $G_1 \subseteq G_2$ and $G_1$ has small
+  support. Then $G_2$ has small support and $\consp(G_2) \subseteq \consp(G_1)$.
+  \label{lem:support-containment}
+\end{lem}
+\begin{proof}
+  We have that $\stab(\SP(G_1)) \subseteq G_1 \subseteq G_2$, and so $\SP(G_1)$
+  supports $G_2$. Since $\SP(G_2)$ is the coarsest support of $G_2$, $\SP(G_1)
+  \subseteq \SP(G_2)$. Let $P_1$ be the maximal element of $\SP(G_1)$, and note
+  that since $G_1$ has small support, $\vert P_1 \vert > \frac{n}{2}$. Then
+  there exists a (unique) $P_2 \in \SP(G_2)$ such that $P_1 \subseteq P_2$. Thus
+  $G_2$ has small support, and $\consp(G_2) = [n] \setminus P_2 \subseteq [n]
+  \setminus P_1 = \consp(G_1)$.
+\end{proof}
+
+\begin{lem}
+  Let $G, H, K \leq \sym_n$ such that $G$ has small support and $G = H \cap K$.
+  Then $H$ and $K$ have small support and $\consp(G) = \consp(H) \cup
+  \consp(K)$.
+  \label{lem:row-column-supports-well-behaved}
+\end{lem}
+\begin{proof}
+  Let $\mathcal{Q} = \{P_H \cap P_K : P_H \in \SP(H), P_K \in \SP(K) \text{ and
+  } \exists P \in \SP(G), P \subseteq P_H \cap P_K \}$. We first show that
+  $\mathcal{Q}$ is a supporting partition of $G$. We have that for any $P_H \cap
+  P_K, P_H' \cap P_K' \in \mathcal{Q}$, $\P_H \cap P_K \cap P_H' \cap \P_K' \neq
+  \emptyset$ if, and only if, $P_H = P_H'$ and $P_K = P_K'$ if, and only if,
+  $P_H \cap P_K = P_H' \cap P_K'$. Also, note that $\stab(\SP(G)) \subseteq G
+  \subseteq H$ and similarly $\stab(\SP(G)) \subseteq K$. Thus $\SP(G)$ supports
+  $H$ and $K$, and from the definition of a canonical supporting partition it
+  follows that $\SP(G) \subseteq \SP(H)$ and $\SP(G) \subseteq \SP(K)$. We also
+  have that for each $P \in SP(G)$ there exists $P_K \in \SP(K)$ and $P_H \in
+  \SP(H)$ such that $P \subseteq P_H \cap P_K$ (which additionally gives us that
+  $H$ and $K$ have small support). As such, for each $a \in [n]$ there exists
+  $P_a \in \SP(G)$, $P_H \in \SP(H)$ and $P_K \in \SP(K)$ such that $a \in P_a
+  \subseteq P_H \cap P_K$. It follows that $\mathcal{Q}$ is a partition.
+
+  Moreover, we note that $\stab(\mathcal{Q}) \subseteq \stab(\SP(H))$ and
+  $\stab(\mathcal{Q}) \subseteq \stab(\SP(K))$, and thus $\stab(\mathcal{Q})
+  \subseteq \stab(\SP(H)) \cap \stab(\SP(K)) \subseteq H \cap K = G$. It follows
+  that $\mathcal{Q}$ is a supporting partition of $G$, and so by definition of
+  the canonical supporting partition $\mathcal{Q} \subseteq \SP (G)$. Let $P_G$
+  be the maximal element of $\SP(G)$. Then there exists $P_H \in \SP(H)$ and
+  $P_K \in \SP(K)$ such that $P_G \subseteq P_H \cap P_K$, and from the fact
+  that $P_G$ is maximal and $G$ has small support it follows $\vert P_H \cap P_K
+  \vert > \frac{n}{2}$. Thus $\mathcal{Q}$ has small support with maximal
+  element $\vert P_H \cap P_K$. It follows from $\mathcal{Q} \subseteq \SP(G)$
+  that $P_G \subseteq P_H \cap P_K \subseteq P_G$.
+
+  % From the fact that $G$ has small support, $P_H$ and $P_K$
+
+  % Thus if $P_Q$ is the maximal element of $\mathcal{Q}$ then there exists $P_G
+  % \in \SP(G)$ such that $P_Q \subsetq P_G$. But $\SP(G)$ supports
+
+  % Since It follows that there exists $P \in \SP(G)$ suLet $P_G$ be the maximal
+  % element of $\SP(G)$. Since $G$ has small support, $\vert P_G \vert >
+  % \frac{n}{2}$. $We have that there exists unique maximal elements $P_H \in
+  % \SP(H)$ and $P_K \in \SP(K)$ such that $P_G P_H \cap P_K$
+\end{proof}
+
 
 We state the following two results from Anderson and Dawar \cite{AndersonD17}.
 
@@ -65,7 +126,7 @@ We state the following two results from Anderson and Dawar \cite{AndersonD17}.
 \end{lem}
 
 \begin{lem}
-  For any $G \leq \sym_n$ we have that $\stab (\SP (G)) \subseteq G
+  For any $G \leq \sym_n$ we have that $\stab (\SP (G)) \leq G \leq
   \setstab(\SP(G))$.
 \end{lem}
 
@@ -241,8 +302,8 @@ $(C_n)_{n \in \nats}$ always denote a family of symmetric, rigid $(\mathbb{B},
 \sqcup A_s$.
 
 We note that for each $g \in C_n$ there is a natural action of $\stab(g)$ on
-$\ind(g)$ is given by $\sigma \cdot \vec{x} := L(g) \cdot \sigma \cdot L(g)^{-1}
-(\vec{x})$.
+$\ind(g)$ defined by $\sigma \cdot \vec{x} := L(g) \cdot \sigma \cdot L(g)^{-1}
+(\vec{x})$ for each $\vec{x} \in \ind(g)$.
 %
 %\begin{lem}[Support Lemma]
 %  For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and
@@ -362,17 +423,20 @@ $\ind(g)$ is given by $\sigma \cdot \vec{x} := L(g) \cdot \sigma \cdot L(g)^{-1}
   say that a pair $(\vec{x}, \vec{x}')$ is \emph{compatible with} $\sigma$ if
   $(\sigma L(g)(\vec{x}), \sigma L(g)(\vec{x}') \in H_g$ and for all $i \in \dom
   (\vec{x})$, $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma \cdot \vec{x})(i) =
-  (\sigma \cdot \vec{x}')(i)$. We say that a pair $(h, h')$ is \emph{compatible
-    with} $\sigma$ if $(L(g)^{-1}(h), L(g)^{-1}(h'))$ is compatible with
-  $\sigma$.
+  (\sigma \cdot \vec{x}')(i)$.
+
+  We say that a pair $(h, h')$ is \emph{compatible with} $\sigma$ if
+  $(L(g)^{-1}(h), L(g)^{-1}(h'))$ is compatible with $\sigma$.
 \end{definition}
 
-For $g \in C_n$ let $\sortstab (g)$ denote the set of all $\sigma \in
+For $g \in C_n$ let $\sortstab (L(g))$ denote the set of all $\sigma \in
 \stab(H_g)$ such that $\sigma \cdot L(g)$ is sort-equivalent to $L(g)$.
 
 \begin{lem}
-  Let $g \in C_n$, and $\sigma \in \stab(H_g)$. Then $\sigma \in \sortstab(g)$
-  iff for all $h, h' \in H_g$, $(h,h')$ is compatible with $\sigma$.
+  Let $g \in C_n$, and $\sigma \in \stab(H_g)$. Then $\sigma \in
+  \sortstab(L(g))$ iff for all $h, h' \in H_g$, $(h,h')$ is compatible with
+  $\sigma$.
+  \label{lem:sortstab-compatible}
 \end{lem}
 \begin{proof}
   $`\Rightarrow'$: From the hypothesis there exists $\pi \in \sym_{A_1} \times
@@ -408,67 +472,61 @@ For $g \in C_n$ let $\sortstab (g)$ denote the set of all $\sigma \in
   \vec{x}_a)(i) = (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}_a))(i) =
   (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}))(i)$. It follows that $L(g) \cdot
   \pi = L(g)^{-1} \cdot \sigma \cdot L(g)$, and the result follows.
-  % If there is no type in $\ind (g)$ containing an element of type $t$ then let
-  % $\pi_t$ be the trivial permutation. Let $a \in A_t$. Let $\vec{x}_a,
-  % \vec{x}_a' \in \ind(g)$ be such that for every $i \in \dom (\vec{x}_a)$ if
-  % $\vec{x}_a(i)$ has sort $t$ then $\vec{x}_a(i) = a = \vec{x}_a'(i)$.
+
+\end{proof}
+% If there is no type in $\ind (g)$ containing an element of type $t$ then let
+% $\pi_t$ be the trivial permutation. Let $a \in A_t$. Let $\vec{x}_a,
+% \vec{x}_a' \in \ind(g)$ be such that for every $i \in \dom (\vec{x}_a)$ if
+% $\vec{x}_a(i)$ has sort $t$ then $\vec{x}_a(i) = a = \vec{x}_a'(i)$.
 
  
-  % $`\Leftarrow'$: We now define an element $\pi \in \sym_{A_1} \times \ldots
-  % \sym_{A_s}$. Let $t \in [s]$. We now defined $\pi_t \in \sym_{A_t}$. If
-  % there
-  % is no type in $\ind (g)$ containing an element of type $t$ then let $\pi_t$
-  % be
-  % the trivial permutation. Let $a \in A_t$. Let $\vec{x}_a, \vec{x}_a' \in
-  % \ind(g)$ be such that for every $i \in \dom (\vec{x}_a)$ if $\vec{x}_a(i)$
-  % has
-  % sort $t$ then $\vec{x}_a(i) = a = \vec{x}_a'(i)$. From the hypothesis we
-  % have
-  % that $L(g)(\vec{x}_a)$ and $L(g)(\vec{x}_a')$ are compatible with $\sigma$,
-  % and let this compatibility be witnessed by $\lambda_a$ and $\lambda_a'$. Let
-  % $\pi_t (a) = \lambda_a (\vec{x}_a)(i)$. Note that $\lambda_a (\vec{x}_a)(i)
-  % =
-  % \lambda_a' (\vec{x}_a'(i)$ and so this function is well defined.
+% $`\Leftarrow'$: We now define an element $\pi \in \sym_{A_1} \times \ldots
+% \sym_{A_s}$. Let $t \in [s]$. We now defined $\pi_t \in \sym_{A_t}$. If there
+% is no type in $\ind (g)$ containing an element of type $t$ then let $\pi_t$ be
+% the trivial permutation. Let $a \in A_t$. Let $\vec{x}_a, \vec{x}_a' \in
+% \ind(g)$ be such that for every $i \in \dom (\vec{x}_a)$ if $\vec{x}_a(i)$ has
+% sort $t$ then $\vec{x}_a(i) = a = \vec{x}_a'(i)$. From the hypothesis we have
+% that $L(g)(\vec{x}_a)$ and $L(g)(\vec{x}_a')$ are compatible with $\sigma$,
+% and let this compatibility be witnessed by $\lambda_a$ and $\lambda_a'$. Let
+% $\pi_t (a) = \lambda_a (\vec{x}_a)(i)$. Note that $\lambda_a (\vec{x}_a)(i) =
+% \lambda_a' (\vec{x}_a'(i)$ and so this function is well defined.
 
-  % We have that $\pi_t$ is surjective, as for every $a \in A_t$,
-  % $\pi_t(\lambda^{-1}_a(a)) = a$. Let $a, b \in A_t$, and suppose $a \neq b$.
-  % Let $\vec{x}_a, \vec{x}_b$ be defined as above, but choose them such that
-  % they
-  % agree nowhere. We have that $(L(g)(\vec{x}_a), \L(g)(\vec{x}_b))$ are
-  % compatible with $\sigma$, and it is easy to see that $\lambda_a$ and
-  % $\lambda_b$ as defined above witness this compatibility. But then
-  % $\lambda(\vec{x_b})$
+% We have that $\pi_t$ is surjective, as for every $a \in A_t$,
+% $\pi_t(\lambda^{-1}_a(a)) = a$. Let $a, b \in A_t$, and suppose $a \neq b$.
+% Let $\vec{x}_a, \vec{x}_b$ be defined as above, but choose them such that they
+% agree nowhere. We have that $(L(g)(\vec{x}_a), \L(g)(\vec{x}_b))$ are
+% compatible with $\sigma$, and it is easy to see that $\lambda_a$ and
+% $\lambda_b$ as defined above witness this compatibility. But then
+% $\lambda(\vec{x_b})$
 
-  % $\pi_t (a) = \pi_t (b)$ implies $\lambda_a (a) = \lambda_b (b)$, but
-  % $L(g)(\vec{x}_a)$ is compatible with $L(g)(\vec{x}_b)$
+% $\pi_t (a) = \pi_t (b)$ implies $\lambda_a (a) = \lambda_b (b)$, but
+% $L(g)(\vec{x}_a)$ is compatible with $L(g)(\vec{x}_b)$
   
-  % Let $\vec{x} \in \ind (g)$ and $i \in \dom(\vec{x})$ and let $t$ be the type
-  % of $\vec{x}(i)$. Then $\pi_t (\vec{x}(i)) = \lambda (\vec{x}(i))$
+% Let $\vec{x} \in \ind (g)$ and $i \in \dom(\vec{x})$ and let $t$ be the type
+% of $\vec{x}(i)$. Then $\pi_t (\vec{x}(i)) = \lambda (\vec{x}(i))$
 
-  % $(\vec{x})$, then $\pi_t (a) = \lambda (\vec{x}_a)(i) = \lambda
-  % (L(g)^{-1}(h_a))(i) = L(g)^{-1}(\sigma \cdot h_a') (i)$.
+% $(\vec{x})$, then $\pi_t (a) = \lambda (\vec{x}_a)(i) = \lambda
+% (L(g)^{-1}(h_a))(i) = L(g)^{-1}(\sigma \cdot h_a') (i)$.
 
-  % Let $\pi := \pi_1 \times \ldots \times \pi_s$. Let $\vec{x} \in \ind(g)$,
-  % then
-  % $L(g) (\pi \cdot \vec{x}) = $
+% Let $\pi := \pi_1 \times \ldots \times \pi_s$. Let $\vec{x} \in \ind(g)$, then
+% $L(g) (\pi \cdot \vec{x}) = $
 
-  % Note that for any pair of $\vec{x}$, $\vec{x}'$ chosen with all entries of
-  % type $t$ being $a$ it is easy to see that $\lambda (a)$
+% Note that for any pair of $\vec{x}$, $\vec{x}'$ chosen with all entries of
+% type $t$ being $a$ it is easy to see that $\lambda (a)$
   
 
-  % It remains to show that $\pi$ witnesses the sort-equivalence of $\sigma
-  % \cdot
-  % L(g)$ and $L(g)$. First note that $\sigma \cdot L(g)(\vec{x}) = \sigma
-  % (h_{\vec{x}}) = $
+% It remains to show that $\pi$ witnesses the sort-equivalence of $\sigma \cdot
+% L(g)$ and $L(g)$. First note that $\sigma \cdot L(g)(\vec{x}) = \sigma
+% (h_{\vec{x}}) = $
 
 
-  % Then there exists $\lambda_1, \lambda_2 \in \sym_{A_1} \times \ldots \times
-  % \sym_{A_s}$ witnessing Let $\lambda (\vec{x}) = \$
+% Then there exists $\lambda_1, \lambda_2 \in \sym_{A_1} \times \ldots \times
+% \sym_{A_s}$ witnessing Let $\lambda (\vec{x}) = \$
 
-  % we have $\lambda_1$ and $\lambda_2$ witnessing that $(h, h')$ is compatible
-  % with $\sigma$. We now define $\lambda \in \sym_{A_1} \times \ldots \times
-  % \sym_{A_s}$ by $\lambda (\vec{a}) = \lambda_1(\vec{a})$
-\end{proof}
+% we have $\lambda_1$ and $\lambda_2$ witnessing that $(h, h')$ is compatible
+% with $\sigma$. We now define $\lambda \in \sym_{A_1} \times \ldots \times
+% \sym_{A_s}$ by $\lambda (\vec{a}) = \lambda_1(\vec{a})$
+
 
 % \begin{lem}[not reviewed]
 %   Let $g \in C_n$ be a gate, $\sigma \in \sym_n$. Then $\sigma \in
@@ -495,11 +553,11 @@ For $g \in C_n$ let $\sortstab (g)$ denote the set of all $\sigma \in
 % \end{proof}
 
 \begin{definition}
-  Let $g \in C_n$. Say $(\sigma, h, h') \in \sym_n \times H^2_g$ is useful if
-  $(h,h')$ is incompatible with $\sigma$.
+  Let $g \in C_n$. We say that $(\sigma, h, h') \in \sym_n \times H^2_g$ is
+  \emph{useful} if $(h,h')$ is incompatible with $\sigma$.
 
-  Say that two distinct pairs $(\sigma_1, h_1, h_1'), (\sigma_2, h_2, h_2') \in
-  \sym_n\times H^2_g$ are mutually independent if
+  We Say that two distinct pairs $(\sigma_1, h_1, h_1'), (\sigma_2, h_2, h_2')
+  \in \sym_n\times H^2_g$ are \emph{mutually independent} if
   \begin{itemize}
     \setlength\itemsep{0mm}
   \item $\sigma_2 h_1 = h_1$,
@@ -508,9 +566,9 @@ For $g \in C_n$ let $\sortstab (g)$ denote the set of all $\sigma \in
   \item $\sigma_2 \sigma_1 h_1' = \sigma h_1'$,
   \end{itemize}
   
-  We say that a set $S \subseteq \sym_n \times H^2$ is useful if each pair in it
-  is useful. We say that $S$ is independent if each pair of distinct pairs in
-  $S$ are mutually independent.
+  We say that a set $S \subseteq \sym_n \times H^2$ is \emph{useful} if each
+  pair in it is useful. We say that $S$ is \emph{independent} if each pair of
+  distinct pairs in $S$ are mutually independent.
 \end{definition}
 
 \begin{lem}
@@ -538,11 +596,11 @@ For $g \in C_n$ let $\sortstab (g)$ denote the set of all $\sigma \in
 \end{proof}
 
 
-\begin{claim}
-  \label{claim:useful-independant-set}
-  Let $g \in C_n$. Let $S$ be a useful and independent. We then have that $\vert
-  \sym_n: \sortstab(g) \vert \leq 2^{\vert S \vert}$.
-\end{claim}
+\begin{lem}
+  \label{lem:useful-independant-set}
+  Let $g \in C_n$. Let $S$ be a useful and independent. We then have that $[
+  \sym_n: \sortstab(L(g)) ] \geq 2^{\vert S \vert}$.
+\end{lem}
 
 \begin{proof}
   Let $R \subseteq S$ and define $\sigma_R = \Pi_{(\sigma, h, h') \in R} \sigma$
@@ -555,7 +613,6 @@ For $g \in C_n$ let $\sortstab (g)$ denote the set of all $\sigma \in
   $\sigma_R$. Moreover, the fact that $\sigma_Q h = h$ and $\sigma_Q h' = h'$
   makes it easy to see $(h,h')$ is compatible with $\sigma_Q$. The result then
   follows from Lemma \ref{lem:duel-sort-equivalence-compatible}.
-
 \end{proof}
 
 % \begin{claim}
@@ -602,81 +659,95 @@ Let $g \in C_n$ then note that $\vert \orb(g) \vert = [\sym_n : \stab (g)]$ by
 the orbit-stabilizer theorem. We say $g$ is a $\tau$-symmetric gate, if the
 function labelling that gate has vocabulary $\tau$.
 
-If $g$ is a matrix-symmetric gate then $\orb(g) = [\sym_n:\matstab (\omega)]$,
-where $\omega$ is the matrix labelling associated with $g$.
+If $g$ is a sort-symmetric gate then $\vert \orb(g) \vert = [\sym_n:\sortstab
+(L(g))]$.
 
 
 
 \begin{thm}
   \label{thm:support_thm}
   For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and $n
-  \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric, rigid circuit on
-  structures of size $n$ and $s := \max_{g \in C} \vert \orb (g)\vert \leq
-  2^{n^{1-\epsilon}}$, then, $\SP(C) \leq \frac{33}{\epsilon}\frac{log s}{log
-    n}$.
+  \geq \frac{128}{\epsilon^2}$, if $C$ is a rigid symmetric circuit with
+  bijective labels that takes takes in structures of size $n$ and $s := \max_{g
+    \in C} \vert \orb (g)\vert \leq 2^{n^{1-\epsilon}}$, then, $\SP(C) \leq
+  \frac{33}{\epsilon}\frac{log s}{log n}$.
 \end{thm}
 
 \begin{proof}
-  It is easy to see that if $g$ is a gate in $C$ then $\stab (g) \subseteq
-  \setstab(\SP(g))$, and so $s \geq \orb(g) = [\sym_n : \stab(g)] \geq [\sym_n :
-  setstab(\SP(g))]$. Thus if $\vert \SP(g) \vert \leq frac{n}{2}$, then from
-  Lemma \ref{lem:small-means-support}, we have $\| SP (g) \| \leq
-  \frac{33}{\epsilon} \cdot \frac{\log s} {\log n}$. The result thus follows
-  from showing that for each $g$ in $C$ we have that $\vert \SP (g) \vert \leq
-  \frac{n}{2}$.
-  
-  % Include some detail here for constant and relational gates
-  The cases where $g$ is a constant or relational gate are easy to handle.
+  First we note that if $1 \leq s < n$, then $C$ cannot have a relational gate,
+  as the orbit of a relational gate has at least $n$ elements. Since $C$ has no
+  relational gates, the only input gates in the circuit are the constant gates.
+  Since constant gates are fixed by all permutations, it follows that any gate
+  $g$ whose children are constant gates must similarly be fixed under all
+  permutations. Furthermore, from the fact that $C$ is rigid, this property
+  inductively extends to the rest of the circuit. Thus for each gate $g$ in $C$
+  the partition $\{[n]\}$ supports $g$, and since this is trivially the coarsest
+  such partition it follows that $\| \SP(g) \| = 0 = \SP(C)$. We therefore
+  assume that $s \geq n$.
 
-  We now consider the case for internal gates. Let $g$ be the topologically
-  first internal gate with $\vert \SP(g) \vert > \frac{n}{2}$. If $g$ is not a
-  matrix-symmetric gate then the result follows from the argument presented by
-  Anderson and Dawar \cite{AndersonD17}. Suppose $g$ is a matrix-symmetric gate,
-  and suppose $g$ has a labelling $\omega$. We now argue that this leads to a
-  contradiction.
-
-  Let $k' := \lceil \frac{8 \log s}{\epsilon \log n} \rceil$. From the
-  assumptions on $s, n$ and $\epsilon$ we have that $k' \leq
-  \frac{1}{4}n^{1-\epsilon} < \frac{n}{2}$. Lemma \ref{lem:big-or-small} implies
-  that $n - \vert \SP(g) \vert \leq k'$
+  is a gate in $C$ then $\stab (g) \subseteq \setstab(\SP(g))$, and so $s \geq
+  \vert \orb(g) \vert = [\sym_n : \stab(g)] \geq [\sym_n : \setstab(\SP(g))]$.
+  Thus if $\vert \SP(g) \vert \leq frac{n}{2}$, then from Lemma
+  \ref{lem:small-means-support}, we have $\| SP (g) \| \leq \frac{33}{\epsilon}
+  \cdot \frac{\log s} {\log n}$. The result thus follows from showing that for
+  each $g$ in $C$ we have that $\vert \SP (g) \vert \leq \frac{n}{2}$.
   
-  From Claim \ref{claim:useful-independant-set} it remains to show that we can
-  construct a sufficiently large useful and independent set of gate-automorphism
-  pairs $S$. Divide $[n]$ into $\lfloor \frac{n}{k' + 2} \rfloor$ disjoint sets
-  $S_i$ of size $k' + 2$ and ignore the elements left over. It follows that for
-  each $i$ there is a permutation $\sigma_i$ which fixes $[n] / S_i$ pointwise
-  but moves $g$. Suppose there was no such $\sigma_i$ it follows that every
-  every permutation that fixes $[n]/S_i$ pointwise fixes $g$. Thus the partition
-  of all the singletons in $[n]/S_i$ and $S_i$ is a supporting partition. As
+  If $g$ is a constant gate, then as argued above, it follows $\vert \SP(g)
+  \vert = 0 < \frac{n}{2}$. If $g$ is a relational gate, then $g$ is fixed by a
+  permutation $\sigma \in \sym_n$ if, and only if, $\sigma$ fixes all elements
+  that appear in $\Lambda(g)$. It follows that $\{a\} \in \SP(g)$ for each $a$
+  appearing in $\Lambda(g)$ and all other elements of $[n]$ are contained in a
+  single part of $\SP(g)$. But suppose $\vert \SP(g) \vert > \frac{n}{2}$. Then
+  the number of singletons in $\SP(g)$ must be larger than $\frac{n}{2}$, which
+  in turn, from the orbit-stabiliser theorem, gives us that $ s \geq \vert \orb
+  (g) \vert \geq \frac{n!}{(n-\vert \Lambda (g) \vert)!} \geq
+  \frac{n!}{{(\frac{n}{2}})!} \geq 2^{\frac{n}{4}} > 2^{n^{1- \epsilon}} $. This
+  is a contradiction, and so $\vert \SP(g) \vert \leq \frac{n}{2}$.
+
+  We now consider the case of internal gates. Let $g$ be the topologically first
+  internal gate with $\vert \SP(g) \vert > \frac{n}{2}$. Let $k' := \lceil
+  \frac{8 \log s}{\epsilon \log n} \rceil$. From the assumptions on $s$, $ n$
+  and $\epsilon$ we have that $k' \leq \frac{1}{4}n^{1-\epsilon} < \frac{n}{2}$.
+  We note that Lemma \ref{lem:big-or-small} implies that $n - \vert \SP(g) \vert
+  \leq k'$.
+  
+  We now construct a sufficiently large useful and independent set which. From
+  Lemma \ref{lem:useful-independant-set} this set will allow us to place a lower
+  bound on the orbit size of $g$, and from this bound we derive the required
+  contradiction. Divide $[n]$ into $\lfloor \frac{n}{k' + 2} \rfloor$ disjoint
+  sets $S_i$ of size $k' + 2$ and ignore the elements left over. It follows that
+  for each $i$ there is a permutation $\sigma_i$ which fixes $[n] / S_i$
+  pointwise but moves $g$. Suppose there was no such $\sigma_i$, but then every
+  permutation that fixes $[n]/S_i$ pointwise fixes $g$. Thus the partition of
+  all the singletons in $[n]/S_i$ and $S_i$ is a supporting partition. As
   $\SP(g)$ is the coarsest partition it follows that $\vert \SP(g) \vert \leq n
   - (k'+2) + 1 = n - k' - 1$, which contradicts the inequality $n - \vert \SP(g)
   \vert \leq k'$.
 
-  Since $g$ is moved by each $\sigma_i$ and $C$ is rigid it follows that we
-  don't have $\sigma_i \notin \matstab(\omega)$. Thus there exists $(h_i, h_i')$
-  that is inconsistent with $(\sigma_i, \omega)$, and so the triple $(\sigma_i,
-  h_i, h_i')$ is useful.
+  Since $g$ is moved by each $\sigma_i$, and $C$ is rigid, it follows that we
+  have $\sigma_i \in \sortstab(L(g))$. Thus, from Lemma
+  \ref{lem:sortstab-compatible}, there exists $(h_i, h_i') \in H^{-1}_g$ that is
+  inconsistent with $sigma_i$, and so the triple $(\sigma_i, h_i, h_i')$ is
+  useful.
 
   Let $\SP (h)^*$ be the union of all parts of $\SP(h)$ except for the largest
   part. Let $Q_i = \SP(h_i)^* \cup \SP(\sigma_i h_i)^* \cup \SP (h_i')^* \cup
   \SP (\sigma_i h_i')^*$. Then note that if $\sigma_j$ fixes $Q_i$ then by
-  construction, we have that $\sigma_j \in \stab_n(\SP(h_i)) \cap
-  \stab_n(\SP(\sigma_i h_i)) \cap \stab_n(\SP(h_i')) \cap \stab_n(\SP(\sigma_i
-  h_i'))$
+  construction, we have that $\sigma_j \in \stab(\SP(h_i)) \cap
+  \stab(\SP(\sigma_i h_i)) \cap \stab(\SP(h_i')) \cap \stab(\SP(\sigma_i h_i'))$
 
   Define a graph $K$ with vertices given by the sets $S_i$ and an edge from
-  $S_i$ to $S_j$ (with $i \neq j$) if $Q_i \cap S_j \neq \emptyset$. It follows
+  $S_i$ to $S_j$ (with $i \neq j$) iff $Q_i \cap S_j \neq \emptyset$. It follows
   then that if there is no edge between $S_i$ and $S_j$ then $(\sigma_i, h_i,
   h_i')$ and $(\sigma_j, h_j, h_j')$ are mutually independent. It remains to
   argue that $K$ has a large independent set. This is possible as the out-degree
   of $S_i$ in $K$ is bounded by
   \begin{align*}
-    \vert Q_i \vert \leq \|SP(h_i) \| + \|SP(\sigma_i h_i) \| + \|SP(h_i') \| + \|SP(\sigma_i h_i') \leq 4 \cdot \frac{33\log s}{\epsilon \log n}
+    \vert Q_i \vert \leq \|SP(h_i) \| + \|SP(\sigma_i h_i) \| + \|SP(h_i') \| + \|SP(\sigma_i h_i') \leq 4 \cdot \frac{33\log s}{\epsilon \log n}.
   \end{align*}. 
-
-  This follows as the sets $S_i$ are disjoint and we may apply Lemma
-  \ref{lem:small-means-support} to each of the child gates. It follows that the
-  average total degree (in + out degree) of $K$ is at most $2 \cdot \vert Q_i
+  These inequalities follow from the fact that the sets $S_i$ are disjoint and we may apply Lemma
+  \ref{lem:small-means-support} to each of the child gates. From these inequalities
+  we have that the the average total degree (in + out degree) of $K$ is at most $2 \cdot \vert Q_i
   \vert \leq 34 \cdot k'$. Now greedily select a maximal independent set in $K$
   by repeatedly selecting $S_i$ with the lowest total degree and eliminating it
   and its neighbours. This action does not affect the bound on the average total
@@ -686,22 +757,36 @@ where $\omega$ is the matrix labelling associated with $g$.
     \frac{\lfloor \frac{n}{k' + 2} \rfloor}{34k' + 1} \geq \frac{n - (k'+2)}{34k'+1k'+2} \geq \frac{n\frac{7}{16}}{34k'^2 + 69k' +2} \geq \frac{n}{(16k')^2}.
   \end{align*}
 
-  Take $S = \{(\sigma, h, h') : S_i \in I \}$. Then from the above argument we
-  have that $S$ is useful and independent.
+  Take $S = \{(\sigma_i, h_i, h_i') : S_i \in I \}$. Then from the above
+  argument we have that $S$ is useful and independent.
   
-  Moreover, from Claim \ref{claim:useful-independant-set}, we have that $s \geq
+  Moreover, from Lemma \ref{lem:useful-independant-set}, we have that $s \geq
   \vert \orb(g) \vert \geq 2^{\vert S \vert} \geq 2^{\frac{n}{(16k')^2}}$ then
   $n^{1-\epsilon} \geq \log s \geq n \cdot (\frac{128}{\epsilon}\frac{\log
     s}{\log n})^{-2} > n \cdot (n^{1-\epsilon})^{-2} = n^{2\epsilon -1} \geq
-  n^{1-\epsilon}$. This is a contradiction.
+  n^{1-\epsilon}$. This is a contradiction, and the result follows.
 \end{proof}
-
-Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a $P$-uniform family of
-symmetric circuits with matrix symmetric gates. Let $s(n)$ be the $s$ for $C_n$
-from the hypothesis of Theorem \ref{thm:support_thm}. The theorem implies that,
-for $n$ large enough, if $s(n)$ is bounded by a polynomial then there exists a
+ 
+Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a $P$-uniform family of rigid
+symmetric circuits with bijective labels. Let $s(n)$ be the $s$ for $C_n$ from
+the hypothesis of Theorem \ref{thm:support_thm}. The theorem implies that, for
+$n$ large enough, if $s(n)$ is bounded by a polynomial then there exists a
 constant $k$ such that for all $n \in \mathbb{N}$ and $g \in C_n$, $\vert
-\consp(g) \vert \leq k$. In other words, gates have constant size supports.
+\consp(g) \vert \leq k$. This gives us this following natural corollary.
 
+\begin{cor}
+  Let $\mathcal{C} := (C_n)_{n \in \mathbb{N}}$ be a polynomial-size rigid
+  symmetric circuit family with bijective labels. Then $\SP(\mathcal{C}) \in
+  O(1)$.
+\end{cor}
+
+If $\mathcal{C} := (C_n)_{n \in \mathbb{N}}$ with bijective labels, we can
+extend the action of $\sigma \in \sym_n$ on the gates of $C_n$ to the sorts of
+the indexes of those gates. Let $g \in C_n$ and $(\tau, A) := \type(g)$ and let $A_1, \ldots,
+A_s$ be the sorts of $A$. Note that for any $h_1, h_2 \in H_g$, and $i \in [r_i]$
+$L(g)(h_1)(i, R_j)$ For all $i \in [s]$, we can define the action of
+$\sigma \in \sym_n$ on $A_i$ by $\sigma (a) = L(g)()$
+
+$a_i \in A_$
 
 \end{document}

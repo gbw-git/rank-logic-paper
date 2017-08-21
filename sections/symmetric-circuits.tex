@@ -2,53 +2,109 @@
 %\usepackage{../mymacros}
 \begin{document}
 % Note: include circuits in background
-Circuits are a well-studied model in complexity theory, and more recently they
-have been studied in the context of finite model theory. However, there are some
-subtleties in the definition and evaluation of circuits which must be considered
-carefully and have important implications for the notion of a symmetric circuit
-studied in this paper. Let $C$ be a Boolean circuit $g$ be an internal gate
-labelled by some function $f_g: \{0,1\}^{A} \rightarrow \{0,1\}$, for some index
-set $A$ with $\vert A \vert = \vert H_g \vert$. Formally, evaluating $g$
-requires a (usually bijective) indexing function $f_i: A \mapsto H_g$, which
-organises the inputs of $g$ into an appropriate sequence. The evaluation of $g$
-is then given by $C[\vec{x}](g) = f_g (a \mapsto C[\vec{x}](f_i(a)))$. As such
-the evaluation of a gate in a circuit may depend on how the inputs to the gate
-are indexed.
+Boolean circuits have long been as an alternative model from which to study
+algorithmic complexity. A circuit is evaluated for some ordered binary input
+sequence by recursively evaluating each gate in the circuit, starting from the
+input gates. Suppose then we are evaluating some gate $g$ in a circuit $C$. The
+procedure involves taking the input string formed by evaluating all gates input
+to $g$ and applying the Boolean function that labels $g$ to that string. But
+this process assumes an externally-imposed ordering on the gates input to $g$;
+an assumption common in most parts of complexity theory, where the encoding of
+structures for computation induces such orderings, but not in finite model
+theory.
 
-In most contexts in complexity theory, circuits may be taken to be implicitly
-ordered objects and so this indexing function can be defined as taking the $i$th
-element of $A$ to the $i$th element of $H_g$. However, in general this renders
-the evaluation of a circuit for a given input a property both of the circuit and
-an arbitrary order. In order to address this problem this problem many authors
-only define circuits over Boolean bases of symmetric functions (e.g. the
-standard basis or the majority basis). In this case the evaluation of a gate is
-independent of the choice of indexing function.
+Circuit models have also been studied in finite model theory as a means for
+characterising the expressive power of logics. In particular, research has
+focused on symmetric circuits defined over bases of symmetric Boolean functions
+(see \cite{}). The fact that the basis consist of only symmetric functions is a
+crucial requirement, ensuring that the evaluation of a gate does not depend on
+the order.
 
-However, in this paper we require gates labelled by Boolean rank functions, i.e.
-a function that takes in a Boolean sequence indexed by `row' and `column' sets,
-outputs 1 iff that matrix, when interpreted as having entries in $\mathbb{F}_p$,
-has rank at least $r$. These rank functions clearly depend on how the input
-sequence is labelled, and so are not symmetric. However, it is worth noting that
-while such rank functions may be symmetric, they are symmetric in the weaker
-sense of being constant under permutations on the rows and columns of the input
-matrix.
+In this section we extend the circuit model so as to allow us to define
+symmetric circuits over a broader basis of functions. We introduce the notion of
+a structured function , i.e. a Boolean function whose input is indexed in
+accordance with some many-sorted structure. This allows us to characterise many
+natural symmetry properties of structured functions in terms of equally natural
+symmetry properties of many-sorted structures. We use this to derive a general
+symmetry conditions on structured functions and a symmetric circuit model whose
+basis elements are symmetric structured functions.
 
-Motivated by the desire to study circuits with gates that compute rank, We
-develop a general framework for circuits that allows gates to be labelled by
-Boolean functions of the form $F: \{0,1\}^{X} \rightarrow \{0, 1\}$, where the
-labelling $X$ is the universe of a many-sorted structure over some vocabulary
-$\tau$. The Moreover, we generalise the notion of a circuit for structures (see
-Anderson and Dawar \cite{AndersonD17}), incorporate an appropriate labelling for
-the inputs of each gate and allowing for a Boolean basis including non-symmetric
-functions. Furthermore, the vocabulary $\tau$ will allow us to impose natural
-symmetry conditions on $F$, and so allowing us to develop a useful notion of a
-symmetric circuit.
+% We incorporate this labelling in the circuit model by including for each gate
+% $g$ labelled by a structured function $$an indexing on its children that
+% matches the index for the function that labels $g$. We allow these circuits to
+% be defined over bases of structured functions with this more general symmetry
+% condition
 
-We also prove that no family symmetric functions defined over a basis of
-symmetric functions can improve on the expressive power of the circuit model of
-Anderson and Dawar \cite{AndersonD17}. Together with the main theorem of this
-paper this implies that these more general symmetric circuits are strictly more
-powerful.
+% In order then to include a gate computing rank in our symmetric circuit model
+% we need to rec We are interested in circuit with gates that can compute rank
+% and so, since rank is not a symmetric function, we develop a symmetric circuit
+% model capable of incorporating non-symmetric functions in its basis. Moreover,
+% we note that
+
+% In particular, we are interested in Boolean functions that compute rank, i.e.
+% functions that take in a binary matrix and compute the rank of that matrix
+% over some prime field and compare the result with some threshold. But clearly
+% this rank function is not symmetric. Furthermore, its evaluation depends on
+% how the input set is labelled to form a matrix.
+
+% In this section we develop the
+
+% allowing us to develop natural symmetry conditions on the functions in terms
+% of symmetry conditions on the structure. This indexing allows us to generalise
+% the notion of a symmetric function by relativising the symmetry condition in
+% accord with the structure on the input string. Incorporating this indexing
+% into the circuit and
+
+
+
+% ore recently, they have played a role in finite model theory, with many
+% authors (e.g. ) studying circuit models that take in some representation of a
+% finite algebraic structure and which obey certain natural symmetry conditions.
+% However, there are some subtleties in the definition and evaluation of
+% circuits which must be considered carefully and have important implications
+% for the notion of a symmetric circuit studied in this paper. Let $C$ be a
+% Boolean circuit $g$ be an internal gate labelled by some function $f_g:
+% \{0,1\}^{A} \rightarrow \{0,1\}$, for some index set $A$ with $\vert A \vert =
+% \vert H_g \vert$. Formally, evaluating $g$ requires a (usually bijective)
+% indexing function $f_i: A \mapsto H_g$, which organises the inputs of $g$ into
+% an appropriate sequence. The evaluation of $g$ is then given by $C[\vec{x}](g)
+% = f_g (a \mapsto C[\vec{x}](f_i(a)))$. As such the evaluation of a gate in a
+% circuit may depend on how the inputs to the gate are indexed.
+
+% In most contexts in complexity theory, circuits may be taken to be implicitly
+% ordered objects and so this indexing function can be defined as taking the
+% $i$th element of $A$ to the $i$th element of $H_g$. However, in general this
+% renders the evaluation of a circuit for a given input a property both of the
+% circuit and an arbitrary order. In order to address this problem this problem
+% many authors only define circuits over Boolean bases of symmetric functions
+% (e.g. the standard basis or the majority basis). In this case the evaluation
+% of a gate is independent of the choice of indexing function.
+
+% However, in this paper we require gates labelled by Boolean rank functions,
+% i.e. a function that takes in a Boolean sequence indexed by `row' and `column'
+% sets, outputs 1 iff that matrix, when interpreted as having entries in
+% $\mathbb{F}_p$, has rank at least $r$. These rank functions clearly depend on
+% how the input sequence is labelled, and so are not symmetric. However, it is
+% worth noting that while such rank functions may be symmetric, they are
+% symmetric in the weaker sense of being constant under permutations on the rows
+% and columns of the input matrix.
+
+% Motivated by the desire to study circuits with gates that compute rank, We
+% develop a general framework for circuits that allows gates to be labelled by
+% Boolean functions of the form $F: \{0,1\}^{X} \rightarrow \{0, 1\}$, where the
+% labelling $X$ is the universe of a many-sorted structure over some vocabulary
+% $\tau$. The Moreover, we generalise the notion of a circuit for structures
+% (see Anderson and Dawar \cite{AndersonD17}), incorporate an appropriate
+% labelling for the inputs of each gate and allowing for a Boolean basis
+% including non-symmetric functions. Furthermore, the vocabulary $\tau$ will
+% allow us to impose natural symmetry conditions on $F$, and so allowing us to
+% develop a useful notion of a symmetric circuit.
+
+% We also prove that no family symmetric functions defined over a basis of
+% symmetric functions can improve on the expressive power of the circuit model
+% of Anderson and Dawar \cite{AndersonD17}. Together with the main theorem of
+% this paper this implies that these more general symmetric circuits are
+% strictly more powerful
 
 % consider the problem of explicitly labelling the input of the function both so
 % that the semantics of the function can be reasonably defined and so as to
@@ -66,44 +122,89 @@ powerful.
 % useful symmetries on the function.
 
 \subsection{Structured Functions and Symmetry}
+Before we begin this section let us review Boolean circuits and a few useful
+symmetry conditions placed on these circuits. Let $X$ be a finite set and $F:
+\{0,1\}^{X} \rightarrow \{0,1\}$ be a Boolean function. We call $X$ the
+\emph{index} of $F$, and denote it by $\ind(F)$. It is often the case that the
+index $X$ is in some sense structured, but let us first consider the case where
+$X$ is an unstructured set. In this case the only natural symmetry condition to
+consider is where $F$ is invariant under the action of $\sym_n$, i.e. $F$ is a
+symmetric function. Suppose instead $X$ consists of all two element subsets of
+the set $V$. Here we can think of $X$ as representing all potential edges in a
+graph, and $\vec{x} \in \{0,1\}^X$ as defining a graph. It is natural then to
+consider the case where $F$ determines a property of the graph, i.e. where $F$
+is invariant under the action of $\sym_V$ on the input (i.e renaming of the
+vertices). We call such a function \emph{graph-invariant}. Suppose that $X := A
+\times B$ for two non-empty sets $A$ and $B$. Here we can think of $\vec{x} \in
+\{0,1\}^X$ as an (unordered) matrix, and we can consider the case where $F$ is
+invariant under the action of $\sym_A \times \sym_B$. In this case we say $F$ is
+\emph{matrix-invariant}. Notice that in each of these cases the symmetry
+condition of interest on the function was related to the structure of the index
+set.
+
+In the rest of this subsection we develop the notion of structured function, a
+Boolean function whose input is structured in accord with some structure and
+whose natural symmetry conditions follow from similar conditions on the
+structure.
+
+
+% $X:= {n}\choose{2}$, for some $n$, we can think of $F$ as taking in some $n$
+% vertex graph, and we should like $F$ to respect permutations on the graph. In
+% this case we insist that $F$ is a \emph{graph symmetric} function, for all $$
+% where we can think of $F$ as taking in a graph with $n$ vertices, where $X:=
+% {n}\choose{2}$ as indexing a graph with $n$ vertices
+
+% The set $X$ is often used just to provide an ordering, and so $F$ just takes
+% in a binary $\vert X \vert$-tuple. While in general the order of the input
+% sequence matters, it is common to consider the case where $F$ is a
+% \emph{symmetric} Boolean function, i.e. for all $\sigma \in \sym_{X}$,
+% $\vec{x} \in \{0,1\}^{X}$, $F(\vec{x}\cdot \sigma) = \vec{x}$. In this case
+% the output of the function is independent of the ordering on the input tuple.
+% Indeed, many natural Boolean functions (e.g. `and', `or', `not', `majority',
+% etc.) are symmetric functions. One of the benefits of considering symmetric
+% functions
+
 Let $\tau = (R, S, \nu)$ be a many-sorted, relational signature, with $R = \{R_1
 \ldots, R_t\}$ and $S = [s]$ for some $s \in \nats$, and $\nu(R_i) = (a^i_1,
 \ldots , a^i_{r_i)})$, where $r_i = \arty(R_i)$ and $a^i_q \in S$ for all $q \in
-[r_i]$. For each $s \in S$ let $A_s$ be a non-empty set, and let $A := A_{1}
-\sqcup \ldots \sqcup A_{s} = \{(a,s) : a \in A_s\}$. Let
-\[
-  \ind (A, \tau) := A_{a^1_1} \times \ldots \times A_{a^1_{r_1}} \times \ldots
-  \times A_{a^t_1} \times A_{a^t_{r_t}},
-\]. We call $\ind (A, \tau)$ the \emph{index defined by} $(A, \tau)$.
+[r_i]$. Let $\mathcal{D}$ be a $\tau$-structure, with the universe $D = D_1
+\uplus \ldots \uplus D_s = \{(i,d) : d \in D_i\}$.
 
-% It is worth noting that there is a natural bijection $P$ that maps
-% $\tau$-structures with universe $A$ to subsets of $\Ind(A, \tau)$, taking each
-% $\tau$-structure $\mathcal{A}$ to the set $\{(\vec{X}_1, \ldots , \vec{X}_t) :
-% \exists i \in [t] \(\vec{X_i} \in R^{\mathcal{A}}_i \) \}$.
+Let the \emph{index-domain} of $\mathcal{D}$ be $\rdom {\mathcal{D}} = \{(i, j)
+:= i \in [r_j], R_j \text{ a relation in $\tau$} \}$. Let the \emph{index
+  defined by} $\mathcal{D}$ be the set of all functions $f: \rdom(\mathcal{D})
+\rightarrow D$ such that for all $R_j \in R$ and $i \in [r_j]$, $f(i, j) \in
+A_{a^{j}_i}$. We abuse notation and denote the index defined by
+$\ind(\mathcal{D})$. We note that, since the set of relation symbols and sort
+symbols are ordered, we can also think of each $f \in \ind(\mathcal{D})$ as a
+tuple in $D_{a^1_1} \times \ldots \times D_{a^1_{r_1}} \times \ldots \times
+D_{a^t_1} \times D_{a^t_{r_t}}$. We will use these tuples in order to index the
+inputs to a Boolean function.
 
-For the remainder of the section let $X := \ind (A, \tau)$. Let $G \leq
-\sym_{X}$, there is a natural action of $G$ on $X$. There is also a natural
-action of $\sym_{A_1} \times \ldots \times \sym_{A_s}$ on $X$ and a subgroup
-$G'$ of $\sym_X$ corresponding to the same action. We identify these two groups.
-
-Furthermore, we can defined an action of $G$ on functions of the form $f: X
-\rightarrow H$, for any set $H$, given by $\sigma \cdot f(x) = f(\sigma \cdot
-x)$ for all $x \in X$. If $H = \{0,1\}$ we say that $f$ is a \emph{binary
-  sequence indexed by $X$}. If $H$ is surjective, we say that \emph{$f$ indexes
-  $H$ by $X$} or \emph{$f$ indexes $H$ by $(A,\tau)$}.
+For the remainder of the section fix a $\tau$-structure $\mathcal{D}$ and let $X
+:= \ind (\mathcal{D})$. Let $G \leq \sym_{X}$. We note that there is a natural
+action of $G$ on $X$. Furthermore, we can define an action of $G$ on functions
+of the form $f: X \rightarrow H$, for any set $H$, given by $\sigma \cdot f(x) =
+f(\sigma \cdot x)$ for all $x \in X$. If $H = \{0,1\}$ we say that $f$ is a
+\emph{binary sequence indexed by $X$}. If $H$ is surjective, we say that
+\emph{$f$ indexes $H$ by $X$} or \emph{$f$ indexes $H$ by $\mathcal{D}$}. We
+note that $\aut(\mathcal{D})$ and $\iso(\mathcal{D})$ can be identified with
+subgroups of $\sym_X$.
 
 We develop a notion of equivalence from this action. Say that two functions $f,
 g : X \rightarrow H$ are \emph{$G$-equivalent} iff there exists $\sigma \in G$
 such that $f(x) = f(\sigma \cdot x)$ for all $x \in X$. We say $f$ and $g$ are
-\emph{sort-equivalent} if they are $\sym_{A_1} \times \ldots
-\sym_{A_p}$-equivalent.
+\emph{isomorphism-equivalent} if they are $\iso(\mathcal{D}$-equivalent. We say
+that $f$ and $g$ are \emph{automorphism-equivalent} if they are $
+\aut(\mathcal{D})$-equivalent. We say that $f$ and $g$ are
+\emph{sort-equivalent} in the special case where every relation in $\mathcal{D}$
+contains all possible tuples and $f$ and $g$ are automorphism-equivalent.
 
 We call a function of the form $F:\{0,1\}^{X} \rightarrow \{0,1\}$ a
-\emph{$(\tau, A)$-structured function}. We call $(\tau, A)$ the \emph{type} of
-$F$, $\tau$ the \emph{signature of $F$} and $A$ \emph{the universe of $F$}. We
-also use $\ind(F)$ to abbreviate $\ind (\type (F))$.Call $F$ a \emph{structured
-  function} if it is a $(\tau, A)$-structured function for some appropriate
-$\tau$ and $A$.
+\emph{$\mathcal{D}$-structured function}. We note that $\ind(F) =
+\ind(\mathcal{D})$, justifying our above choice of notation. We also say
+\emph{the vocabulary of $F$} and \emph{the universe of $F$} to refer to the
+vocabulary and universe of $\mathcal{D}$.
 
 % It is easy to see that if $\mathcal{C}_A$ is the category with objects given
 % by $\tau$-structures over $A$ and morphisms by the action of $G$, and
@@ -134,14 +235,35 @@ $\tau$ and $A$.
 % \end{remark}
 
 These structured functions give us a general framework for indexing the input to
-functions. Moreover, the structure on these index sets allows us to develop a
-natural notion of symmetry particular to the indexing used by the function. Let
-$F$ be a $(\tau, A)$-structured function. We say $F$ is \emph{$G$-invariant} if
-for all $G$-equivalent $\vec{x},\vec{y} \in \{0,1\}^{X}$, $F(\vec{x}) =
-F(\vec{y})$. We say $F$ is \emph{sort-invariant} if it is $(\tau, \sym_{A_{1}}
-\times \ldots \times \sym_{A_{s}})$-invariant. If $\tau = (\{R\}, [2], \nu)$,
-with $\nu (R) = (1, 2)$ and $F$ is sort-invariant then we say $F$ is
-\emph{matrix-invariant}.
+functions while also providing us with a natural set of groups from which to
+develop symmetry conditions for Boolean functions. We now introduce some of
+these conditions. Let $F$ be a $\mathcal{D}$-structured function. We say $F$ is
+\emph{$G$-invariant} if it constant on $G$-equivalent input vectors, i.e. for
+all $G$-equivalent $\vec{x},\vec{y} \in \{0,1\}^{X}$, $F(\vec{x}) = F(\vec{y})$.
+Similarly, we say $F$ is \emph{automorphism-invariant} if it is constant on
+automorphism-equivalent input vectors and \emph{isomorphism-invariant} if it is
+constant on isomorphism-equivalent input vectors. If all the relations in
+$\mathcal{D}$ contain all possible tuples, and $F$ is automorphism-invariant,
+then we say that $F$ is \emph{sort-invariant}. If the vocabulary of $F$ has two
+sorts $s_1, s_2$ and one binary relation $R$ with type $(s_1, s_2)$ and $F$ is
+sort-invariant, then we say $F$ is \emph{matrix-invariant}.
+
+Notice that if $\tau$ is the empty vocabulary and $\mathcal{D}$ is a
+$\tau$-structure, i.e. $\mathcal{D}$ is a pure set, then any
+$\mathcal{D}$-structured function $F$ is automorphism-invariant (or
+isomorphism-invariant) if, and only if, $F$ is symmetric. Also, if $\mathcal{D}$
+is a graph, then $F$ is isomorphism invariant if, and only if, $F$ is
+graph-invariant (except with a slight alteration, here $F$ takes in the edge
+relation rather than a binary string indexed by two element sets of vertices).
+Similarly, $F$ is matrix invariant (as a structured function) if, and only if,
+it is matrix-invariant in the sense defined right at the beginning of this
+subsection. In each of these cases choosing an appropriate structure leads to an
+appropriate index and an appropriate notion of symmetry. In this way structured
+functions generalise the notion of a symmetric function and allow us to capture
+a broad range of structure-specific symmetry conditions in a single definition.
+In the next section we will show how to define a circuit and a symmetric circuit
+using bases of structured functions.
+
 
 % Let $F$ be a $(\tau, A)$-structured function with $\tau = (\{R\}, \{1\},
 % \nu)$, where $R$ is a binary relation. Let $G \leq \sym_A$ such that for any
@@ -150,15 +272,6 @@ with $\nu (R) = (1, 2)$ and $F$ is sort-invariant then we say $F$ is
 
 % If $\tau$ is single-sorted we call $F$ \emph{simple} and if it consists of a
 % single unary relation, we call $F$ \emph{unary-relational}.
-We have developed this more general notion of symmetry for Boolean functions
-that naturally takes into account the structure on the input sequence. The
-following lemma shows that symmetry is just the requirement that the function be
-invariant under permutations of its input, irrespective of structure.
-
-\begin{lem}
-  Let $F$ be a $(\tau, A)$-structured function. $F$ is a symmetric function if
-  and only if $F$ is $\sym_A$-invariant.
-\end{lem}
 
 
 
@@ -193,12 +306,16 @@ invariant under permutations of its input, irrespective of structure.
 % \end{remark}
 
 \subsection{Symmetric Circuits}
-Having developed the notion of a function that accepts input structured in
-accordance with some vocabulary, we now develop a circuit model which
-incorporates this structure on the inputs of a gate. We use this general
-framework to define the notion of a matrix-symmetric circuit, a circuit with
-gates labelled by matrix-symmetric Boolean functions, and finally we develop the
-notion of a matrix-symmetric circuit with rank.
+We define a circuit over a basis of structured functions that are not
+necessarily symmetric. As such, the circuit must include for each gate $g$ an
+index on its children corresponding to the index of the function labelling $g$.
+
+% Having developed the notion of a function that accepts input structured in
+% accordance with some vocabulary, we now develop a circuit model which
+% incorporates this structure on the inputs of a gate. We use this general
+% framework to define the notion of a matrix-symmetric circuit, a circuit with
+% gates labelled by matrix-symmetric Boolean functions, and finally we develop
+% the notion of a matrix-symmetric circuit with rank.
 
 % Importantly, many natural functions of interest are matrix symmetric. For
 % example, the function that computes the rank of the matrix over
@@ -207,101 +324,130 @@ notion of a matrix-symmetric circuit with rank.
 % \in \mathbb{N}$.
 
 \begin{definition}[Circuits on Structures]
-  Let $\mathbb{B}$ be a basis of structured functions and $\tau := (R, \{s_1,
-  \ldots, s_p\}, \nu)$ be a many-sorted vocabulary and let $\vec{n} := (n_{s_1},
-  \ldots , n_{s_p}) \in \mathbb{N}^{S}$, we define a \emph{$(\mathbb{B},
-    \tau)$-circuit} $C_{\vec{n}}$ computing a $q$-ary query $Q$ of type
-  $(s^Q_{1}, \ldots , s^Q_{q})$ is a structure $\langle G, W, \Omega, \Sigma,
-  \Lambda, L\rangle$.
+  Let $\mathbb{B}$ be a basis and $\tau$ be a relational vocabulary, we define a
+  \emph{$(\mathbb{B}, \tau)$-circuit} $C_n$ computing a $q$-ary query $Q$ as a
+  structure $\langle G, \Omega, \Sigma, \Lambda, L \rangle$.
   \begin{itemize}
     \setlength\itemsep{0mm}
-  \item $G$ is called the set of gates of $C_{\vec{n}}$ and $\vert C_{\vec{n}}
-    \vert := \vert G \vert$.
-  \item $W \subseteq G \times G$, where $W$ is called the wires of the circuit.
-    $(G,W)$ must be a directed acyclic graph. For $g \in G$ we $H_g := \{ h \in
-    G: W(h,g)\}$ be the set of children of $g$.
-  \item $\Omega$ is an injective function from $[n_{i_1}] \times \ldots \times
-    [n_{i_q}]$ to $G$. The gates in the image of $\Omega$ are called the output
-    gates. When $q = 0$, $\Omega$ is a constant function mapping to a single
-    output gate.
+  \item $G$ is called the set of gates of $C_n$ and $\vert C_n \vert := \vert G
+    \vert$.
+  \item $\Omega$ is an injective function from $[n]^q$ to $G$. The gates in the
+    image of $\Omega$ are called the output gates. When $q = 0$, $\Omega$ is a
+    constant function mapping to a single output gate.
   \item $\Sigma$ is a function from $G$ to $\mathbb{B} \uplus \tau \uplus
-    \{0,1\} $ which maps input gates to $\tau \uplus \{0,1\}$ and where $\vert
-    \Sigma^{-1} (0) \vert \leq 1$ $\vert \Sigma^{-1} (1) \vert \leq 1$ and the
-    internal gates get mapped into $\mathbb{B}$. Gates mapped to $R$ are called
-    relational gates and gates mapped to 1 or 0 are called constant gates.
-  \item $\Lambda$ is a sequence of injective functions $(\Lambda_{R'})_{R' \in
-      R}$ where for each $R' \in R$ with arity $r$ and type $(s^{R'}_{1},
-    \ldots, s^{R'}_{r})$, $\Lambda_{R'}$ maps each relational gate $g$ with $R'
-    = \Sigma (g)$ to the tuple $\Lambda_{R'} (g) \in [n_{s^{R'}_1}] \times
-    \ldots \times [n_{S^{R'}_r}]$. When no ambiguity arises we write $\Lambda
-    (g)$ for $\Lambda_{R'} (g)$.
-  \item $L$ maps to each internal gate a labelling on its children. Let $g$ be
-    an internal gate. We have that $L(g)$ is a surjection from $\ind (\Sigma (g))$
-    to $H_g$. We call $L(g)$ the \emph{child-labelling} for $g$.
+    \{0,1\} $ such that $\vert \Sigma^{-1} (0) \vert \leq 1$ $\vert \Sigma^{-1}
+    (1) \vert \leq 1$. Those gates mapped to $\tau \uplus \{0,1\}$ are called
+    input gates, with those mapped to $\tau$ called relational gates and those
+    mapped $\{0,1\}$ called constant gates. Those gates mapped to $\mathbb{B}$
+    are called internal gates.
+  \item $\Lambda$ is a sequence of injective functions $(\Lambda_{R_i})_{R_i \in
+      R}$ such that $\Lambda_{R_i}$ maps each relational gate $g$ with $R_i =
+    \Sigma (g)$ to the tuple $\Lambda_{R_i} (g) \in [n]^{r}$. When no ambiguity
+    arises we write $\Lambda (g)$ for $\Lambda_{R_i} (g)$.
+  \item $L$ associates with each internal gate $g$ a function $L(g):
+    \dom(\Sigma(g)) \rightarrow G$ such that if we define a relation $W
+    \subseteq G^{2}$ by $W(h_1,h_2)$ iff $h_2$ is an internal gate and $h_1$ is
+    in the image of $L(h_2)$, then $(G, W)$ is a directed acyclic graph.
   \end{itemize}
 \end{definition}
 
-We write $C_{\vec{n}}$ to emphasise that the circuit accepts input structures
-with sorted-size $\vec{n}$. If $\tau$ is single-sorted vocabulary then we write
-$C_n$ to emphasise that $C_n$ accepts input structures of size $n$. For a gate
-$g \in C_{\vec{n}}$ we abuse notation and define the \emph{type} of $g$, denoted
-by $\type (g)$, to be type of $\Sigma(g)$, and the \emph{index} of $g$, denoted by
-$\ind(g)$, to be the the index for $\Sigma(g)$.
+% \begin{definition}[Circuits on Structures]
+%   Let $\mathbb{B}$ be a basis of structured functions and $\tau := (R, \{s_1,
+%   \ldots, s_p\}, \nu)$ be a many-sorted vocabulary and let $\vec{n} :=
+%   (n_{s_1}, \ldots , n_{s_p}) \in \mathbb{N}^{S}$, we define a
+%   \emph{$(\mathbb{B}, \tau)$-circuit} $C_{\vec{n}}$ computing a $q$-ary query
+%   $Q$ of type $(s^Q_{1}, \ldots , s^Q_{q})$ is a structure $\langle G, W,
+%   \Omega, \Sigma, \Lambda, L\rangle$.
+%   \begin{itemize}
+%     \setlength\itemsep{0mm}
+%   \item $G$ is called the set of gates of $C_{\vec{n}}$ and $\vert C_{\vec{n}}
+%     \vert := \vert G \vert$.
+%   \item $W \subseteq G \times G$, where $W$ is called the wires of the
+%     circuit. $(G,W)$ must be a directed acyclic graph. For $g \in G$ we $H_g
+%     := \{ h \in G: W(h,g)\}$ be the set of children of $g$.
+%   \item $\Omega$ is an injective function from $[n_{i_1}] \times \ldots \times
+%     [n_{i_q}]$ to $G$. The gates in the image of $\Omega$ are called the
+%     output gates. When $q = 0$, $\Omega$ is a constant function mapping to a
+%     single output gate.
+%   \item $\Sigma$ is a function from $G$ to $\mathbb{B} \uplus \tau \uplus
+%     \{0,1\} $ which maps input gates to $\tau \uplus \{0,1\}$ and where $\vert
+%     \Sigma^{-1} (0) \vert \leq 1$ $\vert \Sigma^{-1} (1) \vert \leq 1$ and the
+%     internal gates get mapped into $\mathbb{B}$. Gates mapped to $R$ are
+%     called relational gates and gates mapped to 1 or 0 are called constant
+%     gates.
+%   \item $\Lambda$ is a sequence of injective functions $(\Lambda_{R'})_{R' \in
+%     R}$ where for each $R' \in R$ with arity $r$ and type $(s^{R'}_{1},
+%     \ldots, s^{R'}_{r})$, $\Lambda_{R'}$ maps each relational gate $g$ with
+%     $R' = \Sigma (g)$ to the tuple $\Lambda_{R'} (g) \in [n_{s^{R'}_1}] \times
+%     \ldots \times [n_{S^{R'}_r}]$. When no ambiguity arises we write $\Lambda
+%     (g)$ for $\Lambda_{R'} (g)$.
+%   \item $L$ maps to each internal gate a labelling on its children. Let $g$ be
+%     an internal gate. We have that $L(g)$ is a surjection from $\ind (\Sigma
+%     (g))$ to $H_g$. We call $L(g)$ the \emph{child-labelling} for $g$.
+%   \end{itemize}
+% \end{definition}
 
-Let $\tau = (\{s_1, \ldots, s_p\}, \{R_1, \ldots , R_t\}, \nu)$. Let
-$\mathcal{A}$ be a many-sorted $\tau$-structure with sorts $U_1, \ldots, U_p$
-and sort-size $\vec{n}$, and let $\gamma: U \rightarrow [n_{s_1}] \sqcup \ldots
-\sqcup [n_{s_p}]$ be a sorted bijection. Let $\gamma \mathcal{A}$ be the
-structure formed by mapping the universe of $\mathcal{A}$ in accordance with
+Let $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
+\tau)$-circuit. The $n$ here denotes that $C_n$ accepts structures of size $n$.
+For a gate $g \in C_n$, we define the \emph{index} of $g$, denoted by $\ind(g)$,
+as $\ind(\Sigma(g))$ and we let $H_g$ denote the set of all gates in the image
+of $L(g)$.
+
+For any two sets $X, Y$ we let $X^{\underline{Y}}$ denote the set of all
+injective functions from $Y$ to $X$.
+
+Let $\tau = (R_1, \ldots , R_t)$, $\mathcal{A}$ be a $\tau$-structure of size
+$n$, and $\gamma: \in [n]^{\underline{U}}$. Let $\gamma \mathcal{A}$ be the
+structure formed by mapping U, the universe of $\mathcal{A}$, in accordance with
 $\gamma$. The evaluation of some $(\mathbb{B}, \tau)$-circuit $C$ computing a
-q-ary query $Q$ of type $(s^Q_{1}, \ldots , s^Q_{q})$ proceeds by recursively
-evaluating gates. The evaluation of the gate $g$ using $\gamma$ with input
-$\mathcal{A}$ is denoted by $C[\gamma \mathcal{A}](g)$. The evaluation of a gate
-$g$ is given as follows.
+q-ary query $Q$ proceeds by recursively evaluating the gates in the circuit. The
+evaluation of the gate $g$ using $\gamma$ with input $\mathcal{A}$ is denoted by
+$C[\gamma \mathcal{A}](g)$, and is given as follows
 \begin{enumerate}
   \setlength\itemsep{0mm}
 \item If $g$ is a constant gate then it evaluates to the bit given by
   $\Sigma(g)$.
 \item If $g$ is a relational gate then $g$ evaluates to true iff $\gamma
   \mathcal{A} \models \Sigma(g)(\Lambda (g))$.
-\item If $g$ is an internal gate labelled by a $(\tau_g, A_g)$-structured
-  function $\Sigma(g)$, let $L^{\gamma}_g: \ind(F) \rightarrow \{0,1\}$ be
-  defined by $L^{\gamma}_g(x) = C[\gamma \mathcal{A}](L(g)(x))$. Then $g$
-  evaluates to true iff $\Sigma(g) (L^{\gamma}_g)$.
+\item If $g$ is an internal gate such that $\Sigma (g)$ is a
+  $\mathcal{D}$-structured function, let $L^{\gamma}_g: \ind(g) \rightarrow
+  \{0,1\}$ be defined by $L^{\gamma}_g(x) = C[\gamma \mathcal{A}](L(g)(x))$, for
+  all $x \in \ind(g)$. Then $g$ evaluates to true iff $\Sigma(g) (L^{\gamma}_g)
+  = 1$.
 \end{enumerate}
-$C$ defines the $q$-ary query $Q \subseteq U_{s^Q_1} \times \ldots \times
-U_{s^Q_q}$ where $\vec{a} \in Q$ iff $C[\gamma \mathcal{A}](\Omega (\gamma
-\vec{a})) = 1$.
+We say that $C_n$ defines the $q$-ary query $Q \subseteq U^q$ where $\vec{a} \in
+Q$ iff $C_n[\gamma \mathcal{A}](\Omega (\gamma \vec{a})) = 1$.
 
-The following definition is an important circuit property introduced by Anderson
-and Dawar \cite{AndersonD17}. We introduce it for the sake of comparison.
+% The circuit $C_n$ The following definition is an important circuit property
+% introduced by Anderson and Dawar \cite{AndersonD17}. We introduce it for the
+% sake of comparison.
+
+The following circuit condition is from Anderson and Dawar \cite{AndersonD17}.
 
 \begin{definition}[Invariant Circuit]
-  Let $C_{\vec{n}}$ be a $(\mathbb{B}, \tau)$-circuit, computing some $q$-ary
-  query of type $(s^Q_1, \ldots , s^Q_q)$. We say $C_{\vec{n}}$ is
-  \emph{invariant} if for every $\tau$-structure $\mathcal{A}$ of size
-  $\vec{n}$, $\vec{a} \in U_{i_1} \times \ldots \times U_{i_q}$, and sorted
-  bijections $\gamma_1, \gamma_2: U \rightarrow [n_{s_p}] \sqcup\ldots \sqcup
-  [n_{s_p}]$ we have that $C[\gamma_1 \mathcal{A}](\Omega (\gamma_1 \vec{a})) =
-  C[\gamma_2 \mathcal{A}](\Omega (\gamma_2 \vec{a}))$.
+  Let $C_n$ be a $(\mathbb{B}, \tau)$-circuit, computing some $q$-ary query. We
+  say $C_n$ is \emph{invariant} if for every $\tau$-structure $\mathcal{A}$ of
+  size $n$, $\vec{a} \in U^{q}$, and $\gamma_1, \gamma_2: [n]^{\underline{U}}$
+  we have that $C[\gamma_1 \mathcal{A}](\Omega (\gamma_1 \vec{a})) = C[\gamma_2
+  \mathcal{A}](\Omega (\gamma_2 \vec{a}))$.
 \end{definition}
-
-This property ensures that the function computed by a circuit (or a family of
-circuits) is invariant under isomorphisms on the input structure. In other
-words, the circuit (or family of circuits) decides a property of the structure.
-The following lemma allows us to recast this notion in terms of the language
-developed in this paper.
+In general, the evaluation of a circuit depends on the presentation of the
+structure (i.e. on the chosen bijection $\gamma$). If family of $(\mathcal{B},
+\tau)$-circuits $\mathcal{C}$ is invariant it follows that the query computed is
+a $q$-query on $\tau$-structures. It follows that if $q = 0$ then $\mathcal{C}$
+computes a property of $\tau$-structures. The following lemma allows us to
+recast this notion in terms of the language developed in this paper.
 
 \begin{lem}
-  Let $C_n$ be a $(\mathbb{B}, \tau)$-circuit. We have that the function
-  computed by $C_n$ is $\tau$-symmetric iff $C_n$ is invariant.
+  Let $C_n$ be a $(\mathbb{B}, \tau)$-circuit. The function computed by $C_n$ is
+  isomorphism-invariant iff $C_n$ is invariant.
 \end{lem}
 
 For the sake of simplicity, from now on we assume the that all circuits take in
 structures over a single-sorted vocabulary.
 
 \begin{definition}[Automorphism]
-  let $C = \langle G, W, \Omega, \Sigma, \Lambda, L\rangle$ be a
+  let $C = \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be a
   $(\mathbb{B},\tau)$-circuit computing a $q$-ary query on structures of size
   $n$, and where $\mathbb{B}$ is a bases of sort-symmetric functions. Let
   $\sigma \in \sym_n$ and $\pi: G \rightarrow G$ be a bijection such that
@@ -317,7 +463,7 @@ structures over a single-sorted vocabulary.
     L(g)$ are sort-equivalent.
   \end{itemize}
   We call $\pi$ an \emph{automorphism} of $C$, and we say that $\sigma$
-  \emph{induces the automorphism} $\pi$. The group of automorphisms of $C$ is
+  \emph{extends to the automorphism} $\pi$. The group of automorphisms of $C$ is
   called $\aut_n (C)$.
 \end{definition}
 
@@ -430,15 +576,14 @@ $C_F$.
   by successively adding gates. For $a \in \mathbb{N}$ we add an `and' gate
   $\countgate_a$, and a number of `majority' and `not' gates, wiring them up as
   follows:
-\[
-  \countgate_a = \begin{cases} \land ( \maj  ( x_1, \ldots, x_n, \underbrace {0, \ldots,
-        0}_{2a - n} ), \neg ( \maj (x_1, \ldots , x_n, \underbrace{0, \ldots,
+  \[
+    \countgate_a = \begin{cases} \land ( \maj ( x_1, \ldots, x_n, \underbrace
+      {0, \ldots, 0}_{2a - n} ), \neg ( \maj (x_1, \ldots , x_n, \underbrace{0,
+        \ldots,
         0}_{2a - n + 2} ) )) &  a \geq \frac{n}{2} \\
-     \land ( \maj ( x_1, \ldots, x_n, \underbrace {1, \ldots, 1}_{n -
-           2a} ),  \neg (
-      \maj ( x_1, \ldots , x_n, \underbrace{1, \ldots, 1}_{n - 2a -2}
-      ) )) & a <
-      \frac{n}{2}.
+      \land ( \maj ( x_1, \ldots, x_n, \underbrace {1, \ldots, 1}_{n - 2a} ),
+      \neg ( \maj ( x_1, \ldots , x_n, \underbrace{1, \ldots, 1}_{n - 2a -2} )
+      )) & a < \frac{n}{2}.
     \end{cases}
   \]
   
@@ -449,9 +594,9 @@ $C_F$.
   $g$ for each $a \in c_F(n)$. Mark $g$ as the output gate for $C_n$.
 
   It is easy to see that $C_n$ has depth at most $5$, width at most by $2n + 2$
-  and size at most $1 + 4(2n) + 2 = 8n+3$. We have that in each layer of $C_{g'}$
-  each gate is connected to all gates in the previous layer, and as such the
-  circuit is symmetric.
+  and size at most $1 + 4(2n) + 2 = 8n+3$. We have that in each layer of
+  $C_{g'}$ each gate is connected to all gates in the previous layer, and as
+  such the circuit is symmetric.
 \end{proof}
 
 The above proposition has a straight forward application to circuit

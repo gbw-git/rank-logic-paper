@@ -13,12 +13,12 @@ circuits with rank gates.
 We note that most of these results are for the more general case of symmetric
 circuits with matrix-symmetric gates.
 
-\begin{remark}
-  Please ignore the first two sections (Rigid Circuits and Labelings and
-  Computing Supports), and go on to the third section. These subsections are
-  waiting until the second section of the paper (Symmetric Circuits) is complete
-  as the results in these subsections depend on definitions in that section.
-\end{remark}
+% \begin{remark}
+%   Please ignore the first two sections (Rigid Circuits and Labelings and
+%   Computing Supports), and go on to the third section. These subsections are
+%   waiting until the second section of the paper (Symmetric Circuits) is complete
+%   as the results in these subsections depend on definitions in that section.
+% \end{remark}
 
 \subsection{Rigid Circuits and Labelings}
 
@@ -182,59 +182,84 @@ assumptions of rigidity and bijective labels.
  \end{proof}
 
  \subsection {Evaluating Circuits}
- Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a family of polynomial-size
- rigid symmetric matrix-circuits that compute a $q$-ary query. Let $n_0$ be the
- constant in the hypothesis of the Support Theorem.
-
- We fix a structure $\mathcal{A}$ of size $n$ over the universe $U$,
- matrix-symmetric gate $g$ in $C_n$ and let $A \times B := \ind(g)$. We
- additionally suppose there is a linear-order on the structure $C_n$.
-
- In this section we develop the theory which will allow us to evaluate this gate
- in FPR and thus (using results from Anderson and Dawar \cite{AndersonD17})
+ In this section let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a family of
+ polynomial-size rigid symmetric matrix-circuits that compute a $q$-ary query
+ and let $n_0$ be the constant in the hypothesis of the Support Theorem. We also
+ fix a structure $\mathcal{A}$ of size $n$ over the universe $U$ and an internal
+ gate $g$ in the circuit $C_n$. In this section we show how to evaluate $g$ in
+ $\FPR$ given evaluations of $g$'s children. In this way we will be able to
  recursively evaluate the circuit.
 
- We recall that in order to evaluate the gate $g$ we need to consider a
- bijection $\gamma: U \rightarrow [n]$, with the evaluation of $g$ given by
- $C_n[\gamma \mathcal{A}](g)$. We first show that the evaluation of $g$ depends
- only on which elements of $U$ are mapped to $\consp(g)$.
+ If $g$ is a symmetric gate the results of Anderson and Dawar \cite{AndersonD17}
+ will suffice for evaluating $g$. As such, we assume that $g$ is a
+ matrix-symmetric gate, and for simplicity of notation we let $A \times B :=
+ \ind(g)$.
+
+ Recall that in order to evaluate the gate $g$ we need to consider a bijection
+ $\gamma \in [n]^{\underline{U}}$, with the evaluation of $g$ given by
+ $C_n[\gamma \mathcal{A}](g)$. In this subsection we show that the evaluation of
+ $g$ depends only what $\gamma$ maps to $\consp(g)$. This result allows us to
+ characterise all those bijections for which $g$ evaluates to true using only
+ using only constant-size-domain injections in $U^{\consp(g)}$. In the next
+ subsection we use this succinct encoding, along with the fixed-point operator,
+ to evaluate the entire circuit.
+ 
+ It will often be important that two assignments to a support be
+ \emph{compatible} with one another in the sense that there is an injection over
+ the union of their domains which agrees with each assignment on their
+ respective domains. We formalise this in the following definition.
 
 \begin{definition}
-  Let $f: X \rightarrow Y$ and $g : X' \rightarrow Y'$. We say that $f$ is
-  \emph{compatible} with $g$, or $f \sim g$, if for all $a \in S_1 \cap S_2$,
-  $f(a) = g(a)$ and for all $a \in S_1 \setminus S_2$ and $b \in S_2 \setminus
-  S_1$, $f(a) \neq g(b)$.
+  Let $f \in Y^{\underline{X}}$ and $g : Z^{\underline{W}}$. We say that $f$ is
+  \emph{compatible} with $g$, and we write $f \sim g$, if for all $a \in X \cap
+  W$, $f(a) = g(a)$ and for all $a \in X \setminus W$ and $b \in W \setminus X$,
+  $f(a) \neq g(b)$.
 \end{definition}
 
-\begin{definition}
-  Let $f: A \times B \rightarrow H$ and $p: A' \times B' \rightarrow H$. We say
-  that $f$ and $p$ are \emph{row-column equivalent} if there exist bijections
-  $\alpha: A \rightarrow A'$ and $\beta: B \rightarrow B'$ such that for all
-  $(a, b) \in A \times B$, $f(a,b) = p(\alpha(a), \beta(b))$. In this case we
-  write $f \sim p$.
-\end{definition}
+It is also useful to have some notation for combining two compatible functions.
+Let $f : X \rightarrow Y$ and $p: X' \rightarrow Y'$ be compatible injections.
+Define the combination $(f | p): X \cup X' \rightarrow Y \cup Y'$ by
+\begin{align*}
+  (f \vert p) (x) =
+  \begin{cases}
+    f (x) & x \in X \\
+    p (x) & x \in Y.
+  \end{cases}
+\end{align*}
 
-For a given bijection $\gamma: U \rightarrow [n]$ we can define a matrix
-$L^{\gamma} : A times B \rightarrow \{0,1\}$ by $L^{\gamma} (a,b) := C[\gamma
-\mathcal{A}](L(g)(a,b))$. In the following Lemma we show that the the
-matrix-symmetry of the gate $g$ ensures that for any two such bijections
-$\gamma_1, \gamma_2$, if they agree on the support of $g$ then $L^{\gamma_1}$ is
-row-column equivalent to $L^{\gamma_2}$. From this we can conclude that that the
-evaluation of $g$ depends only on the assignment to its support.
+% \begin{definition}
+%   Let $f: A \times B \rightarrow H$ and $p: A' \times B' \rightarrow H$. We
+%   say that $f$ and $p$ are \emph{row-column equivalent} if there exist
+%   bijections $\alpha: A \rightarrow A'$ and $\beta: B \rightarrow B'$ such
+%   that for all $(a, b) \in A \times B$, $f(a,b) = p(\alpha(a), \beta(b))$.
+% \end{definition}
+
+Given an assignment $\gamma \in [n]^{\underline{U}}$, we can evaluate the child
+gates of $g$, forming the matrix $L^{\gamma} : A \times B \rightarrow \{0,1\}$
+defined by $L^{\gamma} (a,b) := C[\gamma \mathcal{A}](L(g)(a,b))$. This function
+allows us to evaluate $g$. Moreover, since $g$ is matrix-symmetric the
+evaluation of $g$ is constant on any class of functions sort-equivalent to
+$L^\gamma$. In the following Lemma we show that for any $\gamma_1, \gamma_2 \in
+[n]^{\underline{U}}$ that agree on the support of $g$, $L^{\gamma_1}$ is
+sort-equivalent to $L^{\gamma_2}$. From this we can conclude that that the
+evaluation of $g$ for $\gamma$ depends only on the assignment to its support
+(i.e. on what $\gamma$ maps to $\consp(g)$).
 
 \begin{lem}
-  Let $g$ be a matrix-symmetric gate in $C_n$. Let $\eta: \consp(g) \rightarrow
-  U$ be an injection, and suppose $\gamma_1, \gamma_2: U \rightarrow [n]$ with
-  $\gamma^{-1}_1 \sim \eta$ and $\eta \sim \gamma^{-1}_2$. Then $L^{\gamma_1}$
-  and $L^{\gamma_2}$ are row-column equivalent.
+  Let $g$ be a matrix-symmetric gate in $C_n$. Let $\eta \in
+  U^{\underline{\consp(g)}}$ and $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$
+  such that $\gamma^{-1}_1 \sim \eta$ and $\eta \sim \gamma^{-1}_2$. Then
+  $L^{\gamma_1}$ and $L^{\gamma_2}$ are sort-equivalent.
+  \label{lem:support-determines-evaluation}
 \end{lem}
 
 \begin{proof}
-  We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
-  \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
-  consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$ pointwise.
-  Thus $L(g) \sim \pi \cdot L(g)$, and so there exists $(\sigma, \lambda) \in
-  \sym_A \times \sym_B$ such that $\pi L(g) = L(g) (\sigma, \lambda)$.
+  We have that there exists a unique $\pi \in \sym_n$ such that $\pi \cdot
+  \gamma_1 = \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are
+  both consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$
+  pointwise. Thus $L(g)$ is sort-equivalent to $\pi \cdot L(g)$, and so there
+  exists $(\sigma, \lambda) \in \sym_A \times \sym_B$ such that $\pi \cdot L(g)
+  = L(g) \cdot (\sigma, \lambda)$.
 
   We then have that,
   \begin{align*}
@@ -246,17 +271,35 @@ evaluation of $g$ depends only on the assignment to its support.
   and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
 \end{proof}
 
-We associate with each gate $h$ a set $\EV_h \subseteq
+For each gate $h \in C_n$ we associate with it a set $\Gamma_h$ consisting of
+all those bijections which cause $h$ to evaluate to true, i.e. $\Gamma_h:=
+\{\gamma \in [n]^{\underline{U}} : C[\gamma \mathcal{A}](h) = 1 \}$. Lemma
+\ref{lem:supports-determine-evaluation} gives us that the membership of $\gamma$
+in $\Gamma_h$ is entirely determined by what $\gamma$ maps to $\consp(h)$. As
+such, we also associate with $h$ a set $\EV_h \subseteq
 U^{\underline{\consp(h)}}$ consisting of all assignments to the support of $h$
-which cause the gate to evaluate to true, i.e. $\EV_h := \{ \eta:
-U^{\underline{\consp(h)}} : \exists \gamma \in U^{\underline{[n]}} \text{ s.t.
-}C_n [\gamma \mathcal{A}](h) = 1 \wedge \eta \sim \gamma^{-1})\}$. Note that
-$\EV_h$ completely determines all assignments $\delta \in [n]^{\underline{U}}$
-such that $C_n[\delta \mathcal{A}](h) = 1$.
+for which $h$ evaluates to true, i.e. $\EV_h := \{ \eta:
+U^{\underline{\consp(h)}} : \exists \gamma \in \Gamma_h \wedge \eta \sim
+\gamma^{-1})\}$, and note that $\Gamma_h$ is entirely determined by $\EV_h$. The
+important point to note is that each $\eta \in \EV_h$ is defined on a
+constant-size domain, and as such $\EV_h$ gives us a succinct way of encoding
+$\Gamma_h$.
 
-In this rest of the section we show how to recursively construct $\EV_g$ from
-$\{\EV_h : h \in H_g\}$. For the rest of this section fix an injection $\eta :
-\consp(g) \rightarrow U$.
+We aim to show that $\EV_g$ can be recursively constructed for each $g \in C_n$.
+In particular, we show that for any $\eta \in U^{\underline{sp(g)}}$, there is
+an $\FPR$-definable matrix $M$ such that for any $\gamma \in
+[n]^{\underline{U}}$ with $\gamma^{-1} \sim \eta$, $M$ is sort-equivalent to
+$L^{\gamma}$. This result allows us to decide the membership of $\eta$ in
+$\EV_g$ by first defining $M$ for $\eta$, computing rank the rank of $M$ over
+the appropriate prime field, and then comparing this result with the threshold.
+
+% For the remainder of this section we fix an injection $\eta \in
+% U^{\underline{sp(g)}}$, and define the matrix $M$.
+
+
+
+
+
 % \begin{remark}
 %   Let $\sigma \in \spstab{g}$, then we know that there exists $(\sigma_r,
 %   \sigma_c) \in \sym_A \times \sym_B$ and $\sigma_r (i) = \row (\sigma h)$,
@@ -311,31 +354,45 @@ $\{\EV_h : h \in H_g\}$. For the rest of this section fix an injection $\eta :
 %   t$.
 % \end{definition}
 
-For the sake of brevity, for sets $Z,X,Y$, and a function $f : Z \rightarrow X$
-and injection $p :Z \rightarrow Y$, let $f_p = f \cdot p^{-1}$.
+% For the sake of brevity, for sets $Z,X,Y$, and a function $f : Z \rightarrow
+% X$ and injection $p :Z \rightarrow Y$, let $f_p = f \cdot p^{-1}$.
 
-\begin{definition}
-  Let $\vec{x}, \vec{y} : Z \rightarrow X$ and $\vec{r}, \vec{c}: Z \rightarrow
-  Y$ be injections. If $\vec{x} \cdot \vec{r}^{-1} \sim \vec{y} \cdot
-  \vec{c}^{-1}$ we say that $(\vec{x}, \vec{y})$ and $(\vec{r} \vec{c})$ have
-  the same \emph{type}.
-\end{definition}
+% We note that for any $s \subseteq [n]$, $s$ inherits in the linear order on
+% $[n]$ and as such may also be thought of as an ordered set. We write $\vec{s}$
+% to denote the $\vert s \vert$-tuple, consisting of the elements in $s$ in the
+% inherited order. Let $r \subseteq [n]$ and $\vec{x} \in U^{\underline{[\vert r
+% \vert]}}$, we can then derive a function $\vec{x}_r : r \rightarrow U$ defined
+% by $\vec{x}_r (a) = \vec{x}$
 
-We note that if we have $f : X \rightarrow Y$ and $p: X' \rightarrow Y'$ and $f
-\sim p$ then define $(f \vert p): X \cup X' \rightarrow Y \cup Y'$ by
+% We say that two functions pairs of elements have the same type
 
-\begin{align*}
-  (f \vert p) (x) =
-  \begin{cases}
-    f (x) & x \in X \\
-    p (x) & x \in Y.
-  \end{cases}
-\end{align*}
+% \begin{definition}
+%   Let $\vec{x}, \vec{y} : Z \rightarrow X$ and $\vec{r}, \vec{c}: Z
+%   \rightarrow Y$ be injections. If $\vec{x} \cdot \vec{r}^{-1} \sim \vec{y}
+%   \cdot \vec{c}^{-1}$ we say that $(\vec{x}, \vec{y})$ and $(\vec{r} \vec{c})$
+%   have the same \emph{type}.
+% \end{definition}
 
-The compatibility of these two functions ensures that this function is well
-defined. This mapping allows us to combine two assignments into a single
-assignment, and will be useful when combining the row and column supports of a
-gate.
+
+% \begin{definition}
+%   Let $\vec{x}, \vec{y} : Z \rightarrow X$ and $\vec{r}, \vec{c}: Z
+%   \rightarrow Y$ be injections. If $\vec{x} \cdot \vec{r}^{-1} \sim \vec{y}
+%   \cdot \vec{c}^{-1}$ we say that $(\vec{x}, \vec{y})$ and $(\vec{r} \vec{c})$
+%   have the same \emph{type}.
+% \end{definition}
+
+% We note that if we have $f : X \rightarrow Y$ and $p: X' \rightarrow Y'$ and
+% $f \sim p$ then define $(f \vert p): X \cup X' \rightarrow Y \cup Y'$ by
+
+% \begin{align*}
+%   (f \vert p) (x) =
+%   \begin{cases}
+%     f (x) & x \in X \\
+%     p (x) & x \in Y.
+%   \end{cases}
+% \end{align*}
+
+
 
 % \begin{claim}
 %   Let $A_1,B_1, A_2, B_2 \subseteq [n]$. Then $(A_1, B_1)$ and $(A_2, B_2)$
@@ -356,31 +413,36 @@ gate.
 %   the type of $h$ by $\type (h)$.
 % \end{definition}
 
-We define for any set $Y$ with a linear-order $\leq$ on $Y$, a function
-$\ord_\leq: Y \rightarrow \vert Y \vert$ be defined by $\ord_\leq (y) = o_y$,
-where $o_y$ is the position of $y$ in $Y$ in the ordering. We call this function
-the \emph{order map for $Y$}. For a subset $\text{sp} \subseteq [n]$, we use
-$\vec{\text{sp}}$ to denote the inverse of the order map for $\text{sp}$.
+% We define for any set $Y$ with a linear-order $\leq$ on $Y$, a function
+% $\ord_\leq: Y \rightarrow \vert Y \vert$ be defined by $\ord_\leq (y) = o_y$,
+% where $o_y$ is the position of $y$ in $Y$ in the ordering. We call this
+% function the \emph{order map for $Y$}. For a subset $\text{sp} \subseteq [n]$,
+% we use $\vec{\text{sp}}$ to denote the inverse of the order map for
+% $\text{sp}$.
 
-Let $X$ be a set on which the left group action of $\sym_n$ is defined and $s
-\in X$. We let $A_s = \{\vec{x} \in U^{\underline{\consp(s)}} : \eta \sim
-\vec{x} \cdot \vec{\consp}^{-1}(s) \}$. For $\vec{x} \in A_s$, we use
-$\vec{x}_s$ from here forward to denote $\vec{x} \cdot \vec{\consp}^{-1}(s)$.
+For a gate $h \in H_g$ define $A_h := \{\vec{x} \in U^{\underline{\consp(s)}} :
+\eta \sim \vec{x}\}$. We should also like to consider similar sets of functions
+for other objects in the circuit which may be permuted and which are relevant to
+$g$. More generally, let $X$ be a set on which the left group action of $\sym_n$
+is defined and $s \in X$. We let $A_s = \{\vec{x} \in U^{\underline{\consp(s)}}
+: \eta \sim \vec{x} \cdot \vec{\consp}^{-1}(s) \}$. We will be particularly
+interested in the case where $X$ is the set of rows or columns (i.e. $A$ or $B$)
+indexing the inputs of $g$.
+
+% For $\vec{x} \in A_s$, we use $\vec{x}_s$ from here forward to denote $\vec{x}
+% \cdot \vec{\consp}^{-1}(s)$.
 
 Let $s \in X$ and $\vec{x}, \vec{x}' \in A_s$ and we say that $\vec{x}$ and
 $\vec{x}'$ are \emph{mutually stable} if there exists $\sigma \in \stab(s) \cap
-\spstab{g}$ such that $\vec{x} = \vec{x}' \cdot \sigma*$, where $\sigma* =
-\vec{\consp}(s)^{-1} \cdot \sigma \cdot \vec{\consp}(s)$. Note that mutual
+\spstab{g}$ such that $\vec{x} = \vec{x}' \cdot \sigma$. Note that mutual
 stability is an equivalence relation on $A_s$, and we denote the equivalence of
-two vectors $\vec{x}, \vec{x}' \in A_s$ by $\vec{x} \sim_s \vec{x}'$.
+two vectors $\vec{x}, \vec{x}' \in A_s$ by $\vec{x} \equiv_s \vec{x}'$.
 
 \begin{lem}
   Let $X$ be a set on which the left group action of $\sym_n$ is defined, and
   let $\gamma: U \rightarrow [n]$ be a bijection such that $\gamma^{-1} \sim
-  \eta$. Let $s \in X$ and let $\sigma, \sigma' \in \stab(\consp(g))$ such that
-  $\sigma (\consp(s)) = \sigma'(\consp(s))$. Then $\sigma(s) = \sigma' (s)$ iff
-  there exists $x \in X$ such that $\gamma^{-1} \cdot \sigma \cdot
-  \vec{\consp}(s) \sim_x \gamma^{-1} \cdot \sigma' \cdot \vec{\consp}(s)$.
+  \eta$. Let $s \in X$ and let $\sigma, \sigma' \in \stab(\consp(g))$. Then
+  $\sigma(s) = \sigma' (s)$ if, and only if, $\sigma \equiv_s \sigma'$.
   \label{lem:functions-well-defined}
 \end{lem}
 
@@ -430,10 +492,12 @@ two vectors $\vec{x}, \vec{x}' \in A_s$ by $\vec{x} \sim_s \vec{x}'$.
 %   same type then $h' \in \orb(h)$.
 % \end{lem}
 
-We now define a matrix that we later show to be definable in $\FPR$. We then
-show that this matrix is row-column equivalent to $L^{\gamma}$ for any bijection
-$\gamma: U \rightarrow [n]$ compatible with $\eta$. Computing the rank of this
-matrix in $\FPR$ allows us to then evaluate $g$.
+We now define a matrix. We begin by defining the index sets for the matrix.
+% We by defining a matrix We now define a matrix that we later show to be
+% definable in $\FPR$. We then show that this matrix is row-column equivalent to
+% $L^{\gamma}$ for any bijection $\gamma: U \rightarrow [n]$ compatible with
+% $\eta$. Computing the rank of this matrix in $\FPR$ allows us to then evaluate
+% $g$.
 
 Let $R^{\min} = \{\min (\orb(\row(h))) : h \in H_g\}$ and $C^{\min} = \{ \min
 (\orb (\column(h))) : h \in H_g\}$ and let
@@ -451,53 +515,241 @@ and
 %   \vec{y}) \text{ has type } t) \land (\vec{x} | \vec{y}) \in \EV_{\mu_{i,j}(t)}.
 % \end{align*}
 
-Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $u_1 , \ldots , u_{2k}$
-be the first $2k$ elements of $[n] \setminus \consp(g)$ in the natural order on
-the structure. Then let
-\[r = \eta^{-1} (\img(\vec{x}) \cap \eta (\consp(g))) \cup
-  \{u_{\vec{x}^{-1}(a)}: a \in \img(x) \setminus \eta (\consp (g))\} \] and
-\[s = \eta^{-1} (y \cap \eta (\consp(g))) \cup (x \cap y) \cup \{ u_{k +
-    \vec{x}^{-1}(a)} : a \in y \setminus (x \cup \eta (\consp (g))) \}. \]
-Define
-\[
-  \vec{r} (a) =
-  \begin{cases}
-    \eta^{-1} (\vec{x} (a)) & a \in \vec{x}^{-1} (x \cap \eta (\consp(g))) \\
-    u_{a} & a \in \vec{x}^{-1} (x \setminus \eta(\consp(g)),
-  \end{cases}
-\]
-and
+For $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ indexing an element in the
+matrix we should like to define the value at that point in the matrix by somehow
+combining $\vec{x}$ and $\vec{y}$, which we think of as assignments to the
+canonical support of the row $i$ and column $j$ respectively. In order to do
+that we permute $\vec{y}$ so that it is compatible with $\vec{x}$.
+
+% The idea now is to move $\vec{x}$ and $\vec{y}$ such that the moved versions
+% are compatible. We can then combine these new vectors and define our matrix.
+% In order to do this we first move $\vec{x}$ in a way that keeps
+
+% and let $u_1 , \ldots , u_{2k}$ be the first $2k$ elements of $[n] \setminus
+% \consp(g)$. Let $r:= (\consp(g) \cap \consp(i)) \cup \{u_i : i \in [\vert
+% \consp(i) \setminus \consp(g) \vert ] \}$ and $\vec{r} \in r^{\underline
+% {\consp(i)}}$ be such that
+
+Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $u_1, \ldots , u_k$ be
+the first $k$ elements of $[n] \setminus (\consp(g) \cup \consp(i))$. Then let
+$T = \{a \in \consp(j) \setminus \consp(g) : \vec{y}(a) \in \vec{x}(\consp(i)
+\setminus \consp(g))\}$ and $\vec{c} \in \sym_n$ such that
 \[
   \vec{c} (a) =
   \begin{cases}
-    \eta^{-1} (\vec{y} (a)) & a \in \vec{y}^{-1}(y \cap \eta (\consp (g))) \\
-    \vec{r} (a) & a \in \vec{y}^{-1} (x \cap y \setminus \eta (\consp (g))) \\
-    u_{k+a} & \text{otherwise}.
+    a & a \in \consp(g) \cap \consp(j)\\
+    \vec{x}^{-1}(\vec{y}(a)) & a \in T\\
+    u_{i} & \text{$a$ is the $i$th element of $(\consp(j) \setminus (\consp(g)
+      \cup T)))$}.
   \end{cases}
 \]
+\begin{lem}
+  For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ and $\vec{c}$ be defined
+  as above, then $\vec{x} \sim \vec{y}_{\vec{c}}$.
+\end{lem}
+\begin{proof}
+  Let $z \in \consp(i) \cap c$ and $z' = \vec{c}^{-1}(z)$. Suppose $z' \in
+  \consp(g)\cap \consp(j) \cap \consp(i)$. Then we have $\vec{x}(z) =
+  \vec{x}(z') \eta (z') = \vec{y}(z') = \vec{y}_{\vec{c}}(z)$. By a similar
+  argument, if $z' \consp(g) \cap \consp(j) \setminus \consp(i)$ we have
+  $\vec{x}(z) \neq \vec{y}_{\vec{c}}(z)$. Suppose $z' \in T$. Then $\vec{c}(z')
+  = \vec{x}^{-1}(\vec{y}(z'))$ which gives us that $\vec{y}_{\vec{c}}(z) =
+  \vec{y}(z') = \vec{x}(\vec{c}(z')) = \vec{x}(z)$. We finally note that $z'
+  \notin (\consp(j) \setminus (\consp(g) \cup T))$ as $\{u_1 , \ldots , u_k\}
+  \cap \consp(i) = \emptyset$. This completes the intersection component of
+  compatibility.
 
-\begin{remark}
-  The above is quite messy and, while I checked it a few times when I first
-  wrote it, I want to double check on it and look for other ways to write this
-  bit up. Moreover, I think of some of this can be simplified using the new
-  definitions I've added.
-\end{remark}
+  Let $z \in \consp(i) \setminus c$ and $w \in c \setminus \consp(i)$. Let $w' =
+  \vec{c}^{-1}(w)$. Suppose $w' \in \consp(g) \cap \consp(j)$. Then from the
+  fact that $w \notin \consp(i)$ we have that $\vec{y}_{\vec{c}}(w) \neq
+  \vec{x}(z)$ (using a similar argument as in the above case). Suppose $w' \in
+  T$. Then there exists $b \in \consp(i) \setminus \consp(g)$ such that
+  $\vec{y}(w') = \vec{x}(b)$. It follows that $w = \vec{c}(w') =
+  \vec{x}^{-1}\vec{y} (w') = b$, which is a contradiction as $w \notin
+  \consp(i)$ by assumption, and we conclude $w' \notin T$. Suppose finally that
+  $w' \in \consp(j) \setminus (\consp(g) \cup T)$. It follows that for all $b
+  \in \consp(i) \setminus \consp(g)$ we have that $\vec{x}(b) \neq
+  \vec{y}_{\vec{c}}(w)$. It remains to check the result for $b \in (\consp(i)
+  \setminus c) \setminus (\consp(i) \setminus \consp(g)) = (\consp(g) \cap
+  \consp(i)) \setminus c$. But then $b \notin \consp(j)$, and so $\vec{x}(b) =
+  \eta (b)$. But $w' \notin \consp(g)$, and so $\vec{x}(b) = eta(b) \neq
+  \vec{y}(w') = \vec{y}(w)$. The result follows.
+\end{proof}
 
 \begin{lem}
   \label{lem:permutation_row-column}
-  For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ and with $\vec{r}$ and
-  $\vec{c}$ defined as above, there exists $\sigma_1, \sigma_2 \in \spstab{g}$
-  such that $\sigma_1 \cdot \vec{\consp}(i) = \vec{r}$ and $\sigma_2 \cdot
-  \vec{\consp}(j) = \vec{c}$.
+  For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ there exists $\sigma_r,
+  \sigma_c \in \spstab{g}$ such that if we let $\vec{r} := \sigma_r \cdot
+  \vec{\consp}(i)$ and $\vec{c} := \sigma_c \cdot \vec{\consp}(j)$ and
+  $\vec{x}_{\vec{r}} \sim \vec{y}_{\vec{c}}$.
 \end{lem}
-\begin{proof}
-  To be added from the book
-\end{proof}
 
-So for any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ we can define $\vec{r}$
-and $\vec{c}$ as above. Let $(\sigma_1, \sigma_2) \in \spstab{g}$ be as in Lemma
-\ref{lem:permutation_row-column} and let $h = L(g)(\sigma_1(i), \sigma_2 (j))$.
-Then we can define the matrix $M : I \times J \rightarrow \{0,1\}$ by
+% \[
+%   \vec{r} (a) =
+%   \begin{cases}
+%     a & a \in \consp(g) \cap \consp(i) \\
+%     u_{i} & \text{$a$ is the $i$th element of $\consp(i) \setminus \consp(g)$
+%     in the induced order}.
+%   \end{cases}
+% \]
+% Let $T = \{a \in \consp(j) \setminus \consp(g) : \vec{y}(a) \in
+% \vec{x}(\consp(i) \setminus \consp(g))\}$. Then let $c:= \vec{r} \cdot
+% \vec{x}^{-1} \cdot \vec{y} (T) \cup \{u_{k+i} : i \in [\vert \consp(j)
+% \setminus (\consp(g) \cup T) \vert ] \}$ and $\vec{c} \in
+% c^{\underline{\consp(j)}}$ be such that
+% \[
+%   \vec{c} (a) =
+%   \begin{cases}
+%     a & a \in \consp(g) \cap \consp(j)\\
+%     \vec{r} (\vec{x}^{-1}\vec{y}(a)) & a \in T\\
+%     u_{k+i} & \text{$a$ is the $i$th element of the set $(\consp(j) \setminus
+%     (\consp(g) \cup T)))$}.
+%   \end{cases}
+% \]
+
+% \[
+%   \vec{c} (a) =
+%   \begin{cases}
+%     a & a \in \consp(g) \cap \consp(j)\\
+%     \vec{r} (\vec{x^{-1}(\vec{y}(a))}) & \vec{y}(a) \in \vec{x}(\consp(i)
+%     \setminus \consp(g))\\
+%     u_{k+i} & \text{$a$ is the $i$th element of $\consp(j) \setminus
+%     (\consp(g) \cup \consp(i))$ in the induced order}.
+%   \end{cases}
+% \]
+
+
+% Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ and let $u_1 , \ldots ,
+% u_{2k}$ be the first $2k$ elements of $[n] \setminus \consp(g)$. Then let
+% \[r = \eta^{-1} (\img(\vec{x}) \cap \eta (\consp(g))) \cup
+%   \{u_{\vec{x}^{-1}(a)}: a \in \img(x) \setminus \eta (\consp (g))\} \] and
+% \[s = \eta^{-1} (y \cap \eta (\consp(g))) \cup (x \cap y) \cup \{ u_{k +
+%   \vec{x}^{-1}(a)} : a \in y \setminus (x \cup \eta (\consp (g))) \}. \]
+% Define
+% \[
+%   \vec{r} (a) =
+%   \begin{cases}
+%     \eta^{-1} (\vec{x} (a)) & a \in \vec{x}^{-1} (x \cap \eta (\consp(g)))
+%     \\
+%     u_{a} & a \in \vec{x}^{-1} (x \setminus \eta(\consp(g)),
+%   \end{cases}
+% \]
+% and
+% \[
+%   \vec{c} (a) =
+%   \begin{cases}
+%     \eta^{-1} (\vec{y} (a)) & a \in \vec{y}^{-1}(y \cap \eta (\consp (g)))
+%     \\
+%     \vec{r} (a) & a \in \vec{y}^{-1} (x \cap y \setminus \eta (\consp (g)))
+%     \\
+%     u_{k+a} & \text{otherwise}.
+%   \end{cases}
+% \]
+
+% \begin{remark}
+%   The above is quite messy and, while I checked it a few times when I first
+%   wrote it, I want to double check on it and look for other ways to write this
+%   bit up. Moreover, I think of some of this can be simplified using the new
+%   definitions I've added.
+% \end{remark}
+% \begin{lem}
+%   For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ and with $\vec{r}$ and
+%   $\vec{c}$ defined as above, then $\vec{x}_{\vec{r}} \sim \vec{y}_{\vec{c}}$.
+% \end{lem}
+% \begin{proof}
+%   Let $z \in c \cap r$. Then $\exists z_1 \in \consp(i)$ and $z_2 \in
+%   \consp(j)$ such that $z = \vec{r}(z_1) = \vec{c}(z_2)$. Suppose $z_1 \in
+%   \consp(g)$,y then $z = \vec{r}(z_1) = z_1 = \vec{c}(z_2)$. But we can not
+%   have that $\vec{y}(z_2) = \vec{x}(b)$ for some $b \in \consp(i) \setminus
+%   \consp(g)$, as then $\vec{r}(b) = \vec{c}(z_2) = z_1$, which gives that $b
+%   \in \consp(g)$, a contradiction. It follows $z_2 \in \consp(g) \cap
+%   \consp(j)$, and so $z_1 = \vec{c}(z_2) = z_2$, and thus
+%   $\vec{x}_{\vec{r}}(z) = \vec{x}(z_1) = \vec{y}(z_2) = \vec{y}_{\vec{c}}(z)$.
+%   Suppose $z_1 \in \consp(i) \setminus \consp(g)$, then $c(z_2) = r(z_1)$
+%   gives us that there exists $b \in \consp(i) \setminus \consp(g)$ such that
+%   $\vec{x}(b) = \vec{y}(z_2)$ and $\vec{c}(z_2) = \vec{r}(b)$. But then
+%   $\vec{r}(b) = \vec{r}(z_2)$, and so $b = z_2$ and thus $\vec{x}_{\vec{r}}(z)
+%   = \vec{x}(z_1) = \vec{y}(z_2) = \vec{y}_{\vec{c}}(z)$.
+
+%   %   But then $\vec{c}(z_2) = \vec{r}(b)$, where $b \in \consp(i)$ and
+%   %   $\vec{x}(b)
+%   %   = \vec{y}(z_2)$. It follows that $\vec{r}(b) = \vec{r}(z_1)$, and so $b
+%   %   =
+%   %   z_1$. Thus $\vec{x}_{\vec{r}}(z) = \vec{x}(\vec{r}^{-1}(z)) =
+%   %   \vec{x}(z_1) =
+%   %   \vec{y}(z_2) = \vec{y}_{\vec{c}}(z)$.
+
+%   Suppose $z \in r \setminus c$ and $w \in c \setminus r$ and suppose
+%   $\vec{x}_{\vec{r}} (z) = \vec{y}_{\vec{c}}(w)$. Let $z' = \vec{r}^{-1}(z)$
+%   and $w' = \vec{c}^{-1}(z)$. It suffices to prove that $z' = w'$ in order to
+%   derive a contradiction and hence prove the result. Suppose $z' \in \consp(i)
+%   \cap \consp(g)$. Then if $w' \in \consp(j) \cap \consp(g)$, it follows that
+%   $z' = w'$ as $\eta (z') = \vec{x}(z') = \vec{y}(w') = \eta (w')$ and $\eta$
+%   is an injection. Suppose instead $w' \in \consp(j) \setminus \consp(g)$ and
+%   there exists $b \in \consp(i) \setminus \consp(g)$ such that $\vec{x}(b) =
+%   vec{y}(w')$. Since $\vec{x}$ is injective it follows that $b = z'$, which is
+%   a contradiction as $z' \in \consp(g)$ by assumption. Suppose no such $b$
+%   exists. Then $w' \in \consp{j} \setminus (\consp(g) \cap \consp(i))$. It
+%   follows
+
+%   It is easy to see that $z' \notin \consp(j) \cap \consp(g)$ and $w' \notin
+%   \consp(i) \cap \consp(g)$. Suppose $z' \in \consp(g)$, then
+
+
+% \end{proof}
+  
+
+% \begin{lem}
+%   \label{lem:permutation_row-column}
+%   For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ and with $\vec{r}$ and
+%   $\vec{c}$ defined as above, there exists $\sigma_1, \sigma_2 \in \spstab{g}$
+%   such that $\sigma_1 \cdot \vec{\consp}(i) = \vec{r}$ and $\sigma_2 \cdot
+%   \vec{\consp}(j) = \vec{c}$. Moreover, $\vec{x}_{\vec{r}} \sim
+%   \vec{y}_{\vec{c}}$.
+% \end{lem}
+% \begin{proof}
+%   Let $a \in r \cap c$, then if $a \in \consp(g)$ we have $\vec{x}_{\vec{r}}
+%   (a) = \vec{x}_{\vec{c}}(a)$. Then suppose $a \in (r \cap c) \setminus
+%   \consp(g)$, then we must have that $\vec{c}^{-1}(a) \in \consp(i) \cap
+%   \consp(j)$, and so $\vec{y}_{\vec{c}}(a) = \vec{y} \cdot \vec{c}^{-1} (a) =
+%   \vec{y} \cdot (\vec{r} \cdot \vec{x}^{-1} \cdot \vec{y})^{-1}(a) = \vec{y}
+%   \cdot \vec{y}^{-1} \cdot \vec{x} \cdot \vec{r}^{-1} (a) =
+%   \vec{x}_{\vec{r}}(a)$.
+
+%   Suppose $a \in r \setminus c$, then if $a \in \consp(g)$, we have that
+%   $\vec{x}_{\vec{r}}(a) = \eta (a) \neq \vec{y}_{\vec{c}}(b)$ for all $b \in c
+%   \setminus r$ as otherwise $b = \vec{c}^{-1}(b) = a$, a contradiction.
+%   Suppose $a \in r \setminus (c cup \consp(g))$ and suppose there exists $b
+%   \in c \setminus r$ such that $\vec{y}_{\vec{c}}(b) = \vec{x}_{\vec{r}}(a)$.
+%   Clearly $b \notin \consp(g)$ as otherwise $a \in \consp(g)$. It follows that
+%   $\vec{c}^{-1}(b) \notin $
+  
+% \end{proof}
+
+% \begin{lem}
+%   \label{lem:permutation_row-column}
+%   For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ and with $\vec{r}$ and
+%   $\vec{c}$ defined as above, there exists $\sigma_1, \sigma_2 \in \spstab{g}$
+%   such that $\sigma_1 \cdot \vec{\consp}(i) = \vec{r}$ and $\sigma_2 \cdot
+%   \vec{\consp}(j) = \vec{c}$.
+% \end{lem}
+% \begin{proof}
+%   To be added from the book
+% \end{proof}
+
+% \begin{lem}
+%   \label{lem:permutation_row-column}
+%   For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ and with $\vec{r}$ and
+%   $\vec{c}$ defined as above, there exists $\sigma_1, \sigma_2 \in \spstab{g}$
+%   such that $\sigma_1 \cdot \vec{\consp}(i) = \vec{r}$ and $\sigma_2 \cdot
+%   \vec{\consp}(j) = \vec{c}$. Moreover, $\vec{x}_{\vec{r}} \sim
+%   \vec{y}_{\vec{c}}$.
+% \end{lem}
+
+So for any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ we have $\vec{r}$,
+$\vec{c}$, $sigma_r$ and $\sigma_c$ from Lemma \ref{lem:permutation_row-column}.
+Let $h = L(g)(\sigma_r(i), \sigma_c (j))$. We define the matrix $M : I \times J
+\rightarrow \{0,1\}$ by
 
 \begin{align*}
   M((i , \vec{x}), (j, \vec{y})) := (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in EV_h.
@@ -505,15 +757,7 @@ Then we can define the matrix $M : I \times J \rightarrow \{0,1\}$ by
 
 Furthermore, we note the following.
 
-\begin{lem}
-  Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
-  J$ be such that $\vec{x} \sim_i \vec{x}'$ and $\vec{y} \sim_j \vec{y}'$, then
-  $M(((i, \vec{x}), (j, \vec{y}))) = M((i, \vec{x}'), (j, \vec{y}'))$.
-  \label{lem:matrix-quot-well-defined}
-\end{lem}
-\begin{proof}
-  (To be included)
-\end{proof}
+
 
 Let $I /{\sim} = \{(i, \vec{x}): i \in R^{\min}, \vec{x} \in A_i{\sim_i}\},$ and
 $J/{\sim} = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j/{\sim_j}\}$. Let the
@@ -628,8 +872,8 @@ determines the action on that object.
 % $\Pi^{\gamma,c}_{\vec{y}}(j)$
 
 Let $X$ be a set on which the left action of $\sym_n$ is defined, and let $x \in
-X$. Let $f \in U^{\underline{\consp(x)}}$ and $\delta \in [n]^{\underline{U}}$,
-then we let $\Pi^{\delta}_{f} \in \spstab{g}$ be such that $\Pi^{delta}_f (a) =
+X$. Let $f \in U^{\underline{\consp(x)}}$ and $\gamma\in [n]^{\underline{U}}$,
+then we let $\Pi^{\gamma}_{f} \in \spstab{g}$ be such that $\Pi^{\gamma}_f (a) =
 \gamma (f(a))$ for all $a \in \consp(x)$. Note that from Lemma
 \ref{lem:support_determine_action}, $\Pi^{\gamma}_f(x)$ is well-defined
 independently of the choice of $\Pi^{\gamma}_f$.
@@ -655,16 +899,17 @@ proves surjectivity.
 \end{remark}
 
 \begin{lem} 
-  For any bijection $\gamma : U \rightarrow [n]$ both $\alpha^{\delta}$ and
-  $\beta^{\delta}$ are surjective.
+  For any bijection $\gamma : U \rightarrow [n]$ both $\alpha^{\gamma}$ and
+  $\beta^{\gamma}$ are surjective.
+  \label{lem:alpha-beta-surjective}
 \end{lem}
 \begin{proof}
   We show that $\alpha$ is surjective, with the same result for $\beta$
   following similarly. Let $q \in A$ and let $i = \min (\orb (q))$. Then there
   exists $\sigma \in \spstab{g}$ such that $\sigma i = q$. Let $\vec{x} =
-  \gamma^{-1} \cdot \sigma \cdot \vec{\consp}(i)$. Notice that for $a \in \consp(i)$ we
-  have that $\vec{x}_i(a) = \gamma^{-1} (\sigma (a))$, and since $\gamma^{-1}
-  \cdot \sigma \sim \eta$, it follows that $\vec{x} \in A_i$.
+  \gamma^{-1} \cdot \sigma \cdot \vec{\consp}(i)$. Notice that for $a \in
+  \consp(i)$ we have that $\vec{x}_i(a) = \gamma^{-1} (\sigma (a))$, and since
+  $\gamma^{-1} \cdot \sigma \sim \eta$, it follows that $\vec{x} \in A_i$.
 
   For $a \in \consp(i)$ we have $\Pi^{\gamma}_{\vec{x}_i} (a) = \gamma
   (\vec{x}_i(a)) = \gamma \cdot \gamma^{-1} \sigma (a) = \sigma (a)$. From Lemma
@@ -742,23 +987,30 @@ The following lemma allows us to factor through permutations.
 \end{proof}
 
 \begin{lem}
-  Let $\delta \in [n]^{\underline{U}}$ and $h \in C_n$. Then $\nu \in \EV_h$ iff
+  Let $\gamma\in [n]^{\underline{U}}$ and $h \in C_n$. Then $\nu \in \EV_h$ iff
   $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_\nu (h)) = 1$.
   \label{lem:translate_EV_circuits}
 \end{lem}
 \begin{proof}
-  (To be included)
+  We have that $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_\nu(h))$ iff
+  $C_n[(\Pi^{\gamma}_{\nu})^{-1}\gamma \mathcal{A}] (h)$. Then, by the
+  definition of $\EV_h$, $\nu \in \EV_h$ iff there exists $\gamma' \in
+  [n]^{\underline{U}}$ such that $C_n[\gamma' \mathcal{A}](h) = 1$ and $\nu =
+  \gamma\restriction{\consp(h)}$.
+
 \end{proof}
 
+
 \begin{thm}
-  Let $\delta \in [n]^{\underline{U}}$, $M$ is row-column equivalent to
-  $L^{\gamma}$. This equivalence is witnessed by $\alpha^{\gamma}$ and
-  $\beta^{\gamma}$.
+  Let $\gamma\in [n]^{\underline{U}}$ such that $\eta \sim \gamma^{-1}$ and let
+  $(i, \vec{x})\in I$ and $(j, \vec{y})\in J$. It follows that $M((i, \vec{x}),
+  (j, \vec{y})) = L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j,
+  \vec{y})$.
+  \label{lem:ML-equal-elements}
 \end{thm}
 \begin{proof}
-  We have that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective. Let
-  $\gamma' = (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})})^{-1}
-  \gamma$.
+  Let $\gamma' = (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert
+    \vec{y}_{\vec{c}})})^{-1} \gamma$.
 
   \begin{align*}
     M((i, \vec{x}), (j, \vec{y}))
@@ -775,12 +1027,150 @@ The following lemma allows us to factor through permutations.
   equality follows from Lemma \ref{lem:alpha_ind_gamma}.
 \end{proof}
 
-\begin{remark}
-  In fact, the above still requires injectivity. This still needs to be integrated.
-\end{remark}
+\begin{lem}
+  Let $X$ be a set on which the left group action of $\sym_n$ is defined, and
+  let $\sigma, \sigma' \in \stab(\consp(g))$. We have that $\sigma(s) = \sigma'
+  (s)$ if, and only if, $\sigma \equiv_s \sigma'$.
+  \label{lem:functions-mutual-equivalence}
+\end{lem}
+\begin{proof}
+  Suppose $\sigma(s) = \sigma'(s)$. Then let $\pi = (\sigma')^{-1} \cdot
+  \sigma$. Then clearly $\pi \in \stab(s) \cap \spstab(g)$ and $\sigma = \sigma'
+  \pi$.1
+
+  Suppose $\sigma \equiv_s \sigma'$. Then let $\pi = (\sigma')^{-1} \cdot
+  \sigma$. From mutual stability $\pi \in \stab (s)$ and so $(\sigma')^{-1}\cdot
+  \sigma (s) = \pi (s) = s$. The result follows.
+\end{proof}
+
+\begin{lem}
+  Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
+  J$ such that $\vec{x} \equiv_i \vec{x}'$ and $\vec{y} \equiv_j \vec{y}'$. Then
+  for any $\gamma \in [n]^{\underline{U}}$, $\alpha^{\gamma}(i, \vec{x}) =
+  \alpha^{\gamma}(i, \vec{x}')$ and $\beta^{\gamma}(j, \vec{y}) =
+  \beta^{\gamma}(j, \vec{y}')$.
+  \label{lem:alpha-beta-mutal-equivalence}
+\end{lem}
+\begin{proof}
+  From mutual equivalence there exists $\sigma_1 \in \stab(i) \cap \spstab{g}$
+  and $\sigma_2 \in \stab{j} \cap \spstab{g}$ such that $\vec{x}' = \vec{x}
+  \cdot \sigma_1\restriction{\consp(i)}$ and $\vec{y}' = \vec{y} \cdot
+  \sigma_2\restriction{\consp(j)}$. Notice that $\alpha^{\gamma}(i, \vec{x})$
+  and $\beta^{\gamma}(j, \vec{y})$ both stabilise $\consp(g)$. Then for $a \in
+  \consp(i)$, $\Pi^{\gamma}_{\vec{x}} (\sigma_1 (a)) = \gamma (\vec{x}(\sigma_1
+  (a))) = \gamma (\vec{x}'(a)) = \Pi^{\gamma}_{\vec{x}'}(a)$. It follows from
+  Lemma \ref{lem:functions-mutual-equivalence} that $\alpha^{\gamma}(i,j) =
+  \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\gamma}_{\vec{x}'}(i)$. The result follows
+  similarly for $\beta$.
+\end{proof}
+
+\begin{lem}
+  Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
+  J$ be such that $\vec{x} \equiv_i \vec{x}'$ and $\vec{y} \equiv_j \vec{y}'$,
+  then $M(((i, \vec{x}), (j, \vec{y}))) = M((i, \vec{x}'), (j, \vec{y}'))$.
+  \label{lem:matrix-quot-well-defined}
+\end{lem}
+\begin{proof}
+  \begin{align*}
+    M((i, \vec{x}),(j, \vec{y})) &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}) \\
+                                 &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}'), \beta^{\gamma}(j, \vec{y}'))\\
+                                 &= M((i, \vec{x}'), (j, \vec{y}'))
+  \end{align*}
+  The second equality follows from Lemma \ref{lem:alpha-beta-mutal-equivalence}.
+\end{proof}
+
+Let $I_{\equiv} = \{(i, [\vec{x})]_{\equiv}) : (i, \vec{x}) \in I\}$ and
+$J_\equiv = \{(j, [\vec{y}]_{\equiv}) : (j, \vec{y})\}$. Let $M_{\equiv} :
+I_{\equiv} \times J_{\equiv} \rightarrow \{0,1\}$ be defined by $M_\equiv ((i,
+[\vec{x}]_\equiv), (j, [\vec{y}]_\equiv)) := M((i,\vec{x}), (j, \vec{y}))$.
+Lemma \ref{lem:matrix-quot-well-defined} gives us that this function is
+well-defined.
+
+\begin{thm}
+  Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Then
+  $L^{\gamma}$ is row-column equivalent to $M_{\equiv}$.
+  \label{thm:LM-equivalence}
+\end{thm}
+\begin{proof}
+  Let $(i, [\vec{x}]) \in I_\equiv$ and $(j, [\vec{y}]) \in J_\equiv$. Then,
+  from Lemmas \ref{lem:matrix-quot-well-defined} and
+  \ref{lem:ML-equal-elements}, we have that $M_\equiv ((i, [\vec{x}]), (j,
+  [\vec{y}])) = M ((i, \vec{x}), (j, \vec{y}))= = L^{\gamma}(\alpha^{\gamma}(i,
+  \vec{x}), \beta^{\gamma}(j, \vec{y}))$.
+
+  Moreover, from Lemma \ref{lem:alpha-beta-mutal-equivalence} we can lift
+  $\alpha^\gamma$ to $I_\equiv$ and $\beta^{\gamma}$ to $J_\equiv$. It remains
+  to show that $\alpha^\gamma$ and $\beta^{\gamma}$, thought of as functions to
+  $I_\equiv$ and $J_\equiv$, are bijections. We prove the result for
+  $\alpha^{\gamma}$, with the proof for $\beta^\gamma$ following similarly.
+
+  We first note that the lifting of $\alpha^{\gamma}$ to $I_\equiv$ is
+  surjective as, using Lemma \ref{lem:alpha-beta-surjective}, both the unlifted
+  function $\alpha^{\gamma}$ and the lifting function (i.e. the quotient map
+  from $I$ to $I_\equiv$) are surjective.
+
+  Suppose $\alpha^{\gamma}((i, [\vec{x}])) = \alpha^{\gamma}((i', [\vec{x}']))$,
+  and so $\Pi^{\gamma}_{\vec{x}}(i) = \Pi^{\gamma}_{\vec{x}'}(i')$. But then $i$
+  and $i'$ are in the same orbit and thus, from the definition of $I$, $i = i'$.
+  Thus $\Pi^{\gamma}_{\vec{x}}(i) = \Pi^{\gamma}_{\vec{x}'}(i)$, and so from
+  Lemma \ref{lem:functions-mutual-equivalence} there exists $\sigma \in \stab(i)
+  \cap \spstab{g}$ such that for all $a \in \consp(i)$ we have that
+  $\Pi^{\gamma}_{\vec{x}}(a) = \Pi^{\gamma}_{\vec{x}'} (\sigma (a))$. But then
+  $\Pi^{\gamma}_{\vec{x}}(a) = \gamma (\vec{x}(a)) =
+  \Pi^{\gamma}_{\vec{x}'}(\sigma (a)) = \gamma (\vec{x}' (\sigma (a))$ and,
+  since $\gamma$ is a bijection, it follows that $\vec{x}(a) = \vec{x}' \sigma
+  (a)$. Thus $\vec{x} \equiv_i \vec{x}'$, and the lifting of $\alpha^{\gamma}$
+  to $I_{\equiv}$ is an injection. The result follows.
+\end{proof}
+
+% \begin{lem}
+%   Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Then
+%   $\rk_p (M) = \rk_p (L^{\gamma})$.
+% \end{lem}
+% \begin{proof}
+%   We show that $\rk(M) = \rk (M_\equiv)$, and the result will follow from
+%   Theorem \ref{thm:LM-equivalence}.
+% \end{proof}
+
+% Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
+% J$ be such that $\vec{x} \equiv_i \vec{x}'$.
+% \begin{lem}
+
+% \end{lem}
 
 
-%\subsection{FPR Formulas}
+% \begin{thm}
+%   Let $\gamma\in [n]^{\underline{U}}$, $M$ is row-column equivalent to
+%   $L^{\gamma}$. This equivalence is witnessed by $\alpha^{\gamma}$ and
+%   $\beta^{\gamma}$.
+% \end{thm}
+% \begin{proof}
+%   We have that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective. Let
+%   $\gamma' = (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})})^{-1}
+%   \gamma$.
+
+%   \begin{align*}
+%     M((i, \vec{x}), (j, \vec{y}))
+%     &= (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in \EV_h \\
+%     &= C_n[\gamma \mathcal{A}] (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})} (h)) \\
+%     &= C_n[\gamma' \mathcal{A}] (h) \\
+%     &= C_n[\gamma' \mathcal{A}](L(\row(h), \column (h)))\\
+%     &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y})))\\
+%     &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))y)\\
+%     &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))
+%   \end{align*}
+%   The second equality follows from Lemma \ref{lem:translate_EV_circuits}. The
+%   fifth equality follows from Lemma \ref{lem:defining_h_from_IJ}. The sixth
+%   equality follows from Lemma \ref{lem:alpha_ind_gamma}.
+% \end{proof}
+
+% \begin{remark}
+%   In fact, the above still requires injectivity. This still needs to be
+%   integrated.
+% \end{remark}
+
+
+% \subsection{FPR Formulas}
 
 % \begin{lem}
 %   Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $h \in H$ such that
@@ -920,5 +1310,13 @@ The following lemma allows us to factor through permutations.
 % \begin{thm}
 %   The matrix $M$ is equivalent to $L$.
 % \end{thm}
+\subsection{Translating to Formulas of FPR}
+Let $\mathcal{C}:= (C_n)_{n \in \mathbb{N}}$ be a $P$-uniform family of
+symmetric rank circuits. In this section we define a formula $Q$ in $\FPR$ such
+that for any $\tau$-structure $\mathcal{A}$ over the universe $U$ with $\vert U
+\vert = n$, the $q$-ary query defined by $C_n$ on input $\mathcal{A}$ is defined
+by $Q$ when interpreted in $\mathcal{A}$.
 
+From the Immerman-Vardi theorem and Lemma \ref{}, there is an $FP$
+interpretation defining a circuit with bijective 
 \end{document}
