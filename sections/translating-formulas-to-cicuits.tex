@@ -180,15 +180,15 @@ given set.
   [t]$, $C^i = \langle G_i, \Omega_i, \Sigma_i, \Lambda_i, L_i \rangle$ is a
   $(\mathbb{B}_i, \tau_i)$-circuit computing a query of arity $\arty(R_i)$. The
   algorithm outputs, for a given input, a circuit $C = \langle G, \Omega,
-  \Sigma, \Lambda, L\rangle$ constructed as follows. Let $C^0' := C^0$. For each
-  $i \in [t]$ fix a relation symbol $V_i \in \tau_i \setminnus \tau_R$. For each
-  $i \in [t]$ construct the circuit $C^{i}' = \langle G_i', \Omega_i',
-  \Sigma_i', \Lambda_i', L_i' \rangle $ by `inserting' $C^i$ into $C^{i-1}'$,
-  and call the resultant circuit $D^{i-1}'$. For each relational gate $g$ in
+  \Sigma, \Lambda, L\rangle$ constructed as follows. Let ${C^0}' := C^0$. For
+  each $i \in [t]$ fix a relation symbol $V_i \in \tau_i \setminus \tau_R$. For
+  each $i \in [t]$ construct the circuit ${C^{i}}' = \langle G_i', \Omega_i',
+  \Sigma_i', \Lambda_i', L_i' \rangle $ by `inserting' $C^i$ into ${C^{i-1}}'$,
+  and call the resultant circuit ${D^{i-1}}'$. For each relational gate $g$ in
   $D^{i-1}$ labelled by the symbol $R_i$, `replace' $g$ with the gate
   $\Omega_{i}(\Lambda_{i-1}'(g))$ in $D^{i-1}$ and `tag' the gate
   $\Omega_i(\Lambda_{i-1}'(g))$ in $D^{i-1}$ using the tuple $\Lambda_{i-1}'(g)$
-  and the relation symbol $V_i$. Output the circuit $C := C^t'$.
+  and the relation symbol $V_i$. Output the circuit $C := {C^t}'$.
 \end{definition}
 
 It can be shown that `glue-circuits' can be implemented so as to run in time
