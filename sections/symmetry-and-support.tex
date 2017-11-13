@@ -1,7 +1,7 @@
 \documentclass[../paper.tex]{subfiles}
 
 \begin{document}
-In order to analyse families of symmetric circuits we will need to develop some
+In order to analyse families of symmetric circuits we need to develop some
 theory for analysing symmetries. In this section we define the terms needed
 (e.g. the notion of a support) and prove basic results. We then prove the first
 important theorem in this paper, the support theorem, using these tools. It is
@@ -14,40 +14,42 @@ supporting partition.
 
 \begin{definition}
   Let $G \leq \sym_n$ and let $S \subseteq [n]$. Then $S$ is a \emph{support}
-  for $G$ if $\stab(S) \subseteq G$.
+  for $G$ if $\stab(S) \leq G$.
 \end{definition}
+%AD - \stab needs to be defined in background section
 
 \begin{definition}
   Let $G \leq \sym_n$ and $\mathcal{P}$ be a partition of $[n]$. Then
   $\mathcal{P}$ is a \emph{supporting partition} for $G$ if $\stab(\mathcal{P})
-  \subseteq G$.
+  \leq G$.
 \end{definition}
 
 Notice that if $\mathcal{P}$ is a supporting partition for $G$ and $P \in
-\mathcal{P}$ then $\stab([n] \setminus P) \subseteq \stab(\mathcal{P}) \subset
+\mathcal{P}$ then $\stab([n] \setminus P) \leq \stab(\mathcal{P}) \leq
 G$, i.e. $[n] \setminus P$ is a support for $G$.
 
-We can define a partial order in on these partitions of $[n]$. Let $\mathcal{P},
-\mathcal{P}'$ be partitions of $[n]$. We say that $\mathcal{P}'$ is as
-\emph{coarse} as $\mathcal{P}$ (denoted by $\mathcal{P}' \supseteq \mathcal{P}$)
+Let $\mathcal{P}, \mathcal{P}'$ be partitions of $[n]$.  We say that $\mathcal{P}'$ is as
+\emph{coarse} as $\mathcal{P}$ (denoted by $\mathcal{P} \preceq \mathcal{P}'$)
 if for all $x \in \mathcal{P}$ there exists $y \in \mathcal{P}'$ such that $x
-\subseteq y$ \cite{AndersonD17}.
-
-Anderson and Dawar \cite{AndersonD17} show that for any permutation group $G
-\leq \sym_n$ a unique coarsest partition can always be found. We call this
+\subseteq y$.
+Anderson and Dawar~\cite{AndersonD17} show that for any permutation group $G
+\leq \sym_n$ a unique coarsest supporting partition can always be found.  We call this
 partition the \emph{canonical supporting partition}, and denote it by $\SP (G)$.
 This canonical supporting partition, along with the above observation about
-supports, will allow us to construct for each group a canonical support.
+supports, allows us to construct for each group a canonical support.
 
 \begin{definition}
   Let $G \leq \sym_n$. Let $\| \SP(G) \| = \min \{\vert [n] \setminus P \vert :
   P \in \SP(G) \}$. We say that $G$ has \emph{small support} if $\| \SP(G) \| <
   \frac{n}{2}$.
 \end{definition}
+Note that if $G$ has small support then there is a part in its
+canonical supporting partition of size greater than $\frac{n}{2}$ and this
+part is necessarily the unique largest part in the partition.
 
 \begin{definition}
   Let $G \leq \sym_n$ such that $G$ has small support. Let $\consp(G) = [n]
-  \setminus P$, where $P$ is the maximal element of $\SP(G)$. We call
+  \setminus P$, where $P$ is the largest element of $\SP(G)$. We call
   $\consp(G)$ the \emph{canonical support} of $G$.
 \end{definition}
 
@@ -56,15 +58,24 @@ supports, will allow us to construct for each group a canonical support.
 %   Use the alternating group as an example.
 % \end{remark}
 
+\begin{lem}\label{lem:subgroup-coarse}
+Let $G_1, G_2 \leq \sym_n$ with $G_1 \leq G_2$.  Then $\SP(G_1)
+  \preceq \SP(G_2)$
+\end{lem}
+\begin{proof}
+  We have that $\stab(\SP(G_1)) \leq G_1 \leq G_2$, and so $\SP(G_1)$
+  supports $G_2$. Since $\SP(G_2)$ is the coarsest support of $G_2$, $\SP(G_1)
+  \preceq \SP(G_2)$.
+\end{proof}
+
 \begin{lem}
-  Let $G_1, G_2 \leq \sym_n$ such that $G_1 \subseteq G_2$ and $G_1$ has small
+  Let $G_1, G_2 \leq \sym_n$ such that $G_1 \leq G_2$ and $G_1$ has small
   support. Then $G_2$ has small support and $\consp(G_2) \subseteq \consp(G_1)$.
   \label{lem:support-containment}
 \end{lem}
 \begin{proof}
-  We have that $\stab(\SP(G_1)) \subseteq G_1 \subseteq G_2$, and so $\SP(G_1)$
-  supports $G_2$. Since $\SP(G_2)$ is the coarsest support of $G_2$, $\SP(G_1)
-  \subseteq \SP(G_2)$. Let $P_1$ be the maximal element of $\SP(G_1)$, and note
+  By Lemma~\ref{lem:subgroup-coarse}, we have that $\SP(G_1)
+  \preceq \SP(G_2)$. Let $P_1$ be the largest element of $\SP(G_1)$, and note
   that since $G_1$ has small support, $\vert P_1 \vert > \frac{n}{2}$. Then
   there exists a (unique) $P_2 \in \SP(G_2)$ such that $P_1 \subseteq P_2$. Thus
   $G_2$ has small support, and $\consp(G_2) = [n] \setminus P_2 \subseteq [n]
@@ -78,31 +89,30 @@ supports, will allow us to construct for each group a canonical support.
   \label{lem:row-column-supports-well-behaved}
 \end{lem}
 \begin{proof}
+The fact that $H$ and $K$ have small support follows from Lemma~\ref{lem:support-containment}.
+
   Let $\mathcal{Q} = \{P_H \cap P_K : P_H \in \SP(H), P_K \in \SP(K) \text{ and
   } \exists P \in \SP(G), P \subseteq P_H \cap P_K \}$. We first show that
   $\mathcal{Q}$ is a supporting partition of $G$. We have that for any $P_H \cap
-  P_K, P_H' \cap P_K' \in \mathcal{Q}$, $\P_H \cap P_K \cap P_H' \cap \P_K' \neq
+  P_K, P_H' \cap P_K' \in \mathcal{Q}$, $P_H \cap P_K \cap P_H' \cap P_K' \neq
   \emptyset$ if, and only if, $P_H = P_H'$ and $P_K = P_K'$ if, and only if,
-  $P_H \cap P_K = P_H' \cap P_K'$. Also, note that $\stab(\SP(G)) \subseteq G
-  \subseteq H$ and similarly $\stab(\SP(G)) \subseteq K$. Thus $\SP(G)$ supports
-  $H$ and $K$, and from the definition of a canonical supporting partition it
-  follows that $\SP(G) \subseteq \SP(H)$ and $\SP(G) \subseteq \SP(K)$. We also
-  have that for each $P \in SP(G)$ there exists $P_K \in \SP(K)$ and $P_H \in
-  \SP(H)$ such that $P \subseteq P_H \cap P_K$ (which additionally gives us that
-  $H$ and $K$ have small support). As such, for each $a \in [n]$ there exists
+  $P_H \cap P_K = P_H' \cap P_K'$.  By
+  Lemma~\ref{lem:subgroup-coarse}, we have that $\SP(G) \preceq
+  \SP(H)$ and $\SP(G) \preceq \SP(K)$. It follows that for each $P \in SP(G)$ there exists $P_K \in \SP(K)$ and $P_H \in
+  \SP(H)$ such that $P \subseteq P_H \cap P_K$.  So, for each $a \in [n]$ there is
   $P_a \in \SP(G)$, $P_H \in \SP(H)$ and $P_K \in \SP(K)$ such that $a \in P_a
   \subseteq P_H \cap P_K$. It follows that $\mathcal{Q}$ is a partition.
 
-  Moreover, we note that $\stab(\mathcal{Q}) \subseteq \stab(\SP(H))$ and
-  $\stab(\mathcal{Q}) \subseteq \stab(\SP(K))$, and thus $\stab(\mathcal{Q})
-  \subseteq \stab(\SP(H)) \cap \stab(\SP(K)) \subseteq H \cap K = G$. It follows
+  Moreover, we note that $\stab(\mathcal{Q}) \leq \stab(\SP(H))$ and
+  $\stab(\mathcal{Q}) \leq \stab(\SP(K))$, and thus $\stab(\mathcal{Q})
+  \leq \stab(\SP(H)) \cap \stab(\SP(K)) \leq H \cap K = G$. It follows
   that $\mathcal{Q}$ is a supporting partition of $G$, and so by definition of
-  the canonical supporting partition $\mathcal{Q} \subseteq \SP (G)$. Let $P_G$
-  be the maximal element of $\SP(G)$. Then there exists $P_H \in \SP(H)$ and
-  $P_K \in \SP(K)$ such that $P_G \subseteq P_H \cap P_K$, and from the fact
-  that $P_G$ is maximal and $G$ has small support it follows $\vert P_H \cap P_K
-  \vert > \frac{n}{2}$. Thus $\mathcal{Q}$ has small support with maximal
-  element $\vert P_H \cap P_K$. It follows from $\mathcal{Q} \subseteq \SP(G)$
+  the canonical supporting partition $\mathcal{Q} \preceq \SP (G)$.
+  Since $G$ has small support, there is a part $P_G$ in $\SP(G)$ with
+  $|P_G| > \frac{n}{2}$. Then there exists $P_H \in \SP(H)$ and
+  $P_K \in \SP(K)$ such that $P_G \subseteq P_H \cap P_K$, and so $\vert P_H \cap P_K
+  \vert > \frac{n}{2}$. Thus $P_H \cap P_K$ is the unique largest
+  element in $\mathcal{Q}$.   It follows from $\mathcal{Q} \subseteq \SP(G)$
   that $P_G \subseteq P_H \cap P_K \subseteq P_G$.
 
   % From the fact that $G$ has small support, $P_H$ and $P_K$
@@ -117,7 +127,7 @@ supports, will allow us to construct for each group a canonical support.
 \end{proof}
 
 
-We state the following two results from Anderson and Dawar \cite{AndersonD17}.
+We state the following two results proved by Anderson and Dawar \cite{AndersonD17}.
 
 \begin{lem}
   \label{lem:SP_conjugation}
@@ -131,35 +141,36 @@ We state the following two results from Anderson and Dawar \cite{AndersonD17}.
 \end{lem}
 
 \subsection{Group Action on Supports}
-In this paper, distinct the case of Anderson and Dawar \cite{AndersonD17}, we
-will need to develop theory and terminology for dealing with group actions (and
-supports) on more than just gates in the circuit. In particular, we use this
-theory for understanding the actions on the rows and columns of a labelling of a
-gate.
+In this paper, unlike in the case of Anderson and Dawar \cite{AndersonD17}, we
+often wish to speak of supports and group actions on elements on the circuit other than gates. As such, we need to develop theory and terminology for dealing with group actions (and
+supports) in general. In this subsection we introduce some useful terminology.
+
 
 \begin{definition}
-  Let $G \leq \sym_n$ and $X$ be a set on which a left group
-  action of $G$ on $X$ is defined. We denote the canonical supporting partition
-  of $x\in X$ by $\SP (x) = \SP (\stab(x))$. We say that $x \in X$ has small
-  support if $\stab(x)$ has small support. We say that $X$ has small supports if
-  all $x \in X$, $x$ have small support.
+  Let $G \leq X$ be a set on which a left group action of $G$ on $X$ is defined.
+  Then $\stab_G (x) = \{\pi \in G : \pi x = x\}$ and $\orb_G (x) = \{\pi x : \pi
+  \in G\}$. In the event that the context makes the group obvious we omit the
+  subscript. We use $\stab_n$ and $\orb_n$ to abbreviate $\stab_{\sym_n}$ and
+  $\orb_{\sym_n}$.
+\end{definition}
+
+\begin{definition}
+  Let $G \leq \sym_n$ and $X$ be a set on which a left group action of $G$ on
+  $X$ is defined. We denote the \emph{canonical supporting partition} of $x\in
+  X$ by $\SP (x) = \SP (\stab(x))$. Similarly we let $\| \SP (x) \| = \| \SP
+  (\stab(x)) \|$. We say that $x \in X$ has \emph{small support} if $\stab(x)$
+  has small support. We say that $X$ has small supports if all $x \in X$
+  have small support.
 
   If $x \in X$ has small support, we denote the \emph{canonical support} of $x$
   by $\consp(x) = \consp (stab(x))$.
 \end{definition}
 
-\begin{definition}
-  Let $G \leq X$ be a set on which a left group action of $G$ on $X$
-  is defined. Then $\stab_G (x) = \{\pi \in G : \pi x = x\}$ and $\orb_G (x) =
-  \{\pi x : \pi \in G\}$. In the event that the context makes the group obvious
-  we omit the subscript.
-\end{definition}
-
 \begin{lem}
   \label{lem:stab_conjugation}
-  Let $G \leq \sym_n$, $X$ be a set on which a left group action
-  of $G$ on $X$ is defined and $\sigma \in G$. Then for any $x \in X$ it follows
-  that $\sigma \stab (x) \sigma^{-1} = \stab(\sigma x)$.
+  Let $G \leq \sym_n$, $X$ be a set on which a left group action of $G$ on $X$
+  is defined and $\sigma \in G$. Then for any $x \in X$ it follows that $\sigma
+  \stab (x) \sigma^{-1} = \stab(\sigma x)$.
 \end{lem}
 
 \begin{proof}
@@ -173,10 +184,10 @@ gate.
 
 \begin{lem}
   \label{lem:support_mapping}
-  Let $G \leq \sym_n$, $X$ be a set on which a left group action
-  of $G$ on $X$ is defined and $\sigma \in G$. Then for any $x \in X$ it follows
-  that $\sigma \SP (x) = \SP (\sigma x)$ and, if $x$ has small support, $\sigma
-  \consp (x) = \consp (\sigma x)$.
+  Let $G \leq \sym_n$, $X$ be a set on which a left group action of $G$ on $X$
+  is defined and $\sigma \in G$. Then for any $x \in X$ it follows that $\sigma
+  \SP (x) = \SP (\sigma x)$ and, if $x$ has small support, $\sigma \consp (x) =
+  \consp (\sigma x)$.
 \end{lem}
 \begin{proof}
   From Lemma \ref{lem:SP_conjugation} and Lemma \ref{lem:stab_conjugation} have
@@ -189,15 +200,15 @@ gate.
   \setminus P_1) = [n] \setminus (\sigma P_1)$. We note that $\sigma P_1 \in
   \sigma \SP (x) = \SP(\sigma x)$ and $\vert \sigma P_1 \vert > \frac{n}{2}$.
   Thus $\sigma P_1$ is the unique largest partition in $\SP(\sigma x)$, and so
-  $\consp(\sigma x) = [n]\setminus (\sigma P_1) = \sigma (consp(x))$. Thus
-  proving the second part of the statement.
+  $\consp(\sigma x) = [n]\setminus (\sigma P_1) = \sigma (\consp(x))$.
+  Thus  proving the second part of the statement.
 \end{proof}
 
 \begin{lem}
-  Let $G \leq \sym_n$, $X$ be a set on which a left group action
-  of $G$ on $X$ is defined. Then for any $x \in X$ with small support, and
-  $\sigma, \sigma' \in G$ such that $\sigma (vec{\consp}(x)) = \sigma'
-  (\vec{\consp}((x))$ we have that $\sigma (x) = \sigma'(x)$.
+  Let $G \leq \sym_n$, $X$ be a set on which a left group action of $G$ on $X$
+  is defined.  Then for any $x \in X$ with small support, and $\sigma, \sigma'
+  \in G$ such that $\sigma (\vec{\consp}(x)) = \sigma' (\vec{\consp}((x))$ we
+  have that $\sigma (x) = \sigma'(x)$.
 \end{lem}
 \begin{proof}
   We have that $(\sigma')^{-1}\sigma(\vec{\consp}(x)) = \vec{\consp}(x)$ and so
@@ -292,25 +303,69 @@ gate.
 % \end{proof}
 
 \subsection{Support Theorems}
-In this section we develop an analogous theorem to the support theorem of
-Anderson and Dawar \cite{AndersonD17}.
+The support theorem of Anderson and Dawar~\cite{AndersonD17} asserts
+that in a symmetric circuit (over the basis $\mathbb{B}_{\maj}$), if
+the circuit is not too large, then the stabiliser group of any gate hs
+small support.  In particular, in a family of such circuits of
+polynomial size, there is a constant bound on the size of supports.
+The proof proceeds in two parts.  First it is shown that if the index
+of a group $G \leq \sym_n$ is small then $\SP(G)$ either has very few
+or very many parts and, moreover, in the former case there is one
+large part (these are reproduced as Lemmas~\ref{lem:big-or-small}
+and~\ref{lem:small-means-support} below).  Secondly, it is shown by
+induction on the structure of the circuit that the latter case does
+not occur as the stabiliser group of any gate.
+While the first part of the argument is generically about permutation
+groups, the induction in the second part relies crucially on the fact
+that each gate computes a \emph{symmetric} Boolean function.  Our aim
+in this section is to extend this argument to circuits with
+arbitrary structured functions.  We first begin by establishing some
+preliminary results we need about group actions on index sets and then
+proceed to the main result, Theorem~\ref{thm:support_thm}.
 
-In this section let $\mathbb{B}$ be a basis of sort-symmetric functions and
-$(C_n)_{n \in \nats}$ always denote a family of symmetric, rigid $(\mathbb{B},
-\tau)$-circuits with bijective labels. For each $g \in C_n$ let $(\tau_g, A_g)
-:= \type(g)$, with sorts $\tau_g = (R, [s], \nu)$ and $A_g = A_1 \sqcup \ldots
-\sqcup A_s$.
 
-We note that for each $g \in C_n$ there is a natural action of $\stab(g)$ on
-$\ind(g)$ defined by $\sigma \cdot \vec{x} := L(g) \cdot \sigma \cdot L(g)^{-1}
-(\vec{x})$ for each $\vec{x} \in \ind(g)$.
-%
-%\begin{lem}[Support Lemma]
-%  For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and
-%  $n \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric, rigid circuit on
-%  structures of size $n$ and $s := \max_{g \in C} \vert \orb (g)\vert \leq
-%  2^{n^{1-\epsilon}}$, then, for all $g \in C$, $\vert \SP (g) \vert \leq
-%  \frac{n}{2}$.
+% In this subsection we prove a support theorem for symmetric circuits
+% analogous to the support theorem of Anderson and Dawar
+% \cite{AndersonD17}, showing that the stabiliser groups of individual
+% gates in such circuits have small supports, provided that the circuits
+% themselves are not too large.  In general, we refer to the support of
+% a gate as a shorthand for the support of the stabiliser group of the gate.
+% As a consequence of the theorem we get that for
+% any polynomial-size family of symmetric circuits $(C_n)_{n \in \nats}$
+% there is a constant $k$ such that every gate in every circuit in the
+% family has a canonical support of size at most $k$.
+
+
+
+% Informally, we prove the support theorem by showing that, under certain
+% conditions on the circuit, if, for a gate $g$, $\SP(g)$ has few parts, then
+% $\consp{g}$ has bounded size. We show that $\SP(g)$ indeed has few parts by
+% contradiction by establishing a lower-bound on the size of the orbit of $g$ and
+% showing that if $\SP(g)$ has too many parts then the size of the orbit of $g$
+% becomes too large for the circuit.
+
+% In the first part of this subsection we prove results needed to establish the
+% lower-bound on the orbit of a gate. In the second part of this subsection we
+% apply this theory to circuits and prove the support theorem.
+
+% In this section let $\mathbb{B}$ be a basis of sort-symmetric functions and
+% $(C_n)_{n \in \nats}$ always denote afamily family of symmetric, rigid
+% $(\mathbb{B}, \tau)$-circuits with bijective labels. For each $g \in C_n$ let
+% $(\tau_g, A_g) := \type(g)$, with sorts $\tau_g = (R, [s], \nu)$ and $A_g =
+% A_1 \sqcup \ldots \sqcup A_s$.
+
+% We note that for each $g \in C_n$ there is a natural action of $\stab(g)$ on
+% $\ind(g)$ defined by $\sigma \cdot \vec{x} := L(g) \cdot \sigma \cdot
+% L(g)^{-1} (\vec{x})$ for each $\vec{x} \in \ind(g)$.
+
+
+
+% \begin{lem}[Support Lemma]
+%   For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and
+%   $n \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric, rigid circuit on
+%   structures of size $n$ and $s := \max_{g \in C} \vert \orb (g)\vert \leq
+%   2^{n^{1-\epsilon}}$, then, for all $g \in C$, $\vert \SP (g) \vert \leq
+%   \frac{n}{2}$.
 % \end{lem}
 
 % \begin{thm}[Support Theorem]
@@ -418,62 +473,317 @@ $\ind(g)$ defined by $\sigma \cdot \vec{x} := L(g) \cdot \sigma \cdot L(g)^{-1}
 %   \lambda' (\vec{x}')(i)$.
 % \end{definition}
 
-\begin{definition}
-  Let $g \in C_n$, $\vec{x}, \vec{x}' \in \ind(g)$ and $\sigma \in \sym_n$. We
-  say that a pair $(\vec{x}, \vec{x}')$ is \emph{compatible with} $\sigma$ if
-  $(\sigma L(g)(\vec{x}), \sigma L(g)(\vec{x}') \in H_g$ and for all $i \in \dom
-  (\vec{x})$, $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma \cdot \vec{x})(i) =
-  (\sigma \cdot \vec{x}')(i)$.
+In this subsection we always use $\tau$ to denote a many-sorted vocabulary, and $D$ to denote the universe of a $\tau$-structure.
 
-  We say that a pair $(h, h')$ is \emph{compatible with} $\sigma$ if
-  $(L(g)^{-1}(h), L(g)^{-1}(h'))$ is compatible with $\sigma$.
+% Let $H$ be a set on which an action of $\sym_n$ is defined and let $L :
+% \ind(\mathcal{D} \rightarrow H$ be a bijection. Let $\isostab(L)$ be the set
+% of all $\sigma \in \sym_n$ such that $\sigma \cdot L$ and $L$ are
+% isomorphism-equivalent. For the moment we present these ideas abstractly, but
+% later on $H$ will denote the set of child gates of some gate $g$ and $L$ will
+% be the index for $g$.
+
+\begin{definition}
+  Let $\sigma \in \sym_{\ind(\tau, D)}$ and $\vec{x}, \vec{y} \in
+  \ind(\tau, D)$, and let $R_i$ and $R_j$ be relation symbols in $\tau$ such that $\vec{x} \in R^{D}_i$ and
+  $\vec{y} \in R^{D}_j$. We say that $(\vec{x}, \vec{y})$ is
+  \emph{compatible} with $\sigma$ if $\sigma (\vec{x}) \in R^{D}_i$
+  and $\sigma (\vec{y}) \in R^D_j$, and for all $a \in [\arty(R_i)]$
+  and $b \in [\arty(R_j)]$, $\vec{x}(a) = \vec{y}(b)$ if, and only if, $(\sigma
+  (\vec{x}))(a) = (\sigma(\vec{y}))(b)$.
+
+  % Let $H$ be a set on which an action of $\sym_n$ is defined and let $L :
+  % \ind(\mathcal{D} \rightarrow H$ be a bijection, and let $\sigma \in \sym_n$.
+  % In this case we say that $(h, h') \in H$ is \emph{compatible} with $\sigma$
+  % for $L$ if $(L^{-1}(h), L^{-1}(h'))$ is compatible with $L^{-1} \cdot \sigma
+  % \cdot L$. In the event that the function $L$ is obvious from the context we
+  % just say that $(h, h')$ is compatible with $\sigma$.
 \end{definition}
 
-For $g \in C_n$ let $\sortstab (L(g))$ denote the set of all $\sigma \in
-\stab(H_g)$ such that $\sigma \cdot L(g)$ is sort-equivalent to $L(g)$.
+Suppose there is an action of $G \leq \sym_n$ defined on $\ind(\tau, D)$. We say
+that $\sigma \in G$ \emph{acts like a sorted permutation} if there exists $\pi
+\in \sortsym(\tau, D)$ such that $\pi \cdot \vec{x} = \sigma \cdot \vec{x}$ for
+all $\vec{x} \in \ind(\tau, D)$. In this case it is easy to define an action of $G$ on $D$, defined for $\sigma \in G$ by $\sigma \cdot x = \pi (x)$, for all $x \in D$. The intuition then is that a pair of vectors is
+compatible with a permutation on $\ind(\tau, D)$ if the permutation is acting like a sorted permutation (i.e. acting like an element of $\sortsym(\tau, D)$) when restricted to those elements appearing in the two vectors. In the following lemma we
+show that a permutation acts like a sorted permutation if, and only
+if, every pair of tuples is compatible with it. This gives us a useful
+sufficient local condition to check if a permutation is acting like a sorted permutation.
+%
+% The bijection $L$ also allows us to translate an action on the co-domain to an
+% action on the domain, translating $\sigma \in \sym_n$ to $L^{-1} \cdot \sigma
+% \cdot L$. This translation allows us to define an equivalent compatibility
+% condition on the pairs of elements of the co-domain.
+
+
+
+% us to define an action of $\sym_n$ on $\ind(\mathcal{D})$, defined for $\sigma
+% \in \sym_n$ by $L^{-1}\cdot \sigma \cdot L (\vec{x})$ for all $\vec{x} \in
+% \mathcal{D}$. If we think of $L$ as indexing the set $H$ by
+% $\ind(\mathcal{D})$, then the compatibility of $(h, h') \in H^2$ with $\sigma
+% \in \sym_n$, just tells us that $\sigma$ acts as an automorphism of
+% $\mathcal{D}$ on those vectors indexing $h$ and $h'$.
+
+% We have that $L$ is isomorphism-equivalent to $\sigma \cdot L$ if, and only
+% if, there exists $\pi \in \aut(\mathcal{D})$ such that $L \cdot \pi = \sigma
+% \cdot L$. In other words, $L$ is isomorphism-equivalent to $\sigma$ if, and
+% only if, $\sigma$ acts on $\ind(\mathcal{D})$ through $L$ as an automorphism.
+% The following lemma tells us that if all the pairs in $H$ are compatible with
+% $\sigma \in \sym_n$ for $L$ then $\sigma$ acts on $\ind(\mathcal{D})$ (through
+% $L$) as an automorphism.
+
+
+% \begin{definition}
+%   Let $g \in C_n$, $\vec{x}, \vec{x}' \in \ind(g)$ and $\sigma \in \sym_n$. We
+%   say that a pair $(\vec{x}, \vec{x}')$ is \emph{compatible with} $\sigma$ if
+%   $(\sigma L(g)(\vec{x}), \sigma L(g)(\vec{x}') \in H_g$ and for all $i \in
+%   \dom (\vec{x})$, $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma \cdot \vec{x})(i) =
+%   (\sigma \cdot \vec{x}')(i)$.
+
+%   We say that a pair $(h, h')$ is \emph{compatible with} $\sigma$ if
+%   $(L(g)^{-1}(h), L(g)^{-1}(h'))$ is compatible with $\sigma$.
+% \end{definition}
+
+% \begin{lem}
+%   Let $g \in C_n$, and $\sigma \in \ind(g)$. Then $\sigma \in \stab(L(g))$ iff
+%   for all $\vec{x}, \vec{y} \in \ind(g)$, $(\vec{x}, \vec{y})$ is compatible
+%   with $\sigma$.
+%   \label{lem:sortstab-compatible}
+% \end{lem}
+
+% \begin{lem}
+%   Let $H$ be a set on which an action of $\sym_n$ is defined and let $L :
+%   \ind(\mathcal{D} \rightarrow H$ be a bijection. Let $\sigma \in \sym_n$.
+%   Then $\sigma \in \isostab(L)$ iff for all $h, h' \in H$, $(h, h')$ is
+%   compatible with $\sigma$.
+%   \label{lem:isostab-compatible}
+% \end{lem}
 
 \begin{lem}
-  Let $g \in C_n$, and $\sigma \in \stab(H_g)$. Then $\sigma \in
-  \sortstab(L(g))$ iff for all $h, h' \in H_g$, $(h,h')$ is compatible with
-  $\sigma$.
-  \label{lem:sortstab-compatible}
+  Suppose there is a defined group action of $G \leq \sym_n$ on
+  $\ind(\tau, D)$. Let $\sigma \in G$. Then $\sigma$ acts like a sorted permutation if, and only if, for all $\vec{x}, \vec{y} \in
+  \ind(\tau, D)$, $(\vec{x}, \vec{y})$ is compatible with $\sigma$.
+  \label{lem:isostab-compatible}
 \end{lem}
+
 \begin{proof}
-  $`\Rightarrow'$: From the hypothesis there exists $\pi \in \sym_{A_1} \times
-  \ldots \times \sym_{A_s}$ such that $L(g) \cdot \pi = \sigma \cdot L(g)$. Then
-  let $h, h' \in H_g$ and let $\vec{x} = L(g)^{-1}(h)$ and $\vec{x}' =
-  L(g)^{-1}(h')$. Let $i \in \dom (\vec{x})$. If $\vec{x}(i) = \vec{x}'(i)$ then
-  $(\sigma \cdot \vec{x}) (i) = (L(g)^{-1} \cdot \sigma \cdot \L(g)
-  (\vec{x}))(i) = (L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}'))(i) = (\sigma
-  \cdot \vec{x}) (i)$. If $(\sigma \cdot \vec{x})(i) = (\sigma \cdot
-  \vec{x}')(i)$ then $(L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}))(i) =
-  (L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}'))(i)$. Cancelling bijections
-  leaves $\vec{x}(i) = \vec{x}'(i)$.
+  $`\Rightarrow'$: Let $\vec{x}, \vec{y} \in \ind(\tau, D)$ and
+  suppose $\sigma$ acts like a sorted permutation.  Let $\pi \in
+  \sortsym(\tau, D)$ be the permutation that witnesses this.  Then $\sigma$
+  acts on $\ind (\tau, D)$ as an isomorphism, and so maps tuples in a
+  relation to tuples of the same relation. Let $R_i$ and $R_j$ be relation
+  symbols in $\tau$ such that $\vec{x} \in
+  R^D_i$ and $\vec{y} \in R^D_j$. Let $w \in [\arty
+  (R_i)]$ and $z \in [\arty (R_j)]$, then $\sigma \cdot \vec{x} (w) = \sigma
+  \cdot \vec{y}(z)$ iff $\pi \cdot \vec{x}(w) = \pi \cdot \vec{y}(z)$ iff
+  $\vec{x}(w) = \vec{y}(z)$.
+
+  % Let $i \in \dom (\vec{x})$. If $\vec{x}(i) = \vec{x}'(i)$ then $(\sigma
+  % \cdot
+  % \vec{x}) (i) = (L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}))(i) =
+  % (L(g)^{-1}
+  % \cdot \sigma \cdot \L(g) (\vec{x}'))(i) = (\sigma \cdot \vec{x}) (i)$. If
+  % $(\sigma \cdot \vec{x})(i) = (\sigma \cdot \vec{x}')(i)$ then $(L(g)^{-1}
+  % \cdot \sigma \cdot \L(g) (\vec{x}))(i) = (L(g)^{-1} \cdot \sigma \cdot \L(g)
+  % (\vec{x}'))(i)$. Cancelling bijections leaves $\vec{x}(i) = \vec{x}'(i)$.
+
   
-  $`\Leftarrow'$: We now define an element $\pi \in \sym_{A_1} \times \ldots
-  \sym_{A_s}$. Let $t \in [s]$. We now defined $\pi_t \in \sym_{A_t}$. If there
-  is no tuple in $\ind (g)$ containing an element of sort $t$ then let $\pi_t$
-  be the trivial permutation. Suppose there is an element of sort $t$. Let $a
-  \in A_t$. Let $\vec{x}_a \in \ind(g)$ be such that for each $i \in \dom
-  (\vec{x}_a)$, if $\vec{x}_a(i)$ has sort $t$ then $\vec{x}_a(i) = a$. Let
-  $\pi_t (a) = (\sigma \cdot \vec{x}_a) (i)$. The compatibility condition
-  guarantees that $\pi_t$ is well defined.
+  $`\Leftarrow'$: We have that for all $\vec{x}, \vec{y} \in \ind(\tau, D)$,
+  $(\vec{x}, \vec{y})$ is compatible with $\sigma$. We now define $\pi$ such
+  that $\pi \in \sortsym(D)$ and $\sigma \cdot \vec{x} = \pi \cdot$. Let $\vec{x} \in \ind(\tau, D)$ be a tuple containing $a$ and
+  let $\pi (a) = \sigma \cdot \vec{x} (\vec{x}^{-1}(a))$. The compatibility
+  condition ensures that this definition is independent of the particular
+  choice of $\vec{x}$.
+  
+  We show that $\pi$ is injective. Suppose $\pi(a) = \pi(b)$. Suppose $a$ appears in $\vec{x} \in
+  \ind(\tau, D)$ and $b$ appears in $\vec{y} \in \ind(\tau, D)$, then
+  $\sigma \cdot \vec{x} (\vec{x}^{-1}(a)) = \pi (a) = \pi(b) = \sigma \cdot
+  \vec{y}(\vec{y}^{-1}(b))$. From the hypothesis $(\vec{x}, \vec{y})$ is
+  compatible with $\sigma$, and so $a = \vec{x}(\vec{x}^{-1}(a)) =
+  \vec{y}(\vec{y}^{-1}(b)) = b$. It follows
+  $\pi$ is an injection.
 
-  We now show $\pi_t$ is indeed a bijection. Let $a, b \in A_t$ and suppose
-  $\pi_t (a) = \pi_t(b)$, then $(\sigma \cdot \vec{x}_a)(i) = (\sigma \cdot
-  \vec{x}_b)(i)$, and from compatibility $a = \vec{x}_a(i) = \vec{x}_b(i) = b$.
-  Moreover, for $a \in A_t$, let $b = \sigma^{-1} \cdot \vec{x}_a$, then $\pi_t
-  (b) = (\sigma \cdot \vec{x}_b)(i) = (\sigma \cdot (\sigma^{-1} \cdot
-  \vec{x}_a))(i) = a$. So we have that $\pi_t$ is indeed a bijection.
+%   If $a$ appears in
+%   some tuple $\vec{x} \in \ind(\tau, D)$ then $\pi (a) = \sigma \cdot
+%   \vec{x} (\vec{x}^{-1}(a)) = b$, and so $b$ also appears in some tuple. Thus we
+%   may assume that either both $a$ and $b$ appear in tuples in
+%   $\ind(\tau, D)$ or neither of them do. 
+  
+  We now prove surjectivity. Let $b \in D$. Suppose $b$ appears in
+  $\vec{x} \in \ind(\tau, D)$ and let $i \in \dom(\vec{x})$ be such that
+  $\vec{x}(i) = b$. Let $\vec{y} = \sigma \cdot \vec{x}$. Then $\pi (\vec{y}(i))
+  = \sigma \cdot \vec{y} (\vec{y}^{-1}(\vec{y}(i))) = \vec{x}(i) = b$. It
+  follows that $\pi$ is surjective, and thus bijective. The compatibility
+  condition gives us that $\pi (R^D_i) = R^D_i$ for any
+  relation symbol $R_i$ in $\tau$. Thus $\pi \in \sortsym(D)$.
 
-  Let $\pi = \pi_1 \times \ldots \times \pi_s$. Let $\vec{x} \in \ind(g)$, let
-  $i \in \dom (\vec{x})$, let $t$ be the sort of $\vec{x}(i)$ and let $a =
-  \vec{x}(i)$. Then $(\pi \cdot \vec{x})(i) = \pi_t (\vec{x}(i)) = (\sigma \cdot
-  \vec{x}_a)(i) = (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}_a))(i) =
-  (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}))(i)$. It follows that $L(g) \cdot
-  \pi = L(g)^{-1} \cdot \sigma \cdot L(g)$, and the result follows.
-
+  Clearly $\pi \cdot \vec{x} = \sigma \cdot \vec{x}$ for all $\vec{x} \in
+  \ind(\tau, D)$, and the result follows.
 \end{proof}
+
+Let $G \leq \sym_n$ and suppose there is a group action of $G$ on
+$\ind(\tau, D)$. We also use $\sortsym_G (D)$ (or
+$\sortsym_n(D)$ if $G = \sym_n$) to refer to the subgroup of $G$
+consisting of those permutations that act like a sorted permutation
+(or, equivalently, are compatible with every pair  of vectors in
+$\ind(\tau, D)$).
+
+% $`\Rightarrow'$: We have that there exists $\pi \in \aut (\mathcal{D})$ such
+% that $L \cdot \pi = \sigma \cdot L$, and so $\pi = L^{-1} \cdot \sigma \cdot L
+% \in \aut(\mathcal{D})$. Let $h, h' \in H$, and let $\vec{x} = L^{-1}(h)$ and
+% $\vec{y} = L^{-1}(h')$. Let $R_i$ and $R_j$ be relation symbols in the
+% signature of $\mathcal{D}$ such that $\vec{x} \in R^{\mathcal{D}}_i$ and
+% $\vec{y} \in R^{\mathcal{D}}_j$. Clearly we have that $L^{-1} \cdot \sigma
+% \cdot L (\vec{x}) \in R^{\mathcal{D}}_i$ and $L^{-1} \cdot \sigma \cdot L
+% (\vec{y}) \in R^{\mathcal{D}}_j$. Let $a \in [\arty(R_i)]$ and $b \in
+% [\arty(R_j)]$ and suppose $\vec{x} (a) = \vec{y} (b)$. We thus have that
+% $(L^{-1} \cdot \sigma \cdot L (\vec{x})) (a) = \pi (\vec{x}(a)) = \pi
+% (\vec{y}(b)) = (L^{-1} \cdot \sigma \cdot L (\vec{x})) (a)$. The opposite
+% direction follows easily, proving the compatibility of $(h, h')$ and $\sigma$.
+
+% % Let $i \in \dom (\vec{x})$. If $\vec{x}(i) = \vec{x}'(i)$ then $(\sigma
+% % \cdot
+% % \vec{x}) (i) = (L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}))(i) =
+% % (L(g)^{-1}
+% % \cdot \sigma \cdot \L(g) (\vec{x}'))(i) = (\sigma \cdot \vec{x}) (i)$. If
+% % $(\sigma \cdot \vec{x})(i) = (\sigma \cdot \vec{x}')(i)$ then $(L(g)^{-1}
+% % \cdot \sigma \cdot \L(g) (\vec{x}))(i) = (L(g)^{-1} \cdot \sigma \cdot
+% % \L(g)
+% % (\vec{x}'))(i)$. Cancelling bijections leaves $\vec{x}(i) = \vec{x}'(i)$.
+
+  
+% $`\Leftarrow'$: We have that for all $\vec{x}, \vec{y} \in \ind(\mathcal{D})$,
+% $(\vec{x}, \vec{y})$ is compatible with $L^{-1} \cdot \sigma \cdot L$. We now
+% define $\pi$ such that $\pi \in \aut(\mathcal{D})$ and $\sigma \cdot L = L
+% \cdot \pi$. Let $a \in \mathcal{D}$. If there is no tuple in
+% $\ind(\mathcal{D})$ containing $a$ then let $\pi (a) = a$, otherwise let
+% $\vec{x} \in \ind(\mathcal{D}$ be an tuple containing $a$ and let $\pi (a) =
+% (L^{-1} \cdot \sigma \cdot L (\vec{x})) (\vec{x}^{-1}(a))$. Notice that the
+% compatibility condition ensures that this definition is independent of that
+% particular choice of $\vec{x}$. Suppose $\pi(a) = \pi(b)$. Suppose that if $a$
+% appears in $\vec{x} \in \ind(\mathcal{D})$ then $\pi (a) = (L^{-1} \cdot
+% \sigma \cdot L (\vec{x})) (\vec{x}^{-1}(a)) = b$, and so $b$ also appears in a
+% tuple. Thus we may assume that either both $a$ and $b$ appear in a tuple in
+% $\ind(\mathcal{D})$ or neither of them do. Suppose $a$ appears in $\vec{x} \in
+% \ind(\mathcal{D})$ and $b$ appears in $\vec{y} \in \ind(\mathcal{D})$, then
+% $(L^{-1} \cdot \sigma \cdot L (\vec{x})) (\vec{x}^{-1}(a)) = \pi (a) = \pi(b)
+% = (L^{-1} \cdot \sigma \cdot L (\vec{y})) (\vec{y}^{-1}(b))$. But $(\vec{x},
+% \vec{y})$ is compatible with $L^{-1} \cdot \sigma \cdot L$, and so $a =
+% \vec{x}(\vec{x}^{-1}(a)) = \vec{y}(\vec{y}^{-1}(b)) = b$. Suppose instead
+% neither $a$ nor $b$ appear in tuples in $\ind(\mathcal{D})$, then $a = \pi (a)
+% = \pi (b) = b$. It follows $\pi$ is an injection. Take $b \in \mathcal{D}$. If
+% $b$ does not appear in any tuple in $\ind(\mathcal{D})$ then $\pi(b) = b$.
+% Suppose $b$ appears in $\vec{x} \in \ind(\mathcal{D})$ and let $i \in
+% \dom(\vec{x})$ be such that $\vec{x}(i) = b$. Let $\vec{y} = (L^{-1} \cdot
+% \sigma \cdot L)^{-1} (\vec{x})$. Then $\pi (\vec{y}(i)) = ((L^{-1} \cdot
+% \sigma \cdot L)^{-1} (\vec{y}))(\vec{y}^{-1}(\vec{y}(i))) = \vec{x}(i) = b$.
+% It follows that $\pi$ is surjective, and thus bijective. The compatibility
+% condition gives us that $\pi (R^{\mathcal{D}}_i) = R^{\mathcal{D}}_i$ for any
+% relation symbol $R_i$ in the signature of $\mathcal{D}$. Thus $\pi \in \aut
+% (\mathcal{D})$.
+  
+% Notice that for $\vec{x} \in \ind(\mathcal{D})$, $L \cdot \pi (\vec{x})) =
+% L(\pi (\vec{x})) = L \cdot L^{-1} \cdot \sigma \cdot L (\vec{x}) = \sigma
+% \cdot L (\vec{x})$. The result follows.
+
+
+  
+% Then there exists $\vec{x}, \vec{y} \in \ind(\mathcal{D})$ such that $a$
+% appears in $\vec{x}$ and $b$ such that $\pi (a) = (L^{-1} \cdot \sigma \cdot L
+% (\vec{x})) (\vec{x}^{-1}(a))
+
+
+% Since $\vec{y}$ and $\vec{x}$ are comp
+
+% Let $R_i$ and $R_j$ be a relation symbols in the signature of $\matcal{D}$ and
+% let $\vec{x} \in R^{\mathcal{D}}_i$ and $\vec{y} \in R^{\mathcal{D}}_j$.
+
+
+% define a permutation $\pi \in \sym_X$ and show that $\pi \in
+% \aut(\mathcal{D})$ and $L \cdot \pi = \sigma \cdot L$.
+
+
+% If there is no tuple in $\ind (g)$ containing an element of sort $t$ then let
+% $\pi_t$ be the trivial permutation. Suppose there is an element of sort $t$.
+% Let $a \in A_t$. Let $\vec{x}_a \in \ind(g)$ be such that for each $i \in \dom
+% (\vec{x}_a)$, if $\vec{x}_a(i)$ has sort $t$ then $\vec{x}_a(i) = a$. Let
+% $\pi_t (a) = (\sigma \cdot \vec{x}_a) (i)$. The compatibility condition
+% guarantees that $\pi_t$ is well defined.
+
+% We now show $\pi_t$ is indeed a bijection. Let $a, b \in A_t$ and suppose
+% $\pi_t (a) = \pi_t(b)$, then $(\sigma \cdot \vec{x}_a)(i) = (\sigma \cdot
+% \vec{x}_b)(i)$, and from compatibility $a = \vec{x}_a(i) = \vec{x}_b(i) = b$.
+% Moreover, for $a \in A_t$, let $b = \sigma^{-1} \cdot \vec{x}_a$, then $\pi_t
+% (b) = (\sigma \cdot \vec{x}_b)(i) = (\sigma \cdot (\sigma^{-1} \cdot
+% \vec{x}_a))(i) = a$. So we have that $\pi_t$ is indeed a bijection.
+
+% Let $\pi = \pi_1 \times \ldots \times \pi_s$. Let $\vec{x} \in \ind(g)$, let
+% $i \in \dom (\vec{x})$, let $t$ be the sort of $\vec{x}(i)$ and let $a =
+% \vec{x}(i)$. Then $(\pi \cdot \vec{x})(i) = \pi_t (\vec{x}(i)) = (\sigma \cdot
+% \vec{x}_a)(i) = (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}_a))(i) =
+% (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}))(i)$. It follows that $L(g) \cdot
+% \pi = L(g)^{-1} \cdot \sigma \cdot L(g)$, and the result follows
+  
+  
+
+% $`\Leftarrow'$: We now define an element $\pi \in \sym_{A_1} \times \ldots
+% \sym_{A_s}$. Let $t \in [s]$. We now defined $\pi_t \in \sym_{A_t}$. If there
+% is no tuple in $\ind (g)$ containing an element of sort $t$ then let $\pi_t$
+% be the trivial permutation. Suppose there is an element of sort $t$. Let $a
+% \in A_t$. Let $\vec{x}_a \in \ind(g)$ be such that for each $i \in \dom
+% (\vec{x}_a)$, if $\vec{x}_a(i)$ has sort $t$ then $\vec{x}_a(i) = a$. Let
+% $\pi_t (a) = (\sigma \cdot \vec{x}_a) (i)$. The compatibility condition
+% guarantees that $\pi_t$ is well defined.
+
+% We now show $\pi_t$ is indeed a bijection. Let $a, b \in A_t$ and suppose
+% $\pi_t (a) = \pi_t(b)$, then $(\sigma \cdot \vec{x}_a)(i) = (\sigma \cdot
+% \vec{x}_b)(i)$, and from compatibility $a = \vec{x}_a(i) = \vec{x}_b(i) = b$.
+% Moreover, for $a \in A_t$, let $b = \sigma^{-1} \cdot \vec{x}_a$, then $\pi_t
+% (b) = (\sigma \cdot \vec{x}_b)(i) = (\sigma \cdot (\sigma^{-1} \cdot
+% \vec{x}_a))(i) = a$. So we have that $\pi_t$ is indeed a bijection.
+
+% Let $\pi = \pi_1 \times \ldots \times \pi_s$. Let $\vec{x} \in \ind(g)$, let
+% $i \in \dom (\vec{x})$, let $t$ be the sort of $\vec{x}(i)$ and let $a =
+% \vec{x}(i)$. Then $(\pi \cdot \vec{x})(i) = \pi_t (\vec{x}(i)) = (\sigma \cdot
+% \vec{x}_a)(i) = (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}_a))(i) =
+% (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}))(i)$. It follows that $L(g) \cdot
+% \pi = L(g)^{-1} \cdot \sigma \cdot L(g)$, and the result follows.
+
+
+% \begin{proof}
+%   $`\Rightarrow'$: From the hypothesis there exists $\pi \in \sym_{A_1} \times
+%   \ldots \times \sym_{A_s}$ such that $L(g) \cdot \pi = \sigma \cdot L(g)$.
+%   Then let $h, h' \in H_g$ and let $\vec{x} = L(g)^{-1}(h)$ and $\vec{x}' =
+%   L(g)^{-1}(h')$. Let $i \in \dom (\vec{x})$. If $\vec{x}(i) = \vec{x}'(i)$
+%   then $(\sigma \cdot \vec{x}) (i) = (L(g)^{-1} \cdot \sigma \cdot \L(g)
+%   (\vec{x}))(i) = (L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}'))(i) = (\sigma
+%   \cdot \vec{x}) (i)$. If $(\sigma \cdot \vec{x})(i) = (\sigma \cdot
+%   \vec{x}')(i)$ then $(L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}))(i) =
+%   (L(g)^{-1} \cdot \sigma \cdot \L(g) (\vec{x}'))(i)$. Cancelling bijections
+%   leaves $\vec{x}(i) = \vec{x}'(i)$.
+  
+%   $`\Leftarrow'$: We now define an element $\pi \in \sym_{A_1} \times \ldots
+%   \sym_{A_s}$. Let $t \in [s]$. We now defined $\pi_t \in \sym_{A_t}$. If
+%   there is no tuple in $\ind (g)$ containing an element of sort $t$ then let
+%   $\pi_t$ be the trivial permutation. Suppose there is an element of sort $t$.
+%   Let $a \in A_t$. Let $\vec{x}_a \in \ind(g)$ be such that for each $i \in
+%   \dom (\vec{x}_a)$, if $\vec{x}_a(i)$ has sort $t$ then $\vec{x}_a(i) = a$.
+%   Let $\pi_t (a) = (\sigma \cdot \vec{x}_a) (i)$. The compatibility condition
+%   guarantees that $\pi_t$ is well defined.
+
+%   We now show $\pi_t$ is indeed a bijection. Let $a, b \in A_t$ and suppose
+%   $\pi_t (a) = \pi_t(b)$, then $(\sigma \cdot \vec{x}_a)(i) = (\sigma \cdot
+%   \vec{x}_b)(i)$, and from compatibility $a = \vec{x}_a(i) = \vec{x}_b(i) =
+%   b$. Moreover, for $a \in A_t$, let $b = \sigma^{-1} \cdot \vec{x}_a$, then
+%   $\pi_t (b) = (\sigma \cdot \vec{x}_b)(i) = (\sigma \cdot (\sigma^{-1} \cdot
+%   \vec{x}_a))(i) = a$. So we have that $\pi_t$ is indeed a bijection.
+
+%   Let $\pi = \pi_1 \times \ldots \times \pi_s$. Let $\vec{x} \in \ind(g)$, let
+%   $i \in \dom (\vec{x})$, let $t$ be the sort of $\vec{x}(i)$ and let $a =
+%   \vec{x}(i)$. Then $(\pi \cdot \vec{x})(i) = \pi_t (\vec{x}(i)) = (\sigma
+%   \cdot \vec{x}_a)(i) = (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}_a))(i) =
+%   (L(g)^{-1}\cdot \sigma \cdot L(g)(\vec{x}))(i)$. It follows that $L(g) \cdot
+%   \pi = L(g)^{-1} \cdot \sigma \cdot L(g)$, and the result follows.
+
+% \end{proof}
 % If there is no type in $\ind (g)$ containing an element of type $t$ then let
 % $\pi_t$ be the trivial permutation. Let $a \in A_t$. Let $\vec{x}_a,
 % \vec{x}_a' \in \ind(g)$ be such that for every $i \in \dom (\vec{x}_a)$ if
@@ -553,67 +863,188 @@ For $g \in C_n$ let $\sortstab (L(g))$ denote the set of all $\sigma \in
 % \end{proof}
 
 \begin{definition}
-  Let $g \in C_n$. We say that $(\sigma, h, h') \in \sym_n \times H^2_g$ is
-  \emph{useful} if $(h,h')$ is incompatible with $\sigma$.
+  Suppose there is a group action of $G \leq \sym_n$ on $\ind(\tau, D)$. We
+  say that $(\sigma, \vec{x}, \vec{y}) \in G \times \ind(\tau, D)^{2}$ is
+  \emph{useful} if $(\vec{x}, \vec{y})$ is not compatible with $\sigma$.
 
-  We Say that two distinct pairs $(\sigma_1, h_1, h_1'), (\sigma_2, h_2, h_2')
-  \in \sym_n\times H^2_g$ are \emph{mutually independent} if
+  We say that two distinct pairs $(\sigma_1, \vec{x}_1, \vec{y}_1), (\sigma_2,
+  \vec{x}_2, \vec{y}_2) \in G\times \ind(\tau, D)^2$ are \emph{mutually
+    independent} if
   \begin{itemize}
     \setlength\itemsep{0mm}
-  \item $\sigma_2 h_1 = h_1$,
-  \item $\sigma_2 \sigma_1 h_1 = \sigma_1 h_1$,
-  \item $\sigma_2 h_1' = h_1'$,
-  \item $\sigma_2 \sigma_1 h_1' = \sigma h_1'$,
+  \item $\sigma_2 \vec{x}_1 = \vec{x}_1$,
+  \item $\sigma_2 \sigma_1 \vec{x}_1 = \sigma_1 \vec{x}_1$,
+  \item $\sigma_2 \vec{y}_1 = \vec{y}_1$, and
+  \item $\sigma_2 \sigma_1 \vec{y}_1 = \sigma \vec{y}_1$.
   \end{itemize}
   
-  We say that a set $S \subseteq \sym_n \times H^2$ is \emph{useful} if each
-  pair in it is useful. We say that $S$ is \emph{independent} if each pair of
-  distinct pairs in $S$ are mutually independent.
+  We say that a set $S \subseteq G \times \ind(\tau, D)^2$ is \emph{useful}
+  if each pair in it is useful. We say that $S$ is \emph{independent} if any two
+  distinct elements of $S$ are mutually independent.
 \end{definition}
+%AD: isn't this definition missing something about y_2 and x_2?  I
+%also think it needs some intuitive explanation to accompany it.
 
-\begin{lem}
-  \label{lem:duel-sort-equivalence-compatible}
-  Let $g \in C_n$ and $\sigma_1, \sigma_1 \in \sym_n$ such that $\sigma_1 \cdot
-  L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$. Then for any $h,h' \in
-  H_g$, $(h,h')$ is compatible with $\sigma_1$ iff $(h,h')$ is compatible with
-  $\sigma_2$.
-\end{lem}
-\begin{proof}
-  Suppose $\sigma_1 \cdot L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$.
-  Then there exists $\pi \in \sym_{A_1} \times \ldots \times \sym_{A_s}$ such
-  that $\sigma_1 \cdot L(g) (\pi \cdot \vec{x}) = \sigma_2 \cdot L(g)
-  (\vec{x})$.
+% \begin{definition}
+%   Let $H$ be a set on which the action of $\sym_n$ is defined, and $L:
+%   \ind{\mathcal{D}} \rightarrow H$ be a bijection. We say that $(\sigma, h,
+%   h') \in \sym_n \times H^2$ is \emph{useful} if $(h, h')$ is not compatible
+%   with $\sigma$.
 
-  Suppose $(h, h')$ is compatible with $\sigma_1$. Let $\vec{x} = L(g)^{-1}(h)$
-  and $\vec{x}' = L(g)^{-1}(h')$. Then $\sigma_2 \cdot \vec{x} = (L(g)^{-1}
-  \cdot \sigma_2 \cdot L(g)) (\vec{x}) = L(g)^{-1} \cdot \sigma_1 \cdot L(g)(\pi
-  \cdot \vec{x}) = \sigma_1 \cdot (\pi \cdot \vec{x})$. Similarly $\sigma_2
-  \cdot \vec{x}' = \sigma_2 \cdot (\pi \cdot \vec{x}')$. Let $i \in \dom
-  (\vec{x})$, then $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma_1 \cdot \vec{x})(i) =
-  (\sigma_2 \cdot \vec{x}')(i)$ iff $(\sigma_1 \cdot (\pi \vec{x}))(i) =
-  (\sigma_2 \cdot (\pi \vec{x}'))(i)$ iff $(\sigma_2 \cdot \vec{x})(i) =
-  (\sigma_2 \cdot \vec{x}')(i)$. The other direction follows by symmetry.
-\end{proof}
+%   We say that two distinct pairs $(\sigma_1, h_1, h_1'), (\sigma_2, h_2, h_2')
+%   \in \sym_n\times H^2_g$ are \emph{mutually independent} if
+%   \begin{itemize}
+%     \setlength\itemsep{0mm}
+%   \item $\sigma_2 h_1 = h_1$,
+%   \item $\sigma_2 \sigma_1 h_1 = \sigma_1 h_1$,
+%   \item $\sigma_2 h_1' = h_1'$, and
+%   \item $\sigma_2 \sigma_1 h_1' = \sigma h_1'$.
+%   \end{itemize}
+  
+%   We say that a set $S \subseteq \sym_n \times H^2$ is \emph{useful} if each
+%   pair in it is useful. We say that $S$ is \emph{independent} if any two
+%   distinct elements of $S$ are mutually independent.
+% \end{definition}
+
+% \begin{lem}
+%   \label{lem:duel-sort-equivalence-compatible}
+%   Let $H$ be a set on which an action of $\sym_n$ is defined and let $L :
+%   \ind(\mathcal{D} \rightarrow H$ be a bijection. Let $\sigma_1, \sigma_2 \in
+%   \sym_n$ be such that $\sigma_1 \cdot L$ is isomorphism-equivalent to
+%   $\sigma_2 \cdot L$. Then for any $h, h' \in H$, $(h, h')$ is compatible with
+%   $\sigma_1$ iff $(h, h')$ is compatible with $\sigma_2$.
+% \end{lem}
+% \begin{proof}
+%   We have that $\sigma_1 \cdot L$ is isomorphism-equivalent to $\sigma_2 \cdot
+%   L$, and thus there exists $\pi \in \aut(\mathcal{D})$ such that $\sigma_1
+%   \cdot L \cdot \pi = \sigma_2 \cdot L $.
+
+%   Suppose $h, h' \in H$, and suppose $(h, h')$ is compatible with $\sigma_1$.
+%   Let $\vec{x} := L^{-1}(h)$ and $\vec{y} := L^{-1} (h')$. We then have that
+%   $(\vec{x}, \vec{y})$ is compatible with $L^{-1} \cdot \sigma_1 \cdot L$. Let
+%   $R_i$ and $R_j$ be relation symbols in the vocabulary of $\mathcal{D}$ such
+%   that $\vec{x} \in R^{\mathcal{D}}_i$ and $\vec{y} \in R^{\mathcal{D}}_j$.
+%   Then $L^{-1} \cdot \sigma_2 \cdot L (\vec{x}) = L^{-1} \cdot \sigma_1 \cdot
+%   L (\pi \cdot \vec{x})$. But since $\pi$ is an automorphism of $\mathcal{D}$
+%   we have that $\pi \cdot \vec{x} \in R_i$
+
+%   Similarly $\sigma_2 \cdot \vec{x}' = \sigma_2 \cdot (\pi \cdot \vec{x}')$.
+%   Let $i \in \dom (\vec{x})$, then $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma_1
+%   \cdot \vec{x})(i) = (\sigma_2 \cdot \vec{x}')(i)$ iff $(\sigma_1 \cdot (\pi
+%   \vec{x}))(i) = (\sigma_2 \cdot (\pi \vec{x}'))(i)$ iff $(\sigma_2 \cdot
+%   \vec{x})(i) = (\sigma_2 \cdot \vec{x}')(i)$. The other direction follows by
+%   symmetry.
+% \end{proof}
+
+% \begin{lem}
+%   \label{lem:duel-sort-equivalence-compatible}
+%   Let $g \in C_n$ and $\sigma_1, \sigma_1 \in \sym_n$ such that $\sigma_1
+%   \cdot L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$. Then for any $h,h'
+%   \in H_g$, $(h,h')$ is compatible with $\sigma_1$ iff $(h,h')$ is compatible
+%   with $\sigma_2$.
+% \end{lem}
+% \begin{proof}
+%   Suppose $\sigma_1 \cdot L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$.
+%   Then there exists $\pi \in \sym_{A_1} \times \ldots \times \sym_{A_s}$ such
+%   that $\sigma_1 \cdot L(g) (\pi \cdot \vec{x}) = \sigma_2 \cdot L(g)
+%   (\vec{x})$.
+
+%   Suppose $(h, h')$ is compatible with $\sigma_1$. Let $\vec{x} =
+%   L(g)^{-1}(h)$ and $\vec{x}' = L(g)^{-1}(h')$. Then $\sigma_2 \cdot \vec{x} =
+%   (L(g)^{-1} \cdot \sigma_2 \cdot L(g)) (\vec{x}) = L(g)^{-1} \cdot \sigma_1
+%   \cdot L(g)(\pi \cdot \vec{x}) = \sigma_1 \cdot (\pi \cdot \vec{x})$.
+%   Similarly $\sigma_2 \cdot \vec{x}' = \sigma_2 \cdot (\pi \cdot \vec{x}')$.
+%   Let $i \in \dom (\vec{x})$, then $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma_1
+%   \cdot \vec{x})(i) = (\sigma_2 \cdot \vec{x}')(i)$ iff $(\sigma_1 \cdot (\pi
+%   \vec{x}))(i) = (\sigma_2 \cdot (\pi \vec{x}'))(i)$ iff $(\sigma_2 \cdot
+%   \vec{x})(i) = (\sigma_2 \cdot \vec{x}')(i)$. The other direction follows by
+%   symmetry.
+% \end{proof}
 
 
 \begin{lem}
   \label{lem:useful-independant-set}
-  Let $g \in C_n$. Let $S$ be a useful and independent. We then have that $[
-  \sym_n: \sortstab(L(g)) ] \geq 2^{\vert S \vert}$.
+  Suppose there is a group action of $G \leq \sym_n$ on $\ind(\tau, D)$. Let
+  $S \subseteq G \times \ind(\tau, D)^2$ be a useful and independent set (with respect to the group $G$).
+  Then $[G : \sortsym_n(D)] \geq 2^{\vert S \vert}$.
 \end{lem}
 
 \begin{proof}
-  Let $R \subseteq S$ and define $\sigma_R = \Pi_{(\sigma, h, h') \in R} \sigma$
-  (with some arbitrary order assumed on $S$). Let $R$ and $Q$ be distinct
-  subsets of $S$ and WLOG let $\vert R \vert \geq \vert Q \vert$. We want to
-  show that $\sigma_R L(g)$ is not sort-equivalent to $ \sigma_Q L(g)$. Pick any
-  $(\sigma, h, h') \in R/Q \neq \emptyset$. Given that $\sigma_R \cdot h =
-  \sigma h$ and $\sigma_R h' = \sigma h'$ it is easy to see that the usefulness
-  of $(\sigma, h,h')$ implies the incompatibility of $(h,h')$ with with
-  $\sigma_R$. Moreover, the fact that $\sigma_Q h = h$ and $\sigma_Q h' = h'$
-  makes it easy to see $(h,h')$ is compatible with $\sigma_Q$. The result then
-  follows from Lemma \ref{lem:duel-sort-equivalence-compatible}.
+  For any $R \subseteq S$ define $\sigma_R = \Pi_{(\sigma, \vec{x}, \vec{y}) \in
+    R} \sigma$ (with some arbitrary order assumed on $S$). Let $R$ and $Q$ be
+  distinct subsets of $S$ and WLOG let $\vert R \vert \geq \vert Q \vert$. It
+  suffices to show that $\sigma^{-1}_Q \sigma_R \notin \sortsym (D)$. Pick
+  any $(\sigma, \vec{x}, \vec{y}) \in R \setminus Q \neq \emptyset$.
+%AD: the claim below doesn't follow just from independence.
+ From
+  independence we have $\sigma_R \cdot \vec{x} = \sigma \vec{x}$, $\sigma_R
+  \cdot \vec{y} = \sigma \cdot \vec{y}$, $\sigma_Q \sigma \cdot \vec{x} = \sigma
+  \cdot \vec{x} $, and $\sigma_Q \sigma \cdot \vec{y} = \sigma \cdot \vec{y}$.
+  Therefore $\sigma^{-1}_Q \sigma_R \cdot \vec{x} = \sigma^{-1}_Q \sigma \cdot
+  \vec{x} = \sigma \cdot \vec{x}$, and similarly $\sigma^{-1}_Q\sigma_R \cdot
+  \vec{x} = \sigma \cdot \vec{x}$. Thus, since $(\vec{x}, \vec{y})$ is
+  incompatible with $\sigma$, it follows $(\vec{x}, \vec{y})$ is incompatible
+  with $\sigma^{-1}_Q\sigma_R$. The result follows from Lemma
+  \ref{lem:isostab-compatible}.
 \end{proof}
+
+% \begin{lem}
+%   \label{lem:useful-independant-set}
+%   Let $H$ be a set on which the action of $\sym_n$ is defined, and $L:
+%   \ind{\mathcal{D}} \rightarrow H$ be a bijection. Let $S$ be a useful and
+%   independent set. We then have that $[\sym_n : \isostab(L)] \geq 2^{\vert S
+%   \vert}$.
+% \end{lem}
+
+% \begin{proof}
+%   For any $R \subseteq S$ define $\sigma_R = \Pi_{(\sigma, h, h') \in R}
+%   \sigma$ (with some arbitrary order assumed on $S$). Let $R$ and $Q$ be
+%   distinct subsets of $S$ and WLOG let $\vert R \vert \geq \vert Q \vert$. We
+%   want to show that $\sigma_R L$ is not isomorphism-equivalent to $ \sigma_Q
+%   L$, which is equivalent to showing that $\sigma^{-1}_Q \sigma_R L$ is not
+%   isomorphism-equivalent to $L$. Pick any $(\sigma, h, h') \in R \setminus Q
+%   \neq \emptyset$. From independence we have $\sigma_R h = \sigma h$,
+%   $\sigma_R h' = \sigma h'$, $\sigma_Q (sigma (h)) = \sigma (h) $, and
+%   $\sigma_Q (sigma (h)) = \sigma (h)$. Thus $\sigma^{-1}_Q \sigma_R (h) =
+%   \sigma^{-1}_Q (\sigma (h)) = \sigma(h)$, and similarly
+%   $\sigma^{-1}_Q\sigma_R (h') = \sigma(h')$. Since $(h, h')$ is incompatible
+%   with $\sigma$, it follows $(h, h')$ is incompatible with
+%   $\sigma^{-1}_Q\sigma_R$. The result follows from Lemma
+%   \ref{lem:isostab-compatible}.
+% \end{proof}
+
+
+
+
+%
+% $determines a set of automorphisms of $\mathcal{D}$, all of which are equal
+% when their domain in restricted to $\mathcal{D}_R$. Let $s$ be a sort symbol
+% in the vocabulary of $\mathcal{D}$. Let $\sigma \in \isostab(L(g))$ determine
+% $\sigma' \in \aut (\mathcal{D})$. Then
+
+% Let $R_i$ be a relation symbol in the vocabulary of $\Sigma(g)$. Then there is
+% an action of $\sigma$[\arty(R_i)]$
+
+
+% \begin{lem}
+%   \label{lem:useful-independant-set}
+%   Let $g \in C_n$. Let $S$ be a useful and independent. We then have that $[
+%   \sym_n: \isostab(L(g)) ] \geq 2^{\vert S \vert}$.
+% \end{lem}
+
+% \begin{proof}
+%   For any $R \subseteq S$ define $\sigma_R = \Pi_{(\sigma, h, h') \in R}
+%   \sigma$ (with some arbitrary order assumed on $S$). Let $R$ and $Q$ be
+%   distinct subsets of $S$ and WLOG let $\vert R \vert \geq \vert Q \vert$. We
+%   want to show that $\sigma_R L(g)$ is not isomorphism-equivalent to $
+%   \sigma_Q L(g)$. Pick any $(\sigma, h, h') \in R/Q \neq \emptyset$. From
+%   independence we have $\sigma_R h = \sigma h$ and $\sigma_R h' = \sigma h'$,
+%   and from the fact that $(\sigma, h,h')$ is useful, we have that $(h,h')$ is
+%   incompatible with $\sigma_R$. Moreover, the fact that $\sigma_Q h = h$ and
+%   $\sigma_Q h' = h'$ makes it easy to see $(h,h')$ is compatible with
+%   $\sigma_Q$. The result then follows from Lemma
+%   \ref{lem:duel-sort-equivalence-compatible}.
+% \end{proof}
 
 % \begin{claim}
 %   \label{claim:useful-independant-set}
@@ -635,34 +1066,52 @@ For $g \in C_n$ let $\sortstab (L(g))$ denote the set of all $\sigma \in
 %   not have $\sigma_R \sim_\omega \sigma_Q$, and the result follows.
 % \end{proof}
 
-The following two lemmas proved by Anderson and Dawar \cite{AndersonD17} are
-both of use in proving the following theorem.
 
-\begin{lem}
+
+The following two lemmas are proved by Anderson and Dawar \cite{AndersonD17},
+and are both useful for proving the support theorem. The next lemma is used to
+establish a size bound on the supporting partition of a gate. In
+particular, it shows that for a partition $\mathcal{P}$ of $[n]$, if the index
+of $\setstab (\mathcal{P})$ in $\sym_n$ is small enough, then $\mathcal{P}$
+either contains very few or very many parts.
+
+\begin{lem}[{\cite[Lemma 5]{AndersonD17}}]
   \label{lem:big-or-small}
   For any $\epsilon$ and $n$ such that $0 < \epsilon < 1$ and $\log n \geq
   \frac{4}{\epsilon}$, if $\mathcal{P}$ is a partition of $[n]$ with $k$ parts,
-  $s = [\sym_n : \setstab (\mathcal{P})]$ and $n \leq s leq 2^{n^{1-\epsilon}}$,
-  then $\min \{k, n-k\} \leq \frac{8}{\epsilon} \frac{\log s}{\log n}$.
+  $s = [\sym_n : \setstab (\mathcal{P})]$ and $n \leq s \leq
+  2^{n^{1-\epsilon}}$, then $\min \{k, n-k\} \leq \frac{8}{\epsilon} \frac{\log
+    s}{\log n}$.
 \end{lem}
 
-\begin{lem}
+The following lemma tell us that, under the same assumptions as the previous
+lemma, if the number of parts in $\mathcal{P}$ is less then $\frac{n}{2}$ then
+$\mathcal{P}$ contains a very large part. This lemma is used both to establish
+that the stabiliser group of a gate has small support, and hence a canonical support, but also that
+this canonical support has bounded size (and is in fact constant for
+polynomial-size circuits).
+
+\begin{lem}[{\cite[Lemma 6]{AndersonD17}}]
   \label{lem:small-means-support}
   For any $\epsilon$ and $n$ such that $0 < \epsilon < 1$ and $\log n \geq
   \frac{8}{\epsilon^2}$, if $\mathcal{P}$ is a partition of $[n]$ with $\vert
   \mathcal{P} \vert \leq \frac{n}{2}$, $s:= [\sym_n : \setstab (\mathcal{P})]$
   and $n \leq s \leq 2^{n^{1-\epsilon}}$, then $\mathcal{P}$ contains a part $P$
-  with at least $n - \frac{33}{\epsilon} \cdot \frac{\log s} {\log n}$.
+  with at least $n - \frac{33}{\epsilon} \cdot \frac{\log s} {\log n}$
+  elements.
 \end{lem}
 
-Let $g \in C_n$ then note that $\vert \orb(g) \vert = [\sym_n : \stab (g)]$ by
-the orbit-stabilizer theorem. We say $g$ is a $\tau$-symmetric gate, if the
-function labelling that gate has vocabulary $\tau$.
-
-If $g$ is a sort-symmetric gate then $\vert \orb(g) \vert = [\sym_n:\sortstab
-(L(g))]$.
-
-
+Let $C$ be a rigid symmetric circuit with bijective labels that takes in
+structures of size $n$. Let $\SP(C)$ denote the maximum $\| \SP(g) \|$ over
+all gates $g$ in $C$. Let $g$ be a gate in $C$, and suppose $\Sigma (g)$ is a
+$(\tau, D)$-structured function. The action of $\sym_n$ on the circuit induces
+an action on $\ind(\tau,D)$, defined for $\sigma \in \sym_n$ by $\sigma \cdot \vec{x}
+:= L(g)^{-1} \cdot \sigma \cdot L(g) (\vec{x})$ for all $\vec{x} \in \ind(\tau,D)$.
+Moreover, since $C$ is rigid, we have for $\sigma \in \sym_n$, $\sigma \cdot g =
+g$ if, and only if, $\sigma \cdot L(g)$ is isomorphism-equivalent to $L(g)$ if,
+and only if, $\sigma \in \sortsym_n(D)$. It follows from the
+orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n : \stab(g)] =
+[\sym_n : \sortsym_n(D)]$.
 
 \begin{thm}
   \label{thm:support_thm}
@@ -685,12 +1134,13 @@ If $g$ is a sort-symmetric gate then $\vert \orb(g) \vert = [\sym_n:\sortstab
   such partition it follows that $\| \SP(g) \| = 0 = \SP(C)$. We therefore
   assume that $s \geq n$.
 
-  is a gate in $C$ then $\stab (g) \subseteq \setstab(\SP(g))$, and so $s \geq
-  \vert \orb(g) \vert = [\sym_n : \stab(g)] \geq [\sym_n : \setstab(\SP(g))]$.
-  Thus if $\vert \SP(g) \vert \leq frac{n}{2}$, then from Lemma
-  \ref{lem:small-means-support}, we have $\| SP (g) \| \leq \frac{33}{\epsilon}
-  \cdot \frac{\log s} {\log n}$. The result thus follows from showing that for
-  each $g$ in $C$ we have that $\vert \SP (g) \vert \leq \frac{n}{2}$.
+  If $g$ is a gate in $C$ then $\stab (g) \subseteq \setstab(\SP(g))$, and so $s
+  \geq \vert \orb(g) \vert = [\sym_n : \stab(g)] \geq [\sym_n :
+  \setstab(\SP(g))]$. Thus if $\vert \SP(g) \vert \leq \frac{n}{2}$, then from
+  Lemma \ref{lem:small-means-support}, we have $\| \SP (g) \| \leq
+  \frac{33}{\epsilon} \cdot \frac{\log s} {\log n}$. The result thus follows
+  from showing that for each $g$ in $C$ we have that $\vert \SP (g) \vert \leq
+  \frac{n}{2}$.
   
   If $g$ is a constant gate, then as argued above, it follows $\vert \SP(g)
   \vert = 0 < \frac{n}{2}$. If $g$ is a relational gate, then $g$ is fixed by a
@@ -711,43 +1161,49 @@ If $g$ is a sort-symmetric gate then $\vert \orb(g) \vert = [\sym_n:\sortstab
   We note that Lemma \ref{lem:big-or-small} implies that $n - \vert \SP(g) \vert
   \leq k'$.
   
-  We now construct a sufficiently large useful and independent set which. From
-  Lemma \ref{lem:useful-independant-set} this set will allow us to place a lower
+  We now construct a sufficiently large useful and independent set of
+  triples.  Using Lemma
+  \ref{lem:useful-independant-set}, this set allows us to place a lower
   bound on the orbit size of $g$, and from this bound we derive the required
-  contradiction. Divide $[n]$ into $\lfloor \frac{n}{k' + 2} \rfloor$ disjoint
+  contradiction.  Divide $[n]$ into $\lfloor \frac{n}{k' + 2} \rfloor$ disjoint
   sets $S_i$ of size $k' + 2$ and ignore the elements left over. It follows that
-  for each $i$ there is a permutation $\sigma_i$ which fixes $[n] / S_i$
+  for each $i$ there is a permutation $\sigma_i$ which fixes $[n] \setminus S_i$
   pointwise but moves $g$. Suppose there was no such $\sigma_i$, but then every
-  permutation that fixes $[n]/S_i$ pointwise fixes $g$. Thus the partition of
-  all the singletons in $[n]/S_i$ and $S_i$ is a supporting partition. As
-  $\SP(g)$ is the coarsest partition it follows that $\vert \SP(g) \vert \leq n
+  permutation that fixes $[n]\setminus S_i$ pointwise fixes $g$. Thus the partition of
+  all the singletons in $[n]\setminus S_i$ and $S_i$ is a supporting
+  partition of $g$.  As
+  $\SP(g)$ is the coarsest such partition it follows that $\vert \SP(g) \vert \leq n
   - (k'+2) + 1 = n - k' - 1$, which contradicts the inequality $n - \vert \SP(g)
   \vert \leq k'$.
 
   Since $g$ is moved by each $\sigma_i$, and $C$ is rigid, it follows that we
-  have $\sigma_i \in \sortstab(L(g))$. Thus, from Lemma
-  \ref{lem:sortstab-compatible}, there exists $(h_i, h_i') \in H^{-1}_g$ that is
-  inconsistent with $sigma_i$, and so the triple $(\sigma_i, h_i, h_i')$ is
-  useful.
+  have $\sigma_i \notin \sortsym_n(D)$. Thus, from Lemma
+  \ref{lem:isostab-compatible} and the fact that the circuit has bijective
+  labels, there exists $(h_i, h_i') \in H^{-1}_g$ such that $(L(g)^{-1}(h_i),
+  L(g)^{-1}(h_i'))$ is inconsistent with $sigma_i$, and so the triple
+  $(\sigma_i, L(g)^{-1}(h_i), L(g)^{-1}(h_i'))$ is useful.
 
+%AD: I haven't changed this below in case I'm just confused.  But,
+%isn't \SP(h)^* just a new notation for \sp(h)?
   Let $\SP (h)^*$ be the union of all parts of $\SP(h)$ except for the largest
-  part. Let $Q_i = \SP(h_i)^* \cup \SP(\sigma_i h_i)^* \cup \SP (h_i')^* \cup
-  \SP (\sigma_i h_i')^*$. Then note that if $\sigma_j$ fixes $Q_i$ then by
-  construction, we have that $\sigma_j \in \stab(\SP(h_i)) \cap
+  part. Let $Q_i = \SP(h_i)^* \cup \SP(\sigma_i \cdot h_i)^* \cup \SP (h_i')^*
+  \cup \SP (\sigma_i \cdot h_i')^*$. Then note that if $\sigma_j$ fixes $Q_i$
+  then by construction we have that $\sigma_j \in \stab(\SP(h_i)) \cap
   \stab(\SP(\sigma_i h_i)) \cap \stab(\SP(h_i')) \cap \stab(\SP(\sigma_i h_i'))$
 
   Define a graph $K$ with vertices given by the sets $S_i$ and an edge from
   $S_i$ to $S_j$ (with $i \neq j$) iff $Q_i \cap S_j \neq \emptyset$. It follows
-  then that if there is no edge between $S_i$ and $S_j$ then $(\sigma_i, h_i,
-  h_i')$ and $(\sigma_j, h_j, h_j')$ are mutually independent. It remains to
-  argue that $K$ has a large independent set. This is possible as the out-degree
-  of $S_i$ in $K$ is bounded by
+  then that if there is no edge between $S_i$ and $S_j$ then $(\sigma_i,
+  L(g)^{-1}(h_i), L(g)^{-1}(h_i'))$ and $(\sigma_j, L(g)^{-1}(h_j),
+  L(g)^{-1}(h_j'))$ are mutually independent. It remains to argue that $K$ has a
+  large independent set. This is possible as the out-degree of $S_i$ in $K$ is
+  bounded by
   \begin{align*}
-    \vert Q_i \vert \leq \|SP(h_i) \| + \|SP(\sigma_i h_i) \| + \|SP(h_i') \| + \|SP(\sigma_i h_i') \leq 4 \cdot \frac{33\log s}{\epsilon \log n}.
-  \end{align*}. 
+    \vert Q_i \vert \leq \|\SP(h_i) \| + \|\SP(\sigma_i h_i) \| + \|\SP(h_i') \| + \|\SP(\sigma_i h_i') \leq 4 \cdot \frac{33\log s}{\epsilon \log n}.
+  \end{align*}
   These inequalities follow from the fact that the sets $S_i$ are disjoint and we may apply Lemma
   \ref{lem:small-means-support} to each of the child gates. From these inequalities
-  we have that the the average total degree (in + out degree) of $K$ is at most $2 \cdot \vert Q_i
+  we have that the average total degree (in + out degree) of $K$ is at most $2 \cdot \vert Q_i
   \vert \leq 34 \cdot k'$. Now greedily select a maximal independent set in $K$
   by repeatedly selecting $S_i$ with the lowest total degree and eliminating it
   and its neighbours. This action does not affect the bound on the average total
@@ -757,8 +1213,8 @@ If $g$ is a sort-symmetric gate then $\vert \orb(g) \vert = [\sym_n:\sortstab
     \frac{\lfloor \frac{n}{k' + 2} \rfloor}{34k' + 1} \geq \frac{n - (k'+2)}{34k'+1k'+2} \geq \frac{n\frac{7}{16}}{34k'^2 + 69k' +2} \geq \frac{n}{(16k')^2}.
   \end{align*}
 
-  Take $S = \{(\sigma_i, h_i, h_i') : S_i \in I \}$. Then from the above
-  argument we have that $S$ is useful and independent.
+  Take $S = \{(\sigma_i, L(g)^{-1}(h_i), L(g)^{-1}(h_i')) : S_i \in I \}$. Then
+  from the above argument we have that $S$ is useful and independent.
   
   Moreover, from Lemma \ref{lem:useful-independant-set}, we have that $s \geq
   \vert \orb(g) \vert \geq 2^{\vert S \vert} \geq 2^{\frac{n}{(16k')^2}}$ then
@@ -767,12 +1223,11 @@ If $g$ is a sort-symmetric gate then $\vert \orb(g) \vert = [\sym_n:\sortstab
   n^{1-\epsilon}$. This is a contradiction, and the result follows.
 \end{proof}
  
-Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a $P$-uniform family of rigid
-symmetric circuits with bijective labels. Let $s(n)$ be the $s$ for $C_n$ from
-the hypothesis of Theorem \ref{thm:support_thm}. The theorem implies that, for
-$n$ large enough, if $s(n)$ is bounded by a polynomial then there exists a
-constant $k$ such that for all $n \in \mathbb{N}$ and $g \in C_n$, $\vert
-\consp(g) \vert \leq k$. This gives us this following natural corollary.
+Let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a polynomial-size family of
+rigid symmetric circuits with bijective labels. Then $s(n) := \max_{g \in C_n}
+\vert \orb (g)\vert$ must be polynomially bounded, and so the theorem implies
+that there exists $k \in \mathbb{N}$ such that for all $n$ large enough, for all
+$g \in C_n$, $\vert \consp(g) \vert \leq k$.
 
 \begin{cor}
   Let $\mathcal{C} := (C_n)_{n \in \mathbb{N}}$ be a polynomial-size rigid
@@ -780,13 +1235,41 @@ constant $k$ such that for all $n \in \mathbb{N}$ and $g \in C_n$, $\vert
   O(1)$.
 \end{cor}
 
-If $\mathcal{C} := (C_n)_{n \in \mathbb{N}}$ with bijective labels, we can
-extend the action of $\sigma \in \sym_n$ on the gates of $C_n$ to the sorts of
-the indexes of those gates. Let $g \in C_n$ and $(\tau, A) := \type(g)$ and let $A_1, \ldots,
-A_s$ be the sorts of $A$. Note that for any $h_1, h_2 \in H_g$, and $i \in [r_i]$
-$L(g)(h_1)(i, R_j)$ For all $i \in [s]$, we can define the action of
-$\sigma \in \sym_n$ on $A_i$ by $\sigma (a) = L(g)()$
+% If $\mathcal{C} := (C_n)_{n \in \mathbb{N}}$ with bijective labels, we can
+% extend the action of $\sigma \in \sym_n$ on the gates of $C_n$ to the sorts of
+% the indexes of those gates. Let $g \in C_n$ and $(\tau, A) := \type(g)$ and
+% let $A_1, \ldots, A_s$ be the sorts of $A$. Note that for any $h_1, h_2 \in
+% H_g$, and $i \in [r_i]$ $L(g)(h_1)(i, R_j)$ For all $i \in [s]$, we can define
+% the action of $\sigma \in \sym_n$ on $A_i$ by $\sigma (a) = L(g)()$
 
-$a_i \in A_$
+% $a_i \in A_$
+
+Let $C_n$ be a rigid symmetric circuit with bijective labels. We now extend the given action of $\sym_n$ on the gates of $C_n$ to the indexes. Let $g$ be a gate in $C_n$, and let $(\tau, D) := \type(g)$. Note that the action of any permutation in $\stab(g)$ on the circuit fixes $H_g$ setwise. Therefore the action of $\stab(g)$ on $H_g$ induces an action of $\stab(g)$ on $\ind(\tau, D)$. Moreover, since $\stab(g) = \sortsym_n(D)$, it follows that $\stab(g)$ acts on $\ind(\tau, D)$ as a sorted permutation.
+
+For $x \in D$ let $\stab_g(x) = \{\sigma \in \stab(\consp(g)) : \sigma (x) = x\}$ and let $\consp_g(x)$ be the canonical support of $\stab_g(x)$. We call $\consp_g(x)$ the canonical support of $x$ with respect to $g$. In the event that the gate $g$ is clear from context we omit the subscript. If $h \in H_g$ and $(x_1, \ldots ,x_r) := L(g)^{-1}(h)$ then $\stab(h) \cap \stab(g) = \stab_{\stab(g)}(h) = \bigcap_{i \in [r]} \stab_g(x_i)$. If $\stab(h) \cap \stab(g)$ has small support, then from Lemma \ref{lem:row-column-supports-well-behaved} it has canonical support $\consp(h) \cup \consp(g)$. Moreover, if $\stab(h) \cap \stab(g)$ has small support, then $\stab_g(x_i)$ for all $i \in [r]$ and $\consp(g) \cup \consp(h) = \bigcup_{i \in [r]}\consp_g(x_i)$. This follows from repeated application of Lemma \ref{lem:row-column-supports-well-behaved}. As such, we may apply the support theorem to the elements of $D$ for large enough $n$.
+
+%REVIEW THIS BIT, MORE WORK MAY BE NEEDED.
+
+% It follows that for each gate $g$ and $h \in H_g$, $\stab(h) \subseteq
+% \stab(L(g)^{-1}(h))$. Thus all supports and supporting partitions of $h$ are also supports or supporting partitions of $L(g)^{-1} (h)$, which allows us to translate the support theorem to elements of the index of $g$.
+% Suppose $\Sigma(g)$ is a $(\tau, D)$-structured function. Notice that $\stab
+% (\consp(g)) \subseteq \stab (g) = \sortsym_n(D)$, and so each 
+% $\sigma \in \stab(g)$ may be thought of as a sorted-permutation of $D$, defining an action of $\stab(g)$ on $D$. Furthermore, if $h \in H_g$ and $L(g)^{-1}(h) = (x_1, \ldots , x_{r_i}) \in \ind(\tau, D)$ then $\stab_{\stab(g)}(h) = \stab_{\stab(g)}(x_1) \cap \ldots \cap \stab_{\stab(g)}(x_k)$
+
+
+% there exists $\pi_{\sigma} \in \sortsym(D)$
+% such that $\pi_\sigma \cdot \vec{x} = \sigma \cdot \vec{x}$ for all $\vec{x} \in
+% \ind(\tau, D)$. It follows that we can define an action of $\stab(\consp(g))\leq \sym_n$ on $D$  defined for $\sigma \in \stab(g)$ by $\sigma \cdot a := \pi (a)$
+% for all $a \in D$. Mo
+
+
+% Thus there is a well-defined action of $\sym_n$ on the set of all elements in
+% the universe of $\mathcal{D}$ that appears in some relation. It follows that
+% $\sigma$ defines a action on the elements of the universe of $\mathcal{D}$
+% that appear in some relation, and also this action extends to an automorphism
+% of $\mathcal{D}$. Thus for each $a \in \mathcal{D}$ we may speak For any
+% $\sigma \in \stab(\consp(g)) \subseteq \aut_n(\mathcal{D})$, $\sigma$ fixes
+% $g$ and hence permutes $H_g$ and acts as an automorphism. Then $\sigma$
+% $\mathcal{D}$
 
 \end{document}

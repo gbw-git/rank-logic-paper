@@ -1,0 +1,650 @@
+\documentclass[../paper.tex]{subfiles}
+\begin{document}
+
+\subsection{Circuit Manipulation}
+In this section and the next we develop a number of results that reference
+$P$-uniform families of circuits. In order to prove these results we often need
+to define polynomial-time algorithms for generating or manipulating circuits. In
+this subsection we define a number of algorithms that perform commonly invoked
+operations on circuits.
+
+We often include quotes around the names of these algorithm in order to avoid
+any confusion. We assume a reasonable encoding of the circuit.
+
+The algorithm \emph{merge} takes a circuit and an appropriate set of gates and
+produces a new circuit by combining those gates into a single gate.
+
+\begin{definition}
+  The algorithm \emph{merge} takes as input a circuit $C = \langle G, \Omega,
+  \Sigma , \Lambda, L \rangle$ and a set of syntactically equivalent gates $H =
+  \{h_1, \ldots , h_p\}$ and outputs a new circuit $C' = \langle G', \Omega',
+  \Sigma', \Lambda', L' \rangle$, where
+  \begin{itemize}
+    \setlength\itemsep{0mm}
+  \item $G' = G \setminus \{h_2, \ldots, h_q\}$,
+  \item $\Omega' = \Omega$,
+  \item $\Sigma' = \restr{\Sigma}{G'}$,
+  \item $\Lambda' = \Lambda$, and
+  \item For all $g \in G'$ and $\vec{a} \in Ind(g)$ if $L(g) (\vec{a}) \in H$
+    then $L'(g)(\vec{a}) = h_1$ and if $L(g)(\vec{a}) \notin H$ then
+    $L'(g)(\vec{a}) = L(g)(\vec{a})$.
+  \end{itemize}
+\end{definition}
+
+It can be shown that `merge' can be implemented so as to run in time polynomial
+in the size of the input circuit. We note that if the input circuit to `merge'
+is symmetric (resp. has unique labels) then the output circuit will also be
+symmetric (resp. have unique labels). The input and output circuits compute the
+same function.
+
+% Moreover, if we run merge on a circuit $C$ and a set $H$ then if $C$ has
+% unique labels and $H$ has the property that there is no gate $g$ in $C$ such
+% that two elements of $H$ are in $H_g$ then if $C$ has unique labels then so
+% does $C'$. Moreover, if $C$ is symmetric then so is $C'$.
+
+The algorithm \emph{separate-labels} takes a circuit and outputs an equivalent
+circuit such that every symmetric-gate has unique labels.
+
+\begin{definition}
+  The algorithm \emph{separate-labels} takes as input a $(\mathbb{B},
+  \tau)$-circuit $C := \langle G, \Omega, \Sigma , \Lambda, L \rangle$ and
+  outputs circuit $C' = \langle G', \Omega', \Sigma', \Lambda', L' \rangle$. We
+  now describe how these values are derived. We have that $\Omega' = \Omega'$
+  and $\Lambda' = \Lambda$. We start with $G' = G$, $\Sigma' = \Sigma$ and $L' =
+  L$ and updates their definitions iteratively according to the following
+  procedure.
+
+  Let $k$ denote a variable initialised to $1$. Let $S$ be the set of all gates
+  of height $k$ that are symmetric-gates. For each $h_1 \in \bigcup_{g \in
+    S}H_g$ let $g \in S$ be the first gate (using the order of the circuit
+  derived from its encoding) such that $\vert L(g)^{-1}(h_1) \vert$ is maximal.
+  Let $\{a_1, \ldots, a_p\} := L(g)^{-1}(h_1)$ (again, making use of the order).
+  We add to $G'$ the gates $\{h_2, \ldots, h_p\}$ and for each $i \in \{2,
+  \ldots, p\}$ we set $\Sigma'(h_i)$ such that $h_i$ is a $\land$ gate with a
+  single output and $L'(h_i)$ such that $h_i$ takes only $h_{i-1}$ as an input.
+  For each $g' \in S$ such that $h_1 \in H_g$ let $\{ b_1, \ldots, b_q \} :=
+  L(g)^{-1}(h_1)$. For each $i \in [q]$ let $L'(g')(b_i) = h_i$. Iterate $k$ and
+  repeat this procedure until $k$ exceeds the depth of the circuit.
+\end{definition}
+
+It can be shown that `separate-labels' can be implemented so as to run in time
+polynomial in the size of the input circuit. We note that both the input and
+output circuits compute the same function. Moreover, if all of the non-symmetric
+gates in the input circuit have unique labels then the output circuit will have
+unique labels. If the input circuit is symmetric and has the property that every
+non-symmetric gate in the circuit has unique labels then the output circuit is
+symmetric.
+
+% Notice that for a given circuit $C$ and a symmetric-gate $g$ in $C$, running
+% `merge' on each equivalence class of syntactically equivalent gates input to
+% $g$ and then running `separate-labels' on the resultant circuit produces
+% circuit $C'$ computing the same function as $C$ but the gate $g$ in $C$ has
+% unique labels.
+
+The algorithm \emph{insert} takes as input two circuits and creates a new
+circuit formed by inserting the gates of the first circuit into the second
+circuit.
+
+\begin{definition}
+  The algorithm \emph{insert} takes as input a $(\mathbb{B}_1, \tau_1)$-circuit
+  $C^1 := \langle G_1, \Omega_1, \Sigma_1 , \Lambda_1, L_1 \rangle$ and a
+  $(\mathbb{B}_2, \tau_2)$-circuit $C^2 := \langle G_2, \Omega_2, \Sigma_2 ,
+  \Lambda_2, L_2 \rangle$ and outputs a $(\mathbb{B}_1 \cup \mathbb{B}_2, \tau_1
+  \uplus \tau_2)$-circuit $C = \langle G, \Omega, \Sigma , \Lambda, L \rangle$
+  such that
+  \begin{itemize}
+    \setlength\itemsep{0mm}
+  \item $G = G_1 \uplus G_2$,
+  \item $\Omega = \Omega_2$,
+  \item $\Sigma = \Sigma_1 \uplus \Sigma_2$,
+  \item $\Lambda = \Lambda_1 \uplus \Lambda_2$, and
+  \item $L = L_1 \uplus L_2$.
+  \end{itemize}
+\end{definition}
+
+It can be shown that `insert' can be implemented so as to run in time polynomial
+in the size of the input circuit. If the input circuits are symmetric then the
+output circuit will be symmetric.
+
+The operation \emph{replace} removes a gate from a circuit and replaces it with
+another gate.
+  
+\begin{definition}
+  Formally, \emph{replace} is an algorithm that takes as input a circuit $C =
+  \langle G, \Omega, \Sigma, \Lambda, L\rangle$ and a pair of gates $(g_1, g_2)$
+  in $C$ and outputs a circuit $C' = \langle G', \Omega', \Sigma', \Lambda', L'
+  \rangle$ such that
+  \begin{itemize}
+    \setlength\itemsep{0mm}
+  \item $G' = G \setminus \{g_1\}$,
+  \item $\Omega'$ is an function from the domain of $\Omega$ to $G'$ such that
+    for each $\vec{a} \in \dom(Omega)$ if $\Omega(\vec{a}) = g_1$ then
+    $\Omega'(\vec{a}) = g_2$ and if then $\Omega'(\vec{a}) = \Omega(\vec{a})$.
+  \item $\Sigma' = \restr{\Sigma}{G'}$
+  \item $\Lambda' = \restr{\Lambda}{G'}$
+  \item For each $g \in G'$ and each $\vec{a} \in \ind(g)$ if $L(g)(\vec{a}) =
+    g_1$ then $L'(g)(\vec{a}) = g_2$ and if not then $L'(g)(\vec{a}) =
+    L(g)(\vec{a})$.
+  \end{itemize}
+\end{definition}
+
+It can be shown that `replace' can be implemented so as to run in time
+polynomial in the size of the input circuit.
+
+The algorithm \emph{tag} takes in a circuit, a gate in that circuit, a relation
+symbol and a tuple and outputs a circuit computing but with an additional
+gadget, constructed using the gates labelled by the given relation symbol and
+tuple, marking the designated gate. The idea is that marking a gate can be used
+as a step to ensure unique labels in a circuit.
+
+\begin{definition}
+  The algorithm \emph{tag} takes in a $(\mathbb{B}, \tau)$-circuit $C_n :=
+  \langle G, \Omega, \Sigma, \Lambda, L \rangle$, a relation symbol $R \in
+  \tau$, a gate $g \in G$ and a tuple $\vec{a} \in [n]^k$ for some $k$ and
+  outputs the circuit $C_n' = \langle G', \Omega', \Sigma', \Lambda', L'\rangle$
+  defined by the following algorithm. Let $G' = G \uplus \{\land_g, \land_{g'},
+  \land_1, \ldots , \land_k\}$, $\Omega' = \Omega$, and $\Lambda' = \Lambda$.
+  Define $L'$ and $\Sigma'$ as follows. For each $g \in G$ $\Sigma'(g) =
+  \Sigma(g)$. For each $g \in \{\land_0, \land_1, \ldots , \land_k \}$,
+  $\Sigma(g)$ is an $\AND$-gate that takes in two inputs. $\Sigma(\land_g)$ is
+  an $\AND$-gate that takes in a single input. Set $g$ to be the lone input to
+  $\land_g$. Set the two inputs to $\land_0$ to be $\land_g$ and $\land_1$. For
+  each $i \in [k-1]$ set the inputs of $\land_i$ to be $\land_{i+1}$ and the
+  gate $g_i \in G'$ such that $\Sigma(g_i) = R$ and $\Lambda^{-1}(g_i) =
+  \vec{a}_i$, where $\vec{a}_i$ is the $k$-tuple $(\vec{a}(i), \ldots,
+  \vec{a}(i))$. Set the inputs of $\land_k$ to be the constant gate $1$ and the
+  gate $g_k$ such that $\Sigma(g) = R$ and $\Lambda^{-1}(g_k) = \vec{a}_k$.
+
+  For each gate $h \in G \setminus \{g\}$ and $\vec{b} \in \ind(h)$, if
+  $L(h)(\vec{b}) = g$ then let $L'(h)(\vec{b}) = \land_0$, otherwise let
+  $L'(h)(\vec{b}) = L(h)(\vec{b})$.
+
+\end{definition}
+
+It can be shown that `tag' can be implemented so as to run in time polynomial in
+the size of the input. The input and output circuits compute the same function.
+Moreover, if the input circuit had unique labels then the output circuit will
+have unique labels. In the event that the input relation symbol is obvious from
+the context we omit it when invoking this algorithm.
+
+The algorithm \emph{glue-circuits} takes in a designated circuit and another set
+of appropriate circuits and forms a new circuit by replacing the relational
+gates of the designated circuit with the output gates of the circuits in the
+given set.
+
+\begin{definition}
+  The algorithm \emph{glue-circuits} takes as input a set of relation symbols
+  $\tau_R := \{R_1, \ldots, R_t\}$ and $t+1$ circuits $\{C^0, \ldots, C^{t}\}$,
+  where $C^0 = \langle G_0, \Omega_0, \Sigma_0, \Lambda_0, L_0 \rangle$ is a
+  $(\mathbb{B}, \tau)$-circuit with $\tau_R \subseteq \tau$ and for each $i \in
+  [t]$, $C^i = \langle G_i, \Omega_i, \Sigma_i, \Lambda_i, L_i \rangle$ is a
+  $(\mathbb{B}_i, \tau_i)$-circuit computing a query of arity $\arty(R_i)$. The
+  algorithm outputs, for a given input, a circuit $C = \langle G, \Omega,
+  \Sigma, \Lambda, L\rangle$ constructed as follows. Let $C^0' := C^0$. For each
+  $i \in [t]$ fix a relation symbol $V_i \in \tau_i \setminnus \tau_R$. For each
+  $i \in [t]$ construct the circuit $C^{i}' = \langle G_i', \Omega_i',
+  \Sigma_i', \Lambda_i', L_i' \rangle $ by `inserting' $C^i$ into $C^{i-1}'$,
+  and call the resultant circuit $D^{i-1}'$. For each relational gate $g$ in
+  $D^{i-1}$ labelled by the symbol $R_i$, `replace' $g$ with the gate
+  $\Omega_{i}(\Lambda_{i-1}'(g))$ in $D^{i-1}$ and `tag' the gate
+  $\Omega_i(\Lambda_{i-1}'(g))$ in $D^{i-1}$ using the tuple $\Lambda_{i-1}'(g)$
+  and the relation symbol $V_i$. Output the circuit $C := C^t'$.
+\end{definition}
+
+It can be shown that `glue-circuits' can be implemented so as to run in time
+polynomial in the combined size of the input circuits. Moreover, if the input
+circuits are all symmetric (resp. have unique labels) then the output circuit
+will be symmetric (resp. have unique labels). We sometimes refer to `gluing'
+$(C^1, \ldots, C^t)$ into $C^0$ along $(R_1 , \ldots , R_t)$ when invoking
+`glue-circuit' on the input $(C^0, \ldots , C^t)$ and $\tau_R = \{R_1, \ldots ,
+R_t\}$.
+
+\subsection{Unique Labels and Rigidity}
+In contrast with the work of Anderson and Dawar~\cite{}, the circuit families we
+use to establish our main result are additionally required to have unique
+labels. In this subsection we briefly discuss this inclusion, and present
+results suggesting its importance.
+
+It is important to note that our analysis of circuits depends crucially on the
+fact that a circuit may be transformed (in polynomial time) into an equivalent
+circuit with the property that each element of $\sym_n$ induces a unique
+automorphism on the circuit $C_n$. This fact ensures a canonical action of
+$\sym_n$ on the circuit $C_n$ and is a crucial requirement for defining needed
+theoretical tools, such as supports, and computing various facts about the
+circuit in polynomial time, such as the coarsest supporting partition or the
+orbit of a gate.
+
+Anderson and Dawar~\cite{AndersonD17} define a condition analogous to the one
+define above and prove that it's a sufficient condition for establishing the
+uniqueness of the induced automorphism on the circuit and that a circuit can be
+transformed into an equivalent rigid circuit in polynomial time.
+
+Although the rigidity condition we present in this paper is similarly defined,
+the existence of a polynomial-time computable transformation of a circuit into
+an equivalent rigid circuit is not as straight forward. Indeed, it is possible
+to show that the problem of determining if a given $(\mathbb{B}, \tau)$-circuit
+is rigid is as least as hard as the graph isomorphism problem. This is a direct
+consequence of the following result.
+
+\begin{prop}
+  There is a a polynomial time reduction from the graph isomorphism problem to
+  the problem of deciding if a specified gate in a matrix-circuit is syntacticly
+  equivalent to any other gate in the circuit.
+  \label{prop:syntactic-graph-iso}
+\end{prop}
+\begin{proof}
+\end{proof}
+
+Another obvious consequence of this result is that if the syntactic equivalence
+relation for an input $(\mathbb{B}, \tau)$-circuit can be computed in polynomial
+time then the graph isomorphism problem is in $\PT$. It is worth noting that if
+we restrict the input to a class of circuits defined over symmetric bases then
+we can decide the syntactic equivalence relation in polynomial time.
+
+\begin{prop}
+  Let $C_n$ be a circuit with symmetric gates. There is an algorithm that takes
+  in such a circuit, runs in time polynomial in the size of the circuit, and
+  outputs the syntactic equivalence relation on the gates of $C_n$.
+  \label{prop:symmetric-syntactic}
+\end{prop}
+\begin{proof}
+\end{proof}
+
+Moreover, it turns out that being able to compute the syntactic equivalence
+relation in polynomial time for some class of circuits $\mathcal{C}$ implies
+that the existence of a polynomial-time algorithm for converting circuits in $C$
+into equivalent rigid circuit.
+
+\begin{prop}
+  Let $\mathcal{C}$ be a set of circuits. Suppose the syntactic equivalence
+  relation can be computed in polynomial time for circuits in $\mathcal{C}$. It
+  follows that there is an algorithm that runs in polynomial time that takes in
+  a circuit $C \in \mathcal{C}$ and outputs a rigid circuit $C'$ such that if
+  $C$ is symmetric then $C'$ is symmetric.
+  \label{prop:syntactic-equivilence-rigid}
+\end{prop}
+\begin{proof}
+\end{proof}
+
+The following result gives us that the unique labels condition is sufficient.
+
+\begin{prop}
+  There is an algorithm that takes in a $(\mathbb{B}, \tau)$-circuit with unique
+  labels and outputs the syntactic equivalence relation on its gates. This
+  algorithm runs in polynomial time.
+  \label{prop:unique-labels-syntactic-equiv}
+\end{prop}
+\begin{proof}
+\end{proof}
+
+Putting together Propositions \ref{prop:symmetric-syntactic},
+\ref{prop:syntactic-equivilence-rigid}, and
+\ref{prop:unique-labels-syntactic-equiv}, we have that there is a
+polynomial-time algorithm that takes as input a circuit with unique labels and
+outputs an equivalent rigid circuit. In fact, there is an equivalence of sorts
+between the unique labels condition and the rigidity condition.
+
+\begin{prop}
+  Let $\mathcal{C}$ be a family of circuits. There is an algorithm that runs in
+  polynomial-time and takes in a circuit $C \in \mathcal{C}$ and outputs a rigid
+  circuit $C'$ such that if $C$ is symmetric then $C'$ is symmetric if, and only
+  if, there is an algorithm that runs in polynomial-time and takes in a circuit
+  $C \in \mathcal{C}$ and outputs a circuit $C'$ with unique labels such that if
+  $C$ is symmetric then $C'$ is symmetric.
+\end{prop}
+
+It follows then that for the symmetric circuits defined over bases of symmetric
+functions discussed by Anderson and Dawar~\cite{} we may assume the circuits are
+rigid and/or have unique labels without a loss of generality. For the more
+general circuit discussed in this paper we cannot make such an assumption as
+deciding rigidity is harder then graph isomorphism. However, if we restrict
+ourselves to families of circuits with unique labels then again we may assume
+rigidity without a loss of generality.
+
+Of course, this restriction to circuits with unique labels is only useful if we
+can show that formulas in rank logic can be translated into $P$-uniform families
+circuits with unique labels. In the next subsection we prove that this is indeed
+the case.
+
+\subsection{Translating FPR to Symmetric Matrix Circuits}
+Anderson and Dawar~\cite{} define (or reference) a translation of formulas of
+$\FPC$ into equivalent $P$-uniform families of symmetric majority-circuits. More
+formally, they show that for $\theta(\vec{x}) \in \FPC[\tau]$ there exists a
+$P$-uniform family of symmetric majority-circuits $(C_n)_{n \in \nats}$ such
+that the query computed by $(C_n)_{n \in \nats}$ is equal to the query defined
+by $\theta (\vec{x})$. In this subsection we develop a similar translation from
+formulas of $\FPR$ into $P$-uniform families of symmetric matrix-circuits.
+
+% From Lemma \cite{} we may assume, without a loss of generality, that $(C_n)_{n
+% \in nats}$ is a family of rigid circuits (and hence has unique labels).
+
+We are now ready to prove the main theorem of this section.
+
+\begin{thm}
+  For any relational vocabulary $\tau$ and each $\theta(\vec{x}) \in \FPR[\tau]$
+  there is an algorithm that takes as input a natural number $n$ and outputs a
+  symmetric matrix-circuit $C_n$ with unique labels. This algorithm runs in time
+  polynomial in $n$ and the family of circuits produced by this algorithm
+  $(C_n)_{n \in \nats}$ computes the same query as the one defined by
+  $\theta(\vec{x})$.
+\end{thm}
+
+\begin{proof}
+  We say a formula $\psi(\vec{x}) \in \FPR[tau]$ is
+  \emph{matrix-circuit-translatable} if there is a $P$-uniform family of
+  symmetric matrix-circuits with unique labels that compute the same query as
+  $\psi(\vec{x})$. If a formula $\psi(\vec{x}) \in \FPR[tau]$ is
+  matrix-circuit-translatable we let $(C^\psi_n)_{n \in \nats}$ denote the
+  corresponding $P$-uniform family of symmetric matrix-circuits with unique
+  labels.
+
+  We prove that $\theta(\vec{x}) \in \FPR[\tau]$ is matrix-circuit-translatable
+  by structural induction. That is, we first prove that if every sub-formula of
+  $\theta(\vec{x})$ is circuit-translatable then $\theta(\vec{x})$ is
+  circuit-translatable and, second, we note that every atomic formula in
+  $\FPR[\tau]$ is circuit-translatable. We have already that formulas of
+  $\FPC[\tau]$ are circuit translatable (Anderson and Dawar~\cite{AndersonD17}),
+  and in fact we may assume, without a loss of generality, that this translation
+  yields a family of rigid circuits.
+  
+  % It is sufficient to prove that if $\theta(\vec{x})$ has the property that
+  % all
+  % of its subformulas have are matrix-circuit-translatable then there is an
+  % algorithm that takes in a natural number $n$ and outputs a symmetric
+  % matrix-circuit $C^\theta_n$ with unique labels that is equivalent to
+  % $\theta(\vec{x})$ on structures of size $n$.
+
+  Suppose $\phi_1, \phi_2 \in \FPR[\tau]$ are matrix-circuit-translatable and
+  $\theta (\vec{x}) = \phi_1(\vec{x}) \land \phi_2(\vec{x})$. Let $R_{\phi_1}$
+  and $R_{\phi_2}$ be two $\vert \vec{x} \vert$-ary relation symbols not in
+  $\tau$. Let $\theta' (\vec{x}) := R_{\phi_1}(\vec{x}) \land
+  R_{\phi_2}(\vec{x})$. This is a formula of $\FPC$, and so we may efficiently
+  compute $C^{\theta'}_n$ using the construction in \cite{AndersonD17}. From the
+  inductive hypothesis, for each $i \in \{1,2\}$ we may also efficiently compute
+  the circuit $C^{\phi_i}_n = \langle G_i, \Omega_i, \Sigma_i Lambda_i, L_i
+  \rangle$. We construct $C^{\theta}_n$ by `gluing' $C^{\phi_1}$ and
+  $C^{\phi_2}$ into $C^{\theta'}_n$ along $R_1$ and $R_2$
+
+  % We construct the circuit $C'_n = \langle G', \Omega', \Sigma',
+  % \Lambda', L' \rangle$ by `inserting' $C^{\phi_1}_n$ and $C^{\phi_2}_n$ into
+  % $C^{\theta'}_n$. We now construct $C^{\theta}_n$ from $C'_n$ as follows:
+  % \begin{itemize}
+  % \item For each $i \in \{1,2\}$ and each relational gate $g$ in $C_n$ such
+  %   that $\Sigma'(g) = R_{\phi_i}$ `replace' $g$ with
+  %   $\Omega_i(\Lambda_i(g))$,
+  % \item then, for each syntactic equivalence class $H \subseteq
+  %   \range(\Omega_1) \uplus \range(Omega_2)$, `merge' $H$, and finally
+  % \item run `separate-labels' on the circuit.
+  % \end{itemize}
+
+  We note that, since $C^{\phi_1}_n$, $C^{\phi_2}_n$ and $C^{\theta'}_n$ have
+  unique labels, the only gates that might not have unique labels in
+  $C^{\theta}_n$ are those whose input gates include gates in the range of
+  $\Omega_1$ or $\Omega_2$. However, all such gates are symmetric and steps (2)
+  and (3) above guarantee that these gates have unique labels. Finally, we note
+  that this algorithm can implemented such that the computation of
+  $C^{\theta}_n$ from $n$ runs in time polynomial in $n$.
+
+  Analogous algorithms can be used to prove that other formulas are
+  circuit-translatable. Indeed, for circuit-translatable $\phi, \phi_1, \phi_2
+  \in \FPR[\tau]$ an analogous algorithm allows us to prove that
+  $\phi_1(\vec{x}) \lor \phi_2(\vec{x})$, $\neg \phi(\vec{x})$, $\forall y. \phi
+  (\vec{x}, y)$, $\exists y. \phi (\vec{x}, y)$ are all circuit-translatable.
+
+  Suppose $\theta(\vec{x}) = [\lfp_{V, \vec{y}} \phi(\vec{y}, V)](\vec{x})$ for
+  some circuit-translatable formula $\phi(\vec{x}, \vec{y}) \in FPR[\tau \uplus
+  \{V\}]$ and $k$-ary relation symbol $V$. We now describe an algorithm that
+  takes in a natural number $n$ and outputs $C^{\theta}_n$. We have that we may
+  efficiently compute $C^{\phi}_n$. For each $i \in [n^k]$ we construct a
+  circuit $C^i = \langle G^i, \Omega^i, \Sigma^i, \Lambda^i, L \rangle $ as
+  follows. Let $C^1$ be $C^{\phi}_n$ but with all relational gates labelled by
+  the symbol $V$ replaced with a $0$. For each $i>1$ we construct $C^{i}$ by
+  `gluing' $C^{i-1}$ into $C^\phi_n$, producing $C^i$. Set $C^{\theta}_n :=
+  C^{n^k}$. Since $C^1$ and $C^\phi_n$ are symmetric and have unique labels, by
+  induction for each $i > 1$ $C^i$ is symmetric and has unique labels. It
+  follows that $C^{\theta}_n$ is symmetric and has unique labels. Moreover,
+  since the least-fixed-point operator must converge in at most $n^k$ steps,
+  this algorithm runs in time polynomial in $n$ and the family
+  $(C^{\theta}_n)_{n \in \nats}$ computes the same query as $\theta(\vec{x})$.
+
+  We have from \cite{} that a formula containing number terms may be converted
+  into an equivalent family of formulas containing counting quantifiers. More
+  formally if $\theta (\vec{x})$ contains number terms then there exists an
+  algorithm that takes as input a natural number $n$ and outputs a formula
+  $\theta_n(\vec{x}) \in C$ with counting quantifiers and no number terms which
+  is equivalent to $\theta(\vec{x})$ for structures of size $n$ and does not
+  contain any number terms. Moreover, this algorithm runs in time polynomial in
+  $n$.
+
+  Thus to handle the number-term case it is sufficient to show that if
+  $\phi(\vec{x}) \in \FPR[\tau]$ is circuit-translatable then $\theta(\vec{x})
+  := C^{k}y. \phi(\vec{x}, y)$ is circuit translatable. Again, an analogous
+  construction as for the $\AND$-gate case described in detail above is
+  sufficient.
+
+  We have from \cite{} that a formula containing rank operator may be converted
+  into an equivalent family of formulas containing rank quantifiers. In other
+  words for a given formula $\theta(\vec{x}) \in \FPR[\tau]$ containing rank
+  operators there exists an algorithm that takes as input a natural number $n$
+  and outputs a formula $\theta_n(\vec{x})$ with rank quantifiers and no rank
+  operators. It is thus sufficient to prove that if $\phi(\vec{z}, \vec{y},
+  \vec{x})$ is circuit-translatable, $p$ is prime and $r$ is a natural number
+  then $\theta(\vec{x}) = \rank^{\leq r}_p \vec{z} \vec{y}. \phi(\vec{z},
+  \vec{y}, \vec{x})$ is circuit-translatable. We define an algorithm that takes
+  as input a natural number $n$ outputs the required circuit $C^{\theta}_n$.
+
+  We may efficiently compute the $(\mathbb{B}_{\rank}, \tau)$-circuit
+  $C^{\phi}_n = \langle G^{\phi}, \Omega^{\phi}, \Sigma^{\phi}, \Lambda^{\phi},
+  L^{\phi} \rangle$. Let $k:= \vert \vec{x} \vert$, $k_1 : = \vert \vec{z}
+  \vert$ and $k_2 := \vert \vec{y} \vert$. We now define a $(\mathbb{B}_{\rank},
+  \{ R \})$-circuit $C':= \langle G', \Omega', \Sigma', \Lambda', L'\rangle$,
+  where $R$ is a $(k_1 + k_2 +k)$-arity relation symbol. Let $G_1' :=
+  \{g_{\rank, \vec{c}} : \vec{c} \in [n]^k\}$ and $G_2' : = \{ g_{R, \vec{a},
+    \vec{b}, \vec{c}} : \vec{a} \in [n]^{k_1}, \vec{b} \in [n]^{k_2}, \vec{c}
+  \in [n]^{k}\}$.
+
+  \begin{itemize}
+    \setlength\itemsep{0mm}
+  \item Let $G' := G_1' \uplus G_2'$,
+  \item $\Omega'$ be an injection from $[n]^k$ to $G'$ defined by
+    $\Omega'(\vec{c}) = g_{\rank, \vec{c}}$,
+
+  \item $\Sigma' (g) := rk^r_p$ if $g \in G_1'$ and $\Sigma'(g) = R$ if $g \in
+    G_2'$,
+  \item For each $(\vec{a}, \vec{b}, \vec{c}) \in [n]^{k_1 +k_2 + k}$ let
+    $\Lambda' (\vec{a}, \vec{b}, \vec{c}) := g_{R, \vec{a}, \vec{b}, \vec{c}}$,
+    and
+
+  \item For each gate $g_{\rank, \vec{a}} \in G_1'$ let $L(g_{\rank, \vec{a}}):
+    [n]^{k_1} \times [n]^{k_2} \rightarrow G'$ be defined by $L(g_{\rank,
+      \vec{c}})(\vec{a}, \vec{b}) := g_{R, \vec{a}, \vec{b}, \vec{c}}$ for each
+    $\vec{a} \in [n]^{k_1}$ and $\vec{b} \in [n]^{k_2}$.
+
+    \end{itemize}
+    Let $C^{\theta}_n$ be the result of `gluing' $C^{\phi}_n$ into $C'$.
+
+    It is easy to see that both $C'$ and $C^{\phi}_n$ are symmetric
+    rank-circuits with unique labels. Thus $C^{\theta}_n$ is a symmetric
+    rank-circuit with unique labels. The construction of $C'$, and hence
+    $C^{\theta}_n$, can be implemented so as to run in time polynomial in $n$.
+    The construction ensures that the circuit family $(C^{\theta}_n)_{n \in
+      \nats}$ computes the same query as the one defined by $\theta(\vec{x})$.
+
+    It remains only to note that any atomic formula of $\FPR[\tau]$ is trivially
+    circuit-translatable. The result thus follows.
+  \end{proof}
+
+  % such that for any structure $\mathcal{A}$ of size $n$ and an assignment $$
+  % to the tuple of variables $\vec{x}$
+
+  % is symmetric and has unique labels.
+
+  % an equality between two numerical terms or an application of the
+  % least-fixed-point operator,
+
+
+
+  % it follows from Lemma \ref{}, that the syntactic equivalence relation on
+  % $G_1 \uplus G_2$ can be efficiently computed.
+
+  % Note that the construction guarantees that $C^{\theta}_n$ is symmetric.
+  % Moreover, since the only gates in $C^{\theta}_n$ are either output gates
+  % or gates
+
+
+  % Suppose $\theta(\vec{x})$ is of the form $\phi_1(\vec{x}) \land
+  % \phi_2(\vec{x})$, $\phi_1(\vec{x})\lor \phi_2(\vec{x})$, $\neg
+  % \phi(\vec{x})$, $\thr_k(y).\phi(\vec{x}, y)$, $\forall y. \phi (\vec{x},
+  % y)$, $\exists y. \phi (\vec{x}, y)$, an equality between two numerical
+  % terms or an application of the least-fixed-point operator, and each of
+  % these sub-formulas is $(\mathbb{B}, \tau)$-circuit-translatable} then
+  % $\theta(\vec{x})$ is $(\mathbb{B}, \tau)$-circuit-translatable}. This
+  % follows from the following construction. Let $n \in \nats$. We take derive
+  % the formula $\theta'(\vec{x})$ from $\theta(\vec{x})$ by replacing each
+  % sub-formula $\phi(\vec{z})$ with the formula $R_\phi(\vec{z})$ (adding in
+  % some new relational symbol $R_\phi$). We may then translate
+  % $\theta'(\vec{x})$ into a $P$-uniform family of symmetric circuits with
+  % threshold and unique labels $(C^{\theta'}_n)_{n \in \nats}$. For each $n$
+  % we then replace the relational gates in $C^{\theta'}_n$ labelled by
+  % $R_\phi$ with the circuit $C^{\phi}_n$ (that is, we add in the entire
+  % circuit $C^\phi_n$ and replace each relational gate $g$ labelled by
+  % $R_\phi$ such that $\vec{a}:= \Lambda(\vec{a})$ with with the output gates
+  % of $C^{\phi}_n$ such that if $g$ is a relational gate computing
+  % $R_\phi(\vec{a})$ then $g$ is replaced by the gate $\Omega^{-1}(\vec{a})$
+  % in $C^{\phi}_n$). We call this new circuit $C^\theta_n$. It is easy to see
+  % that this circuit is symmetric. To see that it has unique labels, notice
+  % that we need only check
+
+  % , if $L;$ $L'(g) := L(g)$ for all $g \in G' \cap G$ and for all $g \in H$
+  % $L'(H) := L(g)$ if $g \in H$
+
+
+
+  % \begin{lem}
+  %   We say a
+  % \end{lem}
+
+  % We should like to argue that for any $\theta(\vec{x}) \in \FPR[\tau]$ if
+  % every sub-formula of $\theta(\vec{x})$ is $(\mathbb_{\mat}, \tau)$-circuit
+  % translatable then $\theta(\vec{x})$ is $(\mathbb_{\mat}, \tau)$-circuit
+  % translatable. The existence of the desired translation then follows by
+  % induction on the structure of the formula.
+
+  % It is easy to see that if $\theta(\vec{x})$ is of the form $\phi_1(\vec{x})
+  % \land \phi_2(\vec{x})$, $\phi_1(\vec{x})\lor \phi_2(\vec{x})$, $\neg
+  % \phi(\vec{x})$, $\thr_k(y).\phi(\vec{x}, y)$, $\forall y. \phi (\vec{x},
+  % y)$, $\exists y. \phi (\vec{x}, y)$, an equality between two numerical terms
+  % or an application of the least-fixed-point operator, and each of these
+  % sub-formulas is $(\mathbb{B}, \tau)$-circuit-translatable} then
+  % $\theta(\vec{x})$ is $(\mathbb{B}, \tau)$-circuit-translatable}. This
+  % follows from the following construction. Let $n \in \nats$. We take derive
+  % the formula $\theta'(\vec{x})$ from $\theta(\vec{x})$ by replacing each
+  % sub-formula $\phi(\vec{z})$ with the formula $R_\phi(\vec{z})$ (adding in
+  % some new relational symbol $R_\phi$). We may then translate
+  % $\theta'(\vec{x})$ into a $P$-uniform family of symmetric circuits with
+  % threshold and unique labels $(C^{\theta'}_n)_{n \in \nats}$. For each $n$ we
+  % then replace the relational gates in $C^{\theta'}_n$ labelled by $R_\phi$
+  % with the circuit $C^{\phi}_n$ (that is, we add in the entire circuit
+  % $C^\phi_n$ and replace each relational gate $g$ labelled by $R_\phi$ such
+  % that $\vec{a}:= \Lambda(\vec{a})$ with with the output gates of $C^{\phi}_n$
+  % such that if $g$ is a relational gate computing $R_\phi(\vec{a})$ then $g$
+  % is replaced by the gate $\Omega^{-1}(\vec{a})$ in $C^{\phi}_n$). We call
+  % this new circuit $C^\theta_n$. It is easy to see that this circuit is
+  % symmetric. To see that it has unique labels, notice that we need only check
+
+
+  % We solve this problem completely for one case and argue that the other cases
+  % follow similarly. Suppose $\theta (\vec{x}) = \phi_1(\vec{x}) \land
+  % \phi_2(\vec{x})$. We now describe an algorithm that takes in $n\in \nats$
+  % and outputs a formula $C^\theta_n$ with the required properties. We first
+  % introduce two relation symbols $R_{\phi_1}$ and $R_{\phi_2}$ not in $\tau$
+  % and with arity $\vert\vec{x}\vert$. We define $\theta' (\vec{x}) =
+  % R_{\phi_1}(\vec{x}) \land R_{\phi_2}(\vec{x})$ and compute the associated
+  % symmetric threshold circuit with unique labels $C^{\theta'}_n$. Similarly,
+  % for each $i\ \in \{1,2\}$ we may compute the symmetric $(\mathbb{B},
+  % \tau)$-circuit with unique labels corresponding to $\phi_i$ that takes in
+  % inputs of size $n$, $C^{\phi_i}_n = \langle G_i, \Omega_i, \Sigma_i
+  % Lambda_i, L_i \rangle$ algorithms given by the inductive hypothesis. We then
+  % construct $C^{\theta}_n$ by inserting into $C^{\theta'}_n$ the circuits
+  % $C^{\phi_1}_n$ and $C^{\phi_2}_n$ (that is, taking a disjoint union of the
+  % sets of gates and the functions that define each circuit -- with the
+  % exception of $\Omega$ which is specified by $C^{\theta'}_n$ alone). Then for
+  % all $i \in \{1,2\}$ and each relational gate $g$ in $C^{\theta}_n$ such that
+  % $\Sigma(g) = R_{\phi_i}$ we replace $g$ with $\Omega_i(\Lambda_i(g))$. Since
+  % $C^{\phi_1}_n$ and $C^{\phi_2}_n$ have unique labels, it follows from Lemma
+  % \ref{} that we can efficiently decide if any two gates $g_1, g_2 \in G_1
+  % \uplus G_2$ are syntactical equivalent. For each pair of gates $g_1, g_2$ in
+  % the range of $\Omega_1 \uplus \Omega_2$ we check if $g_1 \equiv g_2$, and if
+  % so we merge them.
+
+  % The resultant circuit $C^{\theta}_n$ is clearly a symmetric $(\mathbb{B},
+  % \tau)-circuit$-circuit. Moreover, it is easy to see that if all pairs of
+  % gates in the range of $\Omega_1 \uplus Omega_2$ are not syntactical
+  % equivalent $g$ is a gate such that $h_1, h_2 \in H_g$ are syntactically
+  % equivalent then . it has unique labels (as the only point where two input
+  % gates could be equivalent
+
+  % we can from Lemma \ref{} that we can efficiently decide if two any two gates
+  % from the union of these circuits are syntactical equivalent. If any of their
+  % output gates are syntactically equivalent, merge these gates. This new
+  % circuit has disjoint
+
+
+  % we replace the relational gate $g$ in $C^{\theta'}_n$ such that $\Sigma(g) =
+  % R_\phi$ and $\Lambda(g) = \vec{a}$ with the circuit $C^\phi_n$ $\vec{a}$, an
+  % $\arty(R_\pi)$ each relational gate $R_\phi(\vec{a})$ in the circuit
+  % $C^{\theta'}_n$
+
+
+  % It remains to show that for any $k \in \nats$ and formula $\phi \in
+  % \FPR[\tau]$ such that $\phi$ formula of the form $\theta (\vec{z}): = [rk
+  % (\vec{x}, \vec {\nu} \leq \vec{t}, \vec{y}\vec{\mu} \leq \vec{s}, \pi \leq
+  % r). \phi(\vec{x}, \vec{nu}, \vec{y}, \vec(mu), \vec{s}, \vec{z})] \leq k$
+  % there is an equivalent $P$-uniform family of symmetric rank-circuits with
+  % unique labels $(C_n)_{n \in \nats}$ that compute the same query as $\theta$.
+
+
+  % \begin{lem}
+  %   Let $\tau$ be a relational vocabulary and let $\phi(\vec{x})$ be a formula
+  %   of $\FPR[\tau]$. There is an algorithm that takes as input a natural
+  %   number $n$ and outputs a formula $\phi_n$ such that $\phi_n$ contains no
+  %   rank operators or counting terms and for any $\tau$-structure
+  %   $\mathcal{A}$ of size $n$ and $\vert \vec{x} \vert$-tuple of elements
+  %   $\vec{a}$ from the universe of $\mathcal{A}$, $\mathcal{A}\models
+  %   \phi[\vec{a}]$ if, and only if, $\mathcal{A}\models \phi_n[\vec{a}]$.
+  %   Moreover, this algorithm runs in time polynomial in $n$.
+  % \end{lem}
+
+  % \begin{thm}
+  %   Let $\tau$ be a relational vocabulary and let $\phi$ be a formula of
+  %   $\FPR[\tau]$. There is an algorithm that takes as input a natural number
+  %   $n$ and outputs a symmetric matrix-circuit $C_n$. This algorithm runs in
+  %   time polynomial in $n$. Moreover, the query computed by the circuit family
+  %   $(C_n)_{n \in \nats}$ and the query defined by the formula $\phi$ are
+  %   equal.
+  % \end{thm}
+  % \begin{proof}
+  %   We describe a transformation inductively on the structure of the formula.
+  %   This procedure can then be implemented algorithmically using recursion.
+  
+  %   If $\phi(\vec{a})$ is an atomic formula
+  
+  % \end{proof}
+
+  % We define this transformation by recursion on the structure of the formula
+  % and note that and note that such a transformation can be implemented so as
+  % to run in time polynomial in $n$.
+
+  % Let $\phi$ be a formula
+
+
+
+
+  % \begin{thm}
+  %   Formulas of $\FPR$ can be translated into symmetric matrix-circuits
+  % \end{thm}
+  % \begin{proof}
+  %   The idea here is to do exactly the same thing as for FPC formulas except
+  %   when we arrive at a rank quantifier we `tag' each formula with
+  % \end{proof}
+ \end{document}

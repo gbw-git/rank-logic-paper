@@ -33,7 +33,7 @@ $\mathcal{A}$. All structures in this paper are finite unless stated otherwise.
 
 \begin{definition}
   Let $S = \{s_1, \ldots , s_p\}$ be a set of sort symbols and $A = A_{s_1}
-  \sqcup \ldots \sqcup A_{s_p}$ and $B = B_{s_1}\dotcup \ldots \dotcup
+  \uplus \ldots \uplus A_{s_p}$ and $B = B_{s_1}\uplus \ldots \uplus
   B_{s_p}$ be disjoint unions of non-empty sets. A \emph{sorted bijection}
   between $A$ and $B$ is a bijection $f: A \rightarrow B$ such that $f (A_s) =
   B_s$ for all $s \in S$.
@@ -219,6 +219,12 @@ The main result of~\cite{AndersonD17} is the following characterisation theorem.
   is decided by a P-uniform family of symmetric circuits with majority gates if,
   and only if, it is expressible in FPC.
 \end{thm}
+
+\subsection{Basic Notation}
+
+Let $f : X \rightarrow Y$ be a function and $\sim$ be an equivalence relation on Y. We define $f/{\sim} : X \rightarrow Y/{\sim}$ by $f(x) = [f(x)]_{\sim}$. We call this the quotient of the function by $\sim$. For any two sets $X, Y$ we let $X^{\underline{Y}}$ denote the set of all injective functions from $Y$ to $X$.
+
+
 
 \end{document}
 

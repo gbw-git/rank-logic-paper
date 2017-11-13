@@ -1,17 +1,6 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
-
-In this section we develop the theory for defining a formula of FPR from a
-family of $P$-uniform family of symmetric circuits with rank gates. We first
-prove results on the generality of rigid circuits and circuits with bijective
-labelings. Second, we prove that there are polynomial time algorithms for
-determining canonical supports of gates. Third, we develop a FPR definable way
-of evaluating a rank gate in the circuit. Finally, we complete the result by
-explicitly defining an FPR formula corresponding to a given family of symmetric
-circuits with rank gates.
-
-We note that most of these results are for the more general case of symmetric
-circuits with matrix-symmetric gates.
+In this section we construct for every query computable by a $P$-uniform family of symmetric rank circuits a corresponding $\FPR$ formula. We first prove the existence of a number of useful polynomial-time algorithms for symmetric circuits. In particular, we show that a symmetric circuit can be converted to an equivalent one that is both rigid and has bijective labels. In the second subsection we show that for a rank gate in the circuit the rank of that gate depends only on which elements of the input structure are assigned to the support of $g$. We then construct for  $g$ and an assignment to the support of $g$ a matrix $M$ which has the same rank as the gate for the given support. In the third subsection we implement this construction in $\FPC$ and hence produce a formula for evaluating a rank gate in $\FPR$. This formula, together with the Immerman-Vardi theorem and the work of Anderson and Dawar \cite{AndersonD17}, allows us to both define and evaluate a $P$-uniform family of circuits in $\FPR$, completing the result.
 
 % \begin{remark}
 %   Please ignore the first two sections (Rigid Circuits and Labelings and
@@ -25,120 +14,239 @@ circuits with matrix-symmetric gates.
 In this section we prove important simplifying lemmas which allow for
 assumptions of rigidity and bijective labels.
 
-\begin{definition}
-  We say that a circuit $C$ has bijective labels if for each gate $g$ in $C$,
-  $L(g)$ is a bijection.
-\end{definition}
+% \begin{definition}
+%   We say that a circuit $C$ has bijective labels if for each gate $g$ in $C$,
+%   $L(g)$ is a bijection.
+% \end{definition}
 
 \begin{lem}
-  \label{lem:bij_labels}
-  There is an algorithm that runs in polynomial time that takes in a circuit $C$
-  and outputs a circuit with unique gates $C'$. Moreover, if $C$ was symmetric
-  then $C'$ is symmetric. If $C$ is rigid then $C'$ is rigid.
+Let $C_n$ be a rigid circuit. If $\sigma \in \sym_n$ and $\sigma$ induces an automorphism of $C_n$ then that automorphism is unique. 
 \end{lem}
-
 \begin{proof}
-  Let $S = 2*\vert C \vert$. Recurse through the gates of $C$ topologically and
-  let $h$ be the next gate topologically. If for all $g \in W(h, \cdot)$ we have
-  that $L\vert (g)^{-1}(h) \vert = 1$ continue on to the next gate. If not add
-  in a tower of $S$ $\land$ gates such that $h \rightarrow \land^h_1 \rightarrow
-  \ldots \rightarrow \land^h_S$ (i.e. we have a tower of $\land$ gates with $h$
-  as input to $\land^h_1$ and the output of each $\land^h_i$ connected to the
-  input of each $\land^h_{i+1}$ for each $1 \leq i < S$). Now for each $g \in
-  W(h, \cdot)$, if $L(g)^{-1}(h) = \{ s_0, \ldots, s_{r}\}$, for each $1 \leq i
-  \leq r$ add in the wires $W(\land^h_i, g)$ and set $L(g)(s_{i}) = \land^h_i$.
-  Now continue on to the next gate topologically and run the above algorithm.
 
-  % First, notice that for a given gate $h$ and $k \in \mathbb{N}$, we can
-  % define
-  % a sub-circuit $h^k = 1 \and \cdots, 1 \and h$ (or rather a $k$-height tower
-  % of
-  % $k$ binary $\and$ gates with $h$ at the top and all other inputs set to
-  % $1$).
-  % We call $h$ the top of the sub-circuit $h^k$ and the bottom $and$ gate (the
-  % output of the sub-circuit) the bottom gate. We may think of this as a
-  % $k$-height copy of the gate $h$, in the sense that it has the same output as
-  % $h$ and similar orbits. We now use different copies to distinguish gates
-  % that
-  % otherwise have the same labelling.
+\end{proof}
 
-  % Let $h$ be the next gate topologically. Then let $r$ be maximal such that
-  % $W(h,g)$ and $\omega_g^{-1}(h) = \{ s^g_1, s^g_2, \ldots, s^g_r \}$. Then
-  % let
-  % $k$ be the height of the highest tower with $h$ at the top and with it's
-  % bottom connected to a gate in $W(h, \cdot)$. Then create a single
-  % $k+r-1$-height tower by adding in the appropriate number of binary $\and$
-  % gates below $h$.
+\begin{lem}
+Let $C_n := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B}, \tau)$-circuit with unique labels. There is a deterministic algorithm that takes in such a circuit and outputs the syntactic equivalence relation on $G$. Moreover, this algorithm runs in time polynomial in the size of the circuit.
+\label{lem:syntactic_equivilence_poly}
+\end{lem}
+\begin{proof}
+We proceed to define a relation $\sim$ by induction on height (i.e. distance from an input gate). This relation will be the syntactic equivalence relation on $G$. It is easy to check the conditions for syntactic equivalence for gates of height 0 as all such gates are input gates and so are either constant gates or relational gates. Suppose $g$ and $h$ are gates of height greater than zero. We only need to check conditions (i), (iv) and (v) of syntactic equivalence. It is easy to check (i) and (v). If either condition is false then $g$ and $h$ are not syntacticly equivalent. So suppose $g$ and $h$ are two internal gates such that $\Sigma (g) = \Sigma(h)$ and if they are both output gates then $\Omega^{-1}(g) = \Omega^{-1}(h)$. It remains to check if $L(g)/{\sim}$ and $L(h)/{\sim}$ are isomorphism equivalent. First check if $H_h /{\sim} = H_g /{\sim}$. If not, $g$ and $h$ are not syntacticly equivalent. So suppose $H_h /{\sim} = H_g /{\sim}$. We know that $C_n$ has unique labels, and so $L(g)/{\sim}$ and $L(h)/{\sim}$ are injections so are isomorphism equivalent if, and only if, $L(g)^{-1}L(h)$ acts like an isomorphism. This can be checked by first checking that the function induces a sorted permutation on the universe of $g$ (which can be done by iterating over the index of $g$). This is sufficient as $L(g)(L(g)^{-1}L(h)) = L(h)$.
 
-  % For each $g \in W(h, \cdot)$ and for each $\omega_g^{-1}(h) = \{s^g_1,
-  % s^g_2,\ldots , s^g_{r_g}\}$, set $L'(g)(s^g_1) = h$ each child starting with
-  % the $and$-gate child to $h$ add in a wire from from the $i$th gate in the
-  % tower to $g$ and set $L'(g)(s^g_{i+1}) = \and_i$, where $\and_i$ is the
-  % $i$th
-  % $\and$ gate in the tower starting with the $\and$ gate in the tower child to
-  % $h$. There are enough gates in the tower as $r_g \leq r$.
+It is easy to see that, given a reasonable binary encoding of a circuit, the above procedure can be implemented so as to run in polynomial time, and that the relation $\sim$ is the syntactic equivalence relation on $C_n$.
+\end{proof}
 
-  We call this updated circuit $C'$.
-  
-  Firstly, note that after running the above algorithm for each $g$ the
-  labelling of $g$ will be a bijection. Moreover, it's easy to see that the
-  output of each gate remains unchanged, and as such the output of the circuit
-  is unchanged.
+We should note that Anderson and Dawar~\cite{} do not require this 
+If we constrain ourselves to circuits over bases of symmetric functions then the syntactic equivalence relation can be computed in polynomial time with the additional requirement that the circuit have unique labels. However, if we move beyond the 
 
-  Secondly, notice that the size of $C'$ is at most $2*\vert C \vert^2$, and
-  note that the above algorithm runs in polynomial time.
+\begin{lem}
+Let $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B}, \tau)$-circuit with unique labels. There is a deterministic algorithm which runs in time polynomial in the size of the circuit and outputs an equivalent rigid circuit.
+\label{lem:rigidity_poly}
+\end{lem}
+\begin{proof}
+We partition $G$ into synthetic equivalence equivalences classes. From Lemma \ref{lem:syntactic_equivilence_poly} this can be done in polynomial time.
 
-  Now suppose that $C$ is symmetric. Let $\sigma$ be a permutation on the input
-  universe and $\pi_C$ the induced automorphism on $C$. We now define $\pi$, the
-  induced automorphism on $C'$. For each gate $g$ in $C'$, if $g$ is in $C$ then
-  set $\pi(g) := pi_C(g)$. If $g$ is not in $C$ then $g$ must be some
-  $\land^h_i$, for some $h$ in $C$. Then set $\pi(\land^h_i) :=
-  \land^{\pi_C(h)}_i$. It is easy to see that $\pi$ is an automorphism, and
-  $\pi$ extends $\sigma$.
+If each equivalence class is a singleton then $C_n$ is already rigid. In this case output $C_n$.
 
-  Suppose that $C$ is rigid. It is easy to see that $C'$ will be rigid as well.
+Note that all elements of an equivalence class must have the same height. Suppose there is an equivalence class with more than one element. Let $E:= \{ h_1, \ldots , h_{k_E}\}$ be such an equivalence class of minimal height. For each $i \in \{2, \ldots , k_E \}$ and each gate $g$ in the circuit such that $h_i \in H_g$ set $L(g)(L(g)^{-1}(h_i) := h_1$ and delete $h_i$ from the circuit. If each...needs to be finished
 
+This circuit is rigid. If $C_n$ is symmetric then This circuit is symmetric. Done.
 \end{proof}
 
 
 \begin{lem}
-  There is an algorithm that runs in polynomial time that takes in a circuit $C$
-  and outputs a circuit $C'$ such that $C'$ is rigid and has bijective labels.
-  Moreover, if $C$ was symmetric it follows that $C'$ will be symmetric.
+Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B}, \tau)$-circuit with unique labels on structures of size $n$. Let $\sigma \in \sym_n$. There is a deterministic algorithm which runs in time $\text{poly}(\vert C \vert)$ and outputs for each gate $g$ a gate $g'$ such that the function $\pi : G \rightarrow G$ defined by $\pi (g) = g'$ for all $g \in G$ is an automorphism of $C$.
 \end{lem}
-
 \begin{proof}
-  First run the algorithm from Lemma \ref{lem:bij_labels} on $C$, and call the
-  output circuit $C$.
-  
-  Recurse through the gates of $C$ topologically. For each internal gate $g$,
-  for all $g'$ in $C$ such that $g \neq g'$, $W(\cdot, g) = W(\cdot, g')$, $W(g,
-  \cdot) = W(g', \cdot)$, $\Sigma(g) = \Sigma(g')$, $L(g) \sim L(g')$ and
-  $\Omega^{-1}(g) = \Omega^{-1}(g')$, delete $g'$ and for all $s \in L^{-1}(g')$
-  set $L(s) := g$.
+We suppose that $C$ is sensibly encoded at a binary string, and as such may be assumed to be ordered. We build up a mapping $\pi$ recursively starting with the input gates. We use $\pi_i$ to denote $\pi$ after the $i$th iteration of the algorithm, and let $\pi_0 = \emptyset$. Let $g$ be the next gate in the recursion. If $g$ is a constant gate, then let $g':= g$. If $g$ is a relational gate, then let $g'$ be the first gate in the order such that $\Sigma (g) := \Sigma (g')$ and $\sigma \Lambda (g) = \Lambda (g')$ and $\sigma \Omega^{-1} (g) = \Omega^{-1}(g')$.
 
-  Now re-run the algorithm from Lemma \ref{lem:bij_labels} on $C$ and output the
-  result.
 \end{proof}
 
-  \begin{lem}
-    Let $C = \langle G, W, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\SB, \MB,
-    \tau)-circuit$ on structures of size $n$. There is a deterministic algorithm
-    which runs in Poly($\vert C \vert$) and outputs a rigid $(\SB, \MB, \tau)
-    circuit$ $C'$ such that $G' = G$ and for any $g \in G$, and any input
-    $\tau$-structure $\mathcal{A}$ and any bijection $\gamma$ from $A$ to $[n]$,
-    $C[\gamma \mathcal{A}](g) = C'[\gamma \mathcal{A}](g)$ and if $C$ is
-    symmetric then so is $C'$.
-  \end{lem}
+% \begin{lem}
+%   \label{lem:bij_labels}
+%   There is an algorithm that runs in polynomial time that takes in a rigid circuit $C$
+%   and outputs a rigid circuit with unique labels $C'$. Moreover, if $C$ was symmetric
+%   then $C'$ is symmetric.
+% \end{lem}
+% \begin{proof}
+% For each gate pair of gates $h$ and $g$ in a circuit define a constant $w^h_g$ as follows: let $w^h_g := 0$ if $h$ is not a child of $g$ and $w_g := \vert L(g)^{-1}(h)\vert$ otherwise. Let $w^h$ be the maximum over all $w^h_g$ for any gate $g$ in the circuit.
 
-  \begin{proof}
+% % We now describe an algorithm that starts with the circuit $C$ that iterates through the circuit, updating the circuit at each iteration. Fist check if for all gates $h$, $w_h = 1$. If so the circuit already has bijective labellings, and we output $C$. The encoding of the circuit allows us to define a topological order on the gates of the circuit. Let $h$ be a minimal gate in this ordering such that $w:= w^h > 1$. Add in new gates $h_1, \ldots, h_{w}$ to the circuit. Set each $h_i$, for $i \in [w]$, to be an $\AND$ gate and for all $i \in [w]$ let $h_i$ be input to $h_{i+1}$ and let $h_2$ also have $h$ as an input. Repeat this step for all gates $h'$ such that $w_{h'}$.
+
+% For each gate $g$ in the circuit such that $\vert L(g)^{-1}(h)\vert > 1$ let $\{\ell_1, \ldots , \ell_q \} := L(g)^{-1}(h)$
+% . From Lemma \ref{}. Update $L(g)$ such that $L(g)(h) (\ell_1) = h$ and $L(g)(h_i) = \ell_{i}$ for all $i \in \{2, \ldots q\}$. Now select the next gate $h$ in the topological order such that $w^h > 1$ and continue as above. If no such gate exists we are done, and we output the current state of the circuit.
+
+% The idea here is that 
+
+
+% \end{proof}
+
+% Let us define an equivalence relation $E_R$ on a $C = \langle G, \Omega, \Sigma, \Lambda, L\rangle$, where $g E_R g'$ if, and only if, (i) $\Sigma(g) = \Sigma(g')$, (ii) $\Omega^{-1} (g) = \Omega^{-1}(g')$, (iii) $H_g = H_{g'}$ and (iv) $L(g)$ is isomorphism equivalent to $L(g')$.
+
+% Given an encoding of a symmetric circuit, the equivalence relation $E_R$ can be decided in polynomial time. Checking parts (i)-(iii) is easy Given the first three parts hold, checking part (iv) requires checking that there is a sorted permutation $\pi$ on $D$, the universe of $g$, such that $L(g) = L(g') \cdot \pi$. This is equivalent to checking that the map $L(g')^{-1} L(g)$ defines a sorted permutation on $D$, which can be done in polynomial time.
+
+% We make use of this equivalence relation in the proof of the following Lemma.
+
+% \begin{lem}
+% \end{lem}
+% \begin{proof}
+% Partition $G$ into the equivalence classes of $E_R$. Check if each equivalence class has size one. If so, the circuit is rigid and we  output $C' := C$.
+
+% We now proceed iteratively, starting with the circuit $C$ and looping, modifying the circuit after every iteration. We let $C_i'$ denote the circuit after the $i$th iteration and let $C_0' := C$.  
+
+% Let $E := \{g_1 , \ldots , g_q\}$ be a minimum height equivalence class of gates such that $\vert E \vert > 1$. For each gate $g_i \in  E \setminus \{g_1\}$, set $g_i$ to be an $\AND$ gate such that $g_i$ has only $g_{i-1}$ as an input. Do this for each equivalence class in the circuit that has the same height as $E$. Partition the gates of this modified circuit into equivalence classes and choose a minimum height equivalence class and continue as above. Repeat this procedure until all equivalence classes in the circuit are singletons. Finally output the result of these successive modifications. We call this circuit $C'$.
+
+% Let $E$ be a minimum height equivalence class defined in some iteration of the above algorithm. Notice that all the gates in $E$ must evaluate to the same value for a given input to the circuit. The construction ensures that $g_1$ is unaltered in this iteration and all the other gates in $E$ are modified to be single-input $\AND$ gates in a chain starting at $g_1$. As such the evaluation of $g_1$ is passed along this chain of $\AND$ gates, ensuring that all the modified gates evaluate to the same value as $g_1$ for any input, and thus their evaluation is unchanged. This observation, together with the fact that the output wires of a gate remains unaltered, ensures that the function computed at every gate in the modified circuit is the same as that computed by the same gate in the circuit $C$. It follows from an inductive argument that the circuits $C$ and $C'$ compute the same function. 
+
+% The construction also ensures that for distinct $g_i, g_j \in E$, $g_i$ and $g_j$ have different children in $C'$, and so are not in the same equivalence class in $C'$. It follows that $g_1$ must be in a singleton equivalence class in $C'$, as if there exists a gate $g$ in $C'$ such that $g E_R g_1$, it follows that $g E_R g_1$ in $C$ and so $g \in E$, a contradiction. Let $k$ be the height of $E$ in $C$. Notice that altering the circuit as per the algorithm has no effect on equivalence classes of gates of height less $k$. Thus every iteration of the loop increases the number singleton equivalence classes by at least one. Then, since each iteration of the loop adds no new gates to the circuit and the number of iterations is bounded by the number of gates in the circuit, it follows that the algorithm loops at most $\vert C \vert$ times and outputs a rigid circuit. It follows that, given a reasonable binary encoding of $C$, the above algorithm can be implemented so as to run in time polynomial in $\vert C \vert$
+
+% We argue now that for all $i > 0$, if $C_{i-1}$ is symmetric then $C_i$ is symmetric. Suppose $C_{i-1}$ is symmetric for some $i > 0$. Let $\sigma \in \sym_n$ and let $\pi \in \aut(C_{i-1})$ be an automorphism that extends $\sigma$. Notice that $\pi$ maps equivalence classes in $C_{i-1}$ to equivalence classes $C_{i-1}$. We define a map $\pi'$ on $C_{i}$. For an input gate $g$ we set $\pi' g := \pi g$. For each equivalence class of gates $E$ in $C_{i-1}$ we let $E' := \pi E$. We order the elements of $E$ and $E'$ in accordance with their topological order in $C_{i}$, giving us $E =: \{g_1, \ldots, g_q\}$ and $E' := \{g_1' , \ldots , g_q'\}$ and set $\pi' g_i := g_i'$ for all $i \in [q]$. The idea is that the set $E$ in $C_i$ consists of single gate whose type and children remain unchanged  followed by a chain of $\AND$ gates. The function $\pi'$ maps the chain $E$ to the chain $E'$ in such a way that $W(g_i, g_j)$ if, and only if, $W(\pi' g_i, \pi' g_j)$. Moreover, $\pi'$ is clearly surjective (as every gate is contained in some equivalence class) and injective (from the injectiveity of $\pi$). Let $k$ be the minimum height of a non-singleton equivalence class of gates in $C_{i-1}$. Let $E_1, \ldots , E_p$ be all of the non-singleton equivalence classes of gates in $C_{i-1}$. Let $g$ be a gate in the circuit $C_{i}$. We should like to prove that $\pi'$ at $g$ satisfies the conditions of a circuit automorphism for $C_{i}$. Suppose $g$ in $E_i = \{g_1, \ldots, g_q\}$, for some $i \in [p]$. If $g = g_1$, then $\pi' g = \pi g$, and since all the children fo $g$ are not in $E$ we have the result for $g$. Suppose $g = g_j$ for some $j \in \{2,\ldots , q\}$. Then $g$ is a single-input $\AND$ gate in a chain, and so from the the above observation that $\pi'$ maps chains to chains, we have the result for $g$. Suppose $g \notin E$. If none of the children of $g$ are in $E$ then we are done. Suppose $g$ has children in $E$. Clearly only non-trivial condition that needs to be checked is that $L(g)$ is isomophism-equivilent to $L(\pi' g)$. Let 
+
+% Let $\sigma \in \sym_n$ and $\pi$ be an automorphism extending $\sigma$. Let $E$ be an equivilence class in $C$. Then 
+% \begin{claim}
+% If $\pi$ is an automorphism of $C_{i-1}$ and for all gates $g, h$ in $C_i$, $W_i(h,g)$ iff $W_i(\pi h, \pi g)$, then $\pi$ is an automorphism of $C_i$.
+% \end{claim}
+% \begin{proof}
+% 	It is easy to see that $\pi$ 
+% \end{proof}
+
+% maps the chain of $This clearly satisfies the requirements. If  Suppose $g \in E$, for some . Then $g$ in $C_i$ is unchanged from its state in $C_{i-1} or is an $\AND$ gate with a single input. In the first case $\pi' g = \pi g$. In the second case we have that $g$ is the $i$th $\AND$ gat $\pi'$ maps the $i$th $\AND$ gate in one chain of created $\AND$ gates to the $i$th gate in the corresponding chain, and thus maps $g$ as an automorphism. Suppose $g \notin E$. If none of the children of $g$ are in $E$ either then $\pi' g = \pi g$ and we are done. Suppose there are children of $g$ in $E$. is an   then $\pi' g = \pi g$.  Thus if both $g, h \notin E$ then we are done. Similarly, if both $g, h \in E$ then it is easy to argue from the definition of Suppose $g \in E$ and $h \notin E$. 
+
+
+
+% If gates in $E$ and $E'$ have been modified in $C_i'$ then $\pi' g_1= \pi g_i = g_i'$ restricted to $E$ is clearly
+
+% Let $k$ be the minimum height of an equivalence class We define a map $\pi'$ on the gates of $C_i$. Let $g_1$ be a gate in $C$ $E := \{g_1 , \ldots , g_q\}$ be an equivalence class of gates $C_{i-1}$. Then let  all gates $g$ outside of $E$ set $\pi' g := \pi g$. For $g_i \in E$ 
+
+% and argue that $\pi' \in \aut(C')$ and that $\pi'$ extends $\sigma$. For an input gate $g$ let $\pi g = \pi'g$. It follows that $\pi'$ extends $\sigma$. Let $E := \{g_1 , \ldots , g_q\}$ be a minimal height equivalence class of gates in 
+
+% We note that this construction ensures that if $ If at any stage in the computation we have that a gate $g$ is modified to an \AND gate $g'$, $g$ and $g'$ must evaluate to the same value for any given input.
+% We note that $C'$ computes the same function as $C$ and that if $C$ is symmetric $C'$ is symmetric. 
+
+
+% and  must be in a  must not be in the equivalence class as $g. Suppose there exists $g$ in the modified circuit such that $g_i' E_R g$. But if $g \in E$ then $g$ and $g_i$ have different sets of children, and so cannot be $E_R$-equivalent, a contradiction. If $g \notin E$ and if $g_i = g_1$ then $g_1 E_R g$ implies $g \in E$, a contradiction. If $g \notin E$ and $g_i \neq g_1$, then 
+
+% We note that for a given input structure all the gates in in an equivalence class $E$ must evaluate to the same value. We should like to replace each gate in $E$ such that each gate is in a singleton equivalence class and such that each gate that evaluates to the same value for a given structure (and so does not affect the evaluation of the circuit). As such, we replace the gates in $E$ by a single gate $g_1$ and a collection of \AND gates that all copy the output of $g_1$ and are connected up in a chain. This setup ensures that the gates are no longer equivalent but, since they just copy the output of $g_1$, they each still compute the same function. It remains to show that this algorithm runs in polynomial time, outputs a rigid circuit and that this output circuit it symmetric if the input circuit is symmetric.
+
+% An iteration of the algorithm modifies $E$ such that each gate in $E$ now has a unique set of 
+% children.  during the execution of the algorithm only decrease the number of equivilence clas
+% there is an equivalence class of height $k$ of size greater than one, then after an iteration of the loop the number of such equivalence classes at height $k$ must have decreased by one.
+
+% \begin{lem}
+%   \label{lem:bij_labels}
+%   There is an algorithm that runs in polynomial time that takes in a circuit $C$
+%   and outputs a circuit with unique gates $C'$. Moreover, if $C$ was symmetric
+%   then $C'$ is symmetric. If $C$ is rigid then $C'$ is rigid.
+% \end{lem}
+
+% \begin{proof}
+%   Let $T = 2*\vert C \vert$. We now describe the construction of $C'$ from $C$. Let $C'$ contain all the internal and constant gates in $C$. Recurse through the internal gates of $C$ topologically. Let $h$ be the next internal gate in this recursion. If for all $g \in W_h = \{g \in C : h \in H_g \}$ we have
+%   that $\vert L (g)^{-1}(h) \vert = 1$ continue on to the next gate. Suppose this is not the case, and so let $g$ be a such that $t_{h,g} := \vert L(g)^{-1}(h) \vert > 1$. The idea of the algorithm is that for such a pair $h, g$ replace all but $1$    through another circuit that has the same output as $h$. More formally, we define a \emph{$t$-tower on $h$ to $g$} to be an $t$-length sequence of $\land$ gates each taking in a single input wired up such that 
+%   \begin{align*}
+%   	h \rightarrow \underbrace{\land \rightarrow \ldots \rightarrow \land}_{t \text{ many gates}} \rightarrow g.	
+%   \end{align*}
   
-  \end{proof}
+%   Then for each $g \in W_h$, if $\vert L (g)^{-1}(h) \vert > 1$ we  $h$ by inserting a $S$-tower on $h$ to $g$ 
+  
+%   $h \rightarrow \land  If not add
+%   in a tower of $S$ $\land$ gates such that $h \rightarrow \land^h_1 \rightarrow
+%   \ldots \rightarrow \land^h_S$ (i.e. we have a tower of $\land$ gates with $h$
+%   as input to $\land^h_1$ and the output of each $\land^h_i$ connected to the
+%   input of each $\land^h_{i+1}$ for each $1 \leq i < S$). Now for each $g \in
+%   W_h$, if $L(g)^{-1}(h) = \{ s_0, \ldots, s_{r}\}$, for each $1 \leq i
+%   \leq r$ add in the wires $W(\land^h_i, g)$ and set $L(g)(s_{i}) = \land^h_i$.
+%   Now continue on to the next gate topologically and run the above algorithm.
+
+%   % First, notice that for a given gate $h$ and $k \in \mathbb{N}$, we can
+%   % define
+%   % a sub-circuit $h^k = 1 \and \cdots, 1 \and h$ (or rather a $k$-height tower
+%   % of
+%   % $k$ binary $\and$ gates with $h$ at the top and all other inputs set to
+%   % $1$).
+%   % We call $h$ the top of the sub-circuit $h^k$ and the bottom $and$ gate (the
+%   % output of the sub-circuit) the bottom gate. We may think of this as a
+%   % $k$-height copy of the gate $h$, in the sense that it has the same output as
+%   % $h$ and similar orbits. We now use different copies to distinguish gates
+%   % that
+%   % otherwise have the same labelling.
+
+%   % Let $h$ be the next gate topologically. Then let $r$ be maximal such that
+%   % $W(h,g)$ and $\omega_g^{-1}(h) = \{ s^g_1, s^g_2, \ldots, s^g_r \}$. Then
+%   % let
+%   % $k$ be the height of the highest tower with $h$ at the top and with it's
+%   % bottom connected to a gate in $W(h, \cdot)$. Then create a single
+%   % $k+r-1$-height tower by adding in the appropriate number of binary $\and$
+%   % gates below $h$.
+
+%   % For each $g \in W(h, \cdot)$ and for each $\omega_g^{-1}(h) = \{s^g_1,
+%   % s^g_2,\ldots , s^g_{r_g}\}$, set $L'(g)(s^g_1) = h$ each child starting with
+%   % the $and$-gate child to $h$ add in a wire from from the $i$th gate in the
+%   % tower to $g$ and set $L'(g)(s^g_{i+1}) = \and_i$, where $\and_i$ is the
+%   % $i$th
+%   % $\and$ gate in the tower starting with the $\and$ gate in the tower child to
+%   % $h$. There are enough gates in the tower as $r_g \leq r$.
+
+%   We call this updated circuit $C'$.
+  
+%   Firstly, note that after running the above algorithm for each $g$ the
+%   labelling of $g$ will be a bijection. Moreover, it's easy to see that the
+%   output of each gate remains unchanged, and as such the output of the circuit
+%   is unchanged.
+
+%   Secondly, notice that the size of $C'$ is at most $2*\vert C \vert^2$, and
+%   note that the above algorithm runs in polynomial time.
+
+%   Now suppose that $C$ is symmetric. Let $\sigma$ be a permutation on the input
+%   universe and $\pi_C$ the induced automorphism on $C$. We now define $\pi$, the
+%   induced automorphism on $C'$. For each gate $g$ in $C'$, if $g$ is in $C$ then
+%   set $\pi(g) := pi_C(g)$. If $g$ is not in $C$ then $g$ must be some
+%   $\land^h_i$, for some $h$ in $C$. Then set $\pi(\land^h_i) :=
+%   \land^{\pi_C(h)}_i$. It is easy to see that $\pi$ is an automorphism, and
+%   $\pi$ extends $\sigma$.
+
+%   Suppose that $C$ is rigid. It is easy to see that $C'$ will be rigid as well.
+
+% \end{proof}
+
+
+% \begin{lem}
+%   There is an algorithm that runs in polynomial time that takes in a circuit $C$
+%   and outputs a circuit $C'$ such that $C'$ is rigid and has bijective labels.
+%   Moreover, if $C$ was symmetric it follows that $C'$ will be symmetric.
+% \end{lem}
+
+% \begin{proof}
+%   First run the algorithm from Lemma \ref{lem:bij_labels} on $C$, and call the
+%   output circuit $C$.
+  
+%   Recurse through the gates of $C$ topologically. For each internal gate $g$,
+%   for all $g'$ in $C$ such that $g \neq g'$, $W(\cdot, g) = W(\cdot, g')$, $W(g,
+%   \cdot) = W(g', \cdot)$, $\Sigma(g) = \Sigma(g')$, $L(g) \sim L(g')$ and
+%   $\Omega^{-1}(g) = \Omega^{-1}(g')$, delete $g'$ and for all $s \in L^{-1}(g')$
+%   set $L(s) := g$.
+
+%   Now re-run the algorithm from Lemma \ref{lem:bij_labels} on $C$ and output the
+%   result.
+% \end{proof}
+
+%   \begin{lem}
+%     Let $C = \langle G, W, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\SB, \MB,
+%     \tau)-circuit$ on structures of size $n$. There is a deterministic algorithm
+%     which runs in Poly($\vert C \vert$) and outputs a rigid $(\SB, \MB, \tau)
+%     circuit$ $C'$ such that $G' = G$ and for any $g \in G$, and any input
+%     $\tau$-structure $\mathcal{A}$ and any bijection $\gamma$ from $A$ to $[n]$,
+%     $C[\gamma \mathcal{A}](g) = C'[\gamma \mathcal{A}](g)$ and if $C$ is
+%     symmetric then so is $C'$.
+%   \end{lem}
+
+%   \begin{proof}
+  
+%   \end{proof}
 
   \subsection{Computing Supports}
   
  \begin{lem}
-   Let $C$ be a rigid $(\SB, MB, \tau)$-circuit on structures of size $n$ and
+   Let $C$ be a rigid $(\SB, \MB, \tau)$-circuit on structures of size $n$ and
    $\sigma \in \sym_n$. There is a deterministic algorithm which runs in time
    Poly($\vert C \vert$) and outputs for each gate $g$ its image under the
    automorphism $\pi$ induced by $\sigma$, if it exists.
@@ -183,16 +291,15 @@ assumptions of rigidity and bijective labels.
 
  \subsection {Evaluating Circuits}
  In this section let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a family of
- polynomial-size rigid symmetric matrix-circuits that compute a $q$-ary query
+ polynomial-size rigid symmetric matrix-circuits with bijective labels that compute a $q$-ary query
  and let $n_0$ be the constant in the hypothesis of the Support Theorem. We also
  fix a structure $\mathcal{A}$ of size $n$ over the universe $U$ and an internal
- gate $g$ in the circuit $C_n$. In this section we show how to evaluate $g$ in
- $\FPR$ given evaluations of $g$'s children. In this way we will be able to
- recursively evaluate the circuit.
+ gate $g$ in the circuit $C_n$. In this subsection we show how to evaluate $g$ in
+ $\FPR$ for a given assignment to its support.
 
- If $g$ is a symmetric gate the results of Anderson and Dawar \cite{AndersonD17}
+ If $g$ is a symmetric gate then the results of Anderson and Dawar \cite{AndersonD17}
  will suffice for evaluating $g$. As such, we assume that $g$ is a
- matrix-symmetric gate, and for simplicity of notation we let $A \times B :=
+ matrix-symmetric gate, and we let $A \times B :=
  \ind(g)$.
 
  Recall that in order to evaluate the gate $g$ we need to consider a bijection
@@ -425,7 +532,7 @@ For a gate $h \in H_g$ define $A_h := \{\vec{x} \in U^{\underline{\consp(s)}} :
 for other objects in the circuit which may be permuted and which are relevant to
 $g$. More generally, let $X$ be a set on which the left group action of $\sym_n$
 is defined and $s \in X$. We let $A_s = \{\vec{x} \in U^{\underline{\consp(s)}}
-: \eta \sim \vec{x} \cdot \vec{\consp}^{-1}(s) \}$. We will be particularly
+: \eta \sim \vec{x}\}$. We will be particularly
 interested in the case where $X$ is the set of rows or columns (i.e. $A$ or $B$)
 indexing the inputs of $g$.
 
@@ -533,7 +640,7 @@ that we permute $\vec{y}$ so that it is compatible with $\vec{x}$.
 Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $u_1, \ldots , u_k$ be
 the first $k$ elements of $[n] \setminus (\consp(g) \cup \consp(i))$. Then let
 $T = \{a \in \consp(j) \setminus \consp(g) : \vec{y}(a) \in \vec{x}(\consp(i)
-\setminus \consp(g))\}$ and $\vec{c} \in \sym_n$ such that
+\setminus \consp(g))\}$ and $\vec{c} \in [n]^k$ such that
 \[
   \vec{c} (a) =
   \begin{cases}
@@ -747,17 +854,13 @@ $T = \{a \in \consp(j) \setminus \consp(g) : \vec{y}(a) \in \vec{x}(\consp(i)
 % \end{lem}
 
 So for any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ we have $\vec{r}$,
-$\vec{c}$, $sigma_r$ and $\sigma_c$ from Lemma \ref{lem:permutation_row-column}.
+$\vec{c}$, $\sigma_r$ and $\sigma_c$ from Lemma \ref{lem:permutation_row-column}.
 Let $h = L(g)(\sigma_r(i), \sigma_c (j))$. We define the matrix $M : I \times J
 \rightarrow \{0,1\}$ by
 
 \begin{align*}
   M((i , \vec{x}), (j, \vec{y})) := (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in EV_h.
 \end{align*}
-
-Furthermore, we note the following.
-
-
 
 Let $I /{\sim} = \{(i, \vec{x}): i \in R^{\min}, \vec{x} \in A_i{\sim_i}\},$ and
 $J/{\sim} = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j/{\sim_j}\}$. Let the
@@ -886,17 +989,16 @@ Note that both $\alpha^{\gamma}$ and $\beta^{\gamma}$ can be lifted to functions
 on $I /{\sim}$ and $J /{\sim}$ respectively. Lemma
 \ref{lem:functions-well-defined} gives us that these liftings are well-defined.
 
-
 We now show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ act as witnesses to the
 row-column of equivalence of $M_{~}$ and $L^{\gamma}$. The following lemma
 proves surjectivity.
 
-\begin{remark}
-  I am still in the process of rewriting this section (and figuring out how to
-  restructure it) so as to include this quotienting operation. The remainder of
-  this section should still be looked at, but I have yet to integrate the
-  quotenting operation. I would also like to talk with you about this step.
-\end{remark}
+% \begin{remark}
+%   I am still in the process of rewriting this section (and figuring out how to
+%   restructure it) so as to include this quotienting operation. The remainder of
+%   this section should still be looked at, but I have yet to integrate the
+%   quotenting operation. I would also like to talk with you about this step.
+% \end{remark}
 
 \begin{lem} 
   For any bijection $\gamma : U \rightarrow [n]$ both $\alpha^{\gamma}$ and
@@ -1045,24 +1147,33 @@ The following lemma allows us to factor through permutations.
 
 \begin{lem}
   Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
-  J$ such that $\vec{x} \equiv_i \vec{x}'$ and $\vec{y} \equiv_j \vec{y}'$. Then
-  for any $\gamma \in [n]^{\underline{U}}$, $\alpha^{\gamma}(i, \vec{x}) =
-  \alpha^{\gamma}(i, \vec{x}')$ and $\beta^{\gamma}(j, \vec{y}) =
+  J$ and let $\gamma \in [n]^{\underline{U}}$. If $\vec{x} \equiv_i \vec{x}'$ then $\alpha^{\gamma}(i, \vec{x}) =
+  \alpha^{\gamma}(i, \vec{x}')$ and if $\vec{y} \equiv_j \vec{y}'$ then $\beta^{\gamma}(j, \vec{y}) =
   \beta^{\gamma}(j, \vec{y}')$.
   \label{lem:alpha-beta-mutal-equivalence}
 \end{lem}
 \begin{proof}
-  From mutual equivalence there exists $\sigma_1 \in \stab(i) \cap \spstab{g}$
-  and $\sigma_2 \in \stab{j} \cap \spstab{g}$ such that $\vec{x}' = \vec{x}
-  \cdot \sigma_1\restriction{\consp(i)}$ and $\vec{y}' = \vec{y} \cdot
-  \sigma_2\restriction{\consp(j)}$. Notice that $\alpha^{\gamma}(i, \vec{x})$
-  and $\beta^{\gamma}(j, \vec{y})$ both stabilise $\consp(g)$. Then for $a \in
-  \consp(i)$, $\Pi^{\gamma}_{\vec{x}} (\sigma_1 (a)) = \gamma (\vec{x}(\sigma_1
+  From mutual equivalence there exists $\sigma \in \stab(i)$ such that $\vec{x}' = \vec{x}
+  \cdot {\sigma}\restriction_{\consp(i)}$. Notice that $\alpha^{\gamma}(i, \vec{x})$ stabilises $\consp(g)$. Then for $a \in
+  \consp(i)$, $\Pi^{\gamma}_{\vec{x}} (\sigma (a)) = \gamma (\vec{x}(\sigma
   (a))) = \gamma (\vec{x}'(a)) = \Pi^{\gamma}_{\vec{x}'}(a)$. It follows from
-  Lemma \ref{lem:functions-mutual-equivalence} that $\alpha^{\gamma}(i,j) =
-  \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\gamma}_{\vec{x}'}(i)$. The result follows
+  Lemma \ref{lem:functions-mutual-equivalence} that $\alpha^{\gamma}(i,\vec{x}) =
+  \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\gamma}_{\vec{x}'} = \alpha^{\gamma}(i, \vec{x}')$. The result follows
   similarly for $\beta$.
 \end{proof}
+
+% \begin{proof}
+%   From mutual equivalence there exists $\sigma_1 \in \stab(i) \cap \spstab{g}$
+%   and $\sigma_2 \in \stab{j} \cap \spstab{g}$ such that $\vec{x}' = \vec{x}
+%   \cdot \sigma_1\restriction{\consp(i)}$ and $\vec{y}' = \vec{y} \cdot
+%   \sigma_2\restriction{\consp(j)}$. Notice that $\alpha^{\gamma}(i, \vec{x})$
+%   and $\beta^{\gamma}(j, \vec{y})$ both stabilise $\consp(g)$. Then for $a \in
+%   \consp(i)$, $\Pi^{\gamma}_{\vec{x}} (\sigma_1 (a)) = \gamma (\vec{x}(\sigma_1
+%   (a))) = \gamma (\vec{x}'(a)) = \Pi^{\gamma}_{\vec{x}'}(a)$. It follows from
+%   Lemma \ref{lem:functions-mutual-equivalence} that $\alpha^{\gamma}(i,\vec{x}) =
+%   \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\gamma}_{\vec{x}'}(i)$. The result follows
+%   similarly for $\beta$.
+% \end{proof}
 
 \begin{lem}
   Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
@@ -1079,8 +1190,8 @@ The following lemma allows us to factor through permutations.
   The second equality follows from Lemma \ref{lem:alpha-beta-mutal-equivalence}.
 \end{proof}
 
-Let $I_{\equiv} = \{(i, [\vec{x})]_{\equiv}) : (i, \vec{x}) \in I\}$ and
-$J_\equiv = \{(j, [\vec{y}]_{\equiv}) : (j, \vec{y})\}$. Let $M_{\equiv} :
+Let $I_{\equiv} = \{(i, [\vec{x})]_{\equiv_i}) : (i, \vec{x}) \in I\}$ and
+$J_\equiv = \{(j, [\vec{y}]_{\equiv_j}) : (j, \vec{y})\}$. Let $M_{\equiv} :
 I_{\equiv} \times J_{\equiv} \rightarrow \{0,1\}$ be defined by $M_\equiv ((i,
 [\vec{x}]_\equiv), (j, [\vec{y}]_\equiv)) := M((i,\vec{x}), (j, \vec{y}))$.
 Lemma \ref{lem:matrix-quot-well-defined} gives us that this function is
@@ -1122,6 +1233,8 @@ well-defined.
   (a)$. Thus $\vec{x} \equiv_i \vec{x}'$, and the lifting of $\alpha^{\gamma}$
   to $I_{\equiv}$ is an injection. The result follows.
 \end{proof}
+
+Let $(i,\vec{x}), (i, \vec{x}') \in I$ be such that $\vec{x} \equiv \vec{x}'$. From Lemma \ref{lem:matrix-quot-well-defined} it follows that for all $(j, \vec{y}) \in J$, $M((i, \vec{x}), (j, \vec{y})) = M((i, \vec{x}'), (j, \vec{y}))$, and any two rows indexed by elements of the same equivalence class are equal. It follows that $\rank (M) = \rank (M_{\equiv}) = \rank (L^{\gamma})$.
 
 % \begin{lem}
 %   Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Then
@@ -1317,6 +1430,137 @@ that for any $\tau$-structure $\mathcal{A}$ over the universe $U$ with $\vert U
 \vert = n$, the $q$-ary query defined by $C_n$ on input $\mathcal{A}$ is defined
 by $Q$ when interpreted in $\mathcal{A}$.
 
-From the Immerman-Vardi theorem and Lemma \ref{}, there is an $FP$
-interpretation defining a circuit with bijective 
+Since $\mathcal{C}$ is P-uniform, it follows from the Immerman-Vardi theorem and Lemma \ref{} that there is an $\FP(\leq)$ interpretation defining a rigid symmetric circuit with bijective labeling equivalent to $C_n$ when interpreted in the structure $\langle n, \leq \rangle$. We abuse notation and also call this circuit $C_n$. Let this interpretation be denoted by $\Phi :=  (\phi_G, \phi_\omega, (\phi_s)_{ s \in \mathbb{B} \cup \tau \cup \{0,1\}}, (\phi_{\Lambda_R})_{R \in \tau}, \phi_L)$, where $\mathbb{B}$ consists of the symbols $\land$, $\lor$, $\maj$, $\rank$ and $\nand$. Let $t$ be the artity of this interpretation. It follows that the domain of this interpretation is a subset of $[n]^t$. We identify the tuples in $[n]^t$ with elements of the initial segment of the natural numbers $[n^t]$. In this way $\phi_g$ has one free number variable and defines the set of gates $G \subseteq [n^t]$ (rather than $G$ as a subset of $[n]^t$). Similarly we have that $\phi_s (\mu)$ holds if, and only if, $\mu$ is assigned to a gate of type $s$, and $\phi_L (\mu, \vec{\kappa}, \nu)$ holds if, and only if, $L$ at the gate $\mu$ maps the tuple $\vec{\kappa}$ to the gate $\nu$. Moreover, it follows from the Immerman-Vardi theorem that there exists a formula $\FA{rank-type}(\mu, \kappa , \pi)$ such that, for a structure $\mathcal{A}$, $\mathcal{A} \models \FA{rank-type}[g, r, p]$ if, and only if, $g$ is a rank gate with prime $p$ and threshold $r$. We note that the bound on the domain is definable as a closed number term $\FA{m} := (x\# (x = x))*t$. 
+We have from the support theorem that there are constants $n_0$ and $k$ such that for all $n \geq n_0$ the support of each gate has size at most $k$. Note that for each $n \leq n_0$, $C_n$ can be evaluated by an $\FPC$ formula with simply quantifies over all of the possible bijections from the universe of $\mathcal{A}$ to $[n]$ (since there are at most constantly many such bijections). As such we suppose $n \geq n_0$ in the rest of this subsection. 
+
+We will recursively construct $\EV_g$ for each gate $g$ in the circuit. While we have that the canonical support of $g$ has size at most $k$, it may not be equal to $k$. As such, if $\vert \consp(g) \vert = \ell$, we define 
+
+\begin{align*}
+    \overline{\EV}_g = \{ (a_1, \ldots , a_k) \in [n]^k : (a_1 , \ldots , a_\ell ) \in \EV_g \text{ and } i \neq j \implies a_i \neq a_j \}.
+\end{align*}
+
+In this subsection we use $\mu$ and $\nu$ to denote number variables that index gates. We use $\epsilon$ and $\delta$ to denote variables that index elements of the universe of a gate. We use $\kappa$ and $\pi$ to denote number variables. We use $x, y, z, \ldots$ to denote vertex variables and $U, V, \ldots$ to denote relation variables. We use $a, b, c , \ldots$ to denote elements of the vertex sort. When a vector of values or variables is used without reference to size, it is usually taken to be a $k$-tuple.
+
+We seek to define a relation $V \subseteq [n^t] \times U^k$ by $V(g, \vec{a})$ if, and only if, $\vec{a} \in \overline {\EV}_g$. Our aim is to define a set of formulas $\theta_s (\mu, \vec{x})$, where $s \in  \mathbb{B} \cup \tau \cup \{0,1\}$, which evaluate the gate indexed by $\mu$ for the assignment to its support given by $\vec{x}$ if it is a gate labelled by the symbol $s$. Each of these formulas are written in terms of $V$, the relation variable we are inductively defining.
+
+We will define the $\FPR$ formula $\theta_\rank (\mu, \vec{x})$. The other formulas have already been defined by Anderson and Dawar \cite{AndersonD17} and so this will suffice. In order to do this we first define a formula $\psi_M$ that defines the matrix $M$ from the previous subsection. We then use the rank operator to compute the rank of the given matrix. In order to define $\psi_M$ and $\theta_\rank$ succinctly we first define a number of useful $\FPC$ formulas.
+
+We define the closed number term $\FA{s} := x\# (x = x)$, which defines the size of the structure. The following two formulas take in a gate $g$ and an element of the universe of $g$ and check if that element is in the first or second sort (i.e. of it is a row or a column).
+
+\begin{align*}
+\FA{row} (\mu, \delta) := & \exists \nu, \epsilon \leq \FA{m} \, (\Phi_L (\mu, \delta , \epsilon, \nu))\\
+\FA{col} (\mu, \epsilon) := & \exists \nu, \delta \leq \FA{m} \, (\Phi_L (\mu, \delta , \epsilon, \nu))
+\end{align*}
+
+From Lemma \ref{}, and invoking Immerman-Vardi theorem, we have an $\FPC$ formula $\FA{orb}(\mu, \delta, \epsilon)$ such that $\mathcal{A} \models \FA{orb}[g,i, i']$ if, and only if, $i$ and $i'$ are in the universe of $g$ and are in the same orbit. The following formula allows us to define the minimal element of an orbit
+
+\begin{align*}
+\FA{min-orb} (\mu, \delta) := \forall \epsilon \leq \FA{m} \, (\FA{orb} (\mu, \delta, \epsilon) \implies \delta \leq \epsilon).
+\end{align*}
+
+% We define an $\FPC$ formula $\FA{agree}_s (\vec{s}_1, \vec{s}_1, \vec{x}, \vec{y})$ such that for $\mathcal{A}$, $\mathcal{A}^{\leq} \models \FA{agree}_s[\vec{r}, \vec{c}, \vec{a}, \vec{b}]$ if, and only if,  $\vec{a}_{\vec{r}} \sim \vec{b}_{\vec{c}}$.
+
+From Anderson and Dawar \cite{AndersonD17} there is an $\FPC$ formula $\FA{supp}$ such that $\mathcal{A} \models \FA{supp} [g, u]$ if, and only if, $\mathcal{A} \models \phi_G [g]$ and $u$ is in $\consp(g)$. They use this formula to inductively define a set of formula $\FA{supp}_i$ for each $i \in \nats$ such that $\mathcal{A} \models \FA{supp}_i[g, u]$ if, and only if, $u$ is the $i$th element of $\consp(g)$.
+
+Similarly, we can define $\FA{supp}^r$ such that $\mathcal{A} \models \FA{supp}^r[g, a, u]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{row}[g, a]$ and $u$ is in $\consp_g(u)$, and $\FA{supp}^c$ such that $\mathcal{A} \models \FA{supp}^c[g, a, u]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{col}[g, a]$ and $u$ is in $\consp_g(u)$. Again we can define the formulas $\FA{supp}^r_i$ and $\FA{supp}^c_i$ for each $i \in \nats$ which hold if, and only if, the element given is in fact the $i$th element of the row and column support respectively.
+
+From Anderson and Dawar \cite{AndersonD17} we have an $\FPC$ formula $\FA{agree}(\mu, \nu, \vec{x}, \vec{y})$ such that $\mathcal{A} \models \FA{agree}[g, h, \vec{a}, \vec{b}]$ if, and only if, $\vec{a}_g' \sim \vec{b}_h'$, where $\vec{a}_g'$ and $\vec{b}_h'$ are the the restrictions of the $k$-tuples $\vec{a}_g$ and $\vec{b}_h$ to the sizes of $\consp(g)$ and $\consp(h)$ respectively. We can similarly define define $\FA{agree}_1 (\mu,, \nu, \delta , \vec{x}, \vec{y}, \vec{z})$ (where $\vec{z}$ is a tuple of size $2k$) such that $\mathcal{A} \models \FA{agree}_1 [g, h, i, \vec{a}, \vec{b}, \vec{c}]$ if, and only if, $\vec{b}_h' \sim \vec{c}_i'$, $\vec{a}_g' \sim \vec{b}_h'$ and $\vec{c}_i' \sim \vec{a}_g'$, and where $\vec{a}_g'$, $\vec{b}_h'$ and $\vec{b}_i'$ are the the restrictions of the tuples $\vec{a}_g$, $\vec{b}_h'$ and $\vec{c}_i'$ to the sizes of $\consp(g)$, $\consp(h)$ and $\consp_g(i)$ respectively 
+
+It is easy to see that the construction of the vector $\vec{c}$ from Equation \ref{} is expressible in $\FPC$. Thus we assert that there exists an $\FPC$ formula $\FA{move} (\mu, \delta, \epsilon, \vec{y},  \vec{x}, \vec{y}, \vec{z}, \vec{w})$ such that $\mathcal{A} \models \FA{move} [g, i, j, \vec{a}, \vec{b}, \vec{d}, \vec{c}']$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{row}_g[g,i] \land \FA{col}[g, j]$ and the vector $\vec{c}$ defined in the previous section is equal to the restriction of $\vec{c}'$ to the length of $\vec{c}$.
+
+From Lemma \ref{} and invoking the Immerman-Vardi theorem, there is an $\FPC$ formula $\FA{map}^c$ such that $\mathcal{A} \models \FA{map}^c[g, j, j', \vec{c}]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{col}[g, j] \land \FA{col}[g, j']$ and such that for all $\sigma \in \sym_n$ if $\sigma (\vec{\consp}_g(j)) = \vec{c}$ then $\sigma (j) = j'$.
+
+% Similarly we can define $\FA{agree}_1 (\mu, \delta , \vec{x}, \vec{y})$ such that $\mathcal{A}^leq \models \FA{agree}_1 [g, i, \vec{a}, \vec{b}]$ if, and only if, $\alpha \sim \beta$, where $\alpha \in U^{\underline{\consp(g)}}$ and $\beta \in U^{\underline {\consp_g(i)}}$ are the restrictions of $\vec{a}$ and $\vec{b}$ to the length of $\consp(g)$ and $\consp_g(i)$ respectively. Lastly we can define $\FA{agree}_2 (\mu, \delta, \epsilon , \vec{x}, \vec{y})$ such that $\mathcal{A}^\leq \models \FA{agree}_2 [g, i,j ,\vec{a}, \vec{b}, \vec{c}]$ if, and only if, $\mathcal{A}^{\leq} \models \FA{agree}_1[g, i, \vec{a}, \vec{b}] \land \FA{agree}_1[g, j, \vec{a}, \vec{c}]$ and $\alpha \sim \beta$, where $\alpha \in U^{\underline{\consp_g(i)}}$ and $\beta \in U^{\underline {\consp_g(j)}}$ are the restrictions of $\vec{b}$ and $\vec{c}$ to the length of $\consp_g(i)$ and $\consp_g(j)$ respectively.
+
+We define the $\FPC$ formula $\FA{merge}$ that takes in two gates $g$ and $h$ (with $h \in H_g$) as well as assignments to the supports of $g$ and $h$ and the row and column supports of $h$. It then checks if the assignment to the support of $h$ is compatible with the given row and column supports of $h$.
+
+% \begin{align*}
+%     \FA{merge} (\mu, \nu, \vec{x}, \vec{y}, \vec{z}) := \exists u_1, u_2 \leq \FA{MAX} ( \phi_L (\mu, u_1, u_2, \nu) \land ( \bigwedge{1 \leq i < j \leq 2k}  \exists v \leq \FA{SIZE} ((\FA{supp}^r_j (\mu, u_1, v) \land \FA{supp}_i(\nu, v) \implies z_i = x_j) \land (\FA{supp}^c_j (\mu, u_2, v) \land \FA{supp}_i(\nu, v) \implies z_i = y_j))))
+% \end{align*}
+
+\begin{align*}
+    \FA{merge} (\mu, \nu, \vec{x}, \vec{y}, \vec{w}_1, \vec{w}_2) := &\exists \delta, \epsilon \leq \FA{m} \, ( \phi_L (\mu, \delta, \epsilon, \nu) \\ & \land \FA{agree}_1 (\mu, \nu , \delta, \vec{x}, \vec{y}, \vec{w}_1) \land \\ & \FA{agree}_1 (\mu, \nu , \epsilon, \vec{x}, \vec{y}, \vec{w}_2))
+\end{align*}
+
+We are almost ready to define the matrix $M$ from the previous subsection. We break this up into two formulas. The first checks that the input is within the domain of the matrix and the second defines $M$ for the given row and column indexes.
+
+\begin{align*}
+    \FA{check-dom}(\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z})  := & \FA{dom}_{\Phi_L} (\mu, \delta, \epsilon) 
+    \land \FA{min-orb}(\delta, \vec{y}) \land \FA{min-orb} (\epsilon, \vec{z}) \\
+    &\land \FA{agree}_1 (g, \delta , \vec{x}, \vec{y}) \land \FA{agree}_1 (g, \epsilon , \vec{x}, \vec{z})
+\end{align*}
+
+\begin{align*}
+    \FA{find-eval} (\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z}) := & \exists \vec{s} \leq \FA{s} \, (\FA{move}(\mu, \delta, \epsilon, \vec{x}, \vec{y}, \vec{z}, \vec{s}) \\ & \land (\exists \epsilon' \leq \FA{m} \, (\FA{map}^c (\mu, \epsilon, \epsilon', \vec{s}) \land (\exists \nu \leq \FA{m} \, (\phi_L (\mu, \delta, \epsilon', \nu) \\ & \land (\exists \vec{m} \, (\FA{merge} (\mu, \nu, \vec{x}, \vec{m}, \vec{y}, \vec{z}) \land V(\nu, \vec{m}))))))))
+\end{align*}
+
+% There is an $\FP$ formula $\FA{merge}(\nu , \vec{s}, \vec{s}_2, \vec{x}, \vec{y}, \vec{w})$ such that $\mathcal{A} \models \FA{merge} [\vec{r}, \vec{c}, \vec{a}, \vec{b}, \vec{d}]$ if, and only if, $\mathcal{A}^{\leq} \models \FA{agree}_s[\vec{r}, \vec{c}, \vec{a}, \vec{b}]$ and $\vec{d}_{\vec{r \cup c}} =  \vec{a}_{\vec{r}} | \vec{b}_{\vec{c}}$.
+
+% We define the $\FPC$ formula $\FA{FIND}$ that takes in gates $g$ and $h \in H_g$ and 
+% \begin{align*}
+% \FA{FIND}(\mu, \nu, \vec{s}, \vec{t}) := \exists a, b \leq \FA{MAX} (\phi_L(\mu, a, b, \nu) \land \bigwedge_{1 \leq i \leq 2k} \left( (\exists u \leq \FA{SIZE} (\FA{supp}_i (\mu, a, u) \implies s_i = u)) \and (\exists u \leq \FA{SIZE} (\FA{supp}_i (\mu, b, u) \implies t_i = u)) \right)
+% \end{align*}
+% From Lemma \ref{} and the Immerman-Vardi theorem there is a formula $\FA{FIND}$ such that $\mathcal{A} \models \FA{FIND} [g, h, \vec{r}, \vec{c}]$ if, and only if, $h \in H_g$ and $\mathcal{A} \models \bigwedge_\FA{supp}^_r_i [h, \vec{r}, g] \land \FA{supp}^c [h, \vec{c}, g]$. We can then define $\FA{MIN-FIND} (\vec{s}_1, \vec{s}_2, \mu, \vec{x}, \nu) := \FA{FIND} (\vec{s}_1, \vec{s}_2, \mu, \vec{x}, \nu) \land (\forall \nu' (\FA{FIND} (\vec{s}_1, \vec{s}_2, \mu, \vec{x}, \nu') \implies \nu \leq \nu'))$.
+
+% We now define a formula for checking if the input is in the domain of the matrix, i.e. are elements of the sets $I$ and $J$ defined in the previous section. 
+% \begin{align*}
+%     \FA{check-dom}(\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z})  := & \FA{dom}_{\Phi_L} (\mu, \delta, \epsilon) 
+%     \land \FA{min-orb}(\delta, \vec{y}) \land \FA{min-orb} (\epsilon, \vec{z}) \\
+%     &\land \FA{agree}_1 (g, \delta , \vec{x}, \vec{y}) \land \FA{agree}_1 (g, \epsilon , \vec{x}, \vec{z}).
+% % \FA{merge} (\mu, \vec{x}, \nu, \vec{w}, \delta, \vec{y},  \epsilon, \vec{z}, \vec{w}) := & \FA{agree} (\mu, \nu, \vec{x}, \vec{w})  \land  \FA{agree}_2 (\mu , \delta, \epsilon, \vec{x}, \vec{y}, \vec{z}) \\ & \land \FA{agree}_2 (\nu , \delta, \epsilon, \vec{w}, \vec{y}, \vec{z}), and \\ \\
+% % \FA{MIN-MERGE} (\mu, \vec{x}, \nu, \vec{w}, \delta, \vec{y},  \epsilon, \vec{z}, \vec{w}) := & \FA{merge} (\mu, \vec{x}, \nu, \vec{w}, \delta, \vec{y},  \epsilon, \vec{z}, \vec{w}) \\ &  \land (\forall \nu' (\FA{merge} (\mu, \vec{x}, \nu', \vec{w}, \delta, \vec{y},  \epsilon, \vec{z}, \vec{w}) \implies \nu \leq nu'))
+% \end{align*}.
+
+% We now define a formula that takes in a gate $g$ and an assignment to its support as well as an encoding of $(i, \vec{b}) \in I$ and $(j, \vec{d})\in J$, and constructs the vector $\vec{c}$, as defined in the previous section, such that $\vec{b}_{\consp_g(i)} \sim \vec{d}_{\vec{c}}$. It then defines a gate $h \in H_g$ that has row support $\consp_g(i)$ and column support $\vec{c}$, before evaluating for $h$ for the assignment to the support $(\vec{b}_{\consp_g(i)} | \vec{d}_{\vec{c}})$.
+% \begin{align*}
+%     \FA{find-eval} (\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z}) := & \exists \vec{v} (\FA{move}(\delta, \vec{y}, \epsilon, \vec{z}, \mu, \vec{x}, \vec{v}) \\ & \land (\exists \vec{u} (\FA{supp}_r(\delta, \vec{u}, \mu) \land (\exists \nu (\FA{MIN-FIND}(\vec{u}, \vec{v}, \nu, \mu) \\ & \land (\exists \vec{w} (\FA{merge}(\nu, \vec{y}, \vec{z}, \vec{w}) \FA{agree}(\mu, \nu, \vec{x}, \vec{w}) \land V(\nu, \vec{w}))))))))
+% \end{align*}
+
+We are now ready to define the formula that defines the matrix $M$.
+
+\begin{align*}
+\psi_M (\mu, \vec{x}, \delta, \vec{x}, \epsilon, \vec{y}) :=  \FA{check-dom}(\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z}) \land \FA{find-eval} (\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z})
+\end{align*}
+
+We now define the formula that evaluates a rank gate $g$.
+
+\begin{align*}
+\theta_\rank (\mu, \vec{x}) := &\bigwedge_{1 \leq i < j \leq k} x_i \neq x_j \land (\exists p, k \leq \FA{m} \, (\FA{rank-type}(\mu. p, k) \\ &\land [\rank (\vec{y}\delta\leq \FA{m}, \vec{z}\epsilon\leq \FA{m}, p \leq \FA{M}). \psi_M] \leq k )))
+\end{align*}
+
+As mentioned above we have the formulas $\theta_0$, $\theta_1$, $\theta_\land$, $\theta_\lor$, $\theta_\nand$, $\theta_\maj$ and $(\theta_R)_{R \in \tau}$ from Anderson and Dawar \cite{AndersonD17}. The relation $V$ is then given as a fixed point by the following formula.
+\begin{align*}
+\theta (\mu, \vec{x}) := [\ifp_{V,\nu \vec{y}} \bigvee_{s \in \mathbb{B}' \uplus \tau \uplus \{0,1\}} (\phi_s(\mu) \land \theta_s (\nu, \vec{y} ] (\mu, \vec{x})
+\end{align*}
+
+The following $\FPR$ formula defines the $q$-ary query computed by the circuit family $\mathcal{C}$ \cite{AndersonD17}.
+
+\begin{align*}
+    Q (z_1, \ldots z_q) := & \exists \vec{x} \exists \mu, \nu_1 , \ldots  \nu_q \eta_1 , \ldots , \nu_k \leq \FA{m} [\phi_\omega (\nu_1, \ldots \nu_q, \mu) \land \\
+    & \bigwedge_{1 \leq i \leq k} \FA{supp}_i (\mu, \eta_i) \wedge \forall \eta (\neg \FA{supp}_i (\mu, \eta))) \land \\
+    & \bigwedge_{1 \leq i \leq k} \bigwedge_{1 \leq j \leq q}((\FA{supp}_i (\mu, \eta_i) \land (x_i = z_j) \implies \nu_j = \eta_i) \land \\ &
+    \bigwedge_{1 \leq j \leq q} \bigvee_{1 \leq i \leq k} (x_i = z_j \land \FA{supp}_i (\mu, \eta_i)]
+\end{align*}
+
+This completes the proof of our main theorem.
+
+
+
+
+
+% We define the following formulas:
+% \begin{align*}
+%     \FA{check-dom}(\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z})  := & \FA{dom}_{\Phi_L} (\mu, \delta, \epsilon) 
+%     \land \FA{min-orb}(\delta, \vec{y}) \land \FA{min-orb} (\epsilon, \vec{z}) \\
+%     &\land \FA{agree}_1 (g, \delta , \vec{x}, \vec{y}) \land \FA{agree}_1 (g, \epsilon , \vec{x}, \vec{z}), \\ \\
+% \FA{merge} (\mu, \vec{x}, \nu, \vec{w}, \delta, \vec{y},  \epsilon, \vec{z}, \vec{w}) := & \FA{agree} (\mu, \nu, \vec{x}, \vec{w})  \land  \FA{agree}_2 (\mu , \delta, \epsilon, \vec{x}, \vec{y}, \vec{z}) \\ & \land \FA{agree}_2 (\nu , \delta, \epsilon, \vec{w}, \vec{y}, \vec{z}), and \\ \\
+% \FA{MIN-MERGE} (\mu, \vec{x}, \nu, \vec{w}, \delta, \vec{y},  \epsilon, \vec{z}, \vec{w}) := & \FA{merge} (\mu, \vec{x}, \nu, \vec{w}, \delta, \vec{y},  \epsilon, \vec{z}, \vec{w}) \\ &  \land (\forall \nu' (\FA{merge} (\mu, \vec{x}, \nu', \vec{w}, \delta, \vec{y},  \epsilon, \vec{z}, \vec{w}) \implies \nu \leq nu'))
+% \end{align*}.
+
+
+
+% \theta_M (\delta , \vec{y}, \epsilon, \vec{z}, \mu, \vec{x})
+
+
+
 \end{document}
