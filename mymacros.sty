@@ -15,8 +15,7 @@
 \newcommand{\bd}[1]{\mathbf{#1}} % for bolding symbols
 \newcommand{\RR}{\mathbb{R}} % for Real numbers
 \newcommand{\ZZ}{\mathbb{Z}} % for Integers
-\newcommand{\MB}{\mathbb{B}_{\text{mat}}} % for Integers % for Integers
-\newcommand{\SB}{\mathbb{B}_{\sym}} % for Integers
+
 \newcommand{\col}[1]{\begin{matrix} #1 \end{matrix} \right]}
 \newcommand{\comb}[2]{\binom{#1^2 + #2^2}{#1+#2}}
 \newcommand{\stab}{\text{\textbf{Stab}}}
@@ -58,7 +57,9 @@
 \newcommand{\sortsym}{\text{\textbf{SortSym}}}
 \newcommand{\matsym}{\text{\textbf{MatSym}}}
 \newcommand{\AND}{\logic{AND}}
-\newcommand{\lfp}{\mathbb{lfp}}
+\newcommand{\OR}{\logic{OR}}
+\newcommand{\NOT}{\logic{NOT}}
+%\newcommand{\lfp}{\mathbb{lfp}}
 \newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 %\newcommand{\ind}{\logic{ind}}
 %\newcommand{\ord}{\logic{ord}}
@@ -69,4 +70,15 @@
   \right|_{#2} % this is the delimiter
 }}
 
-\newcommand{\op}[1]{\logic{#1}}
+\newcommand{\mathsc}[1]{{\normalfont\textsc{#1}}}
+\newcommand{\lfp}[2]{[\text{\textbf{lfp}}_{#1} \, #2 ]} 
+\newcommand{\op}[1]{\mathsc{#1}}
+
+\newcommand{\BB}{\mathbb{B}}
+\newcommand{\BS}{\BB_{\text{std}}}
+\newcommand{\RB}{\BB_{\rank}}
+\newcommand{\MB}{\BB_{\text{mat}}}
+\newcommand{\SB}{\BB_{\sym}}
+\newcommand{\BM}{\BB_{\maj}}
+\newcommand{\range}{\text{range}}
+\newcommand{\depth}{\text{depth}}

@@ -16,7 +16,7 @@ supporting partition.
   Let $G \leq \sym_n$ and let $S \subseteq [n]$. Then $S$ is a \emph{support}
   for $G$ if $\stab(S) \leq G$.
 \end{definition}
-%AD - \stab needs to be defined in background section
+% AD - \stab needs to be defined in background section
 
 \begin{definition}
   Let $G \leq \sym_n$ and $\mathcal{P}$ be a partition of $[n]$. Then
@@ -25,27 +25,46 @@ supporting partition.
 \end{definition}
 
 Notice that if $\mathcal{P}$ is a supporting partition for $G$ and $P \in
-\mathcal{P}$ then $\stab([n] \setminus P) \leq \stab(\mathcal{P}) \leq
-G$, i.e. $[n] \setminus P$ is a support for $G$.
+\mathcal{P}$ then $\stab([n] \setminus P) \leq \stab(\mathcal{P}) \leq G$, i.e.
+$[n] \setminus P$ is a support for $G$.
 
-Let $\mathcal{P}, \mathcal{P}'$ be partitions of $[n]$.  We say that $\mathcal{P}'$ is as
-\emph{coarse} as $\mathcal{P}$ (denoted by $\mathcal{P} \preceq \mathcal{P}'$)
-if for all $x \in \mathcal{P}$ there exists $y \in \mathcal{P}'$ such that $x
-\subseteq y$.
-Anderson and Dawar~\cite{AndersonD17} show that for any permutation group $G
-\leq \sym_n$ a unique coarsest supporting partition can always be found.  We call this
-partition the \emph{canonical supporting partition}, and denote it by $\SP (G)$.
-This canonical supporting partition, along with the above observation about
-supports, allows us to construct for each group a canonical support.
+Let $\mathcal{P}, \mathcal{P}'$ be partitions of $[n]$. We say that
+$\mathcal{P}'$ is as \emph{coarse} as $\mathcal{P}$ (denoted by $\mathcal{P}
+\preceq \mathcal{P}'$) if for all $x \in \mathcal{P}$ there exists $y \in
+\mathcal{P}'$ such that $x \subseteq y$. Anderson and Dawar~\cite{AndersonD17}
+define an operation $\mathcal{E}$ on pairs of partitions of $[n]$, where
+$\mathcal{E} (\mathcal{P}, \mathcal{P}')$ is the partition of $[n]$ consisting
+of the equivalence classes of the transitive closure of the relation $\sim$ on
+$[n]$ defined by $a \sim b$ if, and only if, there exists $P \in \mathcal{P}
+\cup mathcal{P}'$ such that $a,b \in P$. They show that $\mathcal{E}$ preserves
+supporting partitions, and that $\mathcal{E}(\mathcal{P}, \mathcal{P}')$ is as
+coarse as both $\mathcal{P}$ and $\mathcal{P}'$.
+
+They use the $\mathcal{E}$ operation to show that for any permutation group $G
+\leq \sym_n$ a unique coarsest supporting partition can always be found. We call
+this partition the \emph{canonical supporting partition}, and denote it by $\SP
+(G)$. This canonical supporting partition, along with the above observation
+about supports, allows us to construct for each group a canonical support.
+Anderson and Dawar \ref{AndersonD17} prove the following result.
+
+\begin{prop}
+  Let $G \leq \sym_n$ be a group and let $\mathcal{P}$ and $\mathcal{P}'$ be
+  supporting partitions of $G$. Then $\mathcal{P} \preceq
+  \mathcal{E}(\mathcal{P}, \mathcal{P}')$, $ \mathcal{P}' \preceq
+  \mathcal{E}(\mathcal{P}, \mathcal{P}')$ and $\mathcal{E}(\mathcal{P},
+  \mathcal{P}')$ is a supporting partition of $G$.
+  \label{prop:combining-supporting-patitions}
+\end{prop}
 
 \begin{definition}
   Let $G \leq \sym_n$. Let $\| \SP(G) \| = \min \{\vert [n] \setminus P \vert :
   P \in \SP(G) \}$. We say that $G$ has \emph{small support} if $\| \SP(G) \| <
   \frac{n}{2}$.
 \end{definition}
-Note that if $G$ has small support then there is a part in its
-canonical supporting partition of size greater than $\frac{n}{2}$ and this
-part is necessarily the unique largest part in the partition.
+
+Note that if $G$ has small support then there is a part in its canonical
+supporting partition of size greater than $\frac{n}{2}$ and this part is
+necessarily the unique largest part in the partition.
 
 \begin{definition}
   Let $G \leq \sym_n$ such that $G$ has small support. Let $\consp(G) = [n]
@@ -59,13 +78,13 @@ part is necessarily the unique largest part in the partition.
 % \end{remark}
 
 \begin{lem}\label{lem:subgroup-coarse}
-Let $G_1, G_2 \leq \sym_n$ with $G_1 \leq G_2$.  Then $\SP(G_1)
-  \preceq \SP(G_2)$
+  Let $G_1, G_2 \leq \sym_n$ with $G_1 \leq G_2$. Then $\SP(G_1) \preceq
+  \SP(G_2)$
 \end{lem}
 \begin{proof}
-  We have that $\stab(\SP(G_1)) \leq G_1 \leq G_2$, and so $\SP(G_1)$
-  supports $G_2$. Since $\SP(G_2)$ is the coarsest support of $G_2$, $\SP(G_1)
-  \preceq \SP(G_2)$.
+  We have that $\stab(\SP(G_1)) \leq G_1 \leq G_2$, and so $\SP(G_1)$ supports
+  $G_2$. Since $\SP(G_2)$ is the coarsest support of $G_2$, $\SP(G_1) \preceq
+  \SP(G_2)$.
 \end{proof}
 
 \begin{lem}
@@ -74,12 +93,12 @@ Let $G_1, G_2 \leq \sym_n$ with $G_1 \leq G_2$.  Then $\SP(G_1)
   \label{lem:support-containment}
 \end{lem}
 \begin{proof}
-  By Lemma~\ref{lem:subgroup-coarse}, we have that $\SP(G_1)
-  \preceq \SP(G_2)$. Let $P_1$ be the largest element of $\SP(G_1)$, and note
-  that since $G_1$ has small support, $\vert P_1 \vert > \frac{n}{2}$. Then
-  there exists a (unique) $P_2 \in \SP(G_2)$ such that $P_1 \subseteq P_2$. Thus
-  $G_2$ has small support, and $\consp(G_2) = [n] \setminus P_2 \subseteq [n]
-  \setminus P_1 = \consp(G_1)$.
+  By Lemma~\ref{lem:subgroup-coarse}, we have that $\SP(G_1) \preceq \SP(G_2)$.
+  Let $P_1$ be the largest element of $\SP(G_1)$, and note that since $G_1$ has
+  small support, $\vert P_1 \vert > \frac{n}{2}$. Then there exists a (unique)
+  $P_2 \in \SP(G_2)$ such that $P_1 \subseteq P_2$. Thus $G_2$ has small
+  support, and $\consp(G_2) = [n] \setminus P_2 \subseteq [n] \setminus P_1 =
+  \consp(G_1)$.
 \end{proof}
 
 \begin{lem}
@@ -89,31 +108,32 @@ Let $G_1, G_2 \leq \sym_n$ with $G_1 \leq G_2$.  Then $\SP(G_1)
   \label{lem:row-column-supports-well-behaved}
 \end{lem}
 \begin{proof}
-The fact that $H$ and $K$ have small support follows from Lemma~\ref{lem:support-containment}.
+  The fact that $H$ and $K$ have small support follows from
+  Lemma~\ref{lem:support-containment}.
 
   Let $\mathcal{Q} = \{P_H \cap P_K : P_H \in \SP(H), P_K \in \SP(K) \text{ and
   } \exists P \in \SP(G), P \subseteq P_H \cap P_K \}$. We first show that
   $\mathcal{Q}$ is a supporting partition of $G$. We have that for any $P_H \cap
   P_K, P_H' \cap P_K' \in \mathcal{Q}$, $P_H \cap P_K \cap P_H' \cap P_K' \neq
   \emptyset$ if, and only if, $P_H = P_H'$ and $P_K = P_K'$ if, and only if,
-  $P_H \cap P_K = P_H' \cap P_K'$.  By
-  Lemma~\ref{lem:subgroup-coarse}, we have that $\SP(G) \preceq
-  \SP(H)$ and $\SP(G) \preceq \SP(K)$. It follows that for each $P \in SP(G)$ there exists $P_K \in \SP(K)$ and $P_H \in
-  \SP(H)$ such that $P \subseteq P_H \cap P_K$.  So, for each $a \in [n]$ there is
-  $P_a \in \SP(G)$, $P_H \in \SP(H)$ and $P_K \in \SP(K)$ such that $a \in P_a
-  \subseteq P_H \cap P_K$. It follows that $\mathcal{Q}$ is a partition.
+  $P_H \cap P_K = P_H' \cap P_K'$. By Lemma~\ref{lem:subgroup-coarse}, we have
+  that $\SP(G) \preceq \SP(H)$ and $\SP(G) \preceq \SP(K)$. It follows that for
+  each $P \in SP(G)$ there exists $P_K \in \SP(K)$ and $P_H \in \SP(H)$ such
+  that $P \subseteq P_H \cap P_K$. So, for each $a \in [n]$ there is $P_a \in
+  \SP(G)$, $P_H \in \SP(H)$ and $P_K \in \SP(K)$ such that $a \in P_a \subseteq
+  P_H \cap P_K$. It follows that $\mathcal{Q}$ is a partition.
 
   Moreover, we note that $\stab(\mathcal{Q}) \leq \stab(\SP(H))$ and
-  $\stab(\mathcal{Q}) \leq \stab(\SP(K))$, and thus $\stab(\mathcal{Q})
-  \leq \stab(\SP(H)) \cap \stab(\SP(K)) \leq H \cap K = G$. It follows
-  that $\mathcal{Q}$ is a supporting partition of $G$, and so by definition of
-  the canonical supporting partition $\mathcal{Q} \preceq \SP (G)$.
-  Since $G$ has small support, there is a part $P_G$ in $\SP(G)$ with
-  $|P_G| > \frac{n}{2}$. Then there exists $P_H \in \SP(H)$ and
-  $P_K \in \SP(K)$ such that $P_G \subseteq P_H \cap P_K$, and so $\vert P_H \cap P_K
-  \vert > \frac{n}{2}$. Thus $P_H \cap P_K$ is the unique largest
-  element in $\mathcal{Q}$.   It follows from $\mathcal{Q} \subseteq \SP(G)$
-  that $P_G \subseteq P_H \cap P_K \subseteq P_G$.
+  $\stab(\mathcal{Q}) \leq \stab(\SP(K))$, and thus $\stab(\mathcal{Q}) \leq
+  \stab(\SP(H)) \cap \stab(\SP(K)) \leq H \cap K = G$. It follows that
+  $\mathcal{Q}$ is a supporting partition of $G$, and so by definition of the
+  canonical supporting partition $\mathcal{Q} \preceq \SP (G)$. Since $G$ has
+  small support, there is a part $P_G$ in $\SP(G)$ with $|P_G| > \frac{n}{2}$.
+  Then there exists $P_H \in \SP(H)$ and $P_K \in \SP(K)$ such that $P_G
+  \subseteq P_H \cap P_K$, and so $\vert P_H \cap P_K \vert > \frac{n}{2}$. Thus
+  $P_H \cap P_K$ is the unique largest element in $\mathcal{Q}$. It follows from
+  $\mathcal{Q} \subseteq \SP(G)$ that $P_G \subseteq P_H \cap P_K \subseteq
+  P_G$.
 
   % From the fact that $G$ has small support, $P_H$ and $P_K$
 
@@ -127,7 +147,8 @@ The fact that $H$ and $K$ have small support follows from Lemma~\ref{lem:support
 \end{proof}
 
 
-We state the following two results proved by Anderson and Dawar \cite{AndersonD17}.
+We state the following two results proved by Anderson and Dawar
+\cite{AndersonD17}.
 
 \begin{lem}
   \label{lem:SP_conjugation}
@@ -209,6 +230,7 @@ supports) in general. In this subsection we introduce some useful terminology.
   is defined.  Then for any $x \in X$ with small support, and $\sigma, \sigma'
   \in G$ such that $\sigma (\vec{\consp}(x)) = \sigma' (\vec{\consp}((x))$ we
   have that $\sigma (x) = \sigma'(x)$.
+  \label{lem:support-determine-action}
 \end{lem}
 \begin{proof}
   We have that $(\sigma')^{-1}\sigma(\vec{\consp}(x)) = \vec{\consp}(x)$ and so
@@ -303,46 +325,43 @@ supports) in general. In this subsection we introduce some useful terminology.
 % \end{proof}
 
 \subsection{Support Theorems}
-The support theorem of Anderson and Dawar~\cite{AndersonD17} asserts
-that in a symmetric circuit (over the basis $\mathbb{B}_{\maj}$), if
-the circuit is not too large, then the stabiliser group of any gate hs
-small support.  In particular, in a family of such circuits of
-polynomial size, there is a constant bound on the size of supports.
-The proof proceeds in two parts.  First it is shown that if the index
-of a group $G \leq \sym_n$ is small then $\SP(G)$ either has very few
-or very many parts and, moreover, in the former case there is one
+The support theorem of Anderson and Dawar~\cite{AndersonD17} asserts that in a
+symmetric circuit (over the basis $\mathbb{B}_{\maj}$), if the circuit is not
+too large, then the stabiliser group of any gate hs small support. In
+particular, in a family of such circuits of polynomial size, there is a constant
+bound on the size of supports. The proof proceeds in two parts. First it is
+shown that if the index of a group $G \leq \sym_n$ is small then $\SP(G)$ either
+has very few or very many parts and, moreover, in the former case there is one
 large part (these are reproduced as Lemmas~\ref{lem:big-or-small}
-and~\ref{lem:small-means-support} below).  Secondly, it is shown by
-induction on the structure of the circuit that the latter case does
-not occur as the stabiliser group of any gate.
-While the first part of the argument is generically about permutation
-groups, the induction in the second part relies crucially on the fact
-that each gate computes a \emph{symmetric} Boolean function.  Our aim
-in this section is to extend this argument to circuits with
-arbitrary structured functions.  We first begin by establishing some
-preliminary results we need about group actions on index sets and then
-proceed to the main result, Theorem~\ref{thm:support_thm}.
+and~\ref{lem:small-means-support} below). Secondly, it is shown by induction on
+the structure of the circuit that the latter case does not occur as the
+stabiliser group of any gate. While the first part of the argument is
+generically about permutation groups, the induction in the second part relies
+crucially on the fact that each gate is symmetric. Our aim in this section is to
+extend this argument to circuits defined over a basis arbitrary structured
+functions. We first begin by establishing some preliminary results we need about
+group actions on index sets and then proceed to the main result,
+Theorem~\ref{thm:support_thm}.
 
 
-% In this subsection we prove a support theorem for symmetric circuits
-% analogous to the support theorem of Anderson and Dawar
-% \cite{AndersonD17}, showing that the stabiliser groups of individual
-% gates in such circuits have small supports, provided that the circuits
-% themselves are not too large.  In general, we refer to the support of
-% a gate as a shorthand for the support of the stabiliser group of the gate.
-% As a consequence of the theorem we get that for
-% any polynomial-size family of symmetric circuits $(C_n)_{n \in \nats}$
-% there is a constant $k$ such that every gate in every circuit in the
-% family has a canonical support of size at most $k$.
+% In this subsection we prove a support theorem for symmetric circuits analogous
+% to the support theorem of Anderson and Dawar \cite{AndersonD17}, showing that
+% the stabiliser groups of individual gates in such circuits have small
+% supports, provided that the circuits themselves are not too large. In general,
+% we refer to the support of a gate as a shorthand for the support of the
+% stabiliser group of the gate. As a consequence of the theorem we get that for
+% any polynomial-size family of symmetric circuits $(C_n)_{n \in \nats}$ there
+% is a constant $k$ such that every gate in every circuit in the family has a
+% canonical support of size at most $k$.
 
 
 
 % Informally, we prove the support theorem by showing that, under certain
 % conditions on the circuit, if, for a gate $g$, $\SP(g)$ has few parts, then
 % $\consp{g}$ has bounded size. We show that $\SP(g)$ indeed has few parts by
-% contradiction by establishing a lower-bound on the size of the orbit of $g$ and
-% showing that if $\SP(g)$ has too many parts then the size of the orbit of $g$
-% becomes too large for the circuit.
+% contradiction by establishing a lower-bound on the size of the orbit of $g$
+% and showing that if $\SP(g)$ has too many parts then the size of the orbit of
+% $g$ becomes too large for the circuit.
 
 % In the first part of this subsection we prove results needed to establish the
 % lower-bound on the orbit of a gate. In the second part of this subsection we
@@ -473,7 +492,8 @@ proceed to the main result, Theorem~\ref{thm:support_thm}.
 %   \lambda' (\vec{x}')(i)$.
 % \end{definition}
 
-In this subsection we always use $\tau$ to denote a many-sorted vocabulary, and $D$ to denote the universe of a $\tau$-structure.
+In this subsection we always use $\tau$ to denote a many-sorted vocabulary, and
+$D$ to denote the universe of a $\tau$-structure.
 
 % Let $H$ be a set on which an action of $\sym_n$ is defined and let $L :
 % \ind(\mathcal{D} \rightarrow H$ be a bijection. Let $\isostab(L)$ be the set
@@ -483,12 +503,12 @@ In this subsection we always use $\tau$ to denote a many-sorted vocabulary, and 
 % be the index for $g$.
 
 \begin{definition}
-  Let $\sigma \in \sym_{\ind(\tau, D)}$ and $\vec{x}, \vec{y} \in
-  \ind(\tau, D)$, and let $R_i$ and $R_j$ be relation symbols in $\tau$ such that $\vec{x} \in R^{D}_i$ and
-  $\vec{y} \in R^{D}_j$. We say that $(\vec{x}, \vec{y})$ is
-  \emph{compatible} with $\sigma$ if $\sigma (\vec{x}) \in R^{D}_i$
-  and $\sigma (\vec{y}) \in R^D_j$, and for all $a \in [\arty(R_i)]$
-  and $b \in [\arty(R_j)]$, $\vec{x}(a) = \vec{y}(b)$ if, and only if, $(\sigma
+  Let $\sigma \in \sym_{\ind(\tau, D)}$ and $\vec{x}, \vec{y} \in \ind(\tau,
+  D)$, and let $R_i$ and $R_j$ be relation symbols in $\tau$ such that $\vec{x}
+  \in R^{D}_i$ and $\vec{y} \in R^{D}_j$. We say that $(\vec{x}, \vec{y})$ is
+  \emph{compatible} with $\sigma$ if $\sigma (\vec{x}) \in R^{D}_i$ and $\sigma
+  (\vec{y}) \in R^D_j$, and for all $a \in [\arty(R_i)]$ and $b \in
+  [\arty(R_j)]$, $\vec{x}(a) = \vec{y}(b)$ if, and only if, $(\sigma
   (\vec{x}))(a) = (\sigma(\vec{y}))(b)$.
 
   % Let $H$ be a set on which an action of $\sym_n$ is defined and let $L :
@@ -502,11 +522,15 @@ In this subsection we always use $\tau$ to denote a many-sorted vocabulary, and 
 Suppose there is an action of $G \leq \sym_n$ defined on $\ind(\tau, D)$. We say
 that $\sigma \in G$ \emph{acts like a sorted permutation} if there exists $\pi
 \in \sortsym(\tau, D)$ such that $\pi \cdot \vec{x} = \sigma \cdot \vec{x}$ for
-all $\vec{x} \in \ind(\tau, D)$. In this case it is easy to define an action of $G$ on $D$, defined for $\sigma \in G$ by $\sigma \cdot x = \pi (x)$, for all $x \in D$. The intuition then is that a pair of vectors is
-compatible with a permutation on $\ind(\tau, D)$ if the permutation is acting like a sorted permutation (i.e. acting like an element of $\sortsym(\tau, D)$) when restricted to those elements appearing in the two vectors. In the following lemma we
-show that a permutation acts like a sorted permutation if, and only
-if, every pair of tuples is compatible with it. This gives us a useful
-sufficient local condition to check if a permutation is acting like a sorted permutation.
+all $\vec{x} \in \ind(\tau, D)$. In this case it is easy to define an action of
+$G$ on $D$, defined for $\sigma \in G$ by $\sigma \cdot x = \pi (x)$, for all $x
+\in D$. The intuition then is that a pair of vectors is compatible with a
+permutation on $\ind(\tau, D)$ if the permutation is acting like a sorted
+permutation (i.e. acting like an element of $\sortsym(\tau, D)$) when restricted
+to those elements appearing in the two vectors. In the following lemma we show
+that a permutation acts like a sorted permutation if, and only if, every pair of
+tuples is compatible with it. This gives us a useful sufficient local condition
+to check if a permutation is acting like a sorted permutation.
 %
 % The bijection $L$ also allows us to translate an action on the co-domain to an
 % action on the domain, translating $\sigma \in \sym_n$ to $L^{-1} \cdot \sigma
@@ -558,23 +582,22 @@ sufficient local condition to check if a permutation is acting like a sorted per
 % \end{lem}
 
 \begin{lem}
-  Suppose there is a defined group action of $G \leq \sym_n$ on
-  $\ind(\tau, D)$. Let $\sigma \in G$. Then $\sigma$ acts like a sorted permutation if, and only if, for all $\vec{x}, \vec{y} \in
-  \ind(\tau, D)$, $(\vec{x}, \vec{y})$ is compatible with $\sigma$.
+  Suppose there is a defined group action of $G \leq \sym_n$ on $\ind(\tau, D)$.
+  Let $\sigma \in G$. Then $\sigma$ acts like a sorted permutation if, and only
+  if, for all $\vec{x}, \vec{y} \in \ind(\tau, D)$, $(\vec{x}, \vec{y})$ is
+  compatible with $\sigma$.
   \label{lem:isostab-compatible}
 \end{lem}
 
 \begin{proof}
-  $`\Rightarrow'$: Let $\vec{x}, \vec{y} \in \ind(\tau, D)$ and
-  suppose $\sigma$ acts like a sorted permutation.  Let $\pi \in
-  \sortsym(\tau, D)$ be the permutation that witnesses this.  Then $\sigma$
-  acts on $\ind (\tau, D)$ as an isomorphism, and so maps tuples in a
-  relation to tuples of the same relation. Let $R_i$ and $R_j$ be relation
-  symbols in $\tau$ such that $\vec{x} \in
-  R^D_i$ and $\vec{y} \in R^D_j$. Let $w \in [\arty
-  (R_i)]$ and $z \in [\arty (R_j)]$, then $\sigma \cdot \vec{x} (w) = \sigma
-  \cdot \vec{y}(z)$ iff $\pi \cdot \vec{x}(w) = \pi \cdot \vec{y}(z)$ iff
-  $\vec{x}(w) = \vec{y}(z)$.
+  $`\Rightarrow'$: Let $\vec{x}, \vec{y} \in \ind(\tau, D)$ and suppose $\sigma$
+  acts like a sorted permutation. Let $\pi \in \sortsym(\tau, D)$ be the
+  permutation that witnesses this. Then $\sigma$ acts on $\ind (\tau, D)$ as an
+  isomorphism, and so maps tuples in a relation to tuples of the same relation.
+  Let $R_i$ and $R_j$ be relation symbols in $\tau$ such that $\vec{x} \in
+  R^D_i$ and $\vec{y} \in R^D_j$. Let $w \in [\arty (R_i)]$ and $z \in [\arty
+  (R_j)]$, then $\sigma \cdot \vec{x} (w) = \sigma \cdot \vec{y}(z)$ iff $\pi
+  \cdot \vec{x}(w) = \pi \cdot \vec{y}(z)$ iff $\vec{x}(w) = \vec{y}(z)$.
 
   % Let $i \in \dom (\vec{x})$. If $\vec{x}(i) = \vec{x}'(i)$ then $(\sigma
   % \cdot
@@ -588,42 +611,40 @@ sufficient local condition to check if a permutation is acting like a sorted per
   
   $`\Leftarrow'$: We have that for all $\vec{x}, \vec{y} \in \ind(\tau, D)$,
   $(\vec{x}, \vec{y})$ is compatible with $\sigma$. We now define $\pi$ such
-  that $\pi \in \sortsym(D)$ and $\sigma \cdot \vec{x} = \pi \cdot$. Let $\vec{x} \in \ind(\tau, D)$ be a tuple containing $a$ and
-  let $\pi (a) = \sigma \cdot \vec{x} (\vec{x}^{-1}(a))$. The compatibility
-  condition ensures that this definition is independent of the particular
-  choice of $\vec{x}$.
+  that $\pi \in \sortsym(D)$ and $\sigma \cdot \vec{x} = \pi \cdot$. Let
+  $\vec{x} \in \ind(\tau, D)$ be a tuple containing $a$ and let $\pi (a) =
+  \sigma \cdot \vec{x} (\vec{x}^{-1}(a))$. The compatibility condition ensures
+  that this definition is independent of the particular choice of $\vec{x}$.
   
-  We show that $\pi$ is injective. Suppose $\pi(a) = \pi(b)$. Suppose $a$ appears in $\vec{x} \in
-  \ind(\tau, D)$ and $b$ appears in $\vec{y} \in \ind(\tau, D)$, then
-  $\sigma \cdot \vec{x} (\vec{x}^{-1}(a)) = \pi (a) = \pi(b) = \sigma \cdot
-  \vec{y}(\vec{y}^{-1}(b))$. From the hypothesis $(\vec{x}, \vec{y})$ is
-  compatible with $\sigma$, and so $a = \vec{x}(\vec{x}^{-1}(a)) =
-  \vec{y}(\vec{y}^{-1}(b)) = b$. It follows
-  $\pi$ is an injection.
+  We show that $\pi$ is injective. Suppose $\pi(a) = \pi(b)$. Suppose $a$
+  appears in $\vec{x} \in \ind(\tau, D)$ and $b$ appears in $\vec{y} \in
+  \ind(\tau, D)$, then $\sigma \cdot \vec{x} (\vec{x}^{-1}(a)) = \pi (a) =
+  \pi(b) = \sigma \cdot \vec{y}(\vec{y}^{-1}(b))$. From the hypothesis
+  $(\vec{x}, \vec{y})$ is compatible with $\sigma$, and so $a =
+  \vec{x}(\vec{x}^{-1}(a)) = \vec{y}(\vec{y}^{-1}(b)) = b$. It follows $\pi$ is
+  an injection.
 
-%   If $a$ appears in
-%   some tuple $\vec{x} \in \ind(\tau, D)$ then $\pi (a) = \sigma \cdot
-%   \vec{x} (\vec{x}^{-1}(a)) = b$, and so $b$ also appears in some tuple. Thus we
-%   may assume that either both $a$ and $b$ appear in tuples in
-%   $\ind(\tau, D)$ or neither of them do. 
+  % If $a$ appears in some tuple $\vec{x} \in \ind(\tau, D)$ then $\pi (a) =
+  % \sigma \cdot \vec{x} (\vec{x}^{-1}(a)) = b$, and so $b$ also appears in some
+  % tuple. Thus we may assume that either both $a$ and $b$ appear in tuples in
+  % $\ind(\tau, D)$ or neither of them do.
   
-  We now prove surjectivity. Let $b \in D$. Suppose $b$ appears in
-  $\vec{x} \in \ind(\tau, D)$ and let $i \in \dom(\vec{x})$ be such that
-  $\vec{x}(i) = b$. Let $\vec{y} = \sigma \cdot \vec{x}$. Then $\pi (\vec{y}(i))
-  = \sigma \cdot \vec{y} (\vec{y}^{-1}(\vec{y}(i))) = \vec{x}(i) = b$. It
-  follows that $\pi$ is surjective, and thus bijective. The compatibility
-  condition gives us that $\pi (R^D_i) = R^D_i$ for any
-  relation symbol $R_i$ in $\tau$. Thus $\pi \in \sortsym(D)$.
+  We now prove surjectivity. Let $b \in D$. Suppose $b$ appears in $\vec{x} \in
+  \ind(\tau, D)$ and let $i \in \dom(\vec{x})$ be such that $\vec{x}(i) = b$.
+  Let $\vec{y} = \sigma \cdot \vec{x}$. Then $\pi (\vec{y}(i)) = \sigma \cdot
+  \vec{y} (\vec{y}^{-1}(\vec{y}(i))) = \vec{x}(i) = b$. It follows that $\pi$ is
+  surjective, and thus bijective. The compatibility condition gives us that $\pi
+  (R^D_i) = R^D_i$ for any relation symbol $R_i$ in $\tau$. Thus $\pi \in
+  \sortsym(D)$.
 
   Clearly $\pi \cdot \vec{x} = \sigma \cdot \vec{x}$ for all $\vec{x} \in
   \ind(\tau, D)$, and the result follows.
 \end{proof}
 
-Let $G \leq \sym_n$ and suppose there is a group action of $G$ on
-$\ind(\tau, D)$. We also use $\sortsym_G (D)$ (or
-$\sortsym_n(D)$ if $G = \sym_n$) to refer to the subgroup of $G$
-consisting of those permutations that act like a sorted permutation
-(or, equivalently, are compatible with every pair  of vectors in
+Let $G \leq \sym_n$ and suppose there is a group action of $G$ on $\ind(\tau,
+D)$. We also use $\sortsym_G (D)$ (or $\sortsym_n(D)$ if $G = \sym_n$) to refer
+to the subgroup of $G$ consisting of those permutations that act like a sorted
+permutation (or, equivalently, are compatible with every pair of vectors in
 $\ind(\tau, D)$).
 
 % $`\Rightarrow'$: We have that there exists $\pi \in \aut (\mathcal{D})$ such
@@ -863,8 +884,8 @@ $\ind(\tau, D)$).
 % \end{proof}
 
 \begin{definition}
-  Suppose there is a group action of $G \leq \sym_n$ on $\ind(\tau, D)$. We
-  say that $(\sigma, \vec{x}, \vec{y}) \in G \times \ind(\tau, D)^{2}$ is
+  Suppose there is a group action of $G \leq \sym_n$ on $\ind(\tau, D)$. We say
+  that $(\sigma, \vec{x}, \vec{y}) \in G \times \ind(\tau, D)^{2}$ is
   \emph{useful} if $(\vec{x}, \vec{y})$ is not compatible with $\sigma$.
 
   We say that two distinct pairs $(\sigma_1, \vec{x}_1, \vec{y}_1), (\sigma_2,
@@ -878,12 +899,12 @@ $\ind(\tau, D)$).
   \item $\sigma_2 \sigma_1 \vec{y}_1 = \sigma \vec{y}_1$.
   \end{itemize}
   
-  We say that a set $S \subseteq G \times \ind(\tau, D)^2$ is \emph{useful}
-  if each pair in it is useful. We say that $S$ is \emph{independent} if any two
+  We say that a set $S \subseteq G \times \ind(\tau, D)^2$ is \emph{useful} if
+  each pair in it is useful. We say that $S$ is \emph{independent} if any two
   distinct elements of $S$ are mutually independent.
 \end{definition}
-%AD: isn't this definition missing something about y_2 and x_2?  I
-%also think it needs some intuitive explanation to accompany it.
+% AD: isn't this definition missing something about y_2 and x_2? I also think it
+% needs some intuitive explanation to accompany it.
 
 % \begin{definition}
 %   Let $H$ be a set on which the action of $\sym_n$ is defined, and $L:
@@ -964,20 +985,19 @@ $\ind(\tau, D)$).
 
 \begin{lem}
   \label{lem:useful-independant-set}
-  Suppose there is a group action of $G \leq \sym_n$ on $\ind(\tau, D)$. Let
-  $S \subseteq G \times \ind(\tau, D)^2$ be a useful and independent set (with respect to the group $G$).
-  Then $[G : \sortsym_n(D)] \geq 2^{\vert S \vert}$.
+  Suppose there is a group action of $G \leq \sym_n$ on $\ind(\tau, D)$. Let $S
+  \subseteq G \times \ind(\tau, D)^2$ be a useful and independent set (with
+  respect to the group $G$). Then $[G : \sortsym_n(D)] \geq 2^{\vert S \vert}$.
 \end{lem}
 
 \begin{proof}
   For any $R \subseteq S$ define $\sigma_R = \Pi_{(\sigma, \vec{x}, \vec{y}) \in
     R} \sigma$ (with some arbitrary order assumed on $S$). Let $R$ and $Q$ be
   distinct subsets of $S$ and WLOG let $\vert R \vert \geq \vert Q \vert$. It
-  suffices to show that $\sigma^{-1}_Q \sigma_R \notin \sortsym (D)$. Pick
-  any $(\sigma, \vec{x}, \vec{y}) \in R \setminus Q \neq \emptyset$.
-%AD: the claim below doesn't follow just from independence.
- From
-  independence we have $\sigma_R \cdot \vec{x} = \sigma \vec{x}$, $\sigma_R
+  suffices to show that $\sigma^{-1}_Q \sigma_R \notin \sortsym (D)$. Pick any
+  $(\sigma, \vec{x}, \vec{y}) \in R \setminus Q \neq \emptyset$.
+  % AD: the claim below doesn't follow just from independence.
+  From independence we have $\sigma_R \cdot \vec{x} = \sigma \vec{x}$, $\sigma_R
   \cdot \vec{y} = \sigma \cdot \vec{y}$, $\sigma_Q \sigma \cdot \vec{x} = \sigma
   \cdot \vec{x} $, and $\sigma_Q \sigma \cdot \vec{y} = \sigma \cdot \vec{y}$.
   Therefore $\sigma^{-1}_Q \sigma_R \cdot \vec{x} = \sigma^{-1}_Q \sigma \cdot
@@ -1070,10 +1090,10 @@ $\ind(\tau, D)$).
 
 The following two lemmas are proved by Anderson and Dawar \cite{AndersonD17},
 and are both useful for proving the support theorem. The next lemma is used to
-establish a size bound on the supporting partition of a gate. In
-particular, it shows that for a partition $\mathcal{P}$ of $[n]$, if the index
-of $\setstab (\mathcal{P})$ in $\sym_n$ is small enough, then $\mathcal{P}$
-either contains very few or very many parts.
+establish a size bound on the supporting partition of a gate. In particular, it
+shows that for a partition $\mathcal{P}$ of $[n]$, if the index of $\setstab
+(\mathcal{P})$ in $\sym_n$ is small enough, then $\mathcal{P}$ either contains
+very few or very many parts.
 
 \begin{lem}[{\cite[Lemma 5]{AndersonD17}}]
   \label{lem:big-or-small}
@@ -1087,9 +1107,9 @@ either contains very few or very many parts.
 The following lemma tell us that, under the same assumptions as the previous
 lemma, if the number of parts in $\mathcal{P}$ is less then $\frac{n}{2}$ then
 $\mathcal{P}$ contains a very large part. This lemma is used both to establish
-that the stabiliser group of a gate has small support, and hence a canonical support, but also that
-this canonical support has bounded size (and is in fact constant for
-polynomial-size circuits).
+that the stabiliser group of a gate has small support, and hence a canonical
+support, but also that this canonical support has bounded size (and is in fact
+constant for polynomial-size circuits).
 
 \begin{lem}[{\cite[Lemma 6]{AndersonD17}}]
   \label{lem:small-means-support}
@@ -1097,21 +1117,20 @@ polynomial-size circuits).
   \frac{8}{\epsilon^2}$, if $\mathcal{P}$ is a partition of $[n]$ with $\vert
   \mathcal{P} \vert \leq \frac{n}{2}$, $s:= [\sym_n : \setstab (\mathcal{P})]$
   and $n \leq s \leq 2^{n^{1-\epsilon}}$, then $\mathcal{P}$ contains a part $P$
-  with at least $n - \frac{33}{\epsilon} \cdot \frac{\log s} {\log n}$
-  elements.
+  with at least $n - \frac{33}{\epsilon} \cdot \frac{\log s} {\log n}$ elements.
 \end{lem}
 
 Let $C$ be a rigid symmetric circuit with bijective labels that takes in
-structures of size $n$. Let $\SP(C)$ denote the maximum $\| \SP(g) \|$ over
-all gates $g$ in $C$. Let $g$ be a gate in $C$, and suppose $\Sigma (g)$ is a
+structures of size $n$. Let $\SP(C)$ denote the maximum $\| \SP(g) \|$ over all
+gates $g$ in $C$. Let $g$ be a gate in $C$, and suppose $\Sigma (g)$ is a
 $(\tau, D)$-structured function. The action of $\sym_n$ on the circuit induces
-an action on $\ind(\tau,D)$, defined for $\sigma \in \sym_n$ by $\sigma \cdot \vec{x}
-:= L(g)^{-1} \cdot \sigma \cdot L(g) (\vec{x})$ for all $\vec{x} \in \ind(\tau,D)$.
-Moreover, since $C$ is rigid, we have for $\sigma \in \sym_n$, $\sigma \cdot g =
-g$ if, and only if, $\sigma \cdot L(g)$ is isomorphism-equivalent to $L(g)$ if,
-and only if, $\sigma \in \sortsym_n(D)$. It follows from the
-orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n : \stab(g)] =
-[\sym_n : \sortsym_n(D)]$.
+an action on $\ind(\tau,D)$, defined for $\sigma \in \sym_n$ by $\sigma \cdot
+\vec{x} := L(g)^{-1} \cdot \sigma \cdot L(g) (\vec{x})$ for all $\vec{x} \in
+\ind(\tau,D)$. Moreover, since $C$ is rigid, we have for $\sigma \in \sym_n$,
+$\sigma \cdot g = g$ if, and only if, $\sigma \cdot L(g)$ is
+isomorphism-equivalent to $L(g)$ if, and only if, $\sigma \in \sortsym_n(D)$. It
+follows from the orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n :
+\stab(g)] = [\sym_n : \sortsym_n(D)]$.
 
 \begin{thm}
   \label{thm:support_thm}
@@ -1161,20 +1180,18 @@ orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n : \stab(g)] =
   We note that Lemma \ref{lem:big-or-small} implies that $n - \vert \SP(g) \vert
   \leq k'$.
   
-  We now construct a sufficiently large useful and independent set of
-  triples.  Using Lemma
-  \ref{lem:useful-independant-set}, this set allows us to place a lower
-  bound on the orbit size of $g$, and from this bound we derive the required
-  contradiction.  Divide $[n]$ into $\lfloor \frac{n}{k' + 2} \rfloor$ disjoint
-  sets $S_i$ of size $k' + 2$ and ignore the elements left over. It follows that
-  for each $i$ there is a permutation $\sigma_i$ which fixes $[n] \setminus S_i$
-  pointwise but moves $g$. Suppose there was no such $\sigma_i$, but then every
-  permutation that fixes $[n]\setminus S_i$ pointwise fixes $g$. Thus the partition of
-  all the singletons in $[n]\setminus S_i$ and $S_i$ is a supporting
-  partition of $g$.  As
-  $\SP(g)$ is the coarsest such partition it follows that $\vert \SP(g) \vert \leq n
-  - (k'+2) + 1 = n - k' - 1$, which contradicts the inequality $n - \vert \SP(g)
-  \vert \leq k'$.
+  We now construct a sufficiently large useful and independent set of triples.
+  Using Lemma \ref{lem:useful-independant-set}, this set allows us to place a
+  lower bound on the orbit size of $g$, and from this bound we derive the
+  required contradiction. Divide $[n]$ into $\lfloor \frac{n}{k' + 2} \rfloor$
+  disjoint sets $S_i$ of size $k' + 2$ and ignore the elements left over. It
+  follows that for each $i$ there is a permutation $\sigma_i$ which fixes $[n]
+  \setminus S_i$ pointwise but moves $g$. Suppose there was no such $\sigma_i$,
+  but then every permutation that fixes $[n]\setminus S_i$ pointwise fixes $g$.
+  Thus the partition of all the singletons in $[n]\setminus S_i$ and $S_i$ is a
+  supporting partition of $g$. As $\SP(g)$ is the coarsest such partition it
+  follows that $\vert \SP(g) \vert \leq n - (k'+2) + 1 = n - k' - 1$, which
+  contradicts the inequality $n - \vert \SP(g) \vert \leq k'$.
 
   Since $g$ is moved by each $\sigma_i$, and $C$ is rigid, it follows that we
   have $\sigma_i \notin \sortsym_n(D)$. Thus, from Lemma
@@ -1183,8 +1200,8 @@ orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n : \stab(g)] =
   L(g)^{-1}(h_i'))$ is inconsistent with $sigma_i$, and so the triple
   $(\sigma_i, L(g)^{-1}(h_i), L(g)^{-1}(h_i'))$ is useful.
 
-%AD: I haven't changed this below in case I'm just confused.  But,
-%isn't \SP(h)^* just a new notation for \sp(h)?
+  % AD: I haven't changed this below in case I'm just confused. But, isn't
+  % \SP(h)^* just a new notation for \sp(h)?
   Let $\SP (h)^*$ be the union of all parts of $\SP(h)$ except for the largest
   part. Let $Q_i = \SP(h_i)^* \cup \SP(\sigma_i \cdot h_i)^* \cup \SP (h_i')^*
   \cup \SP (\sigma_i \cdot h_i')^*$. Then note that if $\sigma_j$ fixes $Q_i$
@@ -1201,14 +1218,14 @@ orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n : \stab(g)] =
   \begin{align*}
     \vert Q_i \vert \leq \|\SP(h_i) \| + \|\SP(\sigma_i h_i) \| + \|\SP(h_i') \| + \|\SP(\sigma_i h_i') \leq 4 \cdot \frac{33\log s}{\epsilon \log n}.
   \end{align*}
-  These inequalities follow from the fact that the sets $S_i$ are disjoint and we may apply Lemma
-  \ref{lem:small-means-support} to each of the child gates. From these inequalities
-  we have that the average total degree (in + out degree) of $K$ is at most $2 \cdot \vert Q_i
-  \vert \leq 34 \cdot k'$. Now greedily select a maximal independent set in $K$
-  by repeatedly selecting $S_i$ with the lowest total degree and eliminating it
-  and its neighbours. This action does not affect the bound on the average total
-  degree of $K$ and hence determines an independent set $I$ in $K$ of size at
-  least
+  These inequalities follow from the fact that the sets $S_i$ are disjoint and
+  we may apply Lemma \ref{lem:small-means-support} to each of the child gates.
+  From these inequalities we have that the average total degree (in + out
+  degree) of $K$ is at most $2 \cdot \vert Q_i \vert \leq 34 \cdot k'$. Now
+  greedily select a maximal independent set in $K$ by repeatedly selecting $S_i$
+  with the lowest total degree and eliminating it and its neighbours. This
+  action does not affect the bound on the average total degree of $K$ and hence
+  determines an independent set $I$ in $K$ of size at least
   \begin{align*}
     \frac{\lfloor \frac{n}{k' + 2} \rfloor}{34k' + 1} \geq \frac{n - (k'+2)}{34k'+1k'+2} \geq \frac{n\frac{7}{16}}{34k'^2 + 69k' +2} \geq \frac{n}{(16k')^2}.
   \end{align*}
@@ -1244,23 +1261,47 @@ $g \in C_n$, $\vert \consp(g) \vert \leq k$.
 
 % $a_i \in A_$
 
-Let $C_n$ be a rigid symmetric circuit with bijective labels. We now extend the given action of $\sym_n$ on the gates of $C_n$ to the indexes. Let $g$ be a gate in $C_n$, and let $(\tau, D) := \type(g)$. Note that the action of any permutation in $\stab(g)$ on the circuit fixes $H_g$ setwise. Therefore the action of $\stab(g)$ on $H_g$ induces an action of $\stab(g)$ on $\ind(\tau, D)$. Moreover, since $\stab(g) = \sortsym_n(D)$, it follows that $\stab(g)$ acts on $\ind(\tau, D)$ as a sorted permutation.
+Let $C_n$ be a rigid symmetric circuit with bijective labels. We now extend the
+given action of $\sym_n$ on the gates of $C_n$ to the indexes. Let $g$ be a gate
+in $C_n$, and let $(\tau, D) := \type(g)$. Note that the action of any
+permutation in $\stab(g)$ on the circuit fixes $H_g$ setwise. Therefore the
+action of $\stab(g)$ on $H_g$ induces an action of $\stab(g)$ on $\ind(\tau,
+D)$. Moreover, since $\stab(g) = \sortsym_n(D)$, it follows that $\stab(g)$ acts
+on $\ind(\tau, D)$ as a sorted permutation.
 
-For $x \in D$ let $\stab_g(x) = \{\sigma \in \stab(\consp(g)) : \sigma (x) = x\}$ and let $\consp_g(x)$ be the canonical support of $\stab_g(x)$. We call $\consp_g(x)$ the canonical support of $x$ with respect to $g$. In the event that the gate $g$ is clear from context we omit the subscript. If $h \in H_g$ and $(x_1, \ldots ,x_r) := L(g)^{-1}(h)$ then $\stab(h) \cap \stab(g) = \stab_{\stab(g)}(h) = \bigcap_{i \in [r]} \stab_g(x_i)$. If $\stab(h) \cap \stab(g)$ has small support, then from Lemma \ref{lem:row-column-supports-well-behaved} it has canonical support $\consp(h) \cup \consp(g)$. Moreover, if $\stab(h) \cap \stab(g)$ has small support, then $\stab_g(x_i)$ for all $i \in [r]$ and $\consp(g) \cup \consp(h) = \bigcup_{i \in [r]}\consp_g(x_i)$. This follows from repeated application of Lemma \ref{lem:row-column-supports-well-behaved}. As such, we may apply the support theorem to the elements of $D$ for large enough $n$.
+For $x \in D$ let $\stab_g(x) = \{\sigma \in \stab(\consp(g)) : \sigma (x) =
+x\}$ and let $\consp_g(x)$ be the canonical support of $\stab_g(x)$. We call
+$\consp_g(x)$ the canonical support of $x$ with respect to $g$. In the event
+that the gate $g$ is clear from context we omit the subscript. If $h \in H_g$
+and $(x_1, \ldots ,x_r) := L(g)^{-1}(h)$ then $\stab(h) \cap \stab(g) =
+\stab_{\stab(g)}(h) = \bigcap_{i \in [r]} \stab_g(x_i)$. If $\stab(h) \cap
+\stab(g)$ has small support, then from Lemma
+\ref{lem:row-column-supports-well-behaved} it has canonical support $\consp(h)
+\cup \consp(g)$. Moreover, if $\stab(h) \cap \stab(g)$ has small support, then
+$\stab_g(x_i)$ for all $i \in [r]$ and $\consp(g) \cup \consp(h) = \bigcup_{i
+  \in [r]}\consp_g(x_i)$. This follows from repeated application of Lemma
+\ref{lem:row-column-supports-well-behaved}. As such, we may apply the support
+theorem to the elements of $D$ for large enough $n$.
 
-%REVIEW THIS BIT, MORE WORK MAY BE NEEDED.
+% REVIEW THIS BIT, MORE WORK MAY BE NEEDED.
 
 % It follows that for each gate $g$ and $h \in H_g$, $\stab(h) \subseteq
-% \stab(L(g)^{-1}(h))$. Thus all supports and supporting partitions of $h$ are also supports or supporting partitions of $L(g)^{-1} (h)$, which allows us to translate the support theorem to elements of the index of $g$.
-% Suppose $\Sigma(g)$ is a $(\tau, D)$-structured function. Notice that $\stab
-% (\consp(g)) \subseteq \stab (g) = \sortsym_n(D)$, and so each 
-% $\sigma \in \stab(g)$ may be thought of as a sorted-permutation of $D$, defining an action of $\stab(g)$ on $D$. Furthermore, if $h \in H_g$ and $L(g)^{-1}(h) = (x_1, \ldots , x_{r_i}) \in \ind(\tau, D)$ then $\stab_{\stab(g)}(h) = \stab_{\stab(g)}(x_1) \cap \ldots \cap \stab_{\stab(g)}(x_k)$
+% \stab(L(g)^{-1}(h))$. Thus all supports and supporting partitions of $h$ are
+% also supports or supporting partitions of $L(g)^{-1} (h)$, which allows us to
+% translate the support theorem to elements of the index of $g$. Suppose
+% $\Sigma(g)$ is a $(\tau, D)$-structured function. Notice that $\stab
+% (\consp(g)) \subseteq \stab (g) = \sortsym_n(D)$, and so each $\sigma \in
+% \stab(g)$ may be thought of as a sorted-permutation of $D$, defining an action
+% of $\stab(g)$ on $D$. Furthermore, if $h \in H_g$ and $L(g)^{-1}(h) = (x_1,
+% \ldots , x_{r_i}) \in \ind(\tau, D)$ then $\stab_{\stab(g)}(h) =
+% \stab_{\stab(g)}(x_1) \cap \ldots \cap \stab_{\stab(g)}(x_k)$
 
 
-% there exists $\pi_{\sigma} \in \sortsym(D)$
-% such that $\pi_\sigma \cdot \vec{x} = \sigma \cdot \vec{x}$ for all $\vec{x} \in
-% \ind(\tau, D)$. It follows that we can define an action of $\stab(\consp(g))\leq \sym_n$ on $D$  defined for $\sigma \in \stab(g)$ by $\sigma \cdot a := \pi (a)$
-% for all $a \in D$. Mo
+% there exists $\pi_{\sigma} \in \sortsym(D)$ such that $\pi_\sigma \cdot
+% \vec{x} = \sigma \cdot \vec{x}$ for all $\vec{x} \in \ind(\tau, D)$. It
+% follows that we can define an action of $\stab(\consp(g))\leq \sym_n$ on $D$
+% defined for $\sigma \in \stab(g)$ by $\sigma \cdot a := \pi (a)$ for all $a
+% \in D$. Mo
 
 
 % Thus there is a well-defined action of $\sym_n$ on the set of all elements in
