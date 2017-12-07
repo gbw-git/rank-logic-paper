@@ -15,7 +15,7 @@ say that $C$ is a directed acyclic graph, without further ordering the nodes, we
 implicitly assume that the functions in the basis $\mathbb{B}$ are
 \emph{symmetric}. That is to say $f_g$ is invariant under all permutations of
 its $m$ inputs. This unstated assumption is pervasive in circuit complexity. In
-particular, the standard Boolean basis of AND, OR and NOT gates as well as bases
+particular, the standard Boolean basis of $\AND$, $\OR$ and $\NOT$ gates as well as bases
 with majority or threshold gates only contain symmetric functions.
 
 We are interested in Boolean circuits that compute queries on structures, such
@@ -201,25 +201,25 @@ is \emph{matrix-invariant}. In this subsection we develop a general framework
 for dealing with functions that take in structures.
 
 % AD - rewrote the paragraph to reduce the use of subscripts and superscripts.
-Let $\tau = (R, S, \nu)$ be a many-sorted signature.
+Let $\tau = (R, S, \nu)$ be a many-sorted vocabulary.
 % with $R = \{R_1 \ldots, R_t\}$, $S = \{s_1, \ldots , s_p\}$, and $\nu(R_i) =
 % (a^i_1, \ldots , a^i_{r_i)})$, where $r_i = \arty(R_i)$ and $a^i_q \in S$ for
 % all $q \in [r_i]$.
 Let $D := \biguplus_{s \in S} D_{s} = \{(s,d) : d \in D_s\}$, be a disjoint
-union of non-empty sets, indexed by $S$, i.e.\ $D$ is potentially the universe
-of a $\tau$-structure. We call $D$ a \emph{$\tau$-sorted set}. For each $P \in
-R$, let $P^D$ denote the trivial relation over the many-sorted universe $D$,
-i.e.\ $P^D := D_{a_1} \times \ldots \times D_{a_{r}}$, where $\nu(P) = (a_1,
-\ldots , a_{r)})$. Let the \emph{index defined by the pair $(\tau, D)$} be the
-set $\biguplus_{P\in R} P^{D}$. We use this set to index the input to a Boolean
-function, as such we abuse notation and denote the index defined by $(\tau, D)$
-by $\ind(\tau, D)$. We call $\tau$ the vocabulary and $D$ the universe of
-$\ind(\tau, D)$.
+union of non-empty sets, indexed by $S$. We call $D$ a \emph{$\tau$-universe}.
+For each $P \in R$, let $P^D$ denote the trivial relation over the many-sorted
+universe $D$, i.e.\ $P^D := D_{a_1} \times \ldots \times D_{a_{r}}$, where
+$\nu(P) = (a_1, \ldots , a_{r)})$. Let the \emph{index defined by the pair
+  $(\tau, D)$} be the set $\biguplus_{P\in R} P^{D}$. We use this set to index
+the input to a Boolean function, as such we abuse notation and denote the index
+defined by $(\tau, D)$ by $\ind(\tau, D)$. We call $\tau$ the vocabulary and $D$
+the universe of $\ind(\tau, D)$.
 
+% GW: move sorted permutations into the background section
 For the remainder of this subsection we fix a vocabulary $\tau$ and a
 many-sorted set $D=\biguplus_{s \in S} D_{s}$ and let $X := \ind (\tau, D)$. Let
-$G \leq \sym_{X}$, and let $\sortsym(D) := \prod_{s \in S} \sym_{D_{s}}$. We
-call the elements of $\sortsym(D)$ \emph{sorted permutations}. Note that
+$G \leq \sym_{X}$, and let $\sortsym_D := \prod_{s \in S} \sym_{D_{s}}$. We
+call the elements of $\sortsym_D$ \emph{sorted permutations}. Note that
 $\sortsym(D)$ can be identified with a subgroup of $\sym_X$. There is an obvious
 action of $G$ on $X$. We can extend this to an action on the set of functions of
 the form $f: X \rightarrow X$, for any set $H$, defined by $\sigma \cdot f(x) =
@@ -230,11 +230,11 @@ f(\sigma \cdot x)$ for all $x \in X$, $\sigma \in G$.
 We say that two functions $f, g : X \rightarrow H$ are \emph{$G$-equivalent} if
 there exists $\sigma \in G$ such that $f = \sigma \cdot g$. We say $f$ and $g$
 are \emph{isomorphism-equivalent} if they are $\sortsym(D)$-equivalent. We are
-interested in the case where $H = \{0,1\}$, i.e.\ $f : X \rightarrow \{0,1\}$.
-In this case $f$ defines for each relation $R^D_i$ a subset of that relation,
-and thus determines a $\tau$-structure over the universe $D$. We note that two
-functions $f, g: X \rightarrow \{0,1\}$ are isomorphism-equivalent if, and only
-if, the two $\tau$-structures they determine are isomorphic.
+often interested in the case where $H = \{0,1\}$, i.e.\ $f : X \rightarrow
+\{0,1\}$. In this case $f$ defines for each relation $R^D_i$ a subset of that
+relation, and thus determines a $\tau$-structure over the universe $D$. We note
+that two functions $f, g: X \rightarrow \{0,1\}$ are isomorphism-equivalent if,
+and only if, the two $\tau$-structures they determine are isomorphic.
 
 We call a function of the form $F:\{0,1\}^{X} \rightarrow \{0,1\}$ a
 \emph{$(\tau, D)$-structured function}, or just a \emph{structured function}
@@ -274,8 +274,8 @@ respectively.
 Structured functions give us a general framework for indexing the input sequence
 to a Boolean function and associating with that function an appropriate symmetry
 condition. Let $F$ be a $(\tau, D)$-structured function. We say $F$ is
-\emph{$G$-invariant} if it is constant on $G$-equivalent input vectors, i.e.\
-for all $G$-equivalent $\vec{x}, \vec{y} \in \{0,1\}^{X}$, $F(\vec{x}) =
+\emph{$G$-invariant} if it is constant on $G$-equivalent input vectors, i.e. for
+all $G$-equivalent $\vec{x}, \vec{y} \in \{0,1\}^{X}$, $F(\vec{x}) =
 F(\vec{y})$. We say $F$ is \emph{isomorphism-invariant} if it is $\sortsym
 (D)$-invariant. Note that a structured function with vocabulary $\tau$ is
 isomorphism-invariant if, and only if, it decides a property of

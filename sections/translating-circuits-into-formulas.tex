@@ -20,18 +20,20 @@ Theorem. We also fix a structure $\mathcal{A}$ of size $n$ over the universe $U$
 and an internal gate $g$ in the circuit $C_n$. In this subsection we show how to
 evaluate $g$ in $\FPR$ for a given assignment to its support.
 
-If $g$ is a symmetric gate then the results of Anderson and
+We note that for a symmetric gate $g$ in $C_n$ the results of Anderson and
 Dawar~\cite{AndersonD17} will suffice for evaluating $g$. As such, we assume
-that $g$ is a matrix-symmetric gate, and we let $A \times B := \ind(g)$.
+that $g$ is a matrix-symmetric gate. In order to simplify notation we let $A
+\times B := \ind(g)$, and for $h \in H_g$ we let $\row(h) = L(g)^{-1}(h)(1)$ and
+$\column(h) = L(g)^{-1}(h)(2)$.
 
 Recall that in order to evaluate the gate $g$ we need to consider a bijection
 $\gamma \in [n]^{\underline{U}}$, with the evaluation of $g$ given by
 $C_n[\gamma \mathcal{A}](g)$. In this subsection we show that the evaluation of
 $g$ depends only what $\gamma$ maps to $\consp(g)$. This result allows us to
 characterise all those bijections for which $g$ evaluates to true using only
-using only constant-size-domain injections in $U^{\consp(g)}$. In the next
-subsection we use this succinct encoding, along with the fixed-point operator,
-to evaluate the entire circuit.
+elements of $U^{\consp(g)}$, i.e. injections with a constant size domain. In the
+next subsection we use this succinct encoding, along with the fixed-point
+operator, to evaluate the entire circuit.
  
 It will often be important that two assignments to a support be
 \emph{compatible} with one another in the sense that there is an injection over
@@ -65,7 +67,7 @@ Given an assignment $\gamma \in [n]^{\underline{U}}$, we can evaluate the child
 gates of $g$, forming the matrix $L^{\gamma} : A \times B \rightarrow \{0,1\}$
 defined by $L^{\gamma} (a,b) := C[\gamma \mathcal{A}](L(g)(a,b))$ for $(a,b) \in
 A \times B$. We may then evaluate $g$ by taking $L^{\gamma}$ as the input to the
-Boolean function labelling $g$. In the following Lemma we show that for any
+Boolean function labelling $g$. In the following lemma we show that for any
 $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$ that agree on the support of $g$,
 $L^{\gamma_1}$ is isomorphism-equivalent to $L^{\gamma_2}$. Since $g$ is matrix
 symmetric, we may conclude that the evaluation of $g$ for $\gamma$ depends only
@@ -154,8 +156,8 @@ two vectors $\vec{x}, \vec{x}' \in A_s$ by $\vec{x} \equiv_s \vec{x}'$.
 
 We now define a matrix. We begin by defining the index sets for the matrix.
 
-Let $R^{\min} = \{\min (\orb(\row(h))) : h \in H_g\}$ and $C^{\min} = \{ \min
-(\orb (\column(h))) : h \in H_g\}$, and let
+Let $R^{\min} = \{\min (\orb_g(\row(h))) : h \in H_g\}$ and $C^{\min} = \{ \min
+(\orb_g (\column(h))) : h \in H_g\}$, and let
 \begin{align*}
   I = \{(i, \vec{x}): i \in R^{\min}, \vec{x} \in A_i\},
 \end{align*}
@@ -164,13 +166,77 @@ and
   J = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j\}.
 \end{align*}
 
+We should like to associate with each index $((i, \vec{x}), (j, \vec{y})$ a gate
+$h$ and then assign $\vec{x}$ and $\vec{y}$ to the support $h$. The matrix at
+that point is then set to 1 if, and only if, the assignment causes $h$ to
+evaluate to true. It remains to show how to select an appropriate gate $h$ and
+ensure that the assignments to its row and column supports are consistent. The
+following lemma is used to make this selection.
+
+\begin{lem}
+  \label{lem:permutation-row-column}
+  For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ there exists $\sigma_r,
+  \sigma_c \in \spstab{g}$ such that if $\vec{r} := \sigma_r \vec{\consp}(i)$
+  and $\vec{c} := \sigma_c \vec{\consp}(j)$ then $\vec{x}_{\vec{r}} \sim
+  \vec{y}_{\vec{c}}$.
+\end{lem}
+\begin{proof}
+  Let $\sigma_r$ be the identity. Then $\vec{r} = \vec{\consp}(i)$ and
+  $\vec{x}_{\vec{r}} = \vec{x}$. Let $u_1, \ldots , u_k$ be the first $k$
+  elements of $[n] \setminus (\consp(g) \cup \consp(i))$. Let $T = \{a \in
+  \consp(j) \setminus \consp(g) : \vec{y}(a) \in \vec{x}(\consp(i) \setminus
+  \consp(g))\}$, let $\vec{c}' \in [n]^{\underline{\consp(j)}}$ be defined by
+  \[
+    \vec{c}' (a) =
+    \begin{cases}
+      a & a \in \consp(g) \cap \consp(j)\\
+      \vec{x}^{-1}(\vec{y}(a)) & a \in T\\
+      u_{i} & \text{$a$ is the $i$th element of $(\consp(j) \setminus (\consp(g)
+        \cup T)))$}.
+    \end{cases}
+  \]
+  Let $\sigma_c$ be any permutation such that $\sigma_c \vec{\consp}(j)) =
+  \vec{c}'$. Then $\vec{c} = \sigma_c \vec{\consp}(j) = \vec{c}'$. Let $c$ be
+  the image of $\vec{c}$.
+
+  It remains to show that $\vec{x} \sim \vec{y}_{\vec{c}}$. Let $z \in \consp(i)
+  \cap c$ and $z' = \vec{c}^{-1}(z)$. Suppose $z' \in \consp(g)\cap \consp(j)
+  \cap \consp(i)$. Then we have $\vec{x}(z) = \vec{x}(z') \eta (z') =
+  \vec{y}(z') = \vec{y}_{\vec{c}}(z)$. By a similar argument, if $z' \consp(g)
+  \cap \consp(j) \setminus \consp(i)$ we have $\vec{x}(z) \neq
+  \vec{y}_{\vec{c}}(z)$. Suppose $z' \in T$. Then $\vec{c}(z') =
+  \vec{x}^{-1}(\vec{y}(z'))$ which gives us that $\vec{y}_{\vec{c}}(z) =
+  \vec{y}(z') = \vec{x}(\vec{c}(z')) = \vec{x}(z)$. We finally note that $z'
+  \notin (\consp(j) \setminus (\consp(g) \cup T))$ as $\{u_1 , \ldots , u_k\}
+  \cap \consp(i) = \emptyset$. This completes the intersection component of
+  compatibility.
+
+  Let $z \in \consp(i) \setminus c$ and $w \in c \setminus \consp(i)$. Let $w' =
+  \vec{c}^{-1}(w)$. Suppose $w' \in \consp(g) \cap \consp(j)$. Then from the
+  fact that $w \notin \consp(i)$ we have that $\vec{y}_{\vec{c}}(w) \neq
+  \vec{x}(z)$ (using a similar argument as in the above case). Suppose $w' \in
+  T$. Then there exists $b \in \consp(i) \setminus \consp(g)$ such that
+  $\vec{y}(w') = \vec{x}(b)$. It follows that $w = \vec{c}(w') =
+  \vec{x}^{-1}\vec{y} (w') = b$, which is a contradiction as $w \notin
+  \consp(i)$ by assumption, and we conclude $w' \notin T$. Suppose finally that
+  $w' \in \consp(j) \setminus (\consp(g) \cup T)$. It follows that for all $b
+  \in \consp(i) \setminus \consp(g)$ we have that $\vec{x}(b) \neq
+  \vec{y}_{\vec{c}}(w)$. It remains to check the result for $b \in (\consp(i)
+  \setminus c) \setminus (\consp(i) \setminus \consp(g)) = (\consp(g) \cap
+  \consp(i)) \setminus c$. But then $b \notin \consp(j)$, and so $\vec{x}(b) =
+  \eta (b)$. But $w' \notin \consp(g)$, and so $\vec{x}(b) = eta(b) \neq
+  \vec{y}(w') = \vec{y}(w)$. The result follows.
+\end{proof}
+
 From Lemma \ref{lem:permutation-row-column} we have for any $(i, \vec{x}) \in I$
 and $(j, \vec{y}) \in J$, corresponding vectors and permutations $\vec{r}$,
 $\vec{c}$, $\sigma_r$ and $\sigma_c$. Let $h := L(g)(\sigma_r(i), \sigma_c
-(j))$. We define the matrix $M : I \times J \rightarrow \{0,1\}$ by
+(j))$. Let $\vec{b}$ for $(i, \vec{x})$ and $(j, \vec{y})$ be the restriction of
+$(\vec{x}_\vec{r} \vert \vec{y}_{\vec{c}})$ to the support of $h$. We define the
+matrix $M : I \times J \rightarrow \{0,1\}$ by
 
 \begin{align*}
-  M((i , \vec{x}), (j, \vec{y})) := (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in EV_h.
+  M((i , \vec{x}), (j, \vec{y})) := \vec{b} \in EV_h.
 \end{align*}
 
 % Let $I /{\sim} = \{(i, [\vec{x}]): i \in R^{\min}, [\vec{x}] \in
