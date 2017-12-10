@@ -13,12 +13,25 @@ together with the Immerman-Vardi theorem and the work of Anderson and Dawar
 of circuits in $\FPR$, completing the result.
 
 \subsection {Evaluating Circuits}
-In this section let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ be a family of
+In this subsection we fix $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$, a family of
 polynomial-size symmetric matrix-circuits with unique labels that compute a
-$q$-ary query, and let $n_0$ be the constant in the hypothesis of the Support
-Theorem. We also fix a structure $\mathcal{A}$ of size $n$ over the universe $U$
-and an internal gate $g$ in the circuit $C_n$. In this subsection we show how to
-evaluate $g$ in $\FPR$ for a given assignment to its support.
+$q$-ary query. We let $n_0$ be the constant in the hypothesis of the Support
+Theorem. We fix a structure $\mathcal{A}$ of size $n > n_0$ over the universe
+$U$ and an internal gate $g$ in the circuit $C_n$. Recall that in order to
+evaluate the gate $g$ we need to consider a bijection $\gamma \in
+[n]^{\underline{U}}$, with the evaluation of $g$ given by $C_n[\gamma
+\mathcal{A}](g)$.
+
+In this subsection we first show that the evaluation of $g$ depends only what
+$\gamma$ maps to $\consp(g)$. We use this fact to limit our discussion to
+characterising those assignments to the support of $g$ for which $g$ evaluates
+to true. We then show that the set of assignments to the support of $g$ that
+make it evaluate to true can be determined from the set of assignments to the
+supports of its child gates that make them evaluate to true. In the next
+subsection we show that this recursive step may be defined in $\FPR$, and hence
+that the circuit (and family of circuits) can be evaluated in $\FPR$. We finally
+construct the a f
+
 
 We note that for a symmetric gate $g$ in $C_n$ the results of Anderson and
 Dawar~\cite{AndersonD17} will suffice for evaluating $g$. As such, we assume
@@ -176,8 +189,8 @@ following lemma is used to make this selection.
 \begin{lem}
   \label{lem:permutation-row-column}
   For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ there exists $\sigma_r,
-  \sigma_c \in \spstab{g}$ such that if $\vec{r} := \sigma_r \vec{\consp}(i)$
-  and $\vec{c} := \sigma_c \vec{\consp}(j)$ then $\vec{x}_{\vec{r}} \sim
+  \sigma_c \in \spstab{g}$ such that if $\vec{r} := \sigma_r \vec{\consp}_g(i)$
+  and $\vec{c} := \sigma_c \vec{\consp}_g(j)$ then $\vec{x}_{\vec{r}} \sim
   \vec{y}_{\vec{c}}$.
 \end{lem}
 \begin{proof}
@@ -196,7 +209,7 @@ following lemma is used to make this selection.
     \end{cases}
   \]
   Let $\sigma_c$ be any permutation such that $\sigma_c \vec{\consp}(j)) =
-  \vec{c}'$. Then $\vec{c} = \sigma_c \vec{\consp}(j) = \vec{c}'$. Let $c$ be
+  \vec{c}'$. Then $\vec{c} := \sigma_c \vec{\consp}(j) = \vec{c}'$. Let $c$ be
   the image of $\vec{c}$.
 
   It remains to show that $\vec{x} \sim \vec{y}_{\vec{c}}$. Let $z \in \consp(i)
@@ -232,8 +245,8 @@ From Lemma \ref{lem:permutation-row-column} we have for any $(i, \vec{x}) \in I$
 and $(j, \vec{y}) \in J$, corresponding vectors and permutations $\vec{r}$,
 $\vec{c}$, $\sigma_r$ and $\sigma_c$. Let $h := L(g)(\sigma_r(i), \sigma_c
 (j))$. Let $\vec{b}$ for $(i, \vec{x})$ and $(j, \vec{y})$ be the restriction of
-$(\vec{x}_\vec{r} \vert \vec{y}_{\vec{c}})$ to the support of $h$. We define the
-matrix $M : I \times J \rightarrow \{0,1\}$ by
+$(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})$ to the support of $h$. We define
+the matrix $M : I \times J \rightarrow \{0,1\}$ by
 
 \begin{align*}
   M((i , \vec{x}), (j, \vec{y})) := \vec{b} \in EV_h.
@@ -258,8 +271,8 @@ that from Lemma \ref{lem:support_determine_action}, $\Pi^{\gamma}_f(x)$ is
 well-defined independently of the particular choice of permutation.
 
 Let $\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
-defined by $\alpha^{\gamma} (i, \vec{x}) = \Pi^{\gamma}_{\vec{x}}(i)$ and
-$\beta^{\gamma} (j, \vec{y}) = \Pi^{\gamma}_{\vec{y}}(j)$, respectively. It can
+defined by $\alpha^{\gamma} (i, \vec{x}) := \Pi^{\gamma}_{\vec{x}}(i)$ and
+$\beta^{\gamma} (j, \vec{y}) := \Pi^{\gamma}_{\vec{y}}(j)$, respectively. It can
 be shown that these functions are surjective.
 
 \begin{lem} 
@@ -270,15 +283,15 @@ be shown that these functions are surjective.
 \begin{proof}
   We show that $\alpha^{\gamma}$ is surjective, with the same result for
   $\beta^{\gamma}$ following similarly. Let $q \in A$ and let $i = \min
-  (\orb_{\spstab{g}} (q))$. Then there exists $\sigma \in \spstab{g}$ such that
-  $\sigma (i) = q$. Let $\vec{x} := \gamma^{-1} \sigma \vec{\consp}(i)$. Notice
-  that for $a \in \consp(i)$ we have that $\vec{x}(a) = \gamma^{-1} (\sigma
-  (a))$, and since $\gamma^{-1} \sigma \sim \eta$, it follows that $\vec{x} \in
-  A_i$.
+  (\orb_{g} (q))$. Then there exists $\sigma \in \spstab{g}$ such that $\sigma
+  (i) = q$. Let $\vec{x} := \gamma^{-1} \sigma \vec{\consp}_g(i)$. Notice that
+  for $a \in \consp_g(i)$ we have that $\vec{x}(a) = \gamma^{-1} (\sigma (a))$,
+  and since $\gamma^{-1} \sigma \sim \eta$, it follows that $\vec{x} \in A_i$.
 
-  For $a \in \consp(i)$ we have $\Pi^{\gamma}_{\vec{x}} (a) = \gamma
+  For $a \in \consp_g(i)$ we have $\Pi^{\gamma}_{\vec{x}} (a) = \gamma
   (\vec{x}(a)) = \gamma \gamma^{-1} \sigma (a) = \sigma (a)$. From Lemma
-  \ref{lem:support-determine-action} it follows that $\alpha(i, \vec{x}) = q$.
+  \ref{lem:support-determine-action} it follows that $\alpha(i, \vec{x}) =
+  \sigma(i) = q$.
 \end{proof}
 
 % Note that $\alpha^{\gamma}$ and $\beta^{\gamma}$ can be lifted to functions on
@@ -325,12 +338,12 @@ of gates in the circuit.
 
 \begin{lem}
   \label{lem:alpha-ind-gamma}
-  Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma_1, \gamma_2: U
-  \rightarrow [n]$ be bijections such that $\gamma^{-1}_1 \sim \eta$ and
-  $\gamma^{-1}_2 \sim \eta$. Let $\mathcal{A}$ be a structure. Then
-  $C_n[\gamma_1 \mathcal{A}] (L(\alpha^{\gamma_1}(i, \vec{x}),
-  \beta^{\gamma_1}(j, \vec{y}))) = C_n[\gamma_2 \mathcal{A}]
-  (L(\alpha^{\gamma_2}(i, \vec{x}), \beta^{\gamma_2}(j, \vec{y})))$.
+  Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma_1, \gamma_2 \in
+  [n]^{\underline{U}}$ be such that $\gamma^{-1}_1 \sim \eta$ and $\gamma^{-1}_2
+  \sim \eta$. Let $\mathcal{A}$ be a structure. Then $C_n[\gamma_1 \mathcal{A}]
+  (L(\alpha^{\gamma_1}(i, \vec{x}), \beta^{\gamma_1}(j, \vec{y}))) =
+  C_n[\gamma_2 \mathcal{A}] (L(\alpha^{\gamma_2}(i, \vec{x}),
+  \beta^{\gamma_2}(j, \vec{y})))$.
 \end{lem}
 \begin{proof}
   We note that there exists $\pi \in \sym_n$ such that $\gamma_1 = \pi
@@ -361,22 +374,22 @@ and column of $h$.
   \label{lem:defining-h-from-IJ}
   Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. From Lemma
   \ref{lem:permutation-row-column} we have $\vec{r}$, $\vec{c}$, $\sigma_r$ and
-  $\sigma_c$. Let $h = L(g) (\sigma_r (i), \sigma_c (j))$. Let $\gamma' :=
-  (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})})^{-1} \gamma$.
-  Then $\alpha^{\gamma'} (i, \vec{x}) = \row (h)$ and $\beta^{\gamma'}
-  (i,\vec{y}) = \column(h)$.
+  $\sigma_c$. Let $h := L(g) (\sigma_r (i), \sigma_c (j))$ and $\vec{z}$ be the
+  restriction of $(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})$ to the support of
+  $h$. Let $\gamma' := (\Pi^{\gamma}_{\vec{z}})^{-1} \gamma$. Then
+  $\alpha^{\gamma'} (i, \vec{x}) = \row (h)$ and $\beta^{\gamma'} (i,\vec{y}) =
+  \column(h)$.
 \end{lem}
 \begin{proof}
   We prove the result for $\alpha$. The $\beta$ case follows similarly. We have
   from Lemma \ref{lem:support-determines-action} that it is sufficient to show
-  that for all $a \in \consp(i)$, $\alpha^{\gamma'}(i, \vec{x}) =
-  \Pi^{\gamma'}_{\vec{x}} (a) = \sigma_r (a)$. Let $a \in \consp(i)$. We have
-  that $\Pi^{\gamma'}_{\vec{x}} (a) = (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert
-    \vec{y}_{\vec{c}})})^{-1} \gamma (\vec{x} (a))$ and $\gamma (\vec{x}(a)) =
-  \gamma (\vec{x} (\sigma^{-1}_r(\sigma_r(a)))) = \gamma (\vec{x} (\vec{r}^{-1}
-  (\sigma_r(a)))) = \Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert
-    \vec{y}_{\vec{c}})}(\sigma_r(a))$. It follows that
-  $\Pi^{\gamma'}_{\vec{x}}(a) = \sigma_r(a)$, as required.
+  that for all $a \in \consp_g(i)$, $\alpha^{\gamma'}(i, \vec{x}) =
+  \Pi^{\gamma'}_{\vec{x}} (a) = \sigma_r (a)$. Let $a \in \consp_g(i)$. We have
+  that $\Pi^{\gamma'}_{\vec{x}} (a) = (\Pi^{\gamma}_{b})^{-1} \gamma (\vec{x}
+  (a))$ and $\gamma (\vec{x}(a)) = \gamma (\vec{x} (\sigma^{-1}_r(\sigma_r(a))))
+  = \gamma (\vec{x} (\vec{r}^{-1} (\sigma_r(a)))) =
+  \Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})}(\sigma_r(a))$. It
+  follows that $\Pi^{\gamma'}_{\vec{x}}(a) = \sigma_r(a)$, as required.
 \end{proof}
 
 The following result shows that we may check if an assignment to a gate $h$
