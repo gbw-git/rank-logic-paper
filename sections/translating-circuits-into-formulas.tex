@@ -1,3 +1,4 @@
+% !TEX root = ../paper.tex
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
 In this section we construct for every query computable by a $P$-uniform family
@@ -44,7 +45,7 @@ $\gamma \in [n]^{\underline{U}}$, with the evaluation of $g$ given by
 $C_n[\gamma \mathcal{A}](g)$. In this subsection we show that the evaluation of
 $g$ depends only what $\gamma$ maps to $\consp(g)$. This result allows us to
 characterise all those bijections for which $g$ evaluates to true using only
-elements of $U^{\consp(g)}$, i.e. injections with a constant size domain. In the
+elements of $U^{\consp(g)}$, i.e.\ injections with a constant size domain. In the
 next subsection we use this succinct encoding, along with the fixed-point
 operator, to evaluate the entire circuit.
  
@@ -54,21 +55,21 @@ the union of their domains which agrees with each assignment on their respective
 domains. We formalise this in the following definition.
 
 \begin{definition}
-  Let $f \in Y^{\underline{X}}$ and $g : Z^{\underline{W}}$. We say that $f$ is
-  \emph{compatible} with $g$, and we write $f \sim g$, if for all $a \in X \cap
-  W$, $f(a) = g(a)$ and for all $a \in X \setminus W$ and $b \in W \setminus X$,
-  $f(a) \neq g(b)$.
+	Let $f \in Y^{\underline{X}}$ and $g : Z^{\underline{W}}$. We say that $f$ is
+	\emph{compatible} with $g$, and we write $f \sim g$, if for all $a \in X \cap
+	W$, $f(a) = g(a)$ and for all $a \in X \setminus W$ and $b \in W \setminus X$,
+	$f(a) \neq g(b)$.
 \end{definition}
 
 It is also useful to have some notation for combining two compatible functions.
 Let $f : X \rightarrow Y$ and $p: X' \rightarrow Y'$ be compatible injections.
 Define the combination $(f | p): X \cup X' \rightarrow Y \cup Y'$ by
 \begin{align*}
-  (f \vert p) (x) =
-  \begin{cases}
-    f (x) & x \in X \\
-    p (x) & x \in Y.
-  \end{cases}
+	(f \vert p) (x) =
+	\begin{cases}
+	f (x) & x \in X  \\
+	p (x) & x \in Y. 
+	\end{cases}
 \end{align*}
 
 We also introduce some notation for the case where $f: X \rightarrow Y$ is an
@@ -88,29 +89,29 @@ on the assignment to the support of $g$ (i.e. on what $\gamma$ maps to
 $\consp(g)$).
 
 \begin{lem}
-  Let $g$ be a matrix-symmetric gate in $C_n$. Let $\eta \in
-  U^{\underline{\consp(g)}}$ and $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$
-  such that $\gamma^{-1}_1 \sim \eta$ and $\eta \sim \gamma^{-1}_2$. Then
-  $L^{\gamma_1}$ and $L^{\gamma_2}$ are isomorphism-equivalent.
-  \label{lem:support-determines-evaluation}
+	Let $g$ be a matrix-symmetric gate in $C_n$. Let $\eta \in
+	U^{\underline{\consp(g)}}$ and $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$
+	such that $\gamma^{-1}_1 \sim \eta$ and $\eta \sim \gamma^{-1}_2$. Then
+	$L^{\gamma_1}$ and $L^{\gamma_2}$ are isomorphism-equivalent.
+	\label{lem:support-determines-evaluation}
 \end{lem}
 
 \begin{proof}
-  We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
-  \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
-  consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$ point-wise.
-  Thus $L(g)$ is isomorphism-equivalent to $\pi L(g)$, and so there exists
-  $(\sigma, \lambda) \in \sym_A \times \sym_B$ such that $\pi L(g) = L(g)
-  (\sigma, \lambda)$.
-
-  We then have that,
-  \begin{align*}
-    L^{\gamma_1} (a,b) &= C_n[\gamma_1 \mathcal{A}](L(g)(a,b))\\
-                       & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(a,b)] \\
-                       & = C_n[\gamma_2 \mathcal{A}][L(g)((\sigma, \lambda)(a,b))]\\
-                       & = L^{\gamma_2} ((\sigma, \lambda) (a,b)),
-  \end{align*}
-  and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
+	We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
+	\gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
+	consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$ point-wise.
+	Thus $L(g)$ is isomorphism-equivalent to $\pi L(g)$, and so there exists
+	$(\sigma, \lambda) \in \sym_A \times \sym_B$ such that $\pi L(g) = L(g)
+	(\sigma, \lambda)$.
+		
+	We then have that,
+	\begin{align*}
+		L^{\gamma_1} (a,b) & = C_n[\gamma_1 \mathcal{A}](L(g)(a,b))                    \\
+		                   & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(a,b)]            \\
+		                   & = C_n[\gamma_2 \mathcal{A}][L(g)((\sigma, \lambda)(a,b))] \\
+		                   & = L^{\gamma_2} ((\sigma, \lambda) (a,b)),                 
+	\end{align*}
+	and it follows that $L^{\gamma_1} \sim L^{\gamma_2}$.
 \end{proof}
 
 For each gate $h \in C_n$ we associate with it a set $\Gamma_h$ consisting of
@@ -153,11 +154,11 @@ We now define a matrix. We begin by defining the index sets for the matrix.
 Let $R^{\min} = \{\min (\orb_g(\row(h))) : h \in H_g\}$ and $C^{\min} = \{ \min
 (\orb_g (\column(h))) : h \in H_g\}$, and let
 \begin{align*}
-  I = \{(i, \vec{x}): i \in R^{\min}, \vec{x} \in A_i\},
+	I = \{(i, \vec{x}): i \in R^{\min}, \vec{x} \in A_i\}, 
 \end{align*}
 and
 \begin{align*}
-  J = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j\}.
+	J = \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j\}. 
 \end{align*}
 
 We should like to associate with each index $((i, \vec{x}), (j, \vec{y})$ a gate
@@ -168,58 +169,58 @@ ensure that the assignments to its row and column supports are consistent. The
 following lemma is used to make this selection.
 
 \begin{lem}
-  \label{lem:permutation-row-column}
-  For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ there exists $\sigma_r,
-  \sigma_c \in \spstab{g}$ such that if $\vec{r} := \sigma_r \vec{\consp}_g(i)$
-  and $\vec{c} := \sigma_c \vec{\consp}_g(j)$ then $\vec{x}_{\vec{r}} \sim
-  \vec{y}_{\vec{c}}$.
+	\label{lem:permutation-row-column}
+	For any $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ there exists $\sigma_r,
+	\sigma_c \in \spstab{g}$ such that if $\vec{r} := \sigma_r \vec{\consp}_g(i)$
+	and $\vec{c} := \sigma_c \vec{\consp}_g(j)$ then $\vec{x}_{\vec{r}} \sim
+	\vec{y}_{\vec{c}}$.
 \end{lem}
 \begin{proof}
-  Let $\sigma_r$ be the identity. Then $\vec{r} = \vec{\consp}(i)$ and
-  $\vec{x}_{\vec{r}} = \vec{x}$. Let $u_1, \ldots , u_k$ be the first $k$
-  elements of $[n] \setminus (\consp(g) \cup \consp(i))$. Let $T = \{a \in
-  \consp(j) \setminus \consp(g) : \vec{y}(a) \in \vec{x}(\consp(i) \setminus
-  \consp(g))\}$, let $\vec{c}' \in [n]^{\underline{\consp(j)}}$ be defined by
-  \[
-    \vec{c}' (a) =
-    \begin{cases}
-      a & a \in \consp(g) \cap \consp(j)\\
-      \vec{x}^{-1}(\vec{y}(a)) & a \in T\\
-      u_{i} & \text{$a$ is the $i$th element of $(\consp(j) \setminus (\consp(g)
-        \cup T)))$}.
-    \end{cases}
-  \]
-  Let $\sigma_c$ be any permutation such that $\sigma_c \vec{\consp}(j)) =
-  \vec{c}'$. Then $\vec{c} := \sigma_c \vec{\consp}(j) = \vec{c}'$. Let $c$ be
-  the image of $\vec{c}$.
-
-  It remains to show that $\vec{x} \sim \vec{y}_{\vec{c}}$. Let $z \in \consp(i)
-  \cap c$ and $z' = \vec{c}^{-1}(z)$. Suppose $z' \in \consp(g)\cap \consp(j)
-  \cap \consp(i)$. Then we have $\vec{x}(z) = \vec{x}(z') \eta (z') =
-  \vec{y}(z') = \vec{y}_{\vec{c}}(z)$. By a similar argument, if $z' \consp(g)
-  \cap \consp(j) \setminus \consp(i)$ we have $\vec{x}(z) \neq
-  \vec{y}_{\vec{c}}(z)$. Suppose $z' \in T$. Then $\vec{c}(z') =
-  \vec{x}^{-1}(\vec{y}(z'))$ which gives us that $\vec{y}_{\vec{c}}(z) =
-  \vec{y}(z') = \vec{x}(\vec{c}(z')) = \vec{x}(z)$. We finally note that $z'
-  \notin (\consp(j) \setminus (\consp(g) \cup T))$ as $\{u_1 , \ldots , u_k\}
-  \cap \consp(i) = \emptyset$. This completes the intersection component of
-  compatibility.
-
-  Let $z \in \consp(i) \setminus c$ and $w \in c \setminus \consp(i)$. Let $w' =
-  \vec{c}^{-1}(w)$. Suppose $w' \in \consp(g) \cap \consp(j)$. Then from the
-  fact that $w \notin \consp(i)$ we have that $\vec{y}_{\vec{c}}(w) \neq
-  \vec{x}(z)$ (using a similar argument as in the above case). Suppose $w' \in
-  T$. Then there exists $b \in \consp(i) \setminus \consp(g)$ such that
-  $\vec{y}(w') = \vec{x}(b)$. It follows that $w = \vec{c}(w') =
-  \vec{x}^{-1}\vec{y} (w') = b$, which is a contradiction as $w \notin
-  \consp(i)$ by assumption, and we conclude $w' \notin T$. Suppose finally that
-  $w' \in \consp(j) \setminus (\consp(g) \cup T)$. It follows that for all $b
-  \in \consp(i) \setminus \consp(g)$ we have that $\vec{x}(b) \neq
-  \vec{y}_{\vec{c}}(w)$. It remains to check the result for $b \in (\consp(i)
-  \setminus c) \setminus (\consp(i) \setminus \consp(g)) = (\consp(g) \cap
-  \consp(i)) \setminus c$. But then $b \notin \consp(j)$, and so $\vec{x}(b) =
-  \eta (b)$. But $w' \notin \consp(g)$, and so $\vec{x}(b) = eta(b) \neq
-  \vec{y}(w') = \vec{y}(w)$. The result follows.
+	Let $\sigma_r$ be the identity. Then $\vec{r} = \vec{\consp}(i)$ and
+	$\vec{x}_{\vec{r}} = \vec{x}$. Let $u_1, \ldots , u_k$ be the first $k$
+	elements of $[n] \setminus (\consp(g) \cup \consp(i))$. Let $T = \{a \in
+	\consp(j) \setminus \consp(g) : \vec{y}(a) \in \vec{x}(\consp(i) \setminus
+	\consp(g))\}$, let $\vec{c}' \in [n]^{\underline{\consp(j)}}$ be defined by
+	\[
+		\vec{c}' (a) =
+		\begin{cases}
+			a                        & a \in \consp(g) \cap \consp(j)                                     \\
+			\vec{x}^{-1}(\vec{y}(a)) & a \in T                                                            \\
+			u_{i}                    & \text{$a$ is the $i$th element of $(\consp(j) \setminus (\consp(g) 
+			\cup T)))$}.
+		\end{cases}
+	\]
+	Let $\sigma_c$ be any permutation such that $\sigma_c \vec{\consp}(j)) =
+	\vec{c}'$. Then $\vec{c} := \sigma_c \vec{\consp}(j) = \vec{c}'$. Let $c$ be
+	the image of $\vec{c}$.
+		
+	It remains to show that $\vec{x} \sim \vec{y}_{\vec{c}}$. Let $z \in \consp(i)
+	\cap c$ and $z' = \vec{c}^{-1}(z)$. Suppose $z' \in \consp(g)\cap \consp(j)
+	\cap \consp(i)$. Then we have $\vec{x}(z) = \vec{x}(z') \eta (z') =
+	\vec{y}(z') = \vec{y}_{\vec{c}}(z)$. By a similar argument, if $z' \consp(g)
+	\cap \consp(j) \setminus \consp(i)$ we have $\vec{x}(z) \neq
+	\vec{y}_{\vec{c}}(z)$. Suppose $z' \in T$. Then $\vec{c}(z') =
+	\vec{x}^{-1}(\vec{y}(z'))$ which gives us that $\vec{y}_{\vec{c}}(z) =
+	\vec{y}(z') = \vec{x}(\vec{c}(z')) = \vec{x}(z)$. We finally note that $z'
+	\notin (\consp(j) \setminus (\consp(g) \cup T))$ as $\{u_1 , \ldots , u_k\}
+	\cap \consp(i) = \emptyset$. This completes the intersection component of
+	compatibility.
+		
+	Let $z \in \consp(i) \setminus c$ and $w \in c \setminus \consp(i)$. Let $w' =
+	\vec{c}^{-1}(w)$. Suppose $w' \in \consp(g) \cap \consp(j)$. Then from the
+	fact that $w \notin \consp(i)$ we have that $\vec{y}_{\vec{c}}(w) \neq
+	\vec{x}(z)$ (using a similar argument as in the above case). Suppose $w' \in
+	T$. Then there exists $b \in \consp(i) \setminus \consp(g)$ such that
+	$\vec{y}(w') = \vec{x}(b)$. It follows that $w = \vec{c}(w') =
+	\vec{x}^{-1}\vec{y} (w') = b$, which is a contradiction as $w \notin
+	\consp(i)$ by assumption, and we conclude $w' \notin T$. Suppose finally that
+	$w' \in \consp(j) \setminus (\consp(g) \cup T)$. It follows that for all $b
+	\in \consp(i) \setminus \consp(g)$ we have that $\vec{x}(b) \neq
+	\vec{y}_{\vec{c}}(w)$. It remains to check the result for $b \in (\consp(i)
+	\setminus c) \setminus (\consp(i) \setminus \consp(g)) = (\consp(g) \cap
+	\consp(i)) \setminus c$. But then $b \notin \consp(j)$, and so $\vec{x}(b) =
+	\eta (b)$. But $w' \notin \consp(g)$, and so $\vec{x}(b) = eta(b) \neq
+	\vec{y}(w') = \vec{y}(w)$. The result follows.
 \end{proof}
 
 From Lemma \ref{lem:permutation-row-column} we have for any $(i, \vec{x}) \in I$
@@ -230,7 +231,7 @@ $(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})$ to the support of $h$. We define
 the matrix $M : I \times J \rightarrow \{0,1\}$ by
 
 \begin{align*}
-  M((i , \vec{x}), (j, \vec{y})) := \vec{b} \in EV_h.
+	M((i , \vec{x}), (j, \vec{y})) := \vec{b} \in EV_h. 
 \end{align*}
 
 % Let $I /{\sim} = \{(i, [\vec{x}]): i \in R^{\min}, [\vec{x}] \in
@@ -248,7 +249,7 @@ Let $X$ be a set on which the left action of $\sym_n$ is defined, and let $x \in
 X$. Let $f \in U^{\underline{\consp(x)}}$ and $\gamma\in [n]^{\underline{U}}$,
 then we let $\Pi^{\gamma}_{f} \in \spstab{g}$ be any permutation in $\sym_n$
 such that $\Pi^{\gamma}_f (a) = \gamma (f(a))$ for all $a \in \consp(x)$. Note
-that from Lemma \ref{lem:support_determine_action}, $\Pi^{\gamma}_f(x)$ is
+that from Lemma~\ref{lem:support_determine_action}, $\Pi^{\gamma}_f(x)$ is
 well-defined independently of the particular choice of permutation.
 
 Let $\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
@@ -259,42 +260,37 @@ The following result shows that we may check if an assignment to a gate $h$
 makes $h$ evaluate to true by analysing certain gates in the orbit of $h$.
 
 \begin{lem}
-  Let $\gamma\in [n]^{\underline{U}}$ and $h \in C_n$. Then $\vec{z} \in \EV_h$
-  if, and only if, $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_{\vec{z}} (h)) = 1$.
-  \label{lem:translate-EV-circuits}
+	Let $\gamma\in [n]^{\underline{U}}$ and $h \in C_n$. Then $\vec{z} \in \EV_h$
+	if, and only if, $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_{\vec{z}} (h)) = 1$.
+\label{lem:translate-EV-circuits}
 \end{lem}
 \begin{proof}
-  We have that $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_\nu(h))$ if, and only if,
-  $C_n[(\Pi^{\gamma}_{\nu})^{-1}\gamma \mathcal{A}] (h)$. Then, by the
-  definition of $\EV_h$, $\nu \in \EV_h$ if, and only if, there exists $\gamma'
-  \in [n]^{\underline{U}}$ such that $C_n[\gamma' \mathcal{A}](h) = 1$ and $\nu
-  = \gamma\restriction{\consp(h)}$.
+	We have that $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_\nu(h))$ if, and only if,
+	$C_n[(\Pi^{\gamma}_{\nu})^{-1}\gamma \mathcal{A}] (h)$. Then, by the
+	definition of $\EV_h$, $\nu \in \EV_h$ if, and only if, there exists $\gamma'
+	\in [n]^{\underline{U}}$ such that $C_n[\gamma' \mathcal{A}](h) = 1$ and $\nu
+	= \gamma\restriction{\consp(h)}$.
 \end{proof}
 
 We now show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective.
 
 \begin{lem} 
-  For any bijection $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim
-  \eta$ both $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective.
-  \label{lem:alpha-beta-surjective}
+	For any bijection $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim
+	\eta$ both $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective.
+\label{lem:alpha-beta-surjective}
 \end{lem}
 \begin{proof}
-  We show that $\alpha^{\gamma}$ is surjective, with the same result for
-  $\beta^{\gamma}$ following similarly. Let $q \in A$ and let $i = \min
-  (\orb_{g} (q))$. Then there exists $\sigma \in \spstab{g}$ such that $\sigma
-  (i) = q$. Let $\vec{x} := \gamma^{-1} \sigma \vec{\consp}_g(i)$. Notice that
-  for $a \in \consp_g(i)$ we have that $\vec{x}(a) = \gamma^{-1} (\sigma (a))$,
-  and since $\gamma^{-1} \sigma \sim \eta$, it follows that $\vec{x} \in A_i$.
-
-  For $a \in \consp_g(i)$ we have $\Pi^{\gamma}_{\vec{x}} (a) = \gamma
-  (\vec{x}(a)) = \gamma \gamma^{-1} \sigma (a) = \sigma (a)$. From Lemma
-  \ref{lem:support-determine-action} it follows that $\alpha(i, \vec{x}) =
-  \sigma(i) = q$.
+	We show that $\alpha^{\gamma}$ is surjective, with the same result for
+	$\beta^{\gamma}$ following similarly. Let $q \in A$ and let $i = \min
+	(\orb_{g} (q))$. Then there exists $\sigma \in \spstab{g}$ such that $\sigma
+	(i) = q$. Let $\vec{x} := \gamma^{-1} \sigma \vec{\consp}_g(i)$. Notice that
+	for $a \in \consp_g(i)$ we have that $\vec{x}(a) = \gamma^{-1} (\sigma (a))$,
+	and since $\gamma^{-1} \sigma \sim \eta$, it follows that $\vec{x} \in A_i$.
+		
+	For $a \in \consp_g(i)$ we have $\Pi^{\gamma}_{\vec{x}} (a) = \gamma
+	(\vec{x}(a)) = \gamma \gamma^{-1} \sigma (a) = \sigma (a)$. From Lemma~\ref{lem:support-determine-action} it follows that $\alpha(i, \vec{x}) =
+	\sigma(i) = q$.
 \end{proof}
-
-asdfasdf
-
-
 
 % Note that $\alpha^{\gamma}$ and $\beta^{\gamma}$ can be lifted to functions on
 % $I /{\sim}$ and $J /{\sim}$ respectively. Lemma
@@ -309,7 +305,7 @@ asdfasdf
 %   I am still in the process of rewriting this section (and figuring out how to
 %   restructure it) so as to include this quotienting operation. The remainder
 %   of this section should still be looked at, but I have yet to integrate the
-%   quotenting operation. I would also like to talk with you about this step.
+%   quotienting operation. I would also like to talk with you about this step.
 % \end{remark}
 
 We now prove a number of important technical lemmas that will ultimately allow
@@ -319,51 +315,51 @@ allows us to factor a permutation through $\alpha^{\gamma}$ and $\beta^{\beta}$.
 
 \begin{lem}
 \label{lem:alpha-and-gamma}
-  Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma: U \rightarrow
-  [n]$ be a bijection such that $\gamma^{-1} \sim \eta$ and $\pi \in spstab{g}$.
-  Then $\pi \alpha^{\gamma}(i, \vec{x}) = \alpha^{\pi \gamma}(i, \vec{x})$ and
-  $\pi \beta^{\gamma}(j, \vec{y}) = \beta^{\pi \gamma}(j, \vec{y})$.
+	Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma: U \rightarrow
+	[n]$ be a bijection such that $\gamma^{-1} \sim \eta$ and $\pi \in spstab{g}$.
+	Then $\pi \alpha^{\gamma}(i, \vec{x}) = \alpha^{\pi \gamma}(i, \vec{x})$ and
+	$\pi \beta^{\gamma}(j, \vec{y}) = \beta^{\pi \gamma}(j, \vec{y})$.
 \end{lem}
 \begin{proof}
-  We have that $\pi \alpha^{\gamma}(i, \vec{x}) = \pi \Pi^{\gamma}_{\vec{x}}(i)$
-  and $(\pi \Pi^{\gamma}_{\vec{x}}(\vec{\consp}(i)) = \pi \cdot \gamma (\vec{x})
-  = \Pi^{\pi \gamma}_{\vec{x}}(\vec{\consp}(i))$. Since $\Pi^{\gamma}_{\vec{x}}$
-  and $\Pi^{\pi \gamma}_{\vec{x}}$ are in $\spstab{g}$, it follows from Lemma
-~\ref{lem:support-determines-action}, that $\pi \alpha^{\gamma}(i, \vec{x}) =
-  \pi \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\pi \gamma}_{\vec{x}}(i) = \alpha^{\pi
-    \gamma}(i, \vec{x})$. Similarly, $\pi \beta^{\gamma}(j, \vec{y}) =
-  \beta^{\pi \gamma} (j, \vec{y})$.
+	We have that $\pi \alpha^{\gamma}(i, \vec{x}) = \pi \Pi^{\gamma}_{\vec{x}}(i)$
+	and $(\pi \Pi^{\gamma}_{\vec{x}}(\vec{\consp}(i)) = \pi \cdot \gamma (\vec{x})
+	= \Pi^{\pi \gamma}_{\vec{x}}(\vec{\consp}(i))$. Since $\Pi^{\gamma}_{\vec{x}}$
+	and $\Pi^{\pi \gamma}_{\vec{x}}$ are in $\spstab{g}$, it follows from Lemma
+	~\ref{lem:support-determine-action}, that $\pi \alpha^{\gamma}(i, \vec{x}) =
+	\pi \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\pi \gamma}_{\vec{x}}(i) = \alpha^{\pi
+		\gamma}(i, \vec{x})$. Similarly, $\pi \beta^{\gamma}(j, \vec{y}) =
+	\beta^{\pi \gamma} (j, \vec{y})$.
 \end{proof}
 
 The following result applies Lemma~\ref{lem:alpha-and-gamma} to the evaluation
 of gates in the circuit.
 
 \begin{lem}
-  \label{lem:alpha-ind-gamma}
-  Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma_1, \gamma_2 \in
-  [n]^{\underline{U}}$ be such that $\gamma^{-1}_1 \sim \eta$ and $\gamma^{-1}_2
-  \sim \eta$. Let $\mathcal{A}$ be a structure. Then $C_n[\gamma_1 \mathcal{A}]
-  (L(\alpha^{\gamma_1}(i, \vec{x}), \beta^{\gamma_1}(j, \vec{y}))) =
-  C_n[\gamma_2 \mathcal{A}] (L(\alpha^{\gamma_2}(i, \vec{x}),
-  \beta^{\gamma_2}(j, \vec{y})))$.
+	\label{lem:alpha-ind-gamma}
+	Let $(i,\vec{x}) \in I$ and $(j, \vec{y}) \in J$. Let $\gamma_1, \gamma_2 \in
+	[n]^{\underline{U}}$ be such that $\gamma^{-1}_1 \sim \eta$ and $\gamma^{-1}_2
+	\sim \eta$. Let $\mathcal{A}$ be a structure. Then $C_n[\gamma_1 \mathcal{A}]
+	(L(\alpha^{\gamma_1}(i, \vec{x}), \beta^{\gamma_1}(j, \vec{y}))) =
+	C_n[\gamma_2 \mathcal{A}] (L(\alpha^{\gamma_2}(i, \vec{x}),
+	\beta^{\gamma_2}(j, \vec{y})))$.
 \end{lem}
 \begin{proof}
-  We note that there exists $\pi \in \sym_n$ such that $\gamma_1 = \pi
-  \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
-  consistent with $\eta$, it follows that $\pi \in \spstab{g}$. We then have
-  that
-  \begin{align*}
-    C_n[\gamma_1 \mathcal{A}](L(\alpha^{\gamma_1}(i, \vec{x}), \beta^{\gamma_1}(j,
-    \vec{y})) &= C_n[\pi \gamma_1 \mathcal{A}](\pi L(\alpha^{\gamma_1}(i, \vec{x}),
-                \beta^{\gamma_1}(j, \vec{y})) \\
-              &= C_n[\pi \gamma_1 \mathcal{A}](L(\pi
-                \alpha^{\gamma_1}(i, \vec{x}), \pi \beta^{\gamma_1}(j, \vec{y}))\\
-              &= C_n[\pi
-                \gamma_1 \mathcal{A}](L(\alpha^{\pi \gamma_1}(i, \vec{x}), \pi \beta^{\pi
-                \gamma_1}(j, \vec{y})\\
-              &= C_n[\gamma_2 \mathcal] (L(\alpha^{\gamma_2}(i,
-                \vec{x}), \beta^{\gamma_2}(j, \vec{y})))\\
-  \end{align*}The third equality follows from Lemma \ref{lem:alpha-and-gamma}.
+	We note that there exists $\pi \in \sym_n$ such that $\gamma_1 = \pi
+	\gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
+	consistent with $\eta$, it follows that $\pi \in \spstab{g}$. We then have
+	that
+	\begin{align*}
+		C_n[\gamma_1 \mathcal{A}](L(\alpha^{\gamma_1}(i, \vec{x}), \beta^{\gamma_1}(j,
+		\vec{y})) & = C_n[\pi \gamma_1 \mathcal{A}](\pi L(\alpha^{\gamma_1}(i, \vec{x}), 
+		\beta^{\gamma_1}(j, \vec{y})) \\
+		          & = C_n[\pi \gamma_1 \mathcal{A}](L(\pi                                
+		\alpha^{\gamma_1}(i, \vec{x}), \pi \beta^{\gamma_1}(j, \vec{y}))\\
+		          & = C_n[\pi                                                            
+		\gamma_1 \mathcal{A}](L(\alpha^{\pi \gamma_1}(i, \vec{x}), \pi \beta^{\pi
+		\gamma_1}(j, \vec{y})\\
+		          & = C_n[\gamma_2 \mathcal] (L(\alpha^{\gamma_2}(i,                     
+		\vec{x}), \beta^{\gamma_2}(j, \vec{y})))\\
+	\end{align*}The third equality follows from Lemma \ref{lem:alpha-and-gamma}.
 \end{proof}
 
 The following result shows that, for a given $(i, \vec{x}) \in I$ and $(j,
@@ -373,34 +369,34 @@ $\alpha^{\gamma'}(i, \vec{x})$ and $\beta^{\gamma'}(j, \vec{y})$ define the row
 and column of $h$.
 
 \begin{lem}
-  \label{lem:defining-h-from-IJ}
-  Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. From Lemma
-  \ref{lem:permutation-row-column} we have $\vec{r}$, $\vec{c}$, $\sigma_r$ and
-  $\sigma_c$. Let $h := L(g) (\sigma_r (i), \sigma_c (j))$ and $\vec{z}$ be the
-  restriction of $(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})$ to the support of
-  $h$. Let $\gamma' := (\Pi^{\gamma}_{\vec{z}})^{-1} \gamma$. Then
-  $\alpha^{\gamma'} (i, \vec{x}) = \row (h)$ and $\beta^{\gamma'} (i,\vec{y}) =
-  \column(h)$.
+	\label{lem:defining-h-from-IJ}
+	Let $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$. From Lemma
+	\ref{lem:permutation-row-column} we have $\vec{r}$, $\vec{c}$, $\sigma_r$ and
+	$\sigma_c$. Let $h := L(g) (\sigma_r (i), \sigma_c (j))$ and $\vec{z}$ be the
+	restriction of $(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})$ to the support of
+	$h$. Let $\gamma' := (\Pi^{\gamma}_{\vec{z}})^{-1} \gamma$. Then
+	$\alpha^{\gamma'} (i, \vec{x}) = \row (h)$ and $\beta^{\gamma'} (i,\vec{y}) =
+	\column(h)$.
 \end{lem}
 \begin{proof}
-  We prove the result for $\alpha^{\gamma'}$. The $\beta^{\gamma'}$ case follows
-  similarly. We have from Lemma \ref{lem:support-determines-action} that it is
-  sufficient to show that for all $a \in \consp_g(i)$, $\alpha^{\gamma'}(i,
-  \vec{x}) = \Pi^{\gamma'}_{\vec{x}} (a) = \sigma_r (a)$. Let $a \in
-  \consp_g(i)$. We have that $\Pi^{\gamma'}_{\vec{x}} (a) =
-  (\Pi^{\gamma}_{\vec{z}})^{-1} \gamma (\vec{x} (a))$ and $\gamma (\vec{x}(a)) =
-  \gamma (\vec{x} (\vec{r}^{-1}(\vec{r}(a)))) = \gamma (\vec{x}_{\vec{r}}
-  (\sigma_r(a)))) = \Pi^{\gamma}_{\vec{z}}(\sigma_r(a))$. The final equality
-  follows from the fact that $r \cup c = \consp(g) \cup \consp(h)\in $, and thus
-  $\sigma_r(a) \in \consp(g)$ or $\sigma_r(a) \in \consp(h)$. If $\sigma_r(a)
-  \in \consp(g)$ then $\sigma_r(a) = a = \Pi^{\gamma}_{\vec{z}}(\sigma_r(a))$ as
-  both $\sigma_r$ and $\Pi^{\gamma}_{\vec{z}}$ are in $\spstab{g}$. If
-  $\sigma_r(a) \in \consp(g)$ then, since $\sigma_r(a) \in r$,
-  $\Pi^{\gamma}_{\vec{z}}(\sigma_r(a)) = \gamma(\vec{z}(\sigma_r(a))) =
-  \gamma(\vec{x}_{\vec{r}}(\sigma_r(a)))$. We thus have that
-  $\Pi^{\gamma'}_{\vec{x}}(a) =
-  (\Pi^{\gamma}_{\vec{z}})^{-1}\Pi^{\gamma}_{\vec{z}} (\sigma_r(a)) =
-  \sigma_r(a)$. The result follows.
+	We prove the result for $\alpha^{\gamma'}$. The $\beta^{\gamma'}$ case follows
+	similarly. We have from Lemma \ref{lem:support-determine-action} that it is
+	sufficient to show that for all $a \in \consp_g(i)$, $\alpha^{\gamma'}(i,
+	\vec{x}) = \Pi^{\gamma'}_{\vec{x}} (a) = \sigma_r (a)$. Let $a \in
+	\consp_g(i)$. We have that $\Pi^{\gamma'}_{\vec{x}} (a) =
+	(\Pi^{\gamma}_{\vec{z}})^{-1} \gamma (\vec{x} (a))$ and $\gamma (\vec{x}(a)) =
+	\gamma (\vec{x} (\vec{r}^{-1}(\vec{r}(a)))) = \gamma (\vec{x}_{\vec{r}}
+	(\sigma_r(a)))) = \Pi^{\gamma}_{\vec{z}}(\sigma_r(a))$. The final equality
+	follows from the fact that $r \cup c = \consp(g) \cup \consp(h)\in $, and thus
+	$\sigma_r(a) \in \consp(g)$ or $\sigma_r(a) \in \consp(h)$. If $\sigma_r(a)
+	\in \consp(g)$ then $\sigma_r(a) = a = \Pi^{\gamma}_{\vec{z}}(\sigma_r(a))$ as
+	both $\sigma_r$ and $\Pi^{\gamma}_{\vec{z}}$ are in $\spstab{g}$. If
+	$\sigma_r(a) \in \consp(g)$ then, since $\sigma_r(a) \in r$,
+	$\Pi^{\gamma}_{\vec{z}}(\sigma_r(a)) = \gamma(\vec{z}(\sigma_r(a))) =
+	\gamma(\vec{x}_{\vec{r}}(\sigma_r(a)))$. We thus have that
+	$\Pi^{\gamma'}_{\vec{x}}(a) =
+	(\Pi^{\gamma}_{\vec{z}})^{-1}\Pi^{\gamma}_{\vec{z}} (\sigma_r(a)) =
+	\sigma_r(a)$. The result follows.
 \end{proof}
 
 We combine the above lemmas in order to show that $\alpha^{\gamma}$ and
@@ -408,30 +404,30 @@ $\beta^{\gamma}$ together defines a surjective homomorphism from $M$ to
 $L^{\gamma}$.
 
 \begin{thm}
-  Let $\gamma\in [n]^{\underline{U}}$ be such that $\eta \sim \gamma^{-1}$ and
-  let $(i, \vec{x})\in I$ and $(j, \vec{y})\in J$. It follows that $M((i,
-  \vec{x}), (j, \vec{y})) = L^{\gamma}(\alpha^{\gamma}(i, \vec{x}),
-  \beta^{\gamma}(j, \vec{y})$.
-  \label{lem:ML-equal-elements}
+	Let $\gamma\in [n]^{\underline{U}}$ be such that $\eta \sim \gamma^{-1}$ and
+	let $(i, \vec{x})\in I$ and $(j, \vec{y})\in J$. It follows that $M((i,
+	\vec{x}), (j, \vec{y})) = L^{\gamma}(\alpha^{\gamma}(i, \vec{x}),
+	\beta^{\gamma}(j, \vec{y})$.
+	\label{lem:ML-equal-elements}
 \end{thm}
 \begin{proof}
-  From Lemma \ref{lem:permutation-row-column} we have $\vec{r}$, $\vec{c}$,
-  $\sigma_r$ and $\sigma_c$. Let $\gamma' = (\Pi^{\gamma}_{(\vec{x}_{\vec{r}}
-    \vert \vec{y}_{\vec{c}})})^{-1} \gamma$. Let $h = L(g)(\sigma_r(i),
-  \sigma_c(j))$. Then
-  \begin{align*}
-    M((i, \vec{x}), (j, \vec{y}))
-    &= (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in \EV_h \\
-    &= C_n[\gamma \mathcal{A}] (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})} (h)) \\
-    &= C_n[\gamma' \mathcal{A}] (h) \\
-    &= C_n[\gamma' \mathcal{A}](L(\row(h), \column (h)))\\
-    &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y})))\\
-    &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))y)\\
-    &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))
-  \end{align*}
-  The second equality follows from Lemma \ref{lem:translate-EV-circuits}. The
-  fifth equality follows from Lemma \ref{lem:defining-h-from-IJ}. The sixth
-  equality follows from Lemma \ref{lem:alpha-ind-gamma}.
+	From Lemma \ref{lem:permutation-row-column} we have $\vec{r}$, $\vec{c}$,
+	$\sigma_r$ and $\sigma_c$. Let $\gamma' = (\Pi^{\gamma}_{(\vec{x}_{\vec{r}}
+		\vert \vec{y}_{\vec{c}})})^{-1} \gamma$. Let $h = L(g)(\sigma_r(i),
+	\sigma_c(j))$. Then
+	\begin{align*}
+		M((i, \vec{x}), (j, \vec{y}))
+		  & = (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in \EV_h                                    \\
+		  & = C_n[\gamma \mathcal{A}] (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})} (h)) \\
+		  & = C_n[\gamma' \mathcal{A}] (h)                                                             \\
+		  & = C_n[\gamma' \mathcal{A}](L(\row(h), \column (h)))                                        \\
+		  & = C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y})))   \\
+		  & = C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))y)     \\
+		  & = L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))                      
+	\end{align*}
+	The second equality follows from Lemma~\ref{lem:translate-EV-circuits}. The
+	fifth equality follows from Lemma~\ref{lem:defining-h-from-IJ}. The sixth
+	equality follows from Lemma~\ref{lem:alpha-ind-gamma}.
 \end{proof}
 
 We have shown that, but for injectivety, $\alpha^{\gamma}$ and $\beta^{\gamma}$
@@ -439,8 +435,7 @@ witnesses an isomorphism-equivalence between $M$ and $L^{\gamma}$. It remains to
 show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are also injective. However, it
 can be shown that $\alpha^{\gamma}(i, \vec{x}) = \alpha^{\gamma}(i, \vec{x}')$
 if, and only if, there exists $\pi \in \stab_g(i) \cap \spstab{g}$ such that
-$\vec{x} = \vec{x}'\sigmapi$ (see Lemma \ref{lem:functions-mutual-equivalence}).
-As such, $\alpha^{\gamma}$ and $\beta^{\gamma}$ are not in general injective and
+$\vec{x} = \vec{x}'\sigma pi$ (see Lemma~\ref{lem:functions-mutual-equivalence}). As such, $\alpha^{\gamma}$ and $\beta^{\gamma}$ are not in general injective and
 we define a new matrix $M_{\equiv}$ by quotienting $M$ by an appropriate
 equivalence relation. We also show that the liftings of $\alpha^{\gamma}$ and
 $\beta^{\gamma}$ to the equivalence classes of $\equiv$ witness an
@@ -511,8 +506,8 @@ I_{\equiv} \times J_{\equiv} \rightarrow \{0,1\}$ be defined by $M_\equiv ((i,
 $(i, [\vec{x}]_{\equiv}) \in I_\equiv$ and $(j, [\vec{y}]_{\equiv}) \in
 J_\equiv$.
 
-We show in Lemma \ref{lem:matrix-quot-well-defined} that this matrix is
-well-defined. We show in Lemma \ref{alpha-beta-mutal equivalence} that
+We show in Lemma~\ref{lem:matrix-quot-well-defined} that this matrix is
+well-defined. We show in Lemma~\ref{lem:alpha-beta-mutal-equivalence} that
 $\alpha^{\gamma}$ and $\beta^{\gamma}$ are constant on mutual equivalence
 classes, and as such may be lifted to act on equivalence classes. We combine
 these results to prove the required isomorphism-equivalence.
@@ -521,20 +516,19 @@ We first prove the claim that those permutations that agree on $s \in D$ are
 exactly those that are mutually stable on $s$.
 
 \begin{lem}
-  Let $s \in D$ and let $\sigma, \sigma' \in \stab(\consp(g))$. Then $\sigma(s)
-  = \sigma' (s)$ if, and only if, $\sigma \equiv_s \simga'$.
-  % there exists $\pi \in \stab_g(s) \cap \spstab{g}$ such that $\sigma
-  % (\vec{\consp}_g(i)) = \sigma' \pi (\vec{\consp}_g(i))$.
-  \label{lem:functions-mutual-equivalence}
+	Let $s \in D$ and let $\sigma, \sigma' \in \stab(\consp(g))$. Then $\sigma(s)
+	= \sigma' (s)$ if, and only if, $\sigma \equiv_s \sigma'$.
+	% there exists $\pi \in \stab_g(s) \cap \spstab{g}$ such that $\sigma
+	% (\vec{\consp}_g(i)) = \sigma' \pi (\vec{\consp}_g(i))$.
+	\label{lem:functions-mutual-equivalence}
 \end{lem}
 \begin{proof}
-  Suppose $\sigma(s) = \sigma'(s)$. Then $\pi := (\sigma')^{-1}\sigma \in
-  stab_g(s)$ and $\sigma = \sigma' \pi$.
-
-  Suppose there exists $\pi \in \stab_g(s)$ such that $\sigma
-  (\vec{\consp}_g(i))= \sigma' \pi (\vec{\consp}_g(i))$. From Lemma
-  \ref{lem:support-determines-action} $\sigma (i) = \sigma' \pi (i)$, and so,
-  since $\pi \in \stab_g(s)$, $\sigma(i) = \sigma' \pi (i) = \sigma' (i)$.
+	Suppose $\sigma(s) = \sigma'(s)$. Then $\pi := (\sigma')^{-1}\sigma \in
+	stab_g(s)$ and $\sigma = \sigma' \pi$.
+		
+	Suppose there exists $\pi \in \stab_g(s)$ such that $\sigma
+	(\vec{\consp}_g(i))= \sigma' \pi (\vec{\consp}_g(i))$. From Lemma~\ref{lem:support-determine-action} $\sigma (i) = \sigma' \pi (i)$, and so,
+	since $\pi \in \stab_g(s)$, $\sigma(i) = \sigma' \pi (i) = \sigma' (i)$.
 \end{proof}
 
 % \begin{lem}
@@ -557,22 +551,22 @@ The following lemma gives us that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are
 constant on classes of mutually stable assignments.
 
 \begin{lem}
-  Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
-  J$ and let $\gamma \in [n]^{\underline{U}}$. If $\vec{x} \equiv_i \vec{x}'$
-  then $\alpha^{\gamma}(i, \vec{x}) = \alpha^{\gamma}(i, \vec{x}')$ and if
-  $\vec{y} \equiv_j \vec{y}'$ then $\beta^{\gamma}(j, \vec{y}) =
-  \beta^{\gamma}(j, \vec{y}')$.
-  \label{lem:alpha-beta-mutal-equivalence}
+	Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
+	J$ and let $\gamma \in [n]^{\underline{U}}$. If $\vec{x} \equiv_i \vec{x}'$
+	then $\alpha^{\gamma}(i, \vec{x}) = \alpha^{\gamma}(i, \vec{x}')$ and if
+	$\vec{y} \equiv_j \vec{y}'$ then $\beta^{\gamma}(j, \vec{y}) =
+	\beta^{\gamma}(j, \vec{y}')$.
+	\label{lem:alpha-beta-mutal-equivalence}
 \end{lem}
 \begin{proof}
-  From mutual equivalence there exists $\sigma \in \stab_g(i) \cap \spstab{g}$
-  such that $\vec{x}' = \vec{x} \sigma$. We have that $\alpha^{\gamma}(i,
-  \vec{x})$ stabilises $\consp(g)$. Also, for all $a \in \consp_g(i)$,
-  $\Pi^{\gamma}_{\vec{x}} (\sigma (a)) = \gamma (\vec{x}(\sigma (a))) = \gamma
-  (\vec{x}'(a)) = \Pi^{\gamma}_{\vec{x}'}(a)$. It follows from Lemma
-  \ref{lem:functions-mutual-equivalence} that $\alpha^{\gamma}(i,\vec{x}) =
-  \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\gamma}_{\vec{x}'}(i) = \alpha^{\gamma}(i,
-  \vec{x}')$. The result follows similarly for $\beta$.
+	From mutual equivalence there exists $\sigma \in \stab_g(i) \cap \spstab{g}$
+	such that $\vec{x}' = \vec{x} \sigma$. We have that $\alpha^{\gamma}(i,
+	\vec{x})$ stabilises $\consp(g)$. Also, for all $a \in \consp_g(i)$,
+	$\Pi^{\gamma}_{\vec{x}} (\sigma (a)) = \gamma (\vec{x}(\sigma (a))) = \gamma
+	(\vec{x}'(a)) = \Pi^{\gamma}_{\vec{x}'}(a)$. It follows from Lemma
+	\ref{lem:functions-mutual-equivalence} that $\alpha^{\gamma}(i,\vec{x}) =
+	\Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\gamma}_{\vec{x}'}(i) = \alpha^{\gamma}(i,
+	\vec{x}')$. The result follows similarly for $\beta$.
 \end{proof}
 
 We define the liftings of $\alpha^{\gamma}$ and $\beta^{\gamma}$ as follows. Let
@@ -580,7 +574,7 @@ $\alpha^{\gamma}_{\equiv} : I_\equiv \rightarrow A$ and $\beta^{\gamma}_\equiv:
 J_\equiv \rightarrow B$ by $\alpha^{\gamma}_{\equiv}(i, [\vec{x}]) :=
 alpha^{\gamma} (i, \vec{x})$ and $\beta^{\gamma}_{\equiv}(j, [\vec{y}]) =
 \beta^{\gamma} (j, \vec{y})$, for all $(i, \vec{x}) \in I_{\equiv}$ and $(j,
-\vec{y}) \in J_\equiv$. Lemma \ref{lem:alpha-beta-mutal-equivalence} gives us
+\vec{y}) \in J_\equiv$. Lemma~\ref{lem:alpha-beta-mutal-equivalence} gives us
 that these liftings are well defined.
 
 % \begin{proof}
@@ -600,59 +594,59 @@ that these liftings are well defined.
 The following lemma gives us that$M_\equiv$ is well defined.
 
 \begin{lem}
-  Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
-  J$ be such that $\vec{x} \equiv_i \vec{x}'$ and $\vec{y} \equiv_j \vec{y}'$,
-  then $M(((i, \vec{x}), (j, \vec{y}))) = M((i, \vec{x}'), (j, \vec{y}'))$.
-  \label{lem:matrix-quot-well-defined}
+	Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
+	J$ be such that $\vec{x} \equiv_i \vec{x}'$ and $\vec{y} \equiv_j \vec{y}'$,
+	then $M(((i, \vec{x}), (j, \vec{y}))) = M((i, \vec{x}'), (j, \vec{y}'))$.
+	\label{lem:matrix-quot-well-defined}
 \end{lem}
 \begin{proof}
-  \begin{align*}
-    M((i, \vec{x}),(j, \vec{y})) &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}) \\
-                                 &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}'), \beta^{\gamma}(j, \vec{y}'))\\
-                                 &= M((i, \vec{x}'), (j, \vec{y}'))
-  \end{align*}
-  The second equality follows from Lemma \ref{lem:alpha-beta-mutal-equivalence}.
+	\begin{align*}
+		M((i, \vec{x}),(j, \vec{y})) & = L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y})    \\
+		                             & = L^{\gamma}(\alpha^{\gamma}(i, \vec{x}'), \beta^{\gamma}(j, \vec{y}')) \\
+		                             & = M((i, \vec{x}'), (j, \vec{y}'))                                       
+	\end{align*}
+	The second equality follows from Lemma \ref{lem:alpha-beta-mutal-equivalence}.
 \end{proof}
 
 We now prove the required isomorphism-equivalence.
 
 \begin{thm}
-  Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Then
-  $L^{\gamma}$ is isomorphism-equivalent to $M_{\equiv}$.
-  \label{thm:LM-equivalence}
+	Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Then
+	$L^{\gamma}$ is isomorphism-equivalent to $M_{\equiv}$.
+	\label{thm:LM-equivalence}
 \end{thm}
 \begin{proof}
-  Let $(i, [\vec{x}]) \in I_\equiv$ and $(j, [\vec{y}]) \in J_\equiv$. Then,
-  from Lemmas \ref{lem:matrix-quot-well-defined} and
-  \ref{lem:ML-equal-elements}, we have that $M_\equiv ((i, [\vec{x}]), (j,
-  [\vec{y}])) = M ((i, \vec{x}), (j, \vec{y})) = L^{\gamma}(\alpha^{\gamma}(i,
-  \vec{x}), \beta^{\gamma}(j, \vec{y}))$.
-
-  Moreover, from Lemma \ref{lem:alpha-beta-mutal-equivalence} we can lift
-  $\alpha^\gamma$ to $I_\equiv$ and $\beta^{\gamma}$ to $J_\equiv$. It remains
-  to show that $\alpha^\gamma_{equiv}$ and $\beta^{\gamma}_{\equiv}$ are
-  bijections. We prove the result for $\alpha^{\gamma}_{\equiv}$, with the proof
-  for $\beta^\gamma_\equiv$ following similarly.
-
-  We first note that the lifting of $\alpha^{\gamma}_{\equiv}$ is surjective as
-  both $\alpha^{\gamma}$ (Lemma \ref{lem:alpha-beta-surjective}) and the lifting
-  function (i.e. the quotient map from $I$ to $I_\equiv$) are surjective.
-
-  Suppose $\alpha^{\gamma}_\equiv((i, [\vec{x}])) = \alpha^{\gamma}_\equiv((i',
-  [\vec{x}']))$, and so $\Pi^{\gamma}_{\vec{x}}(i) =
-  \Pi^{\gamma}_{\vec{x}'}(i')$. But then $i$ and $i'$ are in the same orbit and
-  thus, from the definition of $I_{\equiv}$ they are both the minimum element in
-  that orbit, and so $i = i'$. Thus $\Pi^{\gamma}_{\vec{x}}(i) =
-  \Pi^{\gamma}_{\vec{x}'}(i)$, and so from Lemma
-  \ref{lem:functions-mutual-equivalence} there exists $\sigma \in \stab_g(i)
-  \cap \spstab{g}$ such that for all $a \in \consp_g(i)$ we have that
-  $\Pi^{\gamma}_{\vec{x}}(a) = \Pi^{\gamma}_{\vec{x}'} (\sigma (a))$. But then
-  $\Pi^{\gamma}_{\vec{x}}(a) = \gamma (\vec{x}(a)) =
-  \Pi^{\gamma}_{\vec{x}'}(\sigma (a)) = \gamma (\vec{x}' (\sigma (a))$ and,
-  since $\gamma$ is a bijection, it follows that $\vec{x}(a) = \vec{x}' \sigma
-  (a)$. Thus $\vec{x} \equiv_i \vec{x}'$, and so $[\vec{x}] = [\vec{x}']$. We
-  thus have that $\alpha^{\gamma}_\equiv$ and $\beta^{\gamma}_\equiv$ are
-  injections, and the result follows.
+	Let $(i, [\vec{x}]) \in I_\equiv$ and $(j, [\vec{y}]) \in J_\equiv$. Then,
+	from Lemmas \ref{lem:matrix-quot-well-defined} and
+	\ref{lem:ML-equal-elements}, we have that $M_\equiv ((i, [\vec{x}]), (j,
+	[\vec{y}])) = M ((i, \vec{x}), (j, \vec{y})) = L^{\gamma}(\alpha^{\gamma}(i,
+	\vec{x}), \beta^{\gamma}(j, \vec{y}))$.
+		
+	Moreover, from Lemma \ref{lem:alpha-beta-mutal-equivalence} we can lift
+	$\alpha^\gamma$ to $I_\equiv$ and $\beta^{\gamma}$ to $J_\equiv$. It remains
+	to show that $\alpha^\gamma_{equiv}$ and $\beta^{\gamma}_{\equiv}$ are
+	bijections. We prove the result for $\alpha^{\gamma}_{\equiv}$, with the proof
+	for $\beta^\gamma_\equiv$ following similarly.
+		
+	We first note that the lifting of $\alpha^{\gamma}_{\equiv}$ is surjective as
+	both $\alpha^{\gamma}$ (Lemma \ref{lem:alpha-beta-surjective}) and the lifting
+	function (i.e. the quotient map from $I$ to $I_\equiv$) are surjective.
+		
+	Suppose $\alpha^{\gamma}_\equiv((i, [\vec{x}])) = \alpha^{\gamma}_\equiv((i',
+	[\vec{x}']))$, and so $\Pi^{\gamma}_{\vec{x}}(i) =
+	\Pi^{\gamma}_{\vec{x}'}(i')$. But then $i$ and $i'$ are in the same orbit and
+	thus, from the definition of $I_{\equiv}$ they are both the minimum element in
+	that orbit, and so $i = i'$. Thus $\Pi^{\gamma}_{\vec{x}}(i) =
+	\Pi^{\gamma}_{\vec{x}'}(i)$, and so from Lemma
+	\ref{lem:functions-mutual-equivalence} there exists $\sigma \in \stab_g(i)
+	\cap \spstab{g}$ such that for all $a \in \consp_g(i)$ we have that
+	$\Pi^{\gamma}_{\vec{x}}(a) = \Pi^{\gamma}_{\vec{x}'} (\sigma (a))$. But then
+	$\Pi^{\gamma}_{\vec{x}}(a) = \gamma (\vec{x}(a)) =
+	\Pi^{\gamma}_{\vec{x}'}(\sigma (a)) = \gamma (\vec{x}' (\sigma (a))$ and,
+	since $\gamma$ is a bijection, it follows that $\vec{x}(a) = \vec{x}' \sigma
+	(a)$. Thus $\vec{x} \equiv_i \vec{x}'$, and so $[\vec{x}] = [\vec{x}']$. We
+	thus have that $\alpha^{\gamma}_\equiv$ and $\beta^{\gamma}_\equiv$ are
+	injections, and the result follows.
 \end{proof}
 
 We show in the next lemma that, while $M$ is not in general
@@ -660,46 +654,45 @@ isomorphism-equivalent to $L^\gamma$, $M$ can be shown to have the same rank as
 $L^{\gamma}$.
 
 \begin{lem}
-  Let $\gamma \in U^{\underline{n}}$ be such that $\gamma^{-1} \sim \eta$ and
-  let $p \in \nats$ be prime. Then $\rk_p (M) = \rk_p (M_\equiv) = \rk_p
-  (L^{\gamma})$.
+	Let $\gamma \in U^{\underline{n}}$ be such that $\gamma^{-1} \sim \eta$ and
+	let $p \in \nats$ be prime. Then $\rank_p (M) = \rank_p (M_\equiv) = \rank_p
+	(L^{\gamma})$.
 \end{lem}
 \begin{proof}
-  Let $f : \{0,1\}^{J_\equiv} \rightarrow \{0,1\}^{J}$ be defined such that for
-  all $\vec{b} \in {0,1}^{J_\equiv}$, $f(\vec{b}) (j, \vec{y}) := \vec{b}(j,
-  [\vec{y}])$ for all $(j, \vec{y}) \in J$. We have that $f$ is injective as,
-  for $\vec{b}_1, \vec{b}_2 \in \{0,1\}^{J_\equiv}$, if $f(\vec{b}_1) =
-  f(\vec{b}_2)$ then $\vec{b}_1 (j, [\vec{y}]) = f(\vec{b}_1)(j, \vec{y}) =
-  f(\vec{b}_2)(j, \vec{y}) = \vec{b}_2(j, [\vec{y}])$, for all $(j, \vec{y}) \in
-  J$. Also $f$ is linear as, for $\lambda \in \ff_p$ and $\vec{b}_1, \vec{b}_2
-  \in \{0,1\}^{J_\equiv}$, $f(\lambda \vec{b}_1) (j, \vec{y}) = (\lambda
-  \vec{b}_1)(j, [\vec{y}]) = \lambda (\vec{b}_1 (j, [\vec{y}])) = \lambda (f(
-  \vec{b}_1) (j, \vec{y}))$, and $ f(\vec{b}_1 + \vec{b}_2) (j, \vec{y}) =
-  (\vec{b}_1 + \vec{b}_2) (j, [\vec{y}]) = \vec{b}_1(j, [\vec{y}]) +
-  \vec{b}_2(j, [\vec{y}]) = f(\vec{b}_1)(j, \vec{y}) + f(\vec{b}_2)(j,
-  \vec{y})$, for all $(j, \vec{y}) \in J$.
-
-  From the construction of $M_\equiv$ that $f$ maps rows vectors in $M_\equiv$
-  to row vectors in $M$. Let $\vec{b}'$ be a row vector in $M$. Then there
-  exists $\vec{b} \in \{0,1\}^{J_\equiv}$ defined by $\vec{b} (j, [\vec{y}]) :=
-  \vec{b}' (j, \vec{y})$ (Lemma \ref{lem:matrix-quot-well-defined} gives us that
-  this function is well defined). It follows that $f(\vec{b}) = \vec{b}'$, and
-  so $f$ is a surjective mapping from the row vectors of $M_\equiv$ to the row
-  vectors of $M$.
-
-  It follows from the fact that $f$ is an injective linear map and fact that $f$
-  maps rows in $M_\equiv$ to rows in $M$ that if $B$ is a maximal independent
-  set of row vectors in $M_\equiv$ then $f(B)$ is an independent set of row
-  vectors in $M$. Moreover, suppose $f(B)$ is not a maximal independent set of
-  row vectors in $M$, then there exists a row vector $\vec{b}'$ in $M$ such that
-  $\vec{b}' \notin f(B)$ and $f(B) \cup \{b'\}$ is independent. But since $f$
-  maps rows in $M_\equiv$ to rows in $M$ surjectively, it follows that $B \cup
-  \{f^{-1}(b') \}$ must be an independent set of rows in $M_\equiv$. But since
-  $B$ is maximal, it follows that $f^{-1}(b') \in B$ and so $b' \in f(B)$, a
-  contradiction. We thus have that $f(B)$ is a maximal independent set of rows
-  in $M$ and, since $f$ is injective, we have that $\rk_p (M) = \vert f(B) \vert
-  = \vert B \vert = \rk_p (M_\equiv) = \rk_p(L^{\gamma})$. (The final equality
-  follows from Theorem \ref{thm:LM-equivalence}).
+	Let $f : \{0,1\}^{J_\equiv} \rightarrow \{0,1\}^{J}$ be defined such that for
+	all $\vec{b} \in {0,1}^{J_\equiv}$, $f(\vec{b}) (j, \vec{y}) := \vec{b}(j,
+	[\vec{y}])$ for all $(j, \vec{y}) \in J$. We have that $f$ is injective as,
+	for $\vec{b}_1, \vec{b}_2 \in \{0,1\}^{J_\equiv}$, if $f(\vec{b}_1) =
+	f(\vec{b}_2)$ then $\vec{b}_1 (j, [\vec{y}]) = f(\vec{b}_1)(j, \vec{y}) =
+	f(\vec{b}_2)(j, \vec{y}) = \vec{b}_2(j, [\vec{y}])$, for all $(j, \vec{y}) \in
+	J$. Also $f$ is linear as, for $\lambda \in \ff_p$ and $\vec{b}_1, \vec{b}_2
+	\in \{0,1\}^{J_\equiv}$, $f(\lambda \vec{b}_1) (j, \vec{y}) = (\lambda
+	\vec{b}_1)(j, [\vec{y}]) = \lambda (\vec{b}_1 (j, [\vec{y}])) = \lambda (f(
+	\vec{b}_1) (j, \vec{y}))$, and $ f(\vec{b}_1 + \vec{b}_2) (j, \vec{y}) =
+	(\vec{b}_1 + \vec{b}_2) (j, [\vec{y}]) = \vec{b}_1(j, [\vec{y}]) +
+	\vec{b}_2(j, [\vec{y}]) = f(\vec{b}_1)(j, \vec{y}) + f(\vec{b}_2)(j,
+	\vec{y})$, for all $(j, \vec{y}) \in J$.
+		
+	From the construction of $M_\equiv$ that $f$ maps rows vectors in $M_\equiv$
+	to row vectors in $M$. Let $\vec{b}'$ be a row vector in $M$. Then there
+	exists $\vec{b} \in \{0,1\}^{J_\equiv}$ defined by $\vec{b} (j, [\vec{y}]) :=
+	\vec{b}' (j, \vec{y})$ (Lemma~\ref{lem:matrix-quot-well-defined} gives us that
+	this function is well defined). It follows that $f(\vec{b}) = \vec{b}'$, and
+	so $f$ is a surjective mapping from the row vectors of $M_\equiv$ to the row
+	vectors of $M$.
+		
+	It follows from the fact that $f$ is an injective linear map and fact that $f$
+	maps rows in $M_\equiv$ to rows in $M$ that if $B$ is a maximal independent
+	set of row vectors in $M_\equiv$ then $f(B)$ is an independent set of row
+	vectors in $M$. Moreover, suppose $f(B)$ is not a maximal independent set of
+	row vectors in $M$, then there exists a row vector $\vec{b}'$ in $M$ such that
+	$\vec{b}' \notin f(B)$ and $f(B) \cup \{b'\}$ is independent. But since $f$
+	maps rows in $M_\equiv$ to rows in $M$ surjectively, it follows that $B \cup
+	\{f^{-1}(b') \}$ must be an independent set of rows in $M_\equiv$. But since
+	$B$ is maximal, it follows that $f^{-1}(b') \in B$ and so $b' \in f(B)$, a
+	contradiction. We thus have that $f(B)$ is a maximal independent set of rows
+	in $M$ and, since $f$ is injective, we have that $\rank_p (M) = \vert f(B) \vert 	= \vert B \vert = \rank_p (M_\equiv) = \rank_p(L^{\gamma})$. (The final equality
+	follows from Theorem \ref{thm:LM-equivalence}).
 \end{proof}
 
 
@@ -949,66 +942,53 @@ $\vec{a}_1, \ldots, \vec{a}_p \in [n]^t$, $\langle [n], \leq \rangle \models
 sequence of formulas $\phi$ defined from $\phi'$ in $\Phi'$.
 
 We thus have an interpretation $\Phi := (\phi_G, \phi_\Omega, (\phi_s)_{ s \in
-  \RB \cup \rho \cup \{0,1\}}, (\phi_{\Lambda_R})_{R \in \rho}, \phi_L)$ in
+	\RB \cup \rho \cup \{0,1\}}, (\phi_{\Lambda_R})_{R \in \rho}, \phi_L)$ in
 $\FPC$ defining the circuit $C_n$ when interpreted in $\mathcal{A}$. The
 formulas in this interpretation are defined as follows.
 
 \begin{itemize}
-\item The number term $\phi_G(\mu)$, when interpreted in $\mathcal{A}$, defines
-  a subset of $[n^t]$, which we identify with $G$ (the set of gates in the
-  circuit), and hence write $G \subseteq [n^t]$.
-\item The number term $\phi_{\Omega}(\nu_1, \ldots , \nu_q, \mu)$ is defined
-  such that $\mathcal{A} \models \phi_\Omega[a_1, \ldots, a_q, g]$ if, and only
-  if, $(a_1, \ldots, a_q) \in [n]^q$ and $\Omega(a_1, \ldots, a_q) = g$.
-\item The number term $\phi_s (\mu)$ is defined for $s \in \RB \uplus \rho
-  \uplus \{0,1\}$ such that $\mathcal{A} \models \phi_s [g]$ if, and only if,
-  $\Sigma$ maps $g$ to assigned to the symbol $s$.
+	\setlength\itemsep{0mm}
+	\item The number term $\phi_G(\mu)$, when interpreted in $\mathcal{A}$, defines
+	      a subset of $[n^t]$, which we identify with $G$ (the set of gates in the
+	      circuit), and hence write $G \subseteq [n^t]$.
+	\item The number term $\phi_{\Omega}(\nu_1, \ldots , \nu_q, \mu)$ is defined
+	      such that $\mathcal{A} \models \phi_\Omega[a_1, \ldots, a_q, g]$ if, and only
+	      if, $(a_1, \ldots, a_q) \in [n]^q$ and $\Omega(a_1, \ldots, a_q) = g$.
+	\item The number term $\phi_s (\mu)$ is defined for $s \in \RB \uplus \rho
+	      \uplus \{0,1\}$ such that $\mathcal{A} \models \phi_s [g]$ if, and only if,
+	      $\Sigma$ maps $g$ to assigned to the symbol $s$.
+	      	      
+	\item For $R \in \rho$ of arity $r$ the number term $\phi_{\Lambda_R}(\nu_1,
+	      \ldots, \nu_r, \mu)$ is defined such that $\mathcal{A} \models
+	      \phi_{\Lambda_R} [a_1, \ldots, a_r, g]$ if, and only if, $(a_1, \ldots,
+	      a_r)\in [n]^r$ and $g$ is a relational gate such that $\Sigma (g) = R$ and
+	      $\Lambda_R (g) = (a_1, \ldots, a_r)$.
+	\item The number term $\phi_L(\mu, \nu, \delta, \epsilon)$ is defined such that $\mathcal{A} \models \phi_L[g,h,i,j]$ if, and only if, $g$ and $h$ are gates and $L(g)(i,j) = h$.
+\end{itemize}
+% The Immerman-Vardi Therorem can be used to show that there exist number terms $\FA{row}(\mu, \delta)$ and $\FA{col} (\mu, \delta)$ such that $\mathcal{A} \models \FA{row}[g, i]$ (resp. $\mathcal{A} \models \FA {col} [g, j]$) if, and only if, $g$ is a gate and $i \in A$ (resp. $g$ is a gate and $j \in B$). 
 
-\item For $R \in \rho$ of arity $r$ the number term $\phi_{\Lambda_R}(\nu_1,
-  \ldots, \nu_r, \mu)$ is defined such that $\mathcal{A} \models
-  \phi_{\Lambda_R} [a_1, \ldots, a_r, g]$ if, and only if, $(a_1, \ldots,
-  a_r)\in [n]^r$ and $g$ is a relational gate such that $\Sigma (g) = R$ and
-  $\Lambda_R (g) = (a_1, \ldots, a_r)$.
-\item It can be shown that there is a polynomial time algorithm that takes in a
-  number $n$, gate $g$ in $C_n$ and outputs the universe and vocabulary of $g$.
-  It can also be shown that there exists a polynomial time algorithm that takes
-  in a number $n$ [n]^r$ such that
+Since there is an obvious polynomial-time computable function that takes in an $n \in \nats$ and a gate $g$ in $C_n$ and outputs the characteristic and threshold of a rank gate, we have from the Immerman-Verdi theorem that there exists a formula $\FA{rank-type}(\mu, \kappa , \pi)$ such that $\mathcal{A} \models \FA{rank-type}[g, r, p]$ if, and only if, $g$ is a rank
+gate with characteristic $p$ and threshold $r$. We note that the bound on the
+domain is definable as a closed number term $\FA{m} := (x\# (x = x))*t$.
 
-  and $\phi_L (\mu, \kappa, \nu)$ holds if, and only if, $\mu$ and $\nu$ are
-  assigned to gates such that $L$ at the gate assigned to $\mu$ maps the number
-  assigned to $\kappa$ to the gate assigned to $\nu$ (i.e. if $g$ is assigned to
-  $\mu$)
+We have from the Corollary \ref{} that there are constants $n_0$ and $k$ such
+that for all $n \geq n_0$ the support of each gate has size at most $k$. Note
+that for each $n \leq n_0$, $C_n$ can be evaluated by an $\FPC$ formula with
+simply quantifies over all of the possible bijections from the universe of
+$\mathcal{A}$ to $[n]$ (since there are at most constantly many such
+bijections). As such we suppose $n > n_0$ in the rest of this subsection.
 
-  Since there is an obvious polynomial-time function that takes in an $n \in
-  C_n$ and a gate $g$ in $C_n$ and outputs the characteristic and threshold of a
-  rank gate, we have from the Immerman-Verdi theorem that there exists a formula
-  $\FA{rank-type}(\mu, \kappa , \pi)$ such that, for a structure $\mathcal{A}$,
-  $\mathcal{A} \models \FA{rank-type}[g, r, p]$ if, and only if, $g$ is a rank
-  gate with characteristic $p$ and threshold $r$. We note that the bound on the
-  domain is definable as a closed number term $\FA{m} := (x\# (x = x))*t$.
-
-  We have from the Corollary \ref{} that there are constants $n_0$ and $k$ such
-  that for all $n \geq n_0$ the support of each gate has size at most $k$. Note
-  that for each $n \leq n_0$, $C_n$ can be evaluated by an $\FPC$ formula with
-  simply quantifies over all of the possible bijections from the universe of
-  $\mathcal{A}$ to $[n]$ (since there are at most constantly many such
-  bijections). As such we suppose $n \geq n_0$ in the rest of this subsection.
-
-  We will recursively construct $\EV_g$ for each gate $g$ in the circuit. While
-  we have that the canonical support of $g$ has size at most $k$, it may not be
-  equal to $k$. As such, if $\vert \consp(g) \vert = \ell$, we define
+We will recursively construct $\EV_g$ for each gate $g$ in the circuit. While
+we have that the canonical support of $g$ has size at most $k$, it may not be
+equal to $k$. As such, if $\vert \consp(g) \vert = \ell$, we define
 
 \begin{align*}
-  \overline{\EV}_g = \{ (a_1, \ldots , a_k) \in [n]^k : (a_1 , \ldots , a_\ell ) \in \EV_g \text{ and } i \neq j \implies a_i \neq a_j \}.
+	\overline{\EV}_g = \{ (a_1, \ldots , a_k) \in [n]^k : (a_1 , \ldots , a_\ell ) \in \EV_g \text{ and } i \neq j \implies a_i \neq a_j \}. 
 \end{align*}
 
-In this subsection we use $\mu$ and $\nu$ to denote number variables that index
-gates. We use $\epsilon$ and $\delta$ to denote variables that index elements of
-the universe of a gate. We use $\kappa$ and $\pi$ to denote number variables. We
-use $x, y, z, \ldots$ to denote vertex variables and $U, V, \ldots$ to denote
-relation variables. We use $a, b, c , \ldots$ to denote elements of the vertex
-sort. When a vector of values or variables is used without reference to size, it
-is usually taken to be a $k$-tuple.
+In this subsection we use $\mu$ and $\nu$ to denote number variables that should be assigned to gates and use $\epsilon$ and $\delta$ to denote variables that should be assigned to elements of the universe of a gate. We use $\kappa$ and $\pi$ to denote other number variables. We use $x, y, z, \ldots$ to denote vertex variables and $U, V, \ldots$ to denote relational variables. We use $a, b, c , \ldots$ to denote elements of the vertex sort. When a vector of values or variables is used without reference to size, it is taken to be a $k$-tuple. 
+
+Let $s \subseteq [n]$, $X$ be a set, and $f \in X^{\underline{s}}$. Then, since $[n]$, and hence $s$, is an ordered set, we let $\vec{s}$ denote the $\vert s \vert$-tuple given by listing the elements of $s$ in order. We let $\vec{f}$ denote a $\vert s \vert$-tuple formed by applying $f$ to $s$ in order (i.e. $\vec{f} := f \circ \vec{s}$). 
 
 We seek to define a relation $V \subseteq [n^t] \times U^k$ by $V(g, \vec{a})$
 if, and only if, $\vec{a} \in \overline {\EV}_g$. Our aim is to define a set of
@@ -1016,10 +996,10 @@ formulas $\theta_s (\mu, \vec{x})$, where $s \in \mathbb{B} \cup \tau \cup
 \{0,1\}$, which evaluate the gate indexed by $\mu$ for the assignment to its
 support given by $\vec{x}$ if it is a gate labelled by the symbol $s$. Each of
 these formulas are written in terms of $V$, the relation variable we are
-inductively defining.
+inductively defining. 
 
 We will define the $\FPR$ formula $\theta_\rank (\mu, \vec{x})$. The other
-formulas have already been defined by Anderson and Dawar \cite{AndersonD17} and
+formulas have already been defined by Anderson and Dawar~\cite{AndersonD17} and
 so this will suffice. In order to do this we first define a formula $\psi_M$
 that defines the matrix $M$ from the previous subsection. We then use the rank
 operator to compute the rank of the given matrix. In order to define $\psi_M$
@@ -1032,18 +1012,18 @@ of the universe of $g$ and check if that element is in the first or second sort
 (i.e. of it is a row or a column).
 
 \begin{align*}
-  \FA{row} (\mu, \delta) := & \exists \nu, \epsilon \leq \FA{m} \, (\Phi_L (\mu, \delta , \epsilon, \nu))\\
-  \FA{col} (\mu, \epsilon) := & \exists \nu, \delta \leq \FA{m} \, (\Phi_L (\mu, \delta , \epsilon, \nu))
+	\FA{row} (\mu, \delta) :=   & \exists \nu, \epsilon \leq \FA{m} \, (\Phi_L (\mu, \delta, \epsilon, \nu)) \\
+	\FA{col} (\mu, \epsilon) := & \exists \nu, \delta \leq \FA{m} \, (\Phi_L (\mu, \nu, \delta , \epsilon))  
 \end{align*}
 
-From Lemma \ref{}, and invoking Immerman-Vardi theorem, we have an $\FPC$
+From Lemma~\ref{}, and invoking Immerman-Vardi theorem, we have an $\FPC$
 formula $\FA{orb}(\mu, \delta, \epsilon)$ such that $\mathcal{A} \models
 \FA{orb}[g,i, i']$ if, and only if, $i$ and $i'$ are in the universe of $g$ and
-are in the same orbit. The following formula allows us to define the minimal
+$i \in \orb_g(i')$. The following formula allows us to define the minimal
 element of an orbit
 
 \begin{align*}
-  \FA{min-orb} (\mu, \delta) := \forall \epsilon \leq \FA{m} \, (\FA{orb} (\mu, \delta, \epsilon) \implies \delta \leq \epsilon).
+	\FA{min-orb} (\mu, \delta) := \forall \epsilon \leq \FA{m} \, (\FA{orb} (\mu, \delta, \epsilon) \implies \delta \leq \epsilon). 
 \end{align*}
 
 % We define an $\FPC$ formula $\FA{agree}_s (\vec{s}_1, \vec{s}_1, \vec{x},
@@ -1051,7 +1031,7 @@ element of an orbit
 % \FA{agree}_s[\vec{r}, \vec{c}, \vec{a}, \vec{b}]$ if, and only if,
 % $\vec{a}_{\vec{r}} \sim \vec{b}_{\vec{c}}$.
 
-From Anderson and Dawar \cite{AndersonD17} there is an $\FPC$ formula
+From Anderson and Dawar~\cite{AndersonD17} there is an $\FPC$ formula
 $\FA{supp}$ such that $\mathcal{A} \models \FA{supp} [g, u]$ if, and only if,
 $\mathcal{A} \models \phi_G [g]$ and $u$ is in $\consp(g)$. They use this
 formula to inductively define a set of formula $\FA{supp}_i$ for each $i \in
@@ -1060,42 +1040,26 @@ the $i$th element of $\consp(g)$.
 
 Similarly, we can define $\FA{supp}^r$ such that $\mathcal{A} \models
 \FA{supp}^r[g, a, u]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land
-\FA{row}[g, a]$ and $u$ is in $\consp_g(u)$, and $\FA{supp}^c$ such that
+\FA{row}[g, a]$ and $u$ is in $\consp_g(a)$, and $\FA{supp}^c$ such that
 $\mathcal{A} \models \FA{supp}^c[g, a, u]$ if, and only if, $\mathcal{A} \models
 \phi_G [g] \land \FA{col}[g, a]$ and $u$ is in $\consp_g(u)$. Again we can
-define the formulas $\FA{supp}^r_i$ and $\FA{supp}^c_i$ for each $i \in \nats$
-which hold if, and only if, the element given is in fact the $i$th element of
-the row and column support respectively.
+define the formulas $\FA{supp}^r_i$ and $\FA{supp}^c_i$.
 
-From Anderson and Dawar \cite{AndersonD17} we have an $\FPC$ formula
-$\FA{agree}(\mu, \nu, \vec{x}, \vec{y})$ such that $\mathcal{A} \models
-\FA{agree}[g, h, \vec{a}, \vec{b}]$ if, and only if, $\vec{a}_g' \sim
-\vec{b}_h'$, where $\vec{a}_g'$ and $\vec{b}_h'$ are the the restrictions of the
-$k$-tuples $\vec{a}_g$ and $\vec{b}_h$ to the sizes of $\consp(g)$ and
-$\consp(h)$ respectively. We can similarly define define $\FA{agree}_1 (\mu,,
-\nu, \delta , \vec{x}, \vec{y}, \vec{z})$ (where $\vec{z}$ is a tuple of size
-$2k$) such that $\mathcal{A} \models \FA{agree}_1 [g, h, i, \vec{a}, \vec{b},
-\vec{c}]$ if, and only if, $\vec{b}_h' \sim \vec{c}_i'$, $\vec{a}_g' \sim
-\vec{b}_h'$ and $\vec{c}_i' \sim \vec{a}_g'$, and where $\vec{a}_g'$,
-$\vec{b}_h'$ and $\vec{b}_i'$ are the the restrictions of the tuples
-$\vec{a}_g$, $\vec{b}_h'$ and $\vec{c}_i'$ to the sizes of $\consp(g)$,
-$\consp(h)$ and $\consp_g(i)$ respectively
+From Anderson and Dawar~\cite{AndersonD17} we have an $\FPC$ formula $\FA{agree}(\mu, \nu, \vec{x}, \vec{y})$ such that $\mathcal{A} \models \FA{agree}[g, h, \vec{a}, \vec{b}]$ if, and only if, $\vec{a}_{\vec{\consp}(g)}$ is compatible with $\vec{b}_{\vec{\consp}(h)}$.  
 
-It is easy to see that the construction of the vector $\vec{c}$ from Equation
-\ref{} is expressible in $\FPC$. Thus we assert that there exists an $\FPC$
-formula $\FA{move} (\mu, \delta, \epsilon, \vec{y}, \vec{x}, \vec{y}, \vec{z},
-\vec{w})$ such that $\mathcal{A} \models \FA{move} [g, i, j, \vec{a}, \vec{b},
-\vec{d}, \vec{c}']$ if, and only if, $\mathcal{A} \models \phi_G [g] \land
-\FA{row}_g[g,i] \land \FA{col}[g, j]$ and the vector $\vec{c}$ defined in the
-previous section is equal to the restriction of $\vec{c}'$ to the length of
-$\vec{c}$.
+% A similar argument allows us to define $\FA{agree}_L (\mu, \nu, \delta , \vec{x}, \vec{y}, \vec{z})$ (where $\vec{z}$ is a tuple of size $2k$) such that $\mathcal{A} \models \FA{agree}_L [g, h, i, \vec{a}, \vec{b}, \vec{c}]$ if, and only if, $\vec{a}_{\vec{\consp}(g)}$, $\vec{b}_{\vec{\consp}(h)}$, and $\vec{c}_{\vec{\consp}_g(i)}$ are all pairwise compatible.
+
+A similar argument allows us to define $\FA{agree}_L (\mu, \delta , \vec{x}, \vec{z})$ (where $\vec{z}$ is a tuple of size $2k$) such that $\mathcal{A} \models \FA{agree}_L [g, i, \vec{a}, \vec{r}]$ if, and only if, $\vec{a}_{\vec{\consp}(g)}$ and $\vec{r}_{\vec{\consp}_g(i)}$ are compatible.
+
+It can be shown that given a number $n$, a gate $g$ in $C_n$ and two pairs $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ the function $\vec{c}$ in Lemma~\ref{} can be computed in time polynomial in $n$. Thus, from the Immerman-Vardi Theorem, it can be defined by a number term. Thus we assert that there exists an $\FPC$ formula $\FA{move} (\mu, \delta, \epsilon, \vec{x}, \vec{y}, \vec{z},
+\vec{w})$ (where $\vec{y}$ and $\vec{z}$ are $2k$-tuples) such that $\mathcal{A} \models \FA{move} [g, i, j, \vec{a}, \vec{b}, \vec{d}]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{row}_g[g,i] \land \FA{col}[g, j]$ and $\mathcal{A} \models \FA{agree}_L [g, i, \vec{a}, \vec{b}] \land \FA{agree}_L [g, j, \vec{a}, \vec{d}]$ and $\vec{d}_{\vec{\consp}_g(j)} = \vec{c}$, where $\vec{c}$ is the vector given in Lemma~\ref{} defined from the pairs $(i, \vec{a}_{\vec{\consp_g(i)}})$ and $(j, \vec{b}_{\vec{\consp}_g(j)})$.
 
 From Lemma \ref{} and invoking the Immerman-Vardi theorem, there is an $\FPC$
 formula $\FA{map}^c$ such that $\mathcal{A} \models \FA{map}^c[g, j, j',
 \vec{c}]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{col}[g, j]
 \land \FA{col}[g, j']$ and such that for all $\sigma \in \sym_n$ if $\sigma
 (\vec{\consp}_g(j)) = \vec{c}$ then $\sigma (j) = j'$.
-
+				
 % Similarly we can define $\FA{agree}_1 (\mu, \delta , \vec{x}, \vec{y})$ such
 % that $\mathcal{A}^leq \models \FA{agree}_1 [g, i, \vec{a}, \vec{b}]$ if, and
 % only if, $\alpha \sim \beta$, where $\alpha \in U^{\underline{\consp(g)}}$ and
@@ -1108,41 +1072,41 @@ formula $\FA{map}^c$ such that $\mathcal{A} \models \FA{map}^c[g, j, j',
 % \beta$, where $\alpha \in U^{\underline{\consp_g(i)}}$ and $\beta \in
 % U^{\underline {\consp_g(j)}}$ are the restrictions of $\vec{b}$ and $\vec{c}$
 % to the length of $\consp_g(i)$ and $\consp_g(j)$ respectively.
-
+				
 We define the $\FPC$ formula $\FA{merge}$ that takes in two gates $g$ and $h$
 (with $h \in H_g$) as well as assignments to the supports of $g$ and $h$ and the
 row and column supports of $h$. It then checks if the assignment to the support
 of $h$ is compatible with the given row and column supports of $h$.
-
+				
 % \begin{align*}
 %     \FA{merge} (\mu, \nu, \vec{x}, \vec{y}, \vec{z}) := \exists u_1, u_2 \leq \FA{MAX} ( \phi_L (\mu, u_1, u_2, \nu) \land ( \bigwedge{1 \leq i < j \leq 2k}  \exists v \leq \FA{SIZE} ((\FA{supp}^r_j (\mu, u_1, v) \land \FA{supp}_i(\nu, v) \implies z_i = x_j) \land (\FA{supp}^c_j (\mu, u_2, v) \land \FA{supp}_i(\nu, v) \implies z_i = y_j))))
 % \end{align*}
-
+				
 \begin{align*}
-  \FA{merge} (\mu, \nu, \vec{x}, \vec{y}, \vec{w}_1, \vec{w}_2) := &\exists \delta, \epsilon \leq \FA{m} \, ( \phi_L (\mu, \delta, \epsilon, \nu) \\ & \land \FA{agree}_1 (\mu, \nu , \delta, \vec{x}, \vec{y}, \vec{w}_1) \land \\ & \FA{agree}_1 (\mu, \nu , \epsilon, \vec{x}, \vec{y}, \vec{w}_2))
+	\FA{merge} (\mu, \nu, \vec{x}, \vec{y}, \vec{w}_1, \vec{w}_2) := & \exists \delta, \epsilon \leq \FA{m} \, ( \phi_L (\mu, \delta, \epsilon, \nu) \\ & \land \FA{agree}_1 (\mu, \nu , \delta, \vec{x}, \vec{y}, \vec{w}_1) \land \\ & \FA{agree}_1 (\mu, \nu , \epsilon, \vec{x}, \vec{y}, \vec{w}_2))
 \end{align*}
-
+				
 We are almost ready to define the matrix $M$ from the previous subsection. We
 break this up into two formulas. The first checks that the input is within the
 domain of the matrix and the second defines $M$ for the given row and column
 indexes.
-
+				
 \begin{align*}
-  \FA{check-dom}(\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z})  := & \FA{dom}_{\Phi_L} (\mu, \delta, \epsilon) 
-                                                                         \land \FA{min-orb}(\delta, \vec{y}) \land \FA{min-orb} (\epsilon, \vec{z}) \\
-                                                                       &\land \FA{agree}_1 (g, \delta , \vec{x}, \vec{y}) \land \FA{agree}_1 (g, \epsilon , \vec{x}, \vec{z})
+	\FA{check-dom}(\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z})  := & \FA{dom}_{\Phi_L} (\mu, \delta, \epsilon)                                                             
+\land \FA{min-orb}(\delta, \vec{y}) \land \FA{min-orb} (\epsilon, \vec{z}) \\
+& \land \FA{agree}_1 (g, \delta , \vec{x}, \vec{y}) \land \FA{agree}_1 (g, \epsilon , \vec{x}, \vec{z}) 
 \end{align*}
 
 \begin{align*}
-  \FA{find-eval} (\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z}) := & \exists \vec{s} \leq \FA{s} \, (\FA{move}(\mu, \delta, \epsilon, \vec{x}, \vec{y}, \vec{z}, \vec{s}) \\ & \land (\exists \epsilon' \leq \FA{m} \, (\FA{map}^c (\mu, \epsilon, \epsilon', \vec{s}) \land (\exists \nu \leq \FA{m} \, (\phi_L (\mu, \delta, \epsilon', \nu) \\ & \land (\exists \vec{m} \, (\FA{merge} (\mu, \nu, \vec{x}, \vec{m}, \vec{y}, \vec{z}) \land V(\nu, \vec{m}))))))))
+	\FA{find-eval} (\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z}) := & \exists \vec{s} \leq \FA{s} \, (\FA{move}(\mu, \delta, \epsilon, \vec{x}, \vec{y}, \vec{z}, \vec{s}) \\ & \land (\exists \epsilon' \leq \FA{m} \, (\FA{map}^c (\mu, \epsilon, \epsilon', \vec{s}) \land (\exists \nu \leq \FA{m} \, (\phi_L (\mu, \delta, \epsilon', \nu) \\ & \land (\exists \vec{m} \, (\FA{merge} (\mu, \nu, \vec{x}, \vec{m}, \vec{y}, \vec{z}) \land V(\nu, \vec{m}))))))))
 \end{align*}
-
+				
 % There is an $\FP$ formula $\FA{merge}(\nu , \vec{s}, \vec{s}_2, \vec{x},
 % \vec{y}, \vec{w})$ such that $\mathcal{A} \models \FA{merge} [\vec{r},
 % \vec{c}, \vec{a}, \vec{b}, \vec{d}]$ if, and only if, $\mathcal{A}^{\leq}
 % \models \FA{agree}_s[\vec{r}, \vec{c}, \vec{a}, \vec{b}]$ and $\vec{d}_{\vec{r
 % \cup c}} = \vec{a}_{\vec{r}} | \vec{b}_{\vec{c}}$.
-
+				
 % We define the $\FPC$ formula $\FA{FIND}$ that takes in gates $g$ and $h \in
 % H_g$ and
 % \begin{align*}
@@ -1155,7 +1119,7 @@ indexes.
 % $\FA{MIN-FIND} (\vec{s}_1, \vec{s}_2, \mu, \vec{x}, \nu) := \FA{FIND}
 % (\vec{s}_1, \vec{s}_2, \mu, \vec{x}, \nu) \land (\forall \nu' (\FA{FIND}
 % (\vec{s}_1, \vec{s}_2, \mu, \vec{x}, \nu') \implies \nu \leq \nu'))$.
-
+				
 % We now define a formula for checking if the input is in the domain of the
 % matrix, i.e. are elements of the sets $I$ and $J$ defined in the previous
 % section.
@@ -1174,7 +1138,7 @@ indexes.
 % %     (\FA{merge} (\mu, \vec{x}, \nu', \vec{w}, \delta, \vec{y}, \epsilon,
 % %     \vec{z}, \vec{w}) \implies \nu \leq nu'))
 % \end{align*}.
-
+				
 % We now define a formula that takes in a gate $g$ and an assignment to its
 % support as well as an encoding of $(i, \vec{b}) \in I$ and $(j, \vec{d})\in
 % J$, and constructs the vector $\vec{c}$, as defined in the previous section,
@@ -1185,43 +1149,43 @@ indexes.
 % \begin{align*}
 %     \FA{find-eval} (\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z}) := & \exists \vec{v} (\FA{move}(\delta, \vec{y}, \epsilon, \vec{z}, \mu, \vec{x}, \vec{v}) \\ & \land (\exists \vec{u} (\FA{supp}_r(\delta, \vec{u}, \mu) \land (\exists \nu (\FA{MIN-FIND}(\vec{u}, \vec{v}, \nu, \mu) \\ & \land (\exists \vec{w} (\FA{merge}(\nu, \vec{y}, \vec{z}, \vec{w}) \FA{agree}(\mu, \nu, \vec{x}, \vec{w}) \land V(\nu, \vec{w}))))))))
 % \end{align*}
-
+				
 We are now ready to define the formula that defines the matrix $M$.
-
+				
 \begin{align*}
-  \psi_M (\mu, \vec{x}, \delta, \vec{x}, \epsilon, \vec{y}) :=  \FA{check-dom}(\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z}) \land \FA{find-eval} (\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z})
+	\psi_M (\mu, \vec{x}, \delta, \vec{x}, \epsilon, \vec{y}) :=  \FA{check-dom}(\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z}) \land \FA{find-eval} (\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z}) 
 \end{align*}
-
+				
 We now define the formula that evaluates a rank gate $g$.
-
+				
 \begin{align*}
-  \theta_\rank (\mu, \vec{x}) := &\bigwedge_{1 \leq i < j \leq k} x_i \neq x_j \land (\exists p, k \leq \FA{m} \, (\FA{rank-type}(\mu. p, k) \\ &\land [\rank (\vec{y}\delta\leq \FA{m}, \vec{z}\epsilon\leq \FA{m}, p \leq \FA{M}). \psi_M] \leq k )))
+	\theta_\rank (\mu, \vec{x}) := & \bigwedge_{1 \leq i < j \leq k} x_i \neq x_j \land (\exists p, k \leq \FA{m} \, (\FA{rank-type}(\mu. p, k) \\ &\land [\rank (\vec{y}\delta\leq \FA{m}, \vec{z}\epsilon\leq \FA{m}, p \leq \FA{M}). \psi_M] \leq k )))
 \end{align*}
-
+				
 As mentioned above we have the formulas $\theta_0$, $\theta_1$, $\theta_\land$,
 $\theta_\lor$, $\theta_\nand$, $\theta_\maj$ and $(\theta_R)_{R \in \tau}$ from
 Anderson and Dawar \cite{AndersonD17}. The relation $V$ is then given as a fixed
 point by the following formula.
 \begin{align*}
-  \theta (\mu, \vec{x}) := [\ifp_{V,\nu \vec{y}} \bigvee_{s \in \mathbb{B}' \uplus \tau \uplus \{0,1\}} (\phi_s(\mu) \land \theta_s (\nu, \vec{y} ] (\mu, \vec{x})
+	\theta (\mu, \vec{x}) := [\ifp_{V,\nu \vec{y}} \bigvee_{s \in \mathbb{B}' \uplus \tau \uplus \{0,1\}} (\phi_s(\mu) \land \theta_s (\nu, \vec{y} ] (\mu, \vec{x}) 
 \end{align*}
-
+				
 The following $\FPR$ formula defines the $q$-ary query computed by the circuit
 family $\mathcal{C}$ \cite{AndersonD17}.
-
+				
 \begin{align*}
-  Q (z_1, \ldots z_q) := & \exists \vec{x} \exists \mu, \nu_1 , \ldots  \nu_q \eta_1 , \ldots , \nu_k \leq \FA{m} [\phi_\omega (\nu_1, \ldots \nu_q, \mu) \land \\
-                         & \bigwedge_{1 \leq i \leq k} \FA{supp}_i (\mu, \eta_i) \wedge \forall \eta (\neg \FA{supp}_i (\mu, \eta))) \land \\
-                         & \bigwedge_{1 \leq i \leq k} \bigwedge_{1 \leq j \leq q}((\FA{supp}_i (\mu, \eta_i) \land (x_i = z_j) \implies \nu_j = \eta_i) \land \\ &
-                                                                                                                                                                    \bigwedge_{1 \leq j \leq q} \bigvee_{1 \leq i \leq k} (x_i = z_j \land \FA{supp}_i (\mu, \eta_i)]
+	Q (z_1, \ldots z_q) := & \exists \vec{x} \exists \mu, \nu_1 , \ldots  \nu_q \eta_1 , \ldots , \nu_k \leq \FA{m} [\phi_\omega (\nu_1, \ldots \nu_q, \mu) \land \\
+	& \bigwedge_{1 \leq i \leq k} \FA{supp}_i (\mu, \eta_i) \wedge \forall \eta (\neg \FA{supp}_i (\mu, \eta))) \land \\
+		& \bigwedge_{1 \leq i \leq k} \bigwedge_{1 \leq j \leq q}((\FA{supp}_i (\mu, \eta_i) \land (x_i = z_j) \implies \nu_j = \eta_i) \land \\ &
+	\bigwedge_{1 \leq j \leq q} \bigvee_{1 \leq i \leq k} (x_i = z_j \land \FA{supp}_i (\mu, \eta_i)]
 \end{align*}
-
+				
 This completes the proof of our main theorem.
-
-
-
-
-
+				
+				
+				
+				
+				
 % We define the following formulas:
 % \begin{align*}
 %     \FA{check-dom}(\mu, \vec{x}, \delta, \vec{y}, \epsilon, \vec{z})  := & \FA{dom}_{\Phi_L} (\mu, \delta, \epsilon) 
@@ -1238,11 +1202,11 @@ This completes the proof of our main theorem.
 %     %     (\forall \nu' (\FA{merge} (\mu, \vec{x}, \nu', \vec{w}, \delta,
 %     %     \vec{y}, \epsilon, \vec{z}, \vec{w}) \implies \nu \leq nu'))
 % \end{align*}.
-
-
-
+				
+				
+				
 % \theta_M (\delta , \vec{y}, \epsilon, \vec{z}, \mu, \vec{x})
-
-
-
+				
+				
+								
 \end{document}
