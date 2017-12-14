@@ -132,9 +132,9 @@ that for any $\eta \in U^{\underline{sp(g)}}$, there is an $\FPR$-definable
 matrix $M$ such that for any $\gamma \in [n]^{\underline{U}}$ with $\gamma^{-1}
 \sim \eta$, $M$ is isomorphism-equivalent to $L^{\gamma}$. This result allows us
 to decide the membership of $\eta$ in $\EV_g$, where $g$ is a $\rank^r_p$ gate,
-by first defining $M$ for $\eta$, computing the rank of $M$ over the field of
+by defining $M$ for $\eta$, computing the rank of $M$ over the field of
 characteristic $p$, and then checking if this result is less than or equal to
-$r$.
+the threshold value $r$.
 
 For a gate $h \in H_g$, let $A_h := \{\vec{x} \in U^{\underline{\consp(h)}} :
 \eta \sim \vec{x}\}$ be the set of assignment to the support of $h$ that are
@@ -147,25 +147,6 @@ $X$ be a set on which the left group action of $\sym_n$ is defined and let $s
 of `rows' or `columns' (i.e. $A$ or $B$) of the matrix indexing the inputs of
 $g$.
 
-Let $s \in X$ and $\vec{x}, \vec{x}' \in A_s$ and we say that $\vec{x}$ and
-$\vec{x}'$ are \emph{mutually stable} if there exists $\sigma \in \stab(s) \cap
-\spstab{g}$ such that $\vec{x} = \vec{x}' \cdot \sigma$. Note that mutual
-stability is an equivalence relation on $A_s$, and we denote the equivalence of
-two vectors $\vec{x}, \vec{x}' \in A_s$ by $\vec{x} \equiv_s \vec{x}'$.
-
-\begin{lem}
-  Let $X$ be a set on which the left group action of $\sym_n$ is defined, and
-  let $\gamma: U \rightarrow [n]$ be a bijection such that $\gamma^{-1} \sim
-  \eta$. Let $s \in X$ and let $\sigma, \sigma' \in \stab(\consp(g))$. Then
-  $\sigma(s) = \sigma' (s)$ if, and only if, $\sigma \equiv_s \sigma'$.
-  \label{lem:functions-well-defined}
-\end{lem}
-
-\begin{proof}
-  (removed, to be included later)
-  % Suppose $\sigma(s) = \sigma'(s)$. Take $x := \sigma(s)$. So then
-  % $\gamma^{-1}(\sigma(s))$
-\end{proof}
 
 We now define a matrix. We begin by defining the index sets for the matrix.
 
@@ -272,12 +253,29 @@ well-defined independently of the particular choice of permutation.
 
 Let $\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
 defined by $\alpha^{\gamma} (i, \vec{x}) := \Pi^{\gamma}_{\vec{x}}(i)$ and
-$\beta^{\gamma} (j, \vec{y}) := \Pi^{\gamma}_{\vec{y}}(j)$, respectively. It can
-be shown that these functions are surjective.
+$\beta^{\gamma} (j, \vec{y}) := \Pi^{\gamma}_{\vec{y}}(j)$, respectively.
+
+The following result shows that we may check if an assignment to a gate $h$
+makes $h$ evaluate to true by analysing certain gates in the orbit of $h$.
+
+\begin{lem}
+  Let $\gamma\in [n]^{\underline{U}}$ and $h \in C_n$. Then $\vec{z} \in \EV_h$
+  if, and only if, $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_{\vec{z}} (h)) = 1$.
+  \label{lem:translate-EV-circuits}
+\end{lem}
+\begin{proof}
+  We have that $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_\nu(h))$ if, and only if,
+  $C_n[(\Pi^{\gamma}_{\nu})^{-1}\gamma \mathcal{A}] (h)$. Then, by the
+  definition of $\EV_h$, $\nu \in \EV_h$ if, and only if, there exists $\gamma'
+  \in [n]^{\underline{U}}$ such that $C_n[\gamma' \mathcal{A}](h) = 1$ and $\nu
+  = \gamma\restriction{\consp(h)}$.
+\end{proof}
+
+We now show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective.
 
 \begin{lem} 
-  For any bijection $\gamma : U \rightarrow [n]$ both $\alpha^{\gamma}$ and
-  $\beta^{\gamma}$ are surjective.
+  For any bijection $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim
+  \eta$ both $\alpha^{\gamma}$ and $\beta^{\gamma}$ are surjective.
   \label{lem:alpha-beta-surjective}
 \end{lem}
 \begin{proof}
@@ -312,8 +310,8 @@ be shown that these functions are surjective.
 
 We now prove a number of important technical lemmas that will ultimately allow
 us to to prove that the matrix $M$ (quotiented by some appropriate equivalence
-relation) is isomorphism-equivalent to $L^{\gamma}$. The following useful Lemma
-allows us to factor a permutation through $\alpha$ and $\beta$.
+relation) is isomorphism-equivalent to $L^{\gamma}$. The following lemma
+allows us to factor a permutation through $\alpha^{\gamma}$ and $\beta^{\beta}$.
 
 \begin{lem}
   \label{lem:alpha-and-gamma}
@@ -381,36 +379,29 @@ and column of $h$.
   \column(h)$.
 \end{lem}
 \begin{proof}
-  We prove the result for $\alpha$. The $\beta$ case follows similarly. We have
-  from Lemma \ref{lem:support-determines-action} that it is sufficient to show
-  that for all $a \in \consp_g(i)$, $\alpha^{\gamma'}(i, \vec{x}) =
-  \Pi^{\gamma'}_{\vec{x}} (a) = \sigma_r (a)$. Let $a \in \consp_g(i)$. We have
-  that $\Pi^{\gamma'}_{\vec{x}} (a) = (\Pi^{\gamma}_{b})^{-1} \gamma (\vec{x}
-  (a))$ and $\gamma (\vec{x}(a)) = \gamma (\vec{x} (\sigma^{-1}_r(\sigma_r(a))))
-  = \gamma (\vec{x} (\vec{r}^{-1} (\sigma_r(a)))) =
-  \Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})}(\sigma_r(a))$. It
-  follows that $\Pi^{\gamma'}_{\vec{x}}(a) = \sigma_r(a)$, as required.
-\end{proof}
-
-The following result shows that we may check if an assignment to a gate $h$
-makes $h$ evaluate to true by analysing certain gates in the orbit of $h$.
-
-\begin{lem}
-  Let $\gamma\in [n]^{\underline{U}}$ and $h \in C_n$. Then $\nu \in \EV_h$ if,
-  and only if, $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_\nu (h)) = 1$.
-  \label{lem:translate-EV-circuits}
-\end{lem}
-\begin{proof}
-  We have that $C_n[\gamma \mathcal{A}](\Pi^{\gamma}_\nu(h))$ if, and only if,
-  $C_n[(\Pi^{\gamma}_{\nu})^{-1}\gamma \mathcal{A}] (h)$. Then, by the
-  definition of $\EV_h$, $\nu \in \EV_h$ if, and only if, there exists $\gamma'
-  \in [n]^{\underline{U}}$ such that $C_n[\gamma' \mathcal{A}](h) = 1$ and $\nu
-  = \gamma\restriction{\consp(h)}$.
+  We prove the result for $\alpha^{\gamma'}$. The $\beta^{\gamma'}$ case follows
+  similarly. We have from Lemma \ref{lem:support-determines-action} that it is
+  sufficient to show that for all $a \in \consp_g(i)$, $\alpha^{\gamma'}(i,
+  \vec{x}) = \Pi^{\gamma'}_{\vec{x}} (a) = \sigma_r (a)$. Let $a \in
+  \consp_g(i)$. We have that $\Pi^{\gamma'}_{\vec{x}} (a) =
+  (\Pi^{\gamma}_{\vec{z}})^{-1} \gamma (\vec{x} (a))$ and $\gamma (\vec{x}(a)) =
+  \gamma (\vec{x} (\vec{r}^{-1}(\vec{r}(a)))) = \gamma (\vec{x}_{\vec{r}}
+  (\sigma_r(a)))) = \Pi^{\gamma}_{\vec{z}}(\sigma_r(a))$. The final equality
+  follows from the fact that $r \cup c = \consp(g) \cup \consp(h)\in $, and thus
+  $\sigma_r(a) \in \consp(g)$ or $\sigma_r(a) \in \consp(h)$. If $\sigma_r(a)
+  \in \consp(g)$ then $\sigma_r(a) = a = \Pi^{\gamma}_{\vec{z}}(\sigma_r(a))$ as
+  both $\sigma_r$ and $\Pi^{\gamma}_{\vec{z}}$ are in $\spstab{g}$. If
+  $\sigma_r(a) \in \consp(g)$ then, since $\sigma_r(a) \in r$,
+  $\Pi^{\gamma}_{\vec{z}}(\sigma_r(a)) = \gamma(\vec{z}(\sigma_r(a))) =
+  \gamma(\vec{x}_{\vec{r}}(\sigma_r(a)))$. We thus have that
+  $\Pi^{\gamma'}_{\vec{x}}(a) =
+  (\Pi^{\gamma}_{\vec{z}})^{-1}\Pi^{\gamma}_{\vec{z}} (\sigma_r(a)) =
+  \sigma_r(a)$. The result follows.
 \end{proof}
 
 We combine the above lemmas in order to show that $\alpha^{\gamma}$ and
-$\beta^{\gamma}$ together defines a surjective homomorphism from the matrix $M$
-to $L^{\gamma}$.
+$\beta^{\gamma}$ together defines a surjective homomorphism from $M$ to
+$L^{\gamma}$.
 
 \begin{thm}
   Let $\gamma\in [n]^{\underline{U}}$ be such that $\eta \sim \gamma^{-1}$ and
@@ -439,37 +430,127 @@ to $L^{\gamma}$.
   equality follows from Lemma \ref{lem:alpha-ind-gamma}.
 \end{proof}
 
-We will now define a new matrix $M_{\equiv}$, formed by quotienting the row and
-column sets using the mutual equivalence relation. We will then show that
-$\alpha^{\gamma}$ and $\beta^{\gamma}$, lifted to act on equivalence classes,
-now define the required isomorphism.
+We have shown that, but for injectivety, $\alpha^{\gamma}$ and $\beta^{\gamma}$
+witnesses an isomorphism-equivalence between $M$ and $L^{\gamma}$. It remains to
+show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are also injective. However, it
+can be shown that $\alpha^{\gamma}(i, \vec{x}) = \alpha^{\gamma}(i, \vec{x}')$
+if, and only if, there exists $\pi \in \stab_g(i) \cap \spstab{g}$ such that
+$\vec{x} = \vec{x}'\sigmapi$ (see Lemma \ref{lem:functions-mutual-equivalence}).
+As such, $\alpha^{\gamma}$ and $\beta^{\gamma}$ are not in general injective and
+we define a new matrix $M_{\equiv}$ by quotienting $M$ by an appropriate
+equivalence relation. We also show that the liftings of $\alpha^{\gamma}$ and
+$\beta^{\gamma}$ to the equivalence classes of $\equiv$ witness an
+isomorphism-equivalence between $M_\equiv$ and $L^{\gamma}$. We now define the
+equivalence relation.
 
-Let $I_{\equiv} = \{(i, [\vec{x})]_{\equiv_i}) : (i, \vec{x}) \in I\}$ and
-$J_\equiv = \{(j, [\vec{y}]_{\equiv_j}) : (j, \vec{y})\}$. Let $M_{\equiv} :
+Recall that $\tau$ and $D$ denote the vocabulary and universe of $g$
+respectively. Let $s \in D$ and let $\vec{x}, \vec{x}' \in A_s$ and we say that
+$\vec{x}$ and $\vec{x}'$ are \emph{mutually stable} on $s$ if there exists $\pi
+\in \stab_g(s) \cap \spstab{g}$ such that $\vec{x} (\vec{\consp}_g(s)) =
+\vec{x}'\pi (\vec{\consp}_g(s))$. We also say that two permutations $\sigma,
+\sigma' \in \spstab{g}$ are \emph{mutually stable} on $s$ if there exists $\pi
+\in \stab_g(s) \cap \spstab{g}$ such that $\sigma (\vec{\consp}_g(s)) = \sigma'
+\pi (\vec{\consp}_g(s)) $. Note that mutual stability is an equivalence relation
+on $A_s$ (and $\spstab{g}$), and we denote the equivalence of two vectors
+$\vec{x}, \vec{x}' \in A_s$ by $\vec{x} \equiv_s \vec{x}'$ and the equivalence
+of two permutations $\sigma, \sigma' \in \spstab{g}$ by $\sigma \equiv_s
+sigma'$).
+
+% We define a similar equivalence relation $\stab_n{\consp_g(g)} \cap
+% \spstab{g}$
+
+% We now show that any permutation
+
+% \begin{lem}
+%   Let $s \in D$ and let $\sigma, \sigma' \in \spstab{g} \cap \stab_g(s))$. We
+%   have that $\sigma(s) = \sigma' (s)$ if, and only if, $\vec{x} \sigma
+%   \equiv_s \vec{x} \sigma'$ for all $\vec{x} \in A_s$.
+%   \label{lem:functions-mutual-equivalence}
+% \end{lem}
+% \begin{proof}
+%   Suppose $\sigma(s) = \sigma'(s)$. Then let $\pi = (\sigma')^{-1} \sigma$.
+%   Then clearly $\pi \in \stab_g(s) \cap \spstab{g} \subseteq
+%   \setstab(\consp_g{s}) \cap \spstab{g}$ and for all $\vec{x} \in A_s$,
+%   $\vec{x} \sigma = \vec{x} \sigma' \pi$.
+
+%   Suppose $\vec{x} \sigma \equiv_s \vec{x} \sigma'$ for all $\vec{x} \in A_s$.
+%   Thus there exists $\pi \in \spstab{g} \cap \setstab(\consp_g(i))$ such that
+%   $\vec{x} \sigma = \vec{x} \sigma' \pi$ for all $\vec{x} \in A_s$. It can be
+%   shown that $\pi = (\sigma')^{-1} \sigma$. From mutual stability $\pi \in
+%   \stab_g (s)$ and so $(\sigma')^{-1}\cdot \sigma (s) = \pi (s) = s$. The
+%   result follows.
+% \end{proof}
+
+% \begin{lem}
+%   Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Let
+%   $s \in D$ and let $\sigma, \sigma' \in \spstab{g} \cap
+%   \setstab(\consp_g(s))$. Then $\sigma(s) = \sigma' (s)$ if, and only if,
+%   $\vec{x} \sigma \equiv_s \vec{x} \sigma'$ for all $\vec{x} \in A_s$.
+%   \label{lem:functions-well-defined}
+% \end{lem}
+
+% \begin{proof}
+%   Suppose $\sigma (s) = \sigma'(s)$. Then $s = \sigma^{-1} \sigma' (s)$. So
+%   $\sigma^{-1}\sigma'$ (removed, to be included later)
+%   %   Suppose $\sigma(s) = \sigma'(s)$. Take $x := \sigma(s)$. So then
+%   %   $\gamma^{-1}(\sigma(s))$
+% \end{proof}
+
+We now define a new matrix $M_{\equiv}$ and show that $\alpha^{\gamma}$ and
+$\beta^{\gamma}$, lifted to act on equivalence classes, define the required
+isomorphism.
+
+Let $I_{\equiv} := \{(i, [\vec{x})]_{\equiv_i}) : (i, \vec{x}) \in I\}$ and
+$J_\equiv := \{(j, [\vec{y}]_{\equiv_j}) : (j, \vec{y})\}$. Let $M_{\equiv} :
 I_{\equiv} \times J_{\equiv} \rightarrow \{0,1\}$ be defined by $M_\equiv ((i,
-[\vec{x}]_\equiv), (j, [\vec{y}]_\equiv)) := M((i,\vec{x}), (j, \vec{y}))$.
+[\vec{x}]_\equiv), (j, [\vec{y}]_\equiv)) := M((i,\vec{x}), (j, \vec{y}))$, for
+$(i, [\vec{x}]_{\equiv}) \in I_\equiv$ and $(j, [\vec{y}]_{\equiv}) \in
+J_\equiv$.
 
 We show in Lemma \ref{lem:matrix-quot-well-defined} that this matrix is
 well-defined. We show in Lemma \ref{alpha-beta-mutal equivalence} that
 $\alpha^{\gamma}$ and $\beta^{\gamma}$ are constant on mutual equivalence
 classes, and as such may be lifted to act on equivalence classes. We combine
-these results to prove the existence of the required isomorphism.
+these results to prove the required isomorphism-equivalence.
+
+We first prove the claim that those permutations that agree on $s \in D$ are
+exactly those that are mutually stable on $s$.
 
 \begin{lem}
-  Let $X$ be a set on which the left group action of $\sym_n$ is defined, and
-  let $\sigma, \sigma' \in \stab(\consp(g))$. We have that $\sigma(s) = \sigma'
-  (s)$ if, and only if, $\sigma \equiv_s \sigma'$.
+  Let $s \in D$ and let $\sigma, \sigma' \in \stab(\consp(g))$. Then $\sigma(s)
+  = \sigma' (s)$ if, and only if, $\sigma \equiv_s \simga'$.
+  % there exists $\pi \in \stab_g(s) \cap \spstab{g}$ such that $\sigma
+  % (\vec{\consp}_g(i)) = \sigma' \pi (\vec{\consp}_g(i))$.
   \label{lem:functions-mutual-equivalence}
 \end{lem}
 \begin{proof}
-  Suppose $\sigma(s) = \sigma'(s)$. Then let $\pi = (\sigma')^{-1} \cdot
-  \sigma$. Then clearly $\pi \in \stab(s) \cap \spstab(g)$ and $\sigma = \sigma'
-  \pi$.
+  Suppose $\sigma(s) = \sigma'(s)$. Then $\pi := (\sigma')^{-1}\sigma \in
+  stab_g(s)$ and $\sigma = \sigma' \pi$.
 
-  Suppose $\sigma \equiv_s \sigma'$. Then let $\pi = (\sigma')^{-1} \cdot
-  \sigma$. From mutual stability $\pi \in \stab (s)$ and so $(\sigma')^{-1}\cdot
-  \sigma (s) = \pi (s) = s$. The result follows.
+  Suppose there exists $\pi \in \stab_g(s)$ such that $\sigma
+  (\vec{\consp}_g(i))= \sigma' \pi (\vec{\consp}_g(i))$. From Lemma
+  \ref{lem:support-determines-action} $\sigma (i) = \sigma' \pi (i)$, and so,
+  since $\pi \in \stab_g(s)$, $\sigma(i) = \sigma' \pi (i) = \sigma' (i)$.
 \end{proof}
+
+% \begin{lem}
+%   Let $X$ be a set on which the left group action of $\sym_n$ is defined, and
+%   let $\sigma, \sigma' \in \stab(\consp(g)) \stab_g(i)$. We have that
+%   $\sigma(s) = \sigma' (s)$ if, and only if, there exists $\sigma \equiv_s
+%   \sigma'$.
+%   \label{lem:functions-mutual-equivalence}
+% \end{lem}
+% \begin{proof}
+%   Suppose $\sigma(s) = \sigma'(s)$. Then let $\pi = (\sigma')^{-1} \sigma$.
+%   Then clearly $\pi \in \stab(s) \cap \spstab(g)$ and $\sigma = \sigma' \pi$.
+
+%   Suppose $\sigma \equiv_s \sigma'$. Then let $\pi = (\sigma')^{-1} \cdot
+%   \sigma$. From mutual stability $\pi \in \stab (s)$ and so
+%   $(\sigma')^{-1}\cdot \sigma (s) = \pi (s) = s$. The result follows.
+% \end{proof}
+
+The following lemma gives us that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are
+constant on classes of mutually stable assignments.
 
 \begin{lem}
   Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
@@ -480,15 +561,23 @@ these results to prove the existence of the required isomorphism.
   \label{lem:alpha-beta-mutal-equivalence}
 \end{lem}
 \begin{proof}
-  From mutual equivalence there exists $\sigma \in \stab(i)$ such that $\vec{x}'
-  = \vec{x} \cdot {\sigma}\restriction_{\consp(i)}$. Notice that
-  $\alpha^{\gamma}(i, \vec{x})$ stabilises $\consp(g)$. Then for $a \in
-  \consp(i)$, $\Pi^{\gamma}_{\vec{x}} (\sigma (a)) = \gamma (\vec{x}(\sigma
-  (a))) = \gamma (\vec{x}'(a)) = \Pi^{\gamma}_{\vec{x}'}(a)$. It follows from
-  Lemma \ref{lem:functions-mutual-equivalence} that $\alpha^{\gamma}(i,\vec{x})
-  = \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\gamma}_{\vec{x}'} = \alpha^{\gamma}(i,
+  From mutual equivalence there exists $\sigma \in \stab_g(i) \cap \spstab{g}$
+  such that $\vec{x}' = \vec{x} \sigma$. We have that $\alpha^{\gamma}(i,
+  \vec{x})$ stabilises $\consp(g)$. Also, for all $a \in \consp_g(i)$,
+  $\Pi^{\gamma}_{\vec{x}} (\sigma (a)) = \gamma (\vec{x}(\sigma (a))) = \gamma
+  (\vec{x}'(a)) = \Pi^{\gamma}_{\vec{x}'}(a)$. It follows from Lemma
+  \ref{lem:functions-mutual-equivalence} that $\alpha^{\gamma}(i,\vec{x}) =
+  \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\gamma}_{\vec{x}'}(i) = \alpha^{\gamma}(i,
   \vec{x}')$. The result follows similarly for $\beta$.
 \end{proof}
+
+We define the liftings of $\alpha^{\gamma}$ and $\beta^{\gamma}$ as follows. Let
+$\alpha^{\gamma}_{\equiv} : I_\equiv \rightarrow A$ and $\beta^{\gamma}_\equiv:
+J_\equiv \rightarrow B$ by $\alpha^{\gamma}_{\equiv}(i, [\vec{x}]) :=
+alpha^{\gamma} (i, \vec{x})$ and $\beta^{\gamma}_{\equiv}(j, [\vec{y}]) =
+\beta^{\gamma} (j, \vec{y})$, for all $(i, \vec{x}) \in I_{\equiv}$ and $(j,
+\vec{y}) \in J_\equiv$. Lemma \ref{lem:alpha-beta-mutal-equivalence} gives us
+that these liftings are well defined.
 
 % \begin{proof}
 %   From mutual equivalence there exists $\sigma_1 \in \stab(i) \cap \spstab{g}$
@@ -503,6 +592,8 @@ these results to prove the existence of the required isomorphism.
 %   \Pi^{\gamma}_{\vec{x}} (i) = \Pi^{\gamma}_{\vec{x}'}(i)$. The result follows
 %   similarly for $\beta$.
 % \end{proof}
+
+The following lemma gives us that$M_\equiv$ is well defined.
 
 \begin{lem}
   Let $((i, \vec{x}), (j, \vec{y})), ((i, \vec{x}'), (j, \vec{y}')) \in I \times
@@ -519,7 +610,7 @@ these results to prove the existence of the required isomorphism.
   The second equality follows from Lemma \ref{lem:alpha-beta-mutal-equivalence}.
 \end{proof}
 
-We now prove the existence of the required isomorphism.
+We now prove the required isomorphism-equivalence.
 
 \begin{thm}
   Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Then
@@ -530,40 +621,104 @@ We now prove the existence of the required isomorphism.
   Let $(i, [\vec{x}]) \in I_\equiv$ and $(j, [\vec{y}]) \in J_\equiv$. Then,
   from Lemmas \ref{lem:matrix-quot-well-defined} and
   \ref{lem:ML-equal-elements}, we have that $M_\equiv ((i, [\vec{x}]), (j,
-  [\vec{y}])) = M ((i, \vec{x}), (j, \vec{y}))= = L^{\gamma}(\alpha^{\gamma}(i,
+  [\vec{y}])) = M ((i, \vec{x}), (j, \vec{y})) = L^{\gamma}(\alpha^{\gamma}(i,
   \vec{x}), \beta^{\gamma}(j, \vec{y}))$.
 
   Moreover, from Lemma \ref{lem:alpha-beta-mutal-equivalence} we can lift
   $\alpha^\gamma$ to $I_\equiv$ and $\beta^{\gamma}$ to $J_\equiv$. It remains
-  to show that $\alpha^\gamma$ and $\beta^{\gamma}$, thought of as functions to
-  $I_\equiv$ and $J_\equiv$, are bijections. We prove the result for
-  $\alpha^{\gamma}$, with the proof for $\beta^\gamma$ following similarly.
+  to show that $\alpha^\gamma_{equiv}$ and $\beta^{\gamma}_{\equiv}$ are
+  bijections. We prove the result for $\alpha^{\gamma}_{\equiv}$, with the proof
+  for $\beta^\gamma_\equiv$ following similarly.
 
-  We first note that the lifting of $\alpha^{\gamma}$ to $I_\equiv$ is
-  surjective as, using Lemma \ref{lem:alpha-beta-surjective}, both the unlifted
-  function $\alpha^{\gamma}$ and the lifting function (i.e. the quotient map
-  from $I$ to $I_\equiv$) are surjective.
+  We first note that the lifting of $\alpha^{\gamma}_{\equiv}$ is surjective as
+  both $\alpha^{\gamma}$ (Lemma \ref{lem:alpha-beta-surjective}) and the lifting
+  function (i.e. the quotient map from $I$ to $I_\equiv$) are surjective.
 
-  Suppose $\alpha^{\gamma}((i, [\vec{x}])) = \alpha^{\gamma}((i', [\vec{x}']))$,
-  and so $\Pi^{\gamma}_{\vec{x}}(i) = \Pi^{\gamma}_{\vec{x}'}(i')$. But then $i$
-  and $i'$ are in the same orbit and thus, from the definition of $I$, $i = i'$.
-  Thus $\Pi^{\gamma}_{\vec{x}}(i) = \Pi^{\gamma}_{\vec{x}'}(i)$, and so from
-  Lemma \ref{lem:functions-mutual-equivalence} there exists $\sigma \in \stab(i)
-  \cap \spstab{g}$ such that for all $a \in \consp(i)$ we have that
+  Suppose $\alpha^{\gamma}_\equiv((i, [\vec{x}])) = \alpha^{\gamma}_\equiv((i',
+  [\vec{x}']))$, and so $\Pi^{\gamma}_{\vec{x}}(i) =
+  \Pi^{\gamma}_{\vec{x}'}(i')$. But then $i$ and $i'$ are in the same orbit and
+  thus, from the definition of $I_{\equiv}$ they are both the minimum element in
+  that orbit, and so $i = i'$. Thus $\Pi^{\gamma}_{\vec{x}}(i) =
+  \Pi^{\gamma}_{\vec{x}'}(i)$, and so from Lemma
+  \ref{lem:functions-mutual-equivalence} there exists $\sigma \in \stab_g(i)
+  \cap \spstab{g}$ such that for all $a \in \consp_g(i)$ we have that
   $\Pi^{\gamma}_{\vec{x}}(a) = \Pi^{\gamma}_{\vec{x}'} (\sigma (a))$. But then
   $\Pi^{\gamma}_{\vec{x}}(a) = \gamma (\vec{x}(a)) =
   \Pi^{\gamma}_{\vec{x}'}(\sigma (a)) = \gamma (\vec{x}' (\sigma (a))$ and,
   since $\gamma$ is a bijection, it follows that $\vec{x}(a) = \vec{x}' \sigma
-  (a)$. Thus $\vec{x} \equiv_i \vec{x}'$, and the lifting of $\alpha^{\gamma}$
-  to $I_{\equiv}$ is an injection. The result follows.
+  (a)$. Thus $\vec{x} \equiv_i \vec{x}'$, and so $[\vec{x}] = [\vec{x}']$. We
+  thus have that $\alpha^{\gamma}_\equiv$ and $\beta^{\gamma}_\equiv$ are
+  injections, and the result follows.
 \end{proof}
 
-Let $(i,\vec{x}), (i, \vec{x}') \in I$ be such that $\vec{x} \equiv \vec{x}'$.
-From Lemma \ref{lem:matrix-quot-well-defined} it follows that for all $(j,
-\vec{y}) \in J$, $M((i, \vec{x}), (j, \vec{y})) = M((i, \vec{x}'), (j,
-\vec{y}))$, and any two rows indexed by elements of the same equivalence class
-are equal. It follows that $\rank (M) = \rank (M_{\equiv}) = \rank
-(L^{\gamma})$.
+We show in the next lemma that, while $M$ is not in general
+isomorphism-equivalent to $L^\gamma$, $M$ can be shown to have the same rank as
+$L^{\gamma}$.
+
+\begin{lem}
+  Let $\gamma \in U^{\underline{n}}$ be such that $\gamma^{-1} \sim \eta$ and
+  let $p \in \nats$ be prime. Then $\rk_p (M) = \rk_p (M_\equiv) = \rk_p
+  (L^{\gamma})$.
+\end{lem}
+\begin{proof}
+  Let $f : \{0,1\}^{J_\equiv} \rightarrow \{0,1\}^{J}$ be defined such that for
+  all $\vec{b} \in {0,1}^{J_\equiv}$, $f(\vec{b}) (j, \vec{y}) := \vec{b}(j,
+  [\vec{y}])$ for all $(j, \vec{y}) \in J$. We have that $f$ is injective as,
+  for $\vec{b}_1, \vec{b}_2 \in \{0,1\}^{J_\equiv}$, if $f(\vec{b}_1) =
+  f(\vec{b}_2)$ then $\vec{b}_1 (j, [\vec{y}]) = f(\vec{b}_1)(j, \vec{y}) =
+  f(\vec{b}_2)(j, \vec{y}) = \vec{b}_2(j, [\vec{y}])$, for all $(j, \vec{y}) \in
+  J$. Also $f$ is linear as, for $\lambda \in \ff_p$ and $\vec{b}_1, \vec{b}_2
+  \in \{0,1\}^{J_\equiv}$, $f(\lambda \vec{b}_1) (j, \vec{y}) = (\lambda
+  \vec{b}_1)(j, [\vec{y}]) = \lambda (\vec{b}_1 (j, [\vec{y}])) = \lambda (f(
+  \vec{b}_1) (j, \vec{y}))$, and $ f(\vec{b}_1 + \vec{b}_2) (j, \vec{y}) =
+  (\vec{b}_1 + \vec{b}_2) (j, [\vec{y}]) = \vec{b}_1(j, [\vec{y}]) +
+  \vec{b}_2(j, [\vec{y}]) = f(\vec{b}_1)(j, \vec{y}) + f(\vec{b}_2)(j,
+  \vec{y})$, for all $(j, \vec{y}) \in J$.
+
+  From the construction of $M_\equiv$ that $f$ maps rows vectors in $M_\equiv$
+  to row vectors in $M$. Let $\vec{b}'$ be a row vector in $M$. Then there
+  exists $\vec{b} \in \{0,1\}^{J_\equiv}$ defined by $\vec{b} (j, [\vec{y}]) :=
+  \vec{b}' (j, \vec{y})$ (Lemma \ref{lem:matrix-quot-well-defined} gives us that
+  this function is well defined). It follows that $f(\vec{b}) = \vec{b}'$, and
+  so $f$ is a surjective mapping from the row vectors of $M_\equiv$ to the row
+  vectors of $M$.
+
+  It follows from the fact that $f$ is an injective linear map and fact that $f$
+  maps rows in $M_\equiv$ to rows in $M$ that if $B$ is a maximal independent
+  set of row vectors in $M_\equiv$ then $f(B)$ is an independent set of row
+  vectors in $M$. Moreover, suppose $f(B)$ is not a maximal independent set of
+  row vectors in $M$, then there exists a row vector $\vec{b}'$ in $M$ such that
+  $\vec{b}' \notin f(B)$ and $f(B) \cup \{b'\}$ is independent. But since $f$
+  maps rows in $M_\equiv$ to rows in $M$ surjectively, it follows that $B \cup
+  \{f^{-1}(b') \}$ must be an independent set of rows in $M_\equiv$. But since
+  $B$ is maximal, it follows that $f^{-1}(b') \in B$ and so $b' \in f(B)$, a
+  contradiction. We thus have that $f(B)$ is a maximal independent set of rows
+  in $M$ and, since $f$ is injective, we have that $\rk_p (M) = \vert f(B) \vert
+  = \vert B \vert = \rk_p (M_\equiv) = \rk_p(L^{\gamma})$. (The final equality
+  follows from Theorem \ref{thm:LM-equivalence}).
+\end{proof}
+
+
+% Let $(i,\vec{x}), (i, \vec{x}') \in I$ be such that $\vec{x} \equiv \vec{x}'$.
+% Let $B_\equiv \subseteq \{0,1\}^{J_{\equiv}}$ be a maximal independent set of
+% row vectors in $M_\equiv$. Let $f: B_\equiv \rightarrow \{0,1\}^{J}$ be such
+% that, for any $\vec{b}_\equiv \in B_\equiv$, $f(\vec{b}_\equiv) = \vec{b}$ if,
+% and only if, $\vec{b}(j, \vec{y}) = \vec{b}_\equiv (j, [\vec{y}])$ for all
+% $(j, \vec{y}) \in J$. Let $B := \image (f)$. Then from the definition of
+% $M_\equiv$ we have that $B$ is a set of row vectors in $M$.
+
+% From Lemma \ref{lem:matrix-quot-well-defined}, $f$ is injective
+
+% Suppose $B$ is not independent. Then there exists $\vec{b}_1, \ldots,
+% \vec{b}_p$
+
+% From Lemma \ref{lem:matrix-quot-well-defined} it follows that for all $(j,
+% \vec{y}) \in J$, $M((i, \vec{x}), (j, \vec{y})) = M((i, \vec{x}'), (j,
+% \vec{y}))$. In other words any two rows indexed by vectors in the same
+% equivalence class are equal. It follows that the set of rows vectors in $M$
+% equals the set of rows vectors in $M_\equiv$, and so (from Theorem
+% \ref{thm:LM-equivalence}) $\rank (M) = \rank (M_{\equiv}) = \rank
+% (L^{\gamma})$.
 
 % \begin{lem}
 %   Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Then
@@ -594,12 +749,16 @@ are equal. It follows that $\rank (M) = \rank (M_{\equiv}) = \rank
 %   \begin{align*}
 %     M((i, \vec{x}), (j, \vec{y}))
 %     &= (\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}}) \in \EV_h \\
-%     &= C_n[\gamma \mathcal{A}] (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert \vec{y}_{\vec{c}})} (h)) \\
-%     &= C_n[\gamma' \mathcal{A}] (h) \\
-%     &= C_n[\gamma' \mathcal{A}](L(\row(h), \column (h)))\\
-%     &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y})))\\
-%     &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))y)\\
-%     &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))
+%     &= C_n[\gamma \mathcal{A}] (\Pi^{\gamma}_{(\vec{x}_{\vec{r}} \vert
+%       %     \vec{y}_{\vec{c}})} (h)) \\
+%       %     &= C_n[\gamma' \mathcal{A}] (h) \\
+%       %     &= C_n[\gamma' \mathcal{A}](L(\row(h), \column (h)))\\
+%       %     &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}),
+%       %     \beta^{\gamma'}(j, \vec{y})))\\
+%       %     &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}),
+%       %     \beta^{\gamma}(j, \vec{y}))y)\\
+%       %     &= L^{\gamma}(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j,
+%       %     \vec{y}))
 %   \end{align*}
 %   The second equality follows from Lemma \ref{lem:translate_EV_circuits}. The
 %   fifth equality follows from Lemma \ref{lem:defining_h_from_IJ}. The sixth
@@ -634,11 +793,12 @@ are equal. It follows that $\rank (M) = \rank (M_{\equiv}) = \rank
 %   can show that $\column(h) = \beta^{\gamma'}(j, \vec{y})$. It follows that $h
 %   = L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y}))$, and so
 %   \begin{align*}
-%     C_n[\gamma \mathcal{A}](\Pi^{\gamma}_{\vec{x}
-%     \vert \vec{y}} (h))
+%     C_n[\gamma \mathcal{A}](\Pi^{\gamma}_{\vec{x} \vert \vec{y}} (h))
 %     &= C_n[\gamma' \mathcal{A}](h)\\
-%     &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}), \beta^{\gamma'}(j, \vec{y})))\\
-%     &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}), \beta^{\gamma}(j, \vec{y}))).
+%     &= C_n[\gamma' \mathcal{A}](L(\alpha^{\gamma'}(i, \vec{x}),
+%       %     \beta^{\gamma'}(j, \vec{y})))\\
+%       %     &= C_n[\gamma \mathcal{A}](L(\alpha^{\gamma}(i, \vec{x}),
+%     %     \beta^{\gamma}(j, \vec{y}))).
 %   \end{align*}
 %   The final equality follows from Lemma \ref{lem:alpha_ind_gamma}.
 % \end{proof}
@@ -755,43 +915,84 @@ are equal. It follows that $\rank (M) = \rank (M_{\equiv}) = \rank
 
 \subsection{Translating to Formulas of FPR}
 \label{sec:translating-formulas-to-FPR}
-Let $\mathcal{C}:= (C_n)_{n \in \mathbb{N}}$ be a $P$-uniform family of
-symmetric rank circuits. In this section we define a formula $Q$ in $\FPR$ such
-that for any $\tau$-structure $\mathcal{A}$ over the universe $U$ with $\vert U
-\vert = n$, the $q$-ary query defined by $C_n$ on input $\mathcal{A}$ is defined
-by $Q$ when interpreted in $\mathcal{A}$.
+Let $\mathcal{C}:= (C_n)_{n \in \nats}$ be a $P$-uniform family of transparent
+symmetric $(\RB, \rho)$-circuits. In this section we define a formula $Q$ in
+$\FPR$ such that for any $\rho$-structure $\mathcal{A}$ over the universe $U$
+with $\vert U \vert = n$, the $q$-ary query defined by $C_n$ on input
+$\mathcal{A}$ is defined by $Q$ when interpreted in $\mathcal{A}$.
 
-Since $\mathcal{C}$ is P-uniform, it follows from the Immerman-Vardi theorem and
-Lemma \ref{} that there is an $\FP(\leq)$ interpretation defining a rigid
-symmetric circuit with bijective labeling equivalent to $C_n$ when interpreted
-in the structure $\langle n, \leq \rangle$. We abuse notation and also call this
-circuit $C_n$. Let this interpretation be denoted by $\Phi := (\phi_G,
-\phi_\omega, (\phi_s)_{ s \in \mathbb{B} \cup \tau \cup \{0,1\}},
-(\phi_{\Lambda_R})_{R \in \tau}, \phi_L)$, where $\mathbb{B}$ consists of the
-symbols $\land$, $\lor$, $\maj$, $\rank$ and $\nand$. Let $t$ be the artity of
-this interpretation. It follows that the domain of this interpretation is a
-subset of $[n]^t$. We identify the tuples in $[n]^t$ with elements of the
-initial segment of the natural numbers $[n^t]$. In this way $\phi_g$ has one
-free number variable and defines the set of gates $G \subseteq [n^t]$ (rather
-than $G$ as a subset of $[n]^t$). Similarly we have that $\phi_s (\mu)$ holds
-if, and only if, $\mu$ is assigned to a gate of type $s$, and $\phi_L (\mu,
-\vec{\kappa}, \nu)$ holds if, and only if, $L$ at the gate $\mu$ maps the tuple
-$\vec{\kappa}$ to the gate $\nu$. Moreover, it follows from the Immerman-Vardi
-theorem that there exists a formula $\FA{rank-type}(\mu, \kappa , \pi)$ such
-that, for a structure $\mathcal{A}$, $\mathcal{A} \models \FA{rank-type}[g, r,
-p]$ if, and only if, $g$ is a rank gate with prime $p$ and threshold $r$. We
-note that the bound on the domain is definable as a closed number term $\FA{m}
-:= (x\# (x = x))*t$. We have from the support theorem that there are constants
-$n_0$ and $k$ such that for all $n \geq n_0$ the support of each gate has size
-at most $k$. Note that for each $n \leq n_0$, $C_n$ can be evaluated by an
-$\FPC$ formula with simply quantifies over all of the possible bijections from
-the universe of $\mathcal{A}$ to $[n]$ (since there are at most constantly many
-such bijections). As such we suppose $n \geq n_0$ in the rest of this
-subsection.
+We note that the Immerman-Vardi theorem~\cite{} give us that a polynomial time
+algorithms (of a particular form) can be converted into equivalent $\FP(\leq)$
+interpretations. AS such, from $P$-uniformity of $\mathcal{C}$ and Lemma \ref{},
+there is a $\FP(\leq)$ interpretation $\Phi'$ that defines $n$ a symmetric
+rank-circuit with unique labels equivalent to $C_n$ when interpreted in $\langle
+[n], \leq \rangle$. We abuse notation and refer to this equivalent circuit as
+$C_n$.
 
-We will recursively construct $\EV_g$ for each gate $g$ in the circuit. While we
-have that the canonical support of $g$ has size at most $k$, it may not be equal
-to $k$. As such, if $\vert \consp(g) \vert = \ell$, we define
+It is easy to see that we can define $\Phi$ in $\FPC$ from $\Phi'$ such that
+$\Phi$ defines $C_n$ using a sequence of number-terms rather than formulas of
+$\FP(\leq)$. To see this, let $t$ be the width of $\Phi'$ then the domain of
+$\Phi'$ is a subset of $[n]^t$. Let $\phi_f$ be an number-term that defines a
+bijection from $[n^t]$ to $[n]^t$ for each $n$. Then for each $\phi'
+(\vec{\nu}_1, \ldots, \vec{\nu}_{p}) \in \Phi$, where $\vec{\nu}_i$ is an
+$t$-length vector of variables, we can define a number-term $\phi''$ from
+$\phi'$ by settings all variables to number-sort variables and bounding each
+quantifier by the size of the universe of the input structure such that for
+$\vec{a}_1, \ldots, \vec{a}_p \in [n]^t$, $\langle [n], \leq \rangle \models
+\phi' [\vec{a}_1, \ldots, \vec{a}_p]$ if, and only if, $\mathcal{A} \models
+\phi'' [\vec{a}_1, \ldots, \vec{a}_p]$. We then let $\phi(\nu_1, \ldots, \nu_p)
+:= \phi''(\phi_f (\nu_1), \ldots, \phi_f(\nu_p))$, and let $\Phi$ be the
+sequence of formulas $\phi$ defined from $\phi'$ in $\Phi'$.
+
+We thus have an interpretation $\Phi := (\phi_G, \phi_\Omega, (\phi_s)_{ s \in
+  \RB \cup \rho \cup \{0,1\}}, (\phi_{\Lambda_R})_{R \in \rho}, \phi_L)$ in
+$\FPC$ defining the circuit $C_n$ when interpreted in $\mathcal{A}$. The
+formulas in this interpretation are defined as follows.
+
+\begin{itemize}
+\item The number term $\phi_G(\mu)$, when interpreted in $\mathcal{A}$, defines
+  a subset of $[n^t]$, which we identify with $G$ (the set of gates in the
+  circuit), and hence write $G \subseteq [n^t]$.
+\item The number term $\phi_{\Omega}(\nu_1, \ldots , \nu_q, \mu)$ is defined
+  such that $\mathcal{A} \models \phi_\Omega[a_1, \ldots, a_q, g]$ if, and only
+  if, $(a_1, \ldots, a_q) \in [n]^q$ and $\Omega(a_1, \ldots, a_q) = g$.
+\item The number term $\phi_s (\mu)$ is defined for $s \in \RB \uplus \rho
+  \uplus \{0,1\}$ such that $\mathcal{A} \models \phi_s [g]$ if, and only if,
+  $\Sigma$ maps $g$ to assigned to the symbol $s$.
+
+\item For $R \in \rho$ of arity $r$ the number term $\phi_{\Lambda_R}(\nu_1,
+  \ldots, \nu_r, \mu)$ is defined such that $\mathcal{A} \models
+  \phi_{\Lambda_R} [a_1, \ldots, a_r, g]$ if, and only if, $(a_1, \ldots,
+  a_r)\in [n]^r$ and $g$ is a relational gate such that $\Sigma (g) = R$ and
+  $\Lambda_R (g) = (a_1, \ldots, a_r)$.
+\item It can be shown that there is a polynomial time algorithm that takes in a
+  number $n$, gate $g$ in $C_n$ and outputs the universe and vocabulary of $g$.
+  It can also be shown that there exists a polynomial time algorithm that takes
+  in a number $n$ [n]^r$ such that
+
+  and $\phi_L (\mu, \kappa, \nu)$ holds if, and only if, $\mu$ and $\nu$ are
+  assigned to gates such that $L$ at the gate assigned to $\mu$ maps the number
+  assigned to $\kappa$ to the gate assigned to $\nu$ (i.e. if $g$ is assigned to
+  $\mu$)
+
+  Since there is an obvious polynomial-time function that takes in an $n \in
+  C_n$ and a gate $g$ in $C_n$ and outputs the characteristic and threshold of a
+  rank gate, we have from the Immerman-Verdi theorem that there exists a formula
+  $\FA{rank-type}(\mu, \kappa , \pi)$ such that, for a structure $\mathcal{A}$,
+  $\mathcal{A} \models \FA{rank-type}[g, r, p]$ if, and only if, $g$ is a rank
+  gate with characteristic $p$ and threshold $r$. We note that the bound on the
+  domain is definable as a closed number term $\FA{m} := (x\# (x = x))*t$.
+
+  We have from the Corollary \ref{} that there are constants $n_0$ and $k$ such
+  that for all $n \geq n_0$ the support of each gate has size at most $k$. Note
+  that for each $n \leq n_0$, $C_n$ can be evaluated by an $\FPC$ formula with
+  simply quantifies over all of the possible bijections from the universe of
+  $\mathcal{A}$ to $[n]$ (since there are at most constantly many such
+  bijections). As such we suppose $n \geq n_0$ in the rest of this subsection.
+
+  We will recursively construct $\EV_g$ for each gate $g$ in the circuit. While
+  we have that the canonical support of $g$ has size at most $k$, it may not be
+  equal to $k$. As such, if $\vert \consp(g) \vert = \ell$, we define
 
 \begin{align*}
   \overline{\EV}_g = \{ (a_1, \ldots , a_k) \in [n]^k : (a_1 , \ldots , a_\ell ) \in \EV_g \text{ and } i \neq j \implies a_i \neq a_j \}.
