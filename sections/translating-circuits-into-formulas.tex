@@ -223,7 +223,7 @@ following lemma is used to make this selection.
 	\vec{y}(w') = \vec{y}(w)$. The result follows.
 \end{proof}
 
-From Lemma \ref{lem:permutation-row-column} we have for any $(i, \vec{x}) \in I$
+From Lemma~\ref{lem:permutation-row-column} we have for any $(i, \vec{x}) \in I$
 and $(j, \vec{y}) \in J$, corresponding vectors and permutations $\vec{r}$,
 $\vec{c}$, $\sigma_r$ and $\sigma_c$. Let $h := L(g)(\sigma_r(i), \sigma_c
 (j))$. Let $\vec{b}$ for $(i, \vec{x})$ and $(j, \vec{y})$ be the restriction of
@@ -249,7 +249,7 @@ Let $X$ be a set on which the left action of $\sym_n$ is defined, and let $x \in
 X$. Let $f \in U^{\underline{\consp(x)}}$ and $\gamma\in [n]^{\underline{U}}$,
 then we let $\Pi^{\gamma}_{f} \in \spstab{g}$ be any permutation in $\sym_n$
 such that $\Pi^{\gamma}_f (a) = \gamma (f(a))$ for all $a \in \consp(x)$. Note
-that from Lemma~\ref{lem:support_determine_action}, $\Pi^{\gamma}_f(x)$ is
+that from Lemma~\ref{lem:support-determine-action}, $\Pi^{\gamma}_f(x)$ is
 well-defined independently of the particular choice of permutation.
 
 Let $\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
@@ -1031,12 +1031,7 @@ element of an orbit
 % \FA{agree}_s[\vec{r}, \vec{c}, \vec{a}, \vec{b}]$ if, and only if,
 % $\vec{a}_{\vec{r}} \sim \vec{b}_{\vec{c}}$.
 
-From Anderson and Dawar~\cite{AndersonD17} there is an $\FPC$ formula
-$\FA{supp}$ such that $\mathcal{A} \models \FA{supp} [g, u]$ if, and only if,
-$\mathcal{A} \models \phi_G [g]$ and $u$ is in $\consp(g)$. They use this
-formula to inductively define a set of formula $\FA{supp}_i$ for each $i \in
-\nats$ such that $\mathcal{A} \models \FA{supp}_i[g, u]$ if, and only if, $u$ is
-the $i$th element of $\consp(g)$.
+From Anderson and Dawar~\cite{AndersonD17} there is an $\FPC$ formula $\FA{supp}$ such that $\mathcal{A} \models \FA{supp} [g, u]$ if, and only if, $\mathcal{A} \models \phi_G [g]$ and $u$ is in $\consp(g)$. Anderson and Dawar~\cite{AndersonD17} use this formula to inductively define a set of formulas $\FA{supp}_i$ for each $i \in \nats$ such that $\mathcal{A} \models \FA{supp}_i[g, u]$ if, and only if, $u$ is the $i$th element of $\consp(g)$.
 
 Similarly, we can define $\FA{supp}^r$ such that $\mathcal{A} \models
 \FA{supp}^r[g, a, u]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land
@@ -1051,14 +1046,9 @@ From Anderson and Dawar~\cite{AndersonD17} we have an $\FPC$ formula $\FA{agree}
 
 A similar argument allows us to define $\FA{agree}_L (\mu, \delta , \vec{x}, \vec{z})$ (where $\vec{z}$ is a tuple of size $2k$) such that $\mathcal{A} \models \FA{agree}_L [g, i, \vec{a}, \vec{r}]$ if, and only if, $\vec{a}_{\vec{\consp}(g)}$ and $\vec{r}_{\vec{\consp}_g(i)}$ are compatible.
 
-It can be shown that given a number $n$, a gate $g$ in $C_n$ and two pairs $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ the function $\vec{c}$ in Lemma~\ref{} can be computed in time polynomial in $n$. Thus, from the Immerman-Vardi Theorem, it can be defined by a number term. Thus we assert that there exists an $\FPC$ formula $\FA{move} (\mu, \delta, \epsilon, \vec{x}, \vec{y}, \vec{z},
-\vec{w})$ (where $\vec{y}$ and $\vec{z}$ are $2k$-tuples) such that $\mathcal{A} \models \FA{move} [g, i, j, \vec{a}, \vec{b}, \vec{d}]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{row}_g[g,i] \land \FA{col}[g, j]$ and $\mathcal{A} \models \FA{agree}_L [g, i, \vec{a}, \vec{b}] \land \FA{agree}_L [g, j, \vec{a}, \vec{d}]$ and $\vec{d}_{\vec{\consp}_g(j)} = \vec{c}$, where $\vec{c}$ is the vector given in Lemma~\ref{} defined from the pairs $(i, \vec{a}_{\vec{\consp_g(i)}})$ and $(j, \vec{b}_{\vec{\consp}_g(j)})$.
+It can be shown that given a number $n$, a gate $g$ in $C_n$ and two pairs $(i, \vec{x}) \in I$ and $(j, \vec{y}) \in J$ the function $\vec{c}$ in Lemma~\ref{lem:permutation-row-column} can be computed in time polynomial in $n$. Thus, from the Immerman-Vardi Theorem, it can be defined by a number term. Thus we assert that there exists an $\FPC$ formula $\FA{move} (\mu, \delta, \epsilon, \vec{x}, \vec{y}, \vec{z}, \vec{w})$ (where $\vec{y}$ and $\vec{z}$ are $2k$-tuples) such that $\mathcal{A} \models \FA{move} [g, i, j, \vec{a}, \vec{b}, \vec{d}]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{row}_g[g,i] \land \FA{col}[g, j]$ and $\mathcal{A} \models \FA{agree}_L [g, i, \vec{a}, \vec{b}] \land \FA{agree}_L [g, j, \vec{a}, \vec{d}]$ and $\vec{d}_{\vec{\consp}_g(j)} = \vec{c}$, where $\vec{c}$ is the vector given in Lemma~\ref{lem:permutation-row-column} defined from the pairs $(i, \vec{a}_{\vec{\consp_g(i)}})$ and $(j, \vec{b}_{\vec{\consp}_g(j)})$.
 
-From Lemma \ref{} and invoking the Immerman-Vardi theorem, there is an $\FPC$
-formula $\FA{map}^c$ such that $\mathcal{A} \models \FA{map}^c[g, j, j',
-\vec{c}]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{col}[g, j]
-\land \FA{col}[g, j']$ and such that for all $\sigma \in \sym_n$ if $\sigma
-(\vec{\consp}_g(j)) = \vec{c}$ then $\sigma (j) = j'$.
+From Lemma \ref{lem:permutation-row-column} and invoking the Immerman-Vardi theorem, there is an $\FPC$ formula $\FA{map}$ such that $\mathcal{A} \models FA{map}[g, j, j', \vec{c}]$ if, and only if, $\mathcal{A} \models \phi_G [g] \land \FA{col}[g, j] \land \FA{col}[g, j']$ and such that there exists $\sigma \in \spstab{g}$ such that $\sigma (\vec{\consp}_g(j)) = \vec{c}$ then $\sigma (j) = j'$. 
 				
 % Similarly we can define $\FA{agree}_1 (\mu, \delta , \vec{x}, \vec{y})$ such
 % that $\mathcal{A}^leq \models \FA{agree}_1 [g, i, \vec{a}, \vec{b}]$ if, and
