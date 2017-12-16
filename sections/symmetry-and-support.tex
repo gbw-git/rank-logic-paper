@@ -1,5 +1,5 @@
+% !TEX root = ../paper.tex
 \documentclass[../paper.tex]{subfiles}
-
 \begin{document}
 In order to analyse families of symmetric circuits we need to develop some
 theory for analysing symmetries. In this section we define the terms needed
@@ -46,15 +46,15 @@ They use the $\mathcal{E}$ operation to show that for any permutation group $G
 this partition the \emph{canonical supporting partition}, and denote it by $\SP
 (G)$. This canonical supporting partition, along with the above observation
 about supports, allows us to construct for each group a canonical support.
-Anderson and Dawar \ref{AndersonD17} prove the following result.
+Anderson and Dawar~\ref{AndersonD17} prove the following result.
 
 \begin{prop}
+  \label{prop:combining-supporting-patitions}
   Let $G \leq \sym_n$ be a group and let $\mathcal{P}$ and $\mathcal{P}'$ be
   supporting partitions of $G$. Then $\mathcal{P} \preceq
   \mathcal{E}(\mathcal{P}, \mathcal{P}')$, $ \mathcal{P}' \preceq
   \mathcal{E}(\mathcal{P}, \mathcal{P}')$ and $\mathcal{E}(\mathcal{P},
   \mathcal{P}')$ is a supporting partition of $G$.
-  \label{prop:combining-supporting-patitions}
 \end{prop}
 
 \begin{definition}
@@ -259,7 +259,7 @@ if the index of a group $G \leq \sym_n$ is small then $\SP(G)$ either has very
 few or very many parts. The second lemma gives us that for $G \leq \sym_n$,
 $\SP(G)$ has very few parts then it must have a single very large part. The
 formal statements of these two results have been reproduced here as
-Lemma~\ref{big-or-small} and Lemma~\ref{lem:small-means-support}. These two
+Lemma~\ref{lem:big-or-small} and Lemma~\ref{lem:small-means-support}. These two
 results allow us to conclude that a gate in a symmetric circuit has a small
 canonical support support if it has a canonical supporting partition with very
 few parts. We thus argue by structural induction on the circuit that no gate can
@@ -610,7 +610,7 @@ indeed give the required lower bound.
 % \end{proof}
 
 \begin{lem}
-  \label{lem:useful-independant-set}
+\label{lem:useful-independant-set}
   Let $C$ be a circuit of order $n$ and let $g$ be a gate in that circuit. If
   $S$ is a useful and independent set at $g$ then $[\sym_n : \stab_n(g)] \geq
   2^{\vert S \vert}$.
@@ -780,11 +780,11 @@ constant for polynomial-size circuits).
   internal gate with $\vert \SP(g) \vert > \frac{n}{2}$. Let $k' := \lceil
   \frac{8 \log s}{\epsilon \log n} \rceil$. From the assumptions on $s$, $ n$
   and $\epsilon$ we have that $k' \leq \frac{1}{4}n^{1-\epsilon} < \frac{n}{2}$.
-  We note that Lemma \ref{lem:big-or-small} implies that $n - \vert \SP(g) \vert
+  We note that Lemma~\ref{lem:big-or-small} implies that $n - \vert \SP(g) \vert
   \leq k'$.
   
   We now construct a sufficiently large useful and independent set of triples
-  which, using Lemma \ref{lem:useful-independant-set}, allows us to place a
+  which, using Lemma~\ref{lem:useful-independant-set}, allows us to place a
   lower bound on the orbit size of $g$. Divide $[n]$ into $\lfloor \frac{n}{k' +
     2} \rfloor$ disjoint sets $S_i$ of size $k' + 2$ and ignore the elements
   left over. It follows that for each $i$ there is a permutation $\sigma_i$
@@ -797,7 +797,7 @@ constant for polynomial-size circuits).
 
   Since $g$ is moved by each $\sigma_i$, and $C$ has unique labels, it follows
   that $\sigma_i$ does not act like an automorphism at $g$. Thus, from Lemma
-  \ref{lem:isostab-compatible}, and the fact that the circuit has unique labels,
+~\ref{lem:isostab-compatible}, and the fact that the circuit has unique labels,
   there exists $(h_i, h_i') \in H_g$ such that $(h_i, h_i')$ is not consistent
   with $sigma_i$, and so the triple $(\sigma_i, h_i, h_i')$ is useful.
 
@@ -837,10 +837,9 @@ constant for polynomial-size circuits).
   Take $S = \{(\sigma_i, h_i, h_i') : S_i \in I \}$. Then from the above
   argument we have that $S$ is useful and independent.
   
-  Moreover, from Lemma \ref{lem:useful-independant-set}, we have that $s \geq
+  Moreover, from Lemma~\ref{lem:useful-independant-set}, we have that $s \geq
   \vert \orb(g) \vert \geq 2^{\vert S \vert} \geq 2^{\frac{n}{(16k')^2}}$ then
-  $n^{1-\epsilon} \geq \log s \geq n \cdot (\frac{128}{\epsilon}\frac{\log
-    s}{\log n})^{-2} > n \cdot (n^{1-\epsilon})^{-2} = n^{2\epsilon -1} \geq
+  $n^{1-\epsilon} \geq \log s \geq n \cdot (\frac{128}{\epsilon}\frac{\log s}{\log n})^{-2} > n \cdot (n^{1-\epsilon})^{-2} = n^{2\epsilon -1} \geq
   n^{1-\epsilon}$. This is a contradiction, and the result follows.
 \end{proof}
  
@@ -910,12 +909,12 @@ We may apply Lemma \ref{lem:row-column-supports} in order to generalise
 Corollary \ref{cor:constant-size-support}.
 
 \begin{cor}
+  \label{cor:constant-size-support-for-everything}
   Let $\mathcal{C} := (C_n)_{n \in \nats}$ be a polynomial-size family of
   symmetric circuits with unique labels and let $n_0$ be the constant from the
   Support Theorem. Then there exists $k$ such that for all $n > n_0$, $g$ a gate
   in $C_n$, and $a$ in the universe of $g$, $\vert \consp_g(a) \vert \leq 2*
   \SP(C) \leq k$.
-  \label{col:constant-size-support-for-everything}
 \end{cor}
 
 

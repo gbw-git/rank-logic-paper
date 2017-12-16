@@ -853,7 +853,7 @@ transparent is in $\PT$.
   We note that in every iteration of the loop we have that every non-symmetric
   gate in $G^{\leq p}$ has unique labels. Thus, from Proposition
   \ref{prop:unique-labels-syntactic-equiv}, we may compute the syntactic
-  equvilence relation on this set of gates efficiently. Thus it is easy to see
+  equivalence relation on this set of gates efficiently. Thus it is easy to see
   that the above algorithm can be implemented so as to run in polynomial time.
 \end{proof}
 
@@ -883,6 +883,7 @@ technique used here is analogous to the one used by Anderson and
 Dawar~\cite{AndersonD17}.
 
 \begin{lem}
+  If $G \subseteq \sym_n$
   Let $C_n$ be a $(\mathbb{B}, \tau)$-circuit with unique labels of size $n$ and
   $\sigma \in \sym_n$. There is an algorithm takes as input a circuit $C_n$ and
   $\sigma \in \sym_n$ and outputs for each gate $g$ its image under the unique
@@ -922,61 +923,80 @@ Dawar~\cite{AndersonD17}.
   automorphism if it exists.
 \end{proof}
 
+% \begin{lem}
+%   Let $C_n$ be a $(\mathbb{B}, \tau)$-circuit with unique labels of size $n$ and
+%   $\sigma \in \sym_n$. There is an algorithm takes as input a circuit $C_n$ and
+%   $\sigma \in \sym_n$ and outputs for each gate $g$ its image under the unique
+%   automorphism extending $\sigma$ (if it exists). This algorithm runs in time
+%   polynomial in the combined size of the input circuit and the encoding of the
+%   permutation.
+%   \label{lem:compute-automorphisms}
+% \end{lem}
+% \begin{proof}
+%   Suppose $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$. We build up the
+%   mapping $\pi$ extending $\sigma$ recursively. If at some point in the
+%   recursive construction we arrive at a point where no mapping for $g$ can be
+%   found we halt at that point and return that no automorphism exists.
+
+%   Let $h$ be any gate in the circuit. Suppose $h$ is an input gate. If $h$ is a
+%   constant gate then let $\pi (h) = h'$. If $h$ is a relational gate such that
+%   $R := \Sigma(h)$ and check if there exists $h'$ such that $\Sigma (h') = R$
+%   and $\sigma \Lambda_R(h) = \Lambda_R(h')$ and, if $h$ is an output gate then
+%   $h'$ is an output gate such that $\sigma Omega^{-1}(h) = \Omega^{-1}(h')$. If
+%   such a $h'$ does not exist halt and output that there is no automorphism
+%   extending $\sigma$. We have from Lemma \ref{} that if such an $h'$ exists it
+%   must be unique, and we set $\pi(h) = h'$.
+
+%   Let $h$ be an internal gate in the circuit and assume we have defined $\pi
+%   (g)$ for every gate $g$ of height less than $h$. Let $h'$ be a gate in the
+%   circuit such that $\Sigma(h) = \Sigma (h')$, $\pi L(h)$ is isomorphism
+%   equivalent to $L(h')$ and, if $h$ is an output gate then $h'$ is an output
+%   gate such that $\sigma \Omega^{-1}(h) = \Omega^{-1}(h')$. Since $C_n$ has
+%   unique labels we have that $\pi L(h)$ is isomorphism equivalent to $L(h')$ if,
+%   and only if, $L(h')^{-1}\pi L(h)$ acts like an isomorphism. This can be
+%   determined easily. If no such $h'$ exists halt and output that there is no
+%   automorphism extending $\sigma$. We have from Lemma \ref{} that if $C_n$ has
+%   unique labels then there is at most one such $h'$.
+
+%   This recursive approach can be implemented as an algorithm that runs in time
+%   polynomial in the combined size of the inputs and outputs the required
+%   automorphism if it exists.
+% \end{proof}
+
 This result uses a proof very similar to the one for a similar result proved by
-Anderson and Dawar~\cite{Anderson17D}.
+Anderson and Dawar~\cite{AndersonD17}.
 
 \begin{lem}
-  There is an algorithm that takes as input a circuit $C_n$ with unique labels
-  and decides if $C_n$ is symmetric. If $C_n$ is symmetric outputs the orbits
-  and coarsest supporting partitions of every gate. Moreover, this algorithm
-  runs in time polynomial in the size of the input circuit.
-  \label{lem:computing support}
+\label{lem:computing-support}
+  Let $G \leq \sym_n$ be a subgroup and be $X$ a finite set. Suppose there there is an algorithm that $(g, x) \mapsto g \cdot x$ is computable in time polynomial in $\vert X \vert + n$. Suppose  $s \subset [n]$ be a support of $g$ There is an algorithm that takes in $x \in X$ and outputs $\orb_G (x)$ and $\SP_G(x)$. This algorithm runs in time polynomial in $\vert X \vert + n$.
 \end{lem}
-
 \begin{proof}
-  Suppose $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$. Let $(u, v) \in
-  \sym_n$ be a transposition. We may use Lemma \ref{lem:compute-automorphisms}
-  to determine the unique automorphism $\pi_{(u,v)}$ extending $(u, v)$. It is
-  easy to see that, since the set of transpositions generate $\sym_n$, for all
-  $(u,v) \in \sym_n$ $\pi_{(u,v)}$ the automorphism $\pi_{(u,v)}$ exists if, and
-  only if, $C_n$ is symmetric. We note that there are ${n}\choose{2}$
-  transpositions. It follows that we may check in polynomial time if $C_n$ is
-  symmetric. If $C_n$ is not symmetric we output that it is not symmetric and
-  halt.
+  Let $(u, v) \in \sym([n] \setminus \consp(G))$ be a transposition. We note that $(u,v) \in \stab(\consp(G))$ and there are ${n - \vert \consp(G) \vert}\choose{2}$ (and so polynomially) many such transpositions. For a transposition $(u, v) \in \sym ([n] \setminus \consp(G))$, let
+  \begin{align*}
+  \mathcal{P}_{(u,v)} := \{ \{u,v\}\} \bigcup_{w \in [n] \setminus \{ u,v \}} \{ \{ w \} \}
+  \end{align*}
+   be a partition of $[n]$. Then $\mathcal{P}_{(u,v)}$ supports $\stab_{\consp(G)}(x)$ if, and only if, $(u,v) \cdot x = x$. Then let $\mathcal{P}$ be the partition formed by applying $\mathcal{E}$ to all $\mathcal{P}_{(u,v)}$ such that $(u,v) \cdot x = x$ (which can be checked in polynomial time). From Proposition~\ref{prop:combining-supporting-patitions} we have that $\mathcal{P}$ supports $\stab_{\consp(G)}(x)$. Suppose that $\mathcal{P}$ is not the coarsest supporting partition of $\stab_{\consp(G)}(x)$. Then there exists a partition $\mathcal{P}'$ supporting $\stab_{\consp(G)}(x)$ such that $\mathcal{P}' \preceq P$ and $\mathcal{P}' \neq \mathcal{P}$. And so there exists $P \in \mathcal{P}$ and $P' \in \mathcal{P}'$ such that $P \subsetneq P'$. But then there exists $a , b \in P'$ such that $a \not\in P$. Note that It follows that the transposition $(a,b)$ fixes $\mathcal{P}'$ and so $(a,b) \in \stab_{\consp(G)}(x)$ (and so $a, b \not\in [n] \setminus \consp(G)$). But then $\mathcal{P}_{(a,b)}$ supports $\stab_{\consp(G)}(x)$ and so, from the construction of $\mathcal{P}$, $\mathcal{P}$ is fixed by $(a,b)$. But we selected $a$ and $b$ such that $\mathcal{P}$ is not fixed by $(a,b)$, and so we have a contradiction. We thus have that $\mathcal{P}$ is the coarsest supporting partition of $\stab_{\consp(G)}(x)$.
 
-  Suppose then that $C_n$ is symmetric. For transposition $(u, v) \in \sym_n$,
-  let $\mathcal{P}_{(u,v)} := \{\{u,v\}\}\bigcup_{w \in [n] \setminus
-    \{u,v\}}\{\{w\}\}$ be a partition of $[n]$. We have that $\pi_{(u,v)}$ fixes
-  $g$ if, and only if, $\mathcal{P}_{(u,v)}$ supports $g$. Since we can
-  efficiently check if $\pi_{(u,v)}$ fixes $g$ it follows that we can
-  effeciently check if $\mathcal{P}_{(u,v)}$ supports $g$. Let $\mathcal{P}$ be
-  the result of combining the set consisting of those partitions
-  $\mathcal{P}_{(u,v)}$ that support $g$ using $\mathcal{E}$. From Proposition
-  \ref{prop:combining-supporting-patitions} we have that $\mathcal{P}$ supports
-  $g$. Suppose that $\mathcal{P}$ is not the coarsest supporting partition of
-  $g$. Then there exists a partition $\mathcal{P}'$ supporting $g$ such
-  $\mathcal{P}' \preceq P$ and $\mathcal{P}' \neq \mathcal{P}$. But then there
-  exists $P \in \mathcal{P}$ and $P' \in \mathcal{P}'$ such that $P \subsetneq
-  P'$. But then there exists $a , b \in P'$ such that $a \not\in P$. It follows
-  that the transposition $(a,b)$ fixes $\mathcal{P}'$ and so $\pi_{(a,b)}$ fixes
-  $g$, but then, $\mathcal{P}_{(a,b)}$ supports $g$ and so, from the
-  construction of $\mathcal{P}$, $\mathcal{P}$ is fixed by $(a,b)$. But
-  $\mathcal{P}$ is not fixed by $(a,b)$, so we have a contradiction. We thus
-  have that $\mathcal{P}$ is the coarsest supporting partition of $g$.
-
-  It remains to compute the orbit of a gate $g$. Let $S_0 := \{g\}$ and for each
-  $i \geq 0$ let $S_{i+1} := S_i \bigcup_{(u,v) \in \sym_n} \pi_{(u,v)}S_i$. Let
-  $S$ be the least fixed point. It is easy to see that $S \subseteq \orb(g)$ as
-  every gate in $S$ is equal to the action of some sequence of automorphisms
-  (extending transpositions) acting on $g$. Moreover, since the set of all
-  transpositions generates $\sym_n$, it follows that $\orb(g) \subseteq S$ and
-  so $\orb(g) = S$.
+  It remains to compute $\orb_{\consp(G)}(x)$. Let $S_0 := \{g\}$ and for each
+  $i \geq 0$ let $S_{i+1} := S_i \bigcup_{(u,v) \in \sym_{[n] \setminus \consp(G)}} (u,v)\cdot S_i$. Let  $S$ be the least fixed point. It is easy to see that $S \subseteq \orb_{\consp(G)}(x)$ as every gate in $S$ is equal to the action of some sequence of automorphisms (extending transpositions) acting on $g$. Moreover, since the set of all transpositions generates $\sym_n$, it follows that $\orb_{\consp(G)}(x) \subseteq S$ and so $\orb_{\consp(G)}(x) = S$.
 
   Given the polynomial bound on the number of transpositions, and the
   polynomial-time bound on the algorithm from Proposition
   \ref{prop:combining-supporting-partitions}, it is easy to see that the
   procedures described above can be implemented so as to run in time polynomial
   in the size of the input circuit.
+\end{proof}
+
+\begin{lem}
+  There is an algorithm that takes in a symmetric circuit $C$ of order $n$ with unique labels and outputs for each gate $g$ in $C$ and $a \in \universe{g}$, $\orb_g (a)$ and $\SP_g (a)$.
+\end{lem}
+\begin{proof}
+  Let $(u,v) \in \sym_n$ be a transposition. We can check if $(u,v) \in \stab(g)$ using Lemma~\ref{lem:compute-automorphisms}. Then $(u,v)$ acts like an isomorphism at $g$, and hence $(u,v) \cdot a = L(g)^{-1}((\sigma L(g)(\vec{x}))) (i)$, where $\vec{x} \in \ind(g)$ such that $\vec{x} (i) = a$ for some $i \in [\vert \vec{x} \vert]$. Thus, since Lemma~\ref{lem:compute-automorphisms} gives us that that we can compute $\sigma L(g)(\vec{x})$ in polynomial time, we can compute $(u,v) \cdot a$ in polynomial-time. 
+
+  We note that 
+  
+  and hence we can compute $\sigma \cdot a$ effeciently.  and hence compute $\orb_g(a) = \{ \sigma \cdot a : \sigma \in \stab(g)\}$.
+
 \end{proof}
 
 \begin{remark}
