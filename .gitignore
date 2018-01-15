@@ -35,10 +35,14 @@ sections/translating-formulas-to-cicuits.fls
 sections/translating-formulas-to-cicuits.log
 sections/translating-formulas-to-cicuits.pdf
 sections/translating-formulas-to-cicuits.synctex.gz
-
-
+sections/background.aux
 sections/translating-circuits-into-formulas.tex.backup
 sections/translating-circuits-into-formulas.fls
 sections/translating-circuits-into-formulas.fdb_latexmk
 sections/indent.log
 sections/indent.log
+sections/background.log
+sections/background.synctex.gz
+
+
+

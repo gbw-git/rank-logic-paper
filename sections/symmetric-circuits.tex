@@ -201,40 +201,63 @@ is \emph{matrix-invariant}. In this subsection we develop a general framework
 for dealing with functions that take in structures.
 
 % AD - rewrote the paragraph to reduce the use of subscripts and superscripts.
-Let $\tau = (R, S, \nu)$ be a many-sorted vocabulary.
-% with $R = \{R_1 \ldots, R_t\}$, $S = \{s_1, \ldots , s_p\}$, and $\nu(R_i) =
-% (a^i_1, \ldots , a^i_{r_i)})$, where $r_i = \arty(R_i)$ and $a^i_q \in S$ for
-% all $q \in [r_i]$.
-Let $D := \biguplus_{s \in S} D_{s} = \{(s,d) : d \in D_s\}$, be a disjoint
-union of non-empty sets, indexed by $S$. We call $D$ a \emph{$\tau$-universe}.
-For each $P \in R$, let $P^D$ denote the trivial relation over the many-sorted
-universe $D$, i.e.\ $P^D := D_{a_1} \times \ldots \times D_{a_{r}}$, where
-$\nu(P) = (a_1, \ldots , a_{r)})$. Let the \emph{index defined by the pair
-  $(\tau, D)$} be the set $\biguplus_{P\in R} P^{D}$. We use this set to index
-the input to a Boolean function, as such we abuse notation and denote the index
-defined by $(\tau, D)$ by $\ind(\tau, D)$. We call $\tau$ the vocabulary and $D$
-the universe of $\ind(\tau, D)$.
+Let $\tau = (R, S, \nu)$ be a many-sorted vocabulary. Let $D := \biguplus_{s \in
+  S} D_{s} = \{(s,d) : d \in D_s\}$, be a disjoint union of non-empty sets,
+indexed by $S$. For $R_i \in R$ let $R^D_i$ denote the trivial relation over the
+many-sorted universe $D$, i.e.\ $R^D_i := D_{a_1} \times \ldots \times
+D_{a_{r}}$, where $\nu(R_i) = (a_1, \ldots , a_{r)})$. There is an obvious
+interpretation of $\tau$ over $D$ given by assigning each sort symbol in $\tau$
+in the obvious manner and each relation symbol in $\tau$ to the trivial relation
+over $D$. We call this \emph{the structure defined by $(\tau, D)$}, and denote
+it by $\str(\tau, D)$.
+
+The idea is to use the tuples in the relations of this structure as an index
+set, and with the automorphisms of this structure defining a group action. Let
+the \emph{index defined by the pair $(\tau, D)$} be the set $\biguplus_{R_i\in
+  R} R^{D}_i$. We often use this set to index the input to a Boolean function,
+as such we abuse notation and denote the index defined by $(\tau, D)$ by
+$\ind(\tau, D)$, and call $\tau$ the vocabulary and $D$ the universe of
+$\ind(\tau, D)$.
 
 % GW: move sorted permutations into the background section
 For the remainder of this subsection we fix a vocabulary $\tau$ and a
-many-sorted set $D=\biguplus_{s \in S} D_{s}$ and let $X := \ind (\tau, D)$. Let
-$G \leq \sym_{X}$, and let $\sortsym_D := \prod_{s \in S} \sym_{D_{s}}$. We
-call the elements of $\sortsym_D$ \emph{sorted permutations}. Note that
-$\sortsym(D)$ can be identified with a subgroup of $\sym_X$. There is an obvious
-action of $G$ on $X$. We can extend this to an action on the set of functions of
-the form $f: X \rightarrow X$, for any set $H$, defined by $\sigma \cdot f(x) =
+many-sorted set $D := \biguplus_{s \in S} D_{s}$, and let $X := \ind (\tau, D)$
+and $G \leq \sym_{X}$. There is an obvious action of $G$ on $X$. There is also
+an obvious action of the automorphism group $\str(\tau, D)$ on $X$ (with
+permutations in $\str(\tau, D)$ acting element-wise on tuples in $X$). We denote
+this group by $\aut(\tau, D)$, and identify it with the subgroup of $\sym_X$
+that acts equivalently on $X$.
+
+We can extend the action of $G$ on $X$ to an action on the set of functions of
+the form $f: X \rightarrow H$, for any set $H$, defined by $\sigma \cdot f(x) :=
 f(\sigma \cdot x)$ for all $x \in X$, $\sigma \in G$.
+
+% and let $\sortsym_D := \prod_{s \in S} \sym_{D_{s}}$. We call the elements of
+% $\sortsym_D$ \emph{sorted permutations}. Note that $\sortsym(D)$ can be
+% identified with a subgroup of $\sym_X$.
+
 
 % If $H$ is surjective, we say that \emph{$f$ indexes $H$ by $X$} or \emph{$f$
 % indexes $H$ by $\mathcal{D}$}.
-We say that two functions $f, g : X \rightarrow H$ are \emph{$G$-equivalent} if
-there exists $\sigma \in G$ such that $f = \sigma \cdot g$. We say $f$ and $g$
-are \emph{isomorphism-equivalent} if they are $\sortsym(D)$-equivalent. We are
-often interested in the case where $H = \{0,1\}$, i.e.\ $f : X \rightarrow
-\{0,1\}$. In this case $f$ defines for each relation $R^D_i$ a subset of that
-relation, and thus determines a $\tau$-structure over the universe $D$. We note
-that two functions $f, g: X \rightarrow \{0,1\}$ are isomorphism-equivalent if,
-and only if, the two $\tau$-structures they determine are isomorphic.
+
+We say that two functions $f: \ind(\tau, D) \rightarrow H$ and $g: \ind(\tau',
+D') \rightarrow H$ are \emph{isomorphism-equivalent} if there exists an
+isomorphism $\pi :\str(\tau, D) \rightarrow \str(\tau', D')$ such that $f (x) =
+g (\pi (x))$ for all $x \in \str(\tau, D)$. It is easy to see that
+isomorphism-equivalence is an equivalence relation.
+
+We are often interested in the case where $X = \ind(\tau, D) = \ind(\tau', D')$.
+We say that $f, g X \rightarrow H$ are \emph{$G$-equivalent} if there exists
+$\sigma \in G$ such that $f = \sigma \cdot g$. We note that in this case $f$ and
+$g$ are \emph{isomorphism-equivalent} if, and only if, they are $\aut(\tau,
+G)$-equivalent.
+
+In this paper we will often let the co-domain $H$ be the binary symbols
+$\{0,1\}$, and so consider functions of the form $f : X \rightarrow \{0,1\}$. In
+this case we may think of $f$ as defining for each relation $R^D_i$ a subset of
+that relation, and thus determining a $\tau$-structure over the universe $D$. We
+note that two functions $f, g: X \rightarrow \{0,1\}$ are isomorphism-equivalent
+if, and only if, the two $\tau$-structures they determine are isomorphic.
 
 We call a function of the form $F:\{0,1\}^{X} \rightarrow \{0,1\}$ a
 \emph{$(\tau, D)$-structured function}, or just a \emph{structured function}
@@ -273,12 +296,12 @@ respectively.
 
 Structured functions give us a general framework for indexing the input sequence
 to a Boolean function and associating with that function an appropriate symmetry
-condition. Let $F$ be a $(\tau, D)$-structured function. We say $F$ is
-\emph{$G$-invariant} if it is constant on $G$-equivalent input vectors, i.e. for
-all $G$-equivalent $\vec{x}, \vec{y} \in \{0,1\}^{X}$, $F(\vec{x}) =
-F(\vec{y})$. We say $F$ is \emph{isomorphism-invariant} if it is $\sortsym
-(D)$-invariant. Note that a structured function with vocabulary $\tau$ is
-isomorphism-invariant if, and only if, it decides a property of
+condition, or notion of equivalence. Let $F$ be a $(\tau, D)$-structured
+function. We say $F$ is \emph{$G$-invariant} if it is constant on $G$-equivalent
+input vectors, i.e. for all $G$-equivalent $\vec{x}, \vec{y} \in \{0,1\}^{X}$,
+$F(\vec{x}) = F(\vec{y})$. We say $F$ is \emph{isomorphism-invariant} if it is
+$\aut(\tau, D)$-invariant. Note that a structured function with vocabulary
+$\tau$ is isomorphism-invariant if, and only if, it decides a property of
 $\tau$-structures.
 
 At the beginning of this subsection we defined three Boolean functions with
@@ -457,17 +480,19 @@ vocabularies.
 % \end{definition}
 
 Let $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
-\tau)$-circuit. The $n$ is used to indicates that $C_n$ accepts structures of
+\rho)$-circuit. The $n$ is used to indicates that $C_n$ accepts structures of
 size $n$. For a gate $g \in C_n$, we define the \emph{index} of $g$, denoted by
 $\ind(g)$, as $\ind(\Sigma(g))$. We define the relation $W \subseteq G^2$ by
 $W(h,g)$ if, and only if, $h \in \range(L(g))$. For each $g \in G$ we let
-$W(\cdot, g) := \{h \in G : W(h,g)\}$, and let $W(g, \cdot) := \{h \in G :
-W(g,h)\}$. We call $W(\cdot, g)$ the \emph{children} of $g$ and $W(g, \cdot)$
-the \emph{parents} of $g$. We also abbreviate $W(g, \cdot)$ by $H_g$. We let the
-vocabulary and universe of $g$ be the vocabulary and universe of $\Sigma(g)$,
-respectively.
+$W(\cdot, g) := \{h \in G : W(h,g)\}$ and $W(g, \cdot) := \{h \in G : W(g,h)\}$.
+We call the elements of $W(\cdot, g)$ the \emph{children} of $g$ and the
+elements of $W(g, \cdot)$ the \emph{parents} of $g$. We also abbreviate $W(g,
+\cdot)$ by $H_g$.
 
-
+We let the vocabulary and universe of $g$ be the vocabulary and universe of
+$\Sigma(g)$, respectively, and denote the vocabulary of $g$ by $\vocab{g}$ and
+the universe by $\universe{g}$. We also let $\aut(g) := \aut(\tau, D)$ and
+$\str(g) := \str(\tau, D)$.
 
 % It is worth noting that in general computing the syntactic equivalence
 % relation in polynomial time may not be possible. In fact, given two bipartite
@@ -500,8 +525,6 @@ respectively.
 % \end{prop}
 % \begin{proof}
 % \end{proof}
-
-
 
 Let $\tau$ be a relational vocabulary, $\mathcal{A}$ a $\tau$-structure over an
 $n$-element universe $U$ and $\gamma \in [n]^{\underline{U}}$. Let $\gamma
@@ -910,8 +933,8 @@ for some $a \in \nats$. Similarly we define \emph{$\OR$- gates}, \emph{$\NOT$
 
 We say $C_n$ is a \emph{circuit with symmetric gates} if every gate in $C_n$ is
 symmetric. We say $C_n$ is a \emph{matrix-circuit} if every gate in $C_n$ is
-matrix-symmetric or symmetric. We say $C_n$ is a \emph{rank-circuit} if $C_n$ is a
-matrix-circuit and every non-symmetric gate is a $\rank$ gate.
+matrix-symmetric or symmetric. We say $C_n$ is a \emph{rank-circuit} if $C_n$ is
+a matrix-circuit and every non-symmetric gate is a $\rank$ gate.
 
 % \begin{definition}
 %   Let $C_n = \langle G, \Omega, \Simga, \Lambda, L \rangle$ be a $(\mathbb{B},

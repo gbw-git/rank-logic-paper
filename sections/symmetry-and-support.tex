@@ -1,12 +1,12 @@
 % !TEX root = ../paper.tex
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
-In order to analyse families of symmetric circuits we need to develop some
-theory for analysing symmetries. In this section we define the terms needed
-(e.g. the notion of a support) and prove basic results. We then prove the first
-important theorem in this paper, the support theorem, using these tools. It is
-worth noting that we prove the support theorem for arbitrary symmetric circuits
-with matrix-symmetric gates, not just for rank gates.    
+% In order to analyse families of symmetric circuits we need to develop some
+% theory for analysing symmetries in circuits. In this section we define the terms needed
+% (e.g. the notion of a support) and prove basic results. We then prove the first
+% important theorem in this paper, the support theorem, using these tools. It is
+% worth noting that we prove the support theorem for arbitrary symmetric circuits
+% with matrix-symmetric gates, not just for rank gates.    
 
 \subsection{Supports and Supporting Partitions}
 In this section we formally define a support and the related notion of a
@@ -14,15 +14,15 @@ supporting partition.
 
 \begin{definition}
   Let $G \leq \sym_n$ and let $S \subseteq [n]$. Then $S$ is a \emph{support}
-  for $G$ if $\stab_n(S) \leq G$. 
+  for $G$ if $\stab_n(S) \leq G$.
 \end{definition}
 % AD - \stab needs to be defined in background section GW - I've added it to my
 % notes, to be filled in.
 
 \begin{definition}
   Let $G \leq \sym_n$ and $\mathcal{P}$ be a partition of $[n]$. Then
-  $\mathcal{P}$ is a \emph{supporting partition} for $G$ if $\stab(\mathcal{P})
-  \leq G$.
+  $\mathcal{P}$ is a \emph{supporting partition} for $G$ if
+  $\stab_n(\mathcal{P}) \leq G$.
 \end{definition}
 
 Notice that if $\mathcal{P}$ is a supporting partition for $G$ and $P \in
@@ -37,7 +37,7 @@ define an operation $\mathcal{E}$ on pairs of partitions of $[n]$, where
 $\mathcal{E} (\mathcal{P}, \mathcal{P}')$ is the partition of $[n]$ consisting
 of the equivalence classes of the transitive closure of the relation $\sim$ on
 $[n]$ defined by $a \sim b$ if, and only if, there exists $P \in \mathcal{P}
-\cup mathcal{P}'$ such that $a,b \in P$. They show that $\mathcal{E}$ preserves
+\cup \mathcal{P}'$ such that $a,b \in P$. They show that $\mathcal{E}$ preserves
 supporting partitions, and that $\mathcal{E}(\mathcal{P}, \mathcal{P}')$ is as
 coarse as both $\mathcal{P}$ and $\mathcal{P}'$.
 
@@ -84,7 +84,7 @@ necessarily the unique largest part in the partition.
 \end{lem}
 \begin{proof}
   We have that $\stab(\SP(G_1)) \leq G_1 \leq G_2$, and so $\SP(G_1)$ supports
-  $G_2$. Since $\SP(G_2)$ is the coarsest support of $G_2$, $\SP(G_1) \preceq
+  $G_2$. Since $\SP(G_2)$ is the coarsest support of $G_2$ we have that $\SP(G_1) \preceq
   \SP(G_2)$.
 \end{proof}
 
@@ -133,7 +133,7 @@ necessarily the unique largest part in the partition.
   Then there exists $P_H \in \SP(H)$ and $P_K \in \SP(K)$ such that $P_G
   \subseteq P_H \cap P_K$, and so $\vert P_H \cap P_K \vert > \frac{n}{2}$. Thus
   $P_H \cap P_K$ is the unique largest element in $\mathcal{Q}$. It follows from
-  $\mathcal{Q} \subseteq \SP(G)$ that $P_G \subseteq P_H \cap P_K \subseteq
+  $\mathcal{Q} \preceq \SP(G)$ that $P_G \subseteq P_H \cap P_K \subseteq
   P_G$.
 
   % From the fact that $G$ has small support, $P_H$ and $P_K$
@@ -163,34 +163,42 @@ We state the following two results proved by Anderson and Dawar
 
 \subsection{Group Action on Supports}
 In this paper, unlike in the case of Anderson and Dawar \cite{AndersonD17}, we
-often wish to speak of supports and group actions on elements on the circuit
-other than gates. As such, we need to develop theory and terminology for dealing
-with group actions (and supports) in general. In this subsection we introduce
+often wish to speak of supports and group actions on elements of the circuit
+other than gates (particularly elements of the universe or index of a gate). As
+such, we need to develop theory and terminology for dealing with group actions
+(and supports) in this more general settings. In this subsection we introduce
 some useful terminology.
+% \begin{definition}
+%   Let $G \leq X$ be a set on which a left group action of $G$ on $X$ is
+%   defined and let $x \in X$. Then $\stab_G (x) = \{\pi \in G : \pi x = x\}$
+%   and $\orb_G (x) = \{\pi x : \pi \in G\}$. In the event that the context
+%   makes the group obvious we omit the subscript. We use $\stab_n$ and $\orb_n$
+%   to abbreviate $\stab_{\sym_n}$ and $\orb_{\sym_n}$. Let $Y$ be a set on
+%   which a left group action of $G$ on $Y$ is defined and let $y \in Y$. Then
+%   we let $\stab_y(x) := \stab_{\stab_G(y)}(x)$ and $\orb_y(x) :=
+%   \orb_{\stab_{G}(y)}(x)$.
+% \end{definition}
 
 \begin{definition}
-  Let $G \leq X$ be a set on which a left group action of $G$ on $X$ is defined
-  and let $x \in X$. Then $\stab_G (x) = \{\pi \in G : \pi x = x\}$ and $\orb_G
-  (x) = \{\pi x : \pi \in G\}$. In the event that the context makes the group
-  obvious we omit the subscript. We use $\stab_n$ and $\orb_n$ to abbreviate
-  $\stab_{\sym_n}$ and $\orb_{\sym_n}$. Let $Y$ be a set on which a left group
-  action of $G$ on $Y$ is defined and let $y \in Y$. Then we let $\stab_y(x) :=
-  \stab_{\stab_G(y)}(x)$ and $\orb_y(x) := \orb_{\stab_{G}(y)}(x)$.
-\end{definition}
-
-\begin{definition}
-  Let $X$ be a set on which a left group action of $\sym_n$ on
-  $X$ is defined. We denote the \emph{canonical supporting partition} of $x \in
-  X$ by $\SP (x) = \SP (\stab_G(x))$. Similarly we let $\| \SP (x) \| = \| \SP
+  Let $X$ be a set on which a left group action of $G \leq \sym_n$ on $X$ is
+  defined. We denote the \emph{canonical supporting partition} of $x \in X$ by
+  $\SP_G (x) = \SP (\stab_G(x))$. Similarly we let $\| \SP_G (x) \| = \| \SP
   (\stab_G(x)) \|$. We say that $x \in X$ has \emph{small support} if
-  $\stab_G(x)$ has small support. We say that $X$ has small supports if all $x
-  \in X$ have small support.
+  $\stab_G(x)$ has small support. We say that $X$ has small supports if each $x
+  \in X$ has small support.
 
   If $x \in X$ has small support, we denote the \emph{canonical support} of $x$
-  by $\consp(x) = \consp (stab_G(x))$.
+  by $\consp_G(x) = \consp (stab_G(x))$.
 
-  Let $Y$ be a set on which a left group action of $G$ on $Y$ is defined. We 
+  In the event that the choice of group $G$ is clear from context we omit the
+  subscript.
 \end{definition}
+
+% Let $X$ is a set on which a left group action of $G \leq \sym_n$ is defined,
+% and let $x \in X$. We often let the group $G$ be the stabiliser group of some
+% other set (or element) $S$ on which the action of $\sym_n$ is defined. In this
+% case we write $\SP_S(x)$ and $\consp_S(x)$ to abbreviate $\SP_{\stab(S)}(x)$
+% and $\consp_{\stab(S)}(x)$.
 
 \begin{lem}
   \label{lem:stab_conjugation}
@@ -209,7 +217,7 @@ some useful terminology.
 \end{proof}
 
 \begin{lem}
-  \label{lem:support_mapping}
+  \label{lem:support-mapping}
   Let $G \leq \sym_n$, $X$ be a set on which a left group action of $G$ on $X$
   is defined and $\sigma \in G$. Then for any $x \in X$ it follows that $\sigma
   \SP (x) = \SP (\sigma x)$ and, if $x$ has small support, $\sigma \consp (x) =
@@ -243,14 +251,14 @@ some useful terminology.
 \end{proof}
 
 
-\subsection{Support Theorems}
+\subsection{The Support Theorem}
 The support theorem of Anderson and Dawar~\cite{AndersonD17} asserts that, for
 the case of symmetric circuits with symmetric gates, if the circuit is not too
 large then the stabiliser group of any gate in the circuit has small support. In
-particular, their result implies that polynomial-size family of symmetric
-circuits with symmetric gates consists of gates each of which has a
-constant-size support. In this section we generalise the support theorem to
-transparent $(\mathbb{B}, \rho)$-circuits defined over arbitrary bases.
+particular, their result implies that every gate in a circuit contained in a
+polynomial-size family of symmetric circuits with symmetric gates is constant
+size. In this section we generalise the support theorem to transparent
+$(\mathbb{B}, \rho)$-circuits defined over arbitrary bases.
 
 The proof of this result follows a strategy broadly similar to the one used by
 Anderson and Dawar~\cite{AndersonD17}. We also make use of two lemmas proved by
@@ -270,19 +278,31 @@ orbit would exceed the required bound, thus allowing us to conclude the result
 by contradiction.
 
 We begin by first building up a few observations about the size of the
-stabiliser group, and hence the orbit, of a gate. Let $C$ be a circuit of order
+stabiliser group, and hence the orbit of a gate. Let $C$ be a circuit of order
 $n$ with unique labels and let $g$ be a gate in the circuit. Let $\vec{x} \in
 \ind(g)$ and $\sigma \in \sym_n$ be such that $\sigma L(g)(\vec{x}) \in H_g$.
-Then we let $\sigma \cdot \vec{x} := L(g)^{-1}\sigma L(g)(\vec{x})$. While this
-operation is not defined for certain $\sigma \in \sym_n$, and hence does not
-define a group action of $\sym_n$ on $\ind(g)$, it does define a group action of
-$\stab(H_g)$ on $\ind(g)$. For $\sigma in \sym_n$, if $H_g = \sigma H_g$ and
-$L(g)$ is isomorphism-equivalent to $\sigma L(g)$ then we say that $\sigma$
-\emph{acts like an isomorphism} at $g$. Notice that for $\sigma \in \sym_n$, we
-have that $\sigma \in \stab_n(g)$ if, and only if, $\sigma$ acts like an
-isomorphism at $g$, which holds if, and only if, $H_g = \sigma H_g$ and there
-exists $\pi \in \sortsymsub$ such that $\sigma \cdot \vec{x} = \pi (\vec{x})$
-for all $\vec{x} \in \ind(g)$.
+Let $\sigma \cdot \vec{x} := L(g)^{-1}\sigma L(g)(\vec{x})$. We note that this
+operation does not define a group action of $\sym_n$ on $\ind(g)$, but does
+define a group action of $\setstab_n(H_g)$ on $\ind(g)$.
+
+Notice that, for $\sigma in \sym_n$, $\sigma \in \setstab_n(H_g)$ and $L(g)$ is
+isomorphism-equivalent to $\sigma L(g)$ if, and only if, $\sigma \in \stab_n(g)$
+if, and only if, $\sigma \in \setstab_n(H_g)$ and there exists $\pi \in \aut(g)$
+such that $\sigma \cdot \vec{x} = \pi (\vec{x})$ for all $\vec{x} \in \ind(g)$.
+The final equivalence expresses the fact that $\sigma \in \sym_n$ stabilises $g$
+if, and only if, $\sigma$ behaves on all elements of $\ind(g)$ like an
+automorphism of $\str(g)$. This observation allows us to define a local
+condition for testing whether a given $\sigma \in \sym_n$ stabilises the gate
+$g$. We say that a pair $(h, h') \in H^{2}_g$ is \emph{compatible} with $\sigma$
+if $\sigma$ acts like a member of $\aut(g)$ when restricted to the labels of $h$
+and $h'$.
+
+% We say that $\sigma in \sym_n$ \emph{acts like an isomorphism} at $g$ if
+% $\sigma \in \setstab(H_h)$ and $L(g)$ is isomorphism-equivalent to $\sigma
+% L(g)$. Notice that $\sigma \in \stab_n(g)$ if, and only if, $\sigma$ acts like
+% an isomorphism at $g$ if, and only if, $\sigma \in setstab(H_g)$ and there
+% exists $\pi \in \sortsymsub$ such that $\sigma \cdot \vec{x} = \pi (\vec{x})$
+% for all $\vec{x} \in \ind(g)$.
 
 
 % We first now In this subsection we always use $\tau$ to denote a many-sorted
@@ -308,7 +328,8 @@ for all $\vec{x} \in \ind(g)$.
 %   %   \leq
 %   %   \sym_n$ and suppose there is a (left) group action $\phi: $ defined on
 %   %   $\ind(\tau, D)$.
-%   %   We say that $\sigma \in G$ \emph{acts like an isomorphism} if there
+%   %   We say that $\sigma \in G$ \emph{acts like an isomorphism} if
+%   %   thereequivalently
 %   %   exists
 %   %   $\pi \in \sortsym_D$ such that $\pi \cdot \vec{x} = \sigma \cdot
 %   %   \vec{x}$ for all $\vec{x} \in \ind(\tau, D)$.
@@ -316,9 +337,8 @@ for all $\vec{x} \in \ind(g)$.
 
 % If the group action is obvious from context we write $\sortsym_D(\cdot)$
 % instead of $\sortsym_D(\phi)$.
-We say that $\sigma \in \sym_n$ is \emph{compatible} with a pair $h, h' \in H_g$
-if $\sigma$ acts like an isomorphism at $g$ when restricted to the gates $h$ and
-$h'$. We formalise this notion below.
+
+
 
 \begin{definition}
   Let $C$ be a circuit of order $n$ with unique labels and let $g$ be a gate in
@@ -347,61 +367,58 @@ $h'$. We formalise this notion below.
 % \end{definition}
 
 For a gate $g$ in a circuit with unique labels, we show that a permutation
-$\sigma$ acts like an isomorphism at $g$ if, and only if, every pair of gates in
-$H_g$ is compatible with $\sigma$. This gives us a useful local condition for
-checking if a permutation acts like an isomorphism at $g$, and hence stabilises
-$g$.
+$\sigma$ acts like an element of $\aut(g)$ (or, equivalently, stabilises $g$)
+if, and only if, every pair of gates in $H_g$ is compatible with $\sigma$. This
+gives us a useful local condition for checking if a permutation acts like an
+isomorphism at $g$, and hence stabilises $g$.
 
 \begin{lem}
   Let $C$ be a circuit of order $n$ with unique labels, $g$ be a gate in the
-  circuit, and $\sigma \in \sym_n$. Then $\sigma$ acts like an automorphism at
-  $g$ if, and only if, for all $h, h' \in H_g$, $(h, h')$ is compatible with
-  $\sigma$.
+  circuit, and $\sigma \in \sym_n$. Then $\sigma$ stabilises $g$ if, and only
+  if, for all $h, h' \in H_g$, $(h, h')$ is compatible with $\sigma$.
   \label{lem:isostab-compatible}
 \end{lem}
 
 \begin{proof}
-  Let $\tau$ be the vocabulary and $D$ the universe of $g$.
-  
-  $`\Rightarrow'$: Suppose $\sigma$ acts like an isomorphism at $g$. We then
-  have that $\sigma H_g = H_g$. and there exists $\pi \in \sortsymsub$ such that
-  $\sigma \cdot \vec{x} = \pi (\vec{x})$ for all $\vec{x} \in \ind(\tau, D)$.
-  Let $h, h' \in H_g$ and let $\vec{x} := L(g)^{-1}(h)$ and $\vec{y} =
-  L^{-1}(h)$. Since $\sigma$ acts like an isomorphism at $g$ it is easy to see
-  that it maps tuples in a relation to tuples in the same relation. Let $R_i$
-  and $R_j$ be relation symbols in $\tau$ such that $\vec{x} \in R^D_i$ and
-  $\vec{y} \in R^D_j$. Let $w \in [\arty (R_i)]$ and $z \in [\arty (R_j)]$, then
-  $\sigma \cdot \vec{x} (w) = \sigma \cdot \vec{y}(z)$ if, and only if,
-  $\pi(\vec{x}(w)) = \pi (\vec{x})(w) = \pi (\vec{y})(z) = \pi(\vec{y}(z))$ if,
-  and only if, $\vec{x}(w) = \vec{y}(z)$. The final equivalence follows from the
-  injectivety of $\pi$.
+  % Let $\tau$ be the vocabulary and $D$ the universe of $g$.
+  $`\Rightarrow'$: Suppose $\sigma \in \stab_n(g)$. Then $\sigma H_g = H_g$ and
+  there exists $\pi \in \aut(g)$ such that $\sigma \cdot \vec{x} = \pi
+  (\vec{x})$ for all $\vec{x} \in \ind(g)$. Let $h, h' \in H_g$ and let $\vec{x}
+  := L(g)^{-1}(h)$ and $\vec{y} = L^{-1}(h)$. Since $\sigma \cdot \vec{x} = \pi
+  (\vec{x})$ for $\vec{x} \in \ind(g)$, it is easy to see that $\sigma$ maps
+  tuples in a relation to tuples in the same relation. Let $R_i$ and $R_j$ be
+  relation symbols in $\vocab{g}$ such that $\vec{x} \in R^D_i$ and $\vec{y} \in
+  R^D_j$. Let $w \in [\arty (R_i)]$ and $z \in [\arty (R_j)]$, then $\sigma
+  \cdot \vec{x} (w) = \sigma \cdot \vec{y}(z)$ if, and only if, $\pi(\vec{x}(w))
+  = \pi (\vec{x})(w) = \pi (\vec{y})(z) = \pi(\vec{y}(z))$ if, and only if,
+  $\vec{x}(w) = \vec{y}(z)$. The final equivalence follows from the injectivety
+  of $\pi$.
   
   $`\Leftarrow'$: We have that for all $h, h' \in H_g$ that $(h, h')$ is
   compatible with $\sigma$. It follows that $\sigma H_g = H_g$. We now define
-  $\pi$ such that $\pi \in \sortsymsub$ and $\sigma \cdot \vec{x} = \pi
-  (\vec{x})$ for all $\vec{x} \in \ind(\tau, D)$. Let $a \in D$ and $\vec{x} \in
-  \ind(\tau, D)$ be a tuple containing $a$. Then let $\pi (a) = \sigma \cdot
-  \vec{x} (\vec{x}^{-1}(a))$. The compatibility condition ensures that this
-  definition is independent of the particular choice of $\vec{x}$ and that,
-  since $\sigma$ takes tuples in a given relation to tuples of the same
-  relation, $a$ and $\pi (a)$ must be of the same sort.
+  $\pi$ such that $\pi \in \aut(g)$ and $\sigma \cdot \vec{x} = \pi (\vec{x})$
+  for all $\vec{x} \in \ind(g)$. Let $a \in \universe{g}$ and $\vec{x} \in
+  \ind(g)$ be a tuple containing $a$. Then let $\pi (a) = \sigma \cdot \vec{x}
+  (\vec{x}^{-1}(a))$. The compatibility condition ensures that this definition
+  is independent of the particular choice of $\vec{x}$ and that, since $\sigma$
+  takes tuples in a given relation to tuples of the same relation, $a$ and $\pi
+  (a)$ must be of the same sort.
   
   We show that $\pi$ is injective. Suppose $\pi(a) = \pi(b)$. Suppose $a$
-  appears in $\vec{x} \in \ind(\tau, D)$ and $b$ appears in $\vec{y} \in
-  \ind(\tau, D)$, then $\sigma \cdot \vec{x} (\vec{x}^{-1}(a)) = \pi (a) =
-  \pi(b) = \sigma \cdot \vec{y}(\vec{y}^{-1}(b))$. From the hypothesis
-  $(\vec{x}, \vec{y})$ is compatible with $\sigma$, and so $a =
-  \vec{x}(\vec{x}^{-1}(a)) = \vec{y}(\vec{y}^{-1}(b)) = b$. It follows $\pi$ is
-  an injection.
+  appears in $\vec{x} \in \ind(g)$ and $b$ appears in $\vec{y} \in \ind(g)$,
+  then $\sigma \cdot \vec{x} (\vec{x}^{-1}(a)) = \pi (a) = \pi(b) = \sigma \cdot
+  \vec{y}(\vec{y}^{-1}(b))$. From the hypothesis $(\vec{x}, \vec{y})$ is
+  compatible with $\sigma$, and so $a = \vec{x}(\vec{x}^{-1}(a)) =
+  \vec{y}(\vec{y}^{-1}(b)) = b$. It follows $\pi$ is an injection.
   
-  We now prove surjectivity. Let $b \in D$. Suppose $b$ appears in $\vec{x} \in
-  \ind(\tau, D)$ and let $i \in \dom(\vec{x})$ be such that $\vec{x}(i) = b$.
-  Let $\vec{y} = \sigma \cdot \vec{x}$. Then $\pi (\vec{y}(i)) = \sigma \cdot
-  \vec{y} (\vec{y}^{-1}(\vec{y}(i))) = \vec{x}(i) = b$. It follows that $\pi$ is
-  surjective, and so bijective. Thus $\pi \in \sortsymsub$.
+  We now prove surjectivity. Let $b \in \universe{g}$. Suppose $b$ appears in
+  $\vec{x} \in \ind(g)$ and let $i \in \dom(\vec{x})$ be such that $\vec{x}(i) =
+  b$. Let $\vec{y} = \sigma \cdot \vec{x}$. Then $\pi (\vec{y}(i)) = \sigma
+  \cdot \vec{y} (\vec{y}^{-1}(\vec{y}(i))) = \vec{x}(i) = b$. It follows that
+  $\pi$ is surjective, and so bijective. Thus $\pi \in \aut(g)$.
 
-  Clearly $\pi (\vec{x}) = \sigma \cdot \vec{x}$ for all $\vec{x} \in \ind(\tau,
-  D)$, and the result follows.
+  Clearly $\pi (\vec{x}) = \sigma \cdot \vec{x}$ for all $\vec{x} \in \ind(g)$,
+  and the result follows.
 \end{proof}
 
 % \begin{lem}
@@ -457,24 +474,20 @@ $g$.
 % those permutations that act like a sorted permutation (or, equivalently, are
 % compatible with every pair of vectors in $\ind(\tau, D)$).
 
-In the proof of the support theorem by contradiction we show that if a gate does
-not have a small enough support then its orbit must be too large. In particular,
-we construct a set $S$ such that $\vert \orb(g) \vert = [\sym_n : \stab_n(g)]
-\geq 2^S$, and $S$ is large enough to give the required contradiction. We now
-show that any set $S \subseteq (\sigma, h, h') \in \sym_n \times H^2_g$ that is
-\emph{useful} and \emph{independent} will have that $[\sym_n : \stab_n(g)] \geq
-2^S$. The idea is that the `useful' property ensures that every tuple in the set
-moves the gate $g$. The `independent' property ensures that for all $(\sigma_1,
-h_1, h_1'), (\sigma_2, h_2, h_2') \in S$, $\sigma_1$ fixes $h_2$, $\sigma_2
-h_2$, $h_2'$ and $\sigma_2 h_2$. Independence ensures that for a triple
-$(\sigma, h, h') \in S$ the only permutation that appears in $S$ that could move
-$h$ or $h'$ is $\sigma$. Moreover, this observation extends to sequences of
-permutations, with such sequences acting trivially on $h$ and $h'$ unless
-$\sigma$ is in the sequence, in which case the action on $h$ and $h'$ is equal
-to $\sigma h$ and $\sigma h'$.
-
-We now define these terms formally and prove that useful and independent sets
-indeed give the required lower bound.
+In the proof of the support theorem we show that if we assume a gate has a
+support exceeding a certain size bound then its orbit must be larger than the
+bound on the circuit size (and so we establish the result by contradiction). In
+particular, we construct a set $S$ such that $\vert \orb(g) \vert = [\sym_n :
+\stab_n(g)] \geq 2^S$, and $S$ is large enough to give the required
+contradiction. We now show that any set $S \subseteq (\sigma, h, h') \in \sym_n
+\times H^2_g$ that is \emph{useful} and \emph{independent} will have that
+$[\sym_n : \stab_n(g)] \geq 2^S$. We define these two terms formally below, but
+first briefly give an intuition for these terms. The idea here is that the
+`useful' property ensures that the permutation does not stabilise $g$. The
+`independent' property ensures that for any $(\sigma, h, h') \in S$, every other
+permutation in the set fixes both $h$ and $h'$ and the action of $\sigma$ on $h$
+and $h'$. This means that $\sigma$ is the only permutation that moves $h$ or
+$h'$, and that this property extends to the image of these gates under $\sigma$.
 
 % \begin{definition}
 %   Let $G$ and $G'$ be groups and suppose be a group and suppose $\phi : G
@@ -609,19 +622,21 @@ indeed give the required lower bound.
 %   \sortsym_D(\phi)$.
 % \end{proof}
 
+We now prove the upper-bound on the powerset of useful and independent sets used
+in the proof of the support theorem.
+
 \begin{lem}
-\label{lem:useful-independant-set}
+  \label{lem:useful-independant-set}
   Let $C$ be a circuit of order $n$ and let $g$ be a gate in that circuit. If
   $S$ is a useful and independent set at $g$ then $[\sym_n : \stab_n(g)] \geq
   2^{\vert S \vert}$.
 \end{lem}
 \begin{proof}
-  Let $\tau$ and $D$ be the vocabulary and universe of $g$ respectively. Notice
-  that $\sigma \in stab_n(g)$ if, and only if, $H_g = \sigma H_g$ and $L(g)$ and
-  $\sigma L(g)$ are isomorphism-equivalent. For any $R \subseteq S$ define
-  $\sigma_R = \Pi_{(\sigma, h, h') \in R} \sigma$ (with some arbitrary order
-  assumed on $S$). We prove that the mapping $R \mapsto \sigma_R \sortsymsub$ is
-  injective. Let $R$ and $Q$ be distinct subsets of $S$ and WLOG let $\vert R
+  We have that $\sigma \in stab_n(g)$ if, and only if, $H_g = \sigma H_g$ and
+  $L(g)$ and $\sigma L(g)$ are isomorphism-equivalent. For any $R \subseteq S$
+  define $\sigma_R = \Pi_{(\sigma, h, h') \in R} \sigma$ (with some arbitrary
+  order assumed on $S$). We prove that the mapping $R \mapsto \sigma_R \aut(g)$
+  is injective. Let $R$ and $Q$ be distinct subsets of $S$ and WLOG let $\vert R
   \vert \geq \vert Q \vert$. It is sufficient to prove that $\sigma^{-1}_Q
   \sigma_R H_g \neq H_g$ or $\sigma^{-1}_Q \sigma_R L(g)$ is not
   isomorphism-equivalent to $L(g)$. We prove that if $\sigma^{-1}_Q \sigma_R H_g
@@ -637,9 +652,6 @@ indeed give the required lower bound.
   \ref{lem:isostab-compatible} gives us that $\sigma^{-1}_Q \sigma_R L(g)$ is
   not isomorphism-equivalent to $L(g)$ and the result follows.
 \end{proof}
-
-
-
 
 %
 % $determines a set of automorphisms of $\mathcal{D}$, all of which are equal
@@ -725,22 +737,22 @@ constant for polynomial-size circuits).
 
 % Let $C$ be a symmetric circuit of order $n$ with unique labels. Let $\SP(C)$
 % denote the maximum $\| \SP(g) \|$ over all gates $g$ in $C$. Let $g$ be a gate
-% in $C$, and suppose $\Sigma (g)$ is a $(\tau, D)$-structured function. Define a
-% group action $\phi_g : \stab_n (H_g) \rightarrow \sym_{\ind(\tau, D)}$ for
-% $\sigma \in \stab_n(H_g)$ by $\sigma \cdot_{\phi_g} \vec{x} := L(g)^{-1} \sigma
-% L(g) (\vec{x})$ for all $\vec{x} \in \ind(\tau,D)$. Since $C$ has unique labels,
-% we have for $\sigma \in \sym_n$ that $\sigma (g) = g$ if, and only if, $\sigma
-% H_g = H_g$ and $\sigma L(g)$ is isomorphism-equivalent to $L(g)$, which holds
-% if, and only if, $\sigma \in \sortsym_$. It follows from the
-% orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n : \stab_n(g)] =
-% [\sym_n : \sortsym_D(\phi_g)]$.
+% in $C$, and suppose $\Sigma (g)$ is a $(\tau, D)$-structured function. Define
+% a group action $\phi_g : \stab_n (H_g) \rightarrow \sym_{\ind(\tau, D)}$ for
+% $\sigma \in \stab_n(H_g)$ by $\sigma \cdot_{\phi_g} \vec{x} := L(g)^{-1}
+% \sigma L(g) (\vec{x})$ for all $\vec{x} \in \ind(\tau,D)$. Since $C$ has
+% unique labels, we have for $\sigma \in \sym_n$ that $\sigma (g) = g$ if, and
+% only if, $\sigma H_g = H_g$ and $\sigma L(g)$ is isomorphism-equivalent to
+% $L(g)$, which holds if, and only if, $\sigma \in \sortsym_$. It follows from
+% the orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n :
+% \stab_n(g)] = [\sym_n : \sortsym_D(\phi_g)]$.
 
 \begin{thm}
   \label{thm:support_thm}
   For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and $n
   \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric circuit of order $n$ with
   unique labels and $s := \max_{g \in C} \vert \orb (g)\vert \leq
-  2^{n^{1-\epsilon}}$, then, $\SP(C) \leq \frac{33}{\epsilon}\frac{log s}{log
+  2^{n^{1-\epsilon}}$, then, $\SP(C) \leq \frac{33}{\epsilon}\frac{\log s}{\log
     n}$.
 \end{thm}
 
@@ -796,10 +808,10 @@ constant for polynomial-size circuits).
   k' - 1$, which contradicts the inequality $n - \vert \SP(g) \vert \leq k'$.
 
   Since $g$ is moved by each $\sigma_i$, and $C$ has unique labels, it follows
-  that $\sigma_i$ does not act like an automorphism at $g$. Thus, from Lemma
-~\ref{lem:isostab-compatible}, and the fact that the circuit has unique labels,
-  there exists $(h_i, h_i') \in H_g$ such that $(h_i, h_i')$ is not consistent
-  with $sigma_i$, and so the triple $(\sigma_i, h_i, h_i')$ is useful.
+  from Lemma ~\ref{lem:isostab-compatible}, and the fact that the circuit has
+  unique labels, that there exists $(h_i, h_i') \in H_g$ such that $(h_i, h_i')$
+  is not consistent with $sigma_i$, and so the triple $(\sigma_i, h_i, h_i')$ is
+  useful.
 
   % AD: I haven't changed this below in case I'm just confused. But, isn't
   % \SP(h)^* just a new notation for \sp(h)?
@@ -839,7 +851,8 @@ constant for polynomial-size circuits).
   
   Moreover, from Lemma~\ref{lem:useful-independant-set}, we have that $s \geq
   \vert \orb(g) \vert \geq 2^{\vert S \vert} \geq 2^{\frac{n}{(16k')^2}}$ then
-  $n^{1-\epsilon} \geq \log s \geq n \cdot (\frac{128}{\epsilon}\frac{\log s}{\log n})^{-2} > n \cdot (n^{1-\epsilon})^{-2} = n^{2\epsilon -1} \geq
+  $n^{1-\epsilon} \geq \log s \geq n \cdot (\frac{128}{\epsilon}\frac{\log
+    s}{\log n})^{-2} > n \cdot (n^{1-\epsilon})^{-2} = n^{2\epsilon -1} \geq
   n^{1-\epsilon}$. This is a contradiction, and the result follows.
 \end{proof}
  
@@ -864,44 +877,57 @@ must be polynomially bounded, and so the theorem implies that there exists $k
 
 % $a_i \in A_$
 
+\subsection{Supports on Indexes}
 Let $C$ be a symmetric circuit of order $n$ with unique labels and $g$ be a gate
-in the circuit. Let $\tau$ and $D$ be the vocabulary and universe of $g$,
-respectively. We have defined an action $\sym_n$ on the input gates, and, since
-this circuit is symmetric and has unique labels, we know that each permutation
-extends uniquely to an action on the whole circuit. We have also defined an
-action of $\setstab_n(H_g) \leq \sym_n$ on $\ind(\tau, D)$. We have also noted
-that $\sigma \in \stab_n(g)$ if, and only if, $\sigma in \setstab_n(H_g)$ and
-$\sigma$ acts like an isomorphism at $g$. We can thus associate with each
-permutation $\sigma \in stab_n(g)$ a unique element $\pi_\sigma \in \sortsymsub$
-such that $\sigma \cdot \vec{x} = \pi_{\sigma} (\vec{x})$. This fact allows us
-to define an action of $\stab_n(g)$ on $D$ by $\sigma \cdot a = \pi_\sigma(a)$
-for each $a \in D$.
+in the circuit. Since $C$ symmetric and has unique labels, we know that each
+permutation in $\sym_n$ extends uniquely to an action on the whole circuit. We
+have also defined an action of $\setstab(H_g) \leq \sym_n$ on $\ind(g)$. We have
+also noted that $\sigma \in \stab(g)$ if, and only if, $\sigma in \setstab(H_g)$
+and there exists $\pi_{\sigma} \in \aut(g)$ such that $\sigma \cdot \vec{x} =
+\pi_{\sigma} (\vec{x})$ for all $\vec{x} \in \ind(g)$. Thus we may define an
+action of $\stab(g)$ on $\universe{g}$ by $\sigma \cdot a := \pi_{\sigma}
+(\vec{x}) (\vec{x}^{-1}(a))$, for $\sigma \in \stab(g)$ and $a \in
+\universe{g}$, and where $\vec{x} \in \ind(g)$ is any tuple containing $a$. The
+fact that $\pi_{\sigma}$ is both uniquely determined by $\sigma$ and is an
+automorphism gives that this action is well-defined.
 
-We use $\stab_{\stab(g)}(a)$ and $\orb_{\stab(g)}(a)$ to denote the stabiliser
-group and orbit of $a \in D$ with respect to this action. We often abbreviate
-these two groups to $\stab_{g}(a)$ and $\orb_{g}(a)$ when no ambiguity would
-arise. We also let $\SP_g(a)$ and $\consp_g(a)$ denote the canonical supporting
-partition and canonical support of $\stab_g(a)$. When no ambiguity would arise
-we drop the subscript gate.
+We establish in this subsection that an analogue of the support theorem holds
+for elements of the universe. In order to do this, we show that the canonical
+support of an element of the universe of a gate is bounded above by the size of
+the supports of two gates in the circuit. We first define a few useful
+abbreviations. For $a \in \universe{g}$, let $\stab_{g}(a) :=
+\stab_{\stab(g)}(a)$, $\orb_{g}(a) := \orb_{\stab(g)}(a)$, $\stab_{\consp(g)}(a)
+:= \stab_{\stab(\consp(g))}(a)$, and $\orb_{\consp(g)}(a) :=
+\orb_{\stab(\consp(g))}(a)$. For $a \in \universe{g}$ let $\SP_g(a) :=
+\SP_{\stab(g)}(a)$, $\SP_{\consp(g)}(a) := \SP_{\spstab{g}}(a)$, $\consp_g(a) :=
+\consp_{\stab(g)}(a)$, and $\consp_{\consp(g)}(a) := \consp_{\spstab{g}}(a)$, be
+the canonical supporting partitions and canonical supports with respect to the
+stabiliser of $g$ and stabiliser of the support of $g$.
 
-Let $a \in D$, and $h \in H_g$ such that $a \in \vec{a} := (a_1, \ldots , a_r)
-:= L(g)^{-1}(h)$ then $stab_n(h) \cap \stab_n(g) = \stab_g(h) = \bigcap_{i \in
-  [r]}\stab_g(a_i)$. From the Support Theorem and the fact that
-$\stab_n(\consp(h) \cup \consp(g)) \leq \stab_n(h) \cap \stab_n(g)$, we have
-that for large enough $n$, $\stab_n(h) \cap (\stab_n(g))$ must have small
-support. Thus, from Lemma \ref{lem:row-column-supports-well-behaved} we have
-that $\stab_g(h)$ must have canonical support $\consp(h) \cup \consp(g)$.
-Moreover, by repeated application of Lemma
-\ref{lem:row-column-supports-well-behaved}, it follows that each $a_i$ also has
-small support for large enough $n$ and $\consp(a) \subseteq \bigcup_{i \in
-  [r]}\consp(a_i) = \consp(h) \cup \consp(g)$ for each $i \in [r]$. We summarise
-this observation in the following lemma.
+% GW: Is this needed? It might have small support already? I want to clean this
+% up.
+
+Suppose that $n$ is large enough to apply the support theorem and such that each
+gate in $C$ has small support. Let $a \in \universe{g}$, and $h \in H_g$ be such
+that $a \in \vec{a} := (a_1, \ldots , a_r) := L(g)^{-1}(h)$. We have that
+$\stab(\consp(h) \cup \consp(g)) = \stab(\consp(h)) \cap \stab(\consp(g)) \leq
+\stab(h) \cap \spstab{g} = \stab_{\consp(g)}(h) = \bigcap_{i \in
+  [r]}\stab_{\consp(g)}(a_i)$. We thus have that $\stab_{\consp(g)}(h)$ has
+small support. It follows from Lemma~\ref{lem:row-column-supports-well-behaved}
+that $\consp(h) \cup \consp(g)$ we have that $\consp(\stab_{\consp(g)}(h)) =
+\consp(\stab(h)) \cap \consp(\stab(\consp(g))) = \consp(h) \cap \consp(g)$ is
+the canonical support of $\stab_g(h)$. Moreover, by repeated application of
+Lemma \ref{lem:row-column-supports-well-behaved} it follows that each $a_i$ also
+has small support and $\consp_{\consp(g)}(a) \subseteq \bigcup_{i \in
+  [r]}\consp_{\consp(g)}(a_i) = \consp(\stab_{\consp(g)}(h)) = \consp(h) \cup
+\consp(g)$ for each $i \in [r]$. We conclude the following lemma from the above
+argument.
 
 \begin{lem}
   Let $C$ be a symmetric circuit with unique labels and let $n_0$ be a constant
-  sufficient for application of the Support Theorem. Let $g$ be a gate in $C$,
+  sufficient for application of the support theorem. Let $g$ be a gate in $C$,
   let $h \in H_g$ and let $(a_1, \ldots, a_r) := L(g)^{-1}(h)$. Then $\consp(h)
-  \cup \consp(g) = \bigcup_{i \in [r]} \consp(a_i)$.
+  \cup \consp(g) = \bigcup_{i \in [r]} \consp_{\consp(g)}(a_i)$.
   \label{lem:row-column-supports}
 \end{lem}
 
@@ -912,14 +938,10 @@ Corollary \ref{cor:constant-size-support}.
   \label{cor:constant-size-support-for-everything}
   Let $\mathcal{C} := (C_n)_{n \in \nats}$ be a polynomial-size family of
   symmetric circuits with unique labels and let $n_0$ be the constant from the
-  Support Theorem. Then there exists $k$ such that for all $n > n_0$, $g$ a gate
-  in $C_n$, and $a$ in the universe of $g$, $\vert \consp_g(a) \vert \leq 2*
-  \SP(C) \leq k$.
+  support theorem. Then there exists $k$ such that for all $n > n_0$, $g$ a gate
+  in $C_n$, and $a$ in the universe of $g$, $\vert \consp_{\consp(g)}(a) \vert
+  \leq 2* \SP(C) \leq k$.
 \end{cor}
-
-
-
-
 
 % Let $C_n$ be a rigid symmetric circuit with bijective labels. We now extend
 % the given action of $\sym_n$ on the gates of $C_n$ to the indexes. Let $g$ be

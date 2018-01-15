@@ -136,6 +136,23 @@ matrix is understood to have entries in $\mathbb{F}_p$.
 --Include details on how to define a groupa action. Particularly a group action
 as a homomorphism from $G$ to $\sym_X$
 
+Let $X$ be a set and $G$ be a group acting on $X$. We let the stabiliser of $S
+\subseteq X$ for $G$ be defined as $\stab_G(S) := \{ \sigma \in G : \forall x
+\in S \, \sigma \cdot x = x \}$ and the orbit of $S$ for $G$ to be defined as
+$\orb_G (S) := \{ T \subseteq X : \exists \sigma \in G \, \sigma \cdot S = T
+\}$. If $S = \{x\}$, for some $x \in X$, we write $\stab_G (x)$ and $\orb_G(x)$
+in order to abbreviate $\stab_G(\{x\})$ and $\orb_G(\{x\})$, respectively. In
+the event that the choice of $G$ is obvious from context we omit the subscript.
+
+We are often interested in the case where $G$ is the symmetric group $\sym_n$ on
+$n$ elements. In this case we write $\stab_n(x)$ and $\orb_n(x)$ in order to
+abbreviate $\stab_{\sym_n}(x)$ and $\orb_{\sym_n}(x)$, respectively.
+
+We are also often interested in the case where $G$ is the stabiliser group for
+set of elements, or single element, from $X$. For $S, T \subseteq X$, we write
+$\stab_{S}(T)$ and $\orb_{S}(T)$ in order to abbreviate $\stab_{\stab(S)}(T)$
+and $\orb_{\stab(S)}(T)$.
+
 \subsection{Circuits}
 A \emph{Boolean circuit} $C$ defined over some basis $\mathbb{B}$ is a directed
 acyclic graph (DAG) with designated input gates $x_1, \ldots, x_n$, each with
@@ -226,7 +243,10 @@ The main result of~\cite{AndersonD17} is the following characterisation theorem.
 
 \subsection{Basic Notation}
 
-Let $f : X \rightarrow Y$ be a function and $\sim$ be an equivalence relation on Y. We define $f/{\sim} : X \rightarrow Y/{\sim}$ by $f(x) = [f(x)]_{\sim}$. We call this the quotient of the function by $\sim$. For any two sets $X, Y$ we let $X^{\underline{Y}}$ denote the set of all injective functions from $Y$ to $X$.
+Let $f : X \rightarrow Y$ be a function and $\sim$ be an equivalence relation on
+Y. We define $f/{\sim} : X \rightarrow Y/{\sim}$ by $f(x) = [f(x)]_{\sim}$. We
+call this the quotient of the function by $\sim$. For any two sets $X, Y$ we let
+$X^{\underline{Y}}$ denote the set of all injective functions from $Y$ to $X$.
 
 
 
