@@ -1,0 +1,1527 @@
+\documentclass[../paper.tex]{subfiles}
+\begin{document}
+% In contrast with the work of Anderson and Dawar~\cite{AndersonD17}, the
+% circuit families we use to establish the main result of this paper are
+% additionally required to be transparent. In this subsection we briefly discuss
+% this condition, and present results suggesting its necessity.
+
+In the statement of the main theorem of this paper, rather than working with
+general symmetric rank-circuits, we instead restrict ourselves to families of
+\emph{transparent} circuits. In this section we justify this restriction,
+showing first that the a great number of very useful circuit properties (e.g.
+syntactic-equivalence) are polynomial-time decidable for transparent circuits
+and, second, that deciding most of these circuit properties for general circuits
+(with non-symmetric gates) is at least as hard as the graph-isomorphism
+problem. Since the proof of the main theorem makes use of the polynomial-time
+decidability of many of these properties, these results together justify the
+inclusion of the transparency restriction.
+% We note additionally that the circuit properties that we show
+
+% In this section we discuss the transparency condition on circuits. It is worth
+% noting that, since the symmetric circuits of Anderson and
+% Dawar~\cite{AndersonD17} have no non-symmetric internal gates, these circuits
+% are transparent. We have from the first part of this subsection that a great
+% number of useful properties (and transformations) are polynomial-time
+% computable on transparent circuits. However, it is still reasonable to ask if
+% the explicit inclusion of the transparency restriction is strictly necessary
+% for proving these results, or indeed proving the main result of this paper. We
+% provide evidence for necessity of the transparency condition, presenting
+% reductions from the graph-isomorphism problem to the problem of deciding some
+% of this important properties (e.g. symmetry, syntactic-equivalence, computing
+% the orbit of a gate, etc.) over general, not necessarily transparent,
+% circuits. We note that in all of these cases the decision problem restricted
+% to transparent circuits is polynomial-time decidable.
+
+% We further argue that, since most natural algorithms for transforming an
+% arbitrary symmetric circuit into an equivalent transparent circuit make use of
+% the polynomial-time decidability of these properties, we should consider these
+% hardness results evidence that computing this transformation may be as hard as
+% the graph-isomorphism problem
+% We also prove that a number of related decision problems (e.g. synatcatic)
+% important decision problems are reducible to the graph-isomorphism
+% xthat the problem of deciding the orbit of a gate is reduca
+% why (or whether) the transparency condition is strictly required when
+% considering circuits that contain non-symmetric gates. In the second
+% subsection we address this question, proving
+
+
+
+% when considering circuits
+
+% It is worth noting that the analogous results of Anderson and Dawar~\ref{}
+% make no explicit restriction to transparent circuits,
+
+
+% mentio It is worth asking if this additional transparency requirement is
+% structing It is worth noting that Anderson and Dawar~\ref{} when developing
+% their analogous translation, define a polynomial-time algorithm that
+% transforms symmetric circuits into equivalent circuits with unique extensions
+% -- making no mention of any transparency condition. Of course, the circuits
+% they consider contain only symmetric internal gates, and as such are
+% transparent already, but we may still ask if the transparency restriction is
+% strictly necessary for proving the useful results mentioned above.
+
+
+
+
+
+% It is worth noting that the translation defined by Anderson and Dawar~\cite{}
+% between $P$-uniform families of symmetric circuits (with symmetric gates) and
+% formulas of $\FPC$ makes no
+
+% In the second subsection we discuss the necessity of the transparency
+% requirement. Anderson and Dawar~\cite{AndersonD17} importance of this trans
+
+
+% into In the main result of this paper we restrict ourselves to transparent
+% circuits, a restriction not found in the analogous result of Anderson and
+% Dawar~\cite{}. In this section we develop a number of technical that are
+% important for defining and developing the basic technical tools used in this
+% paper.
+
+
+
+% Anderson and Dawar~\cite{} develop an correspondence between symmetric
+% circuits (with symmetric gates) and formulas of fixed point with counting. In
+% contrast, in the main theorem of this paper we explicitly require that the
+% circuits under discussion be \emph{transparent}. This section we develop a
+% number of results about transparent circuits. In the first subsection we
+% discuss
+
+
+% In this section we present a number of useful results for transparent circuits
+% that together enable our analysis
+
+% This condition does not appear explicitly in the analogous result of Anderson
+% and Dawar~\cite{}, and in this section we discuss the importance of this
+% requirement on circuits with non-symmetric gates.
+
+% In the first subsection we demonstrate the usefulness of transparency. We
+% begin by showing that we may transform transparent circuits into circuits with
+% unique extensions in polynomial-time, allowing us assume, without a loss of
+% generality, that $P$-uniform families of transparent circuits also have unique
+% labels, and hence (from Proposition~\ref{}) unique extensions. We are also
+% able to show that if a circuit has unique labels, which transparency allows us
+% to assume, then many natural circuit properties, including the action of a
+% permutation on the circuit, as well as the orbit and coarsest supporting
+% partition of a gate, are polynomial-time computable.
+
+% These results suggest the importance fundamental to our analysis of circuits.
+% The ability to assume that the circuits under discussion have unique
+% extensions (and unique labels) allows us to define many important theoretical
+% tools, such as a canonical action of $\sym_n$ on the circuit and hence the
+% notions of support and supporting partition. Moreover, the polynomial-time
+% algorithms for computing the orbit and support of a gate play an important
+% role (through the Immerman-Vardi Theorem~\cite{}) in our translation of
+% circuits into formulas (see Section \ref{})
+
+
+% we also show that if a circuit has unique labels (which transparency allows us
+% to assume) then there exists polynomial-time algorithms for computing the
+% action of $\sym_n$ on the circuit, and the canonical supporting partition and
+% the orbit a gate (or elements of a universe of a gate). These algorithms play
+% (along with the
+
+
+% polynomial-time algorithms are thus crucial for developing our translation
+% from circuits to formulas.
+
+
+% and prove the existence of polynomial-time algorithms computing important
+% functions, such as the coarsest supporting partition or the orbit of a gate
+% (see Proposition~\ref{prop:c} and Lemma~\ref{}).
+
+% Thus the transparency condition enables our analysis of circuits by allowing
+% us to assume the circuits also have unique extensions. However, Anderson and
+% Dawar~\cite{AndersonD17} prove that symmetric circuit can be transformed into
+% circuits with unique extensions,without making any mention of any condition
+% analogous to transparency. Of course, our result generalises theirs as they
+% only consider circuits with symmetric gates, which are transparent, but it is
+% reasonable to ask if the transparency requirement on circuits is strictly
+% necessary.
+
+% We address this question in this subsection, presenting reductions
+% graph-isomorphism problem to the many related and important problems. We show,
+% for example, that there is a polynomial-time many-one reduction from
+% graph-isomorphism problem to the problem of deciding the orbit of a gate in an
+% arbitrary symmetric circuit, and contrast this result with the known
+% polynomial-time algorithm computing orbits of gates in transparent circuits.
+% We also present reductions from the graph-isomorphism problem to many related
+% problems (e.g. checking syntactic-equivalence or unique label for gates).
+% Since most natural algorithms for transforming any an arbitrary symmetric
+% circuit into an equivalent family of transparent circuits entail solving these
+% related problems, we consider this evidence that computing this transformation
+% may be as hard as the graph isomorphism problem.
+
+% Moreover, we show that non-transparent circuits
+
+% an ay be as hard as the graph isomorphism problem. However, we
+
+% show that that being able to transform a circuit into an equivalent
+% transparent circuit in polynomial-time would
+
+
+
+
+% make no mention In contrast, Anderson and Dawar~\ref{} do not include any
+% specific condition on the circuit families they consider
+
+
+% consider only symmetric circuits with symmetric gates, which are transparent,
+% and as such include no such condition.
+
+
+% make use of an explicit condition on circuits we call \emph{transparency}. In
+% this section we show that transparency is a sufficient condition in that it
+% allows us to assume, without a loss of generality, that $P$-uniform families
+% of In this subsection we show that if a circuit is transparent then it may be
+% transformed in polynomial time into an equivalent circuit with unique labels.
+% It follows from Proposition~\ref{prop:unique-labels-unique-extensions}) that
+% we may assume, without a loss of generality, that $P$-uniform families of
+% transparent circuits have unique labels, and hence unique extensions.
+
+% We also discuss the importance of the transparency condition on circuits
+% introduced in this paper. Indeed, while Anderson and Dawar~\cite{AndersonD17},
+% place no similar requirement on the symmetric circuits in their paper, in our
+% generalisation of their result, transparency is required.
+
+% We also discuss relevant special cases and motivate the explicit requirement
+% that the $P$-uniform families of circuit referenced in the main result of this
+% paper consist of transparent circuits.
+
+% Anderson and Dawar~\cite{AndersonD17} introduce the notion of a `rigid'
+% circuit, a condition analogous to the rigidity condition defined in this
+% paper. The following
+
+% \begin{definition}
+%   We say a circuit $C_n$ is que labels it has unique extensions. We finally
+%   discuss th\emph{rigid} if it has injective labels and for every pair of
+%   gates $(g, g')$ in $C_n$ such that $H_g = H_{g'}$ and $g \equiv g'$.
+% \end{definition}
+\subsection{The Usefulness of Transparency}
+In the this subsection we show that a number of important circuit properties are
+polynomial-time decidable for transparent circuits (e.g. symmetry, the
+syntactic-equivalence relation, etc.). We also provide polynomial-time
+algorithms for computing the action of a permutation on a symmetric circuit, as
+well as for computing the orbits and supports of gates, and elements of
+universes of gates, in a circuit.
+
+We use the polynomial-time decidability of many of these properties throughout
+this paper, and particularly for our translation of circuits into formulas. For
+example, the polynomial-time decidability of the syntactic-equivalence relation
+enables us to transform transparent circuits into circuits with unique labels
+(and so unique extensions) in polynomial-time. This result allows us, when
+working with $\PT$-uniform families of transparent circuits, to assume without a
+loss of generality that these circuits have unique labels and unique extensions.
+This is a crucial step in the proof of our main result, as the unique labels
+requirement is needed to apply the support theorem, and the unique extensions
+property is necessary for applying (and even defining) a great many technical tools (e.g. supports
+and supporting partitions) used extensively throughout this paper.
+
+We now show that the syntactic-equivalence relation can be computed in
+polynomial time for transparent circuits.
+
+% \begin{definition}
+%   We say a class of circuits $\mathcal{C}$ is \emph{syntactically transparent}
+%   if there is an algorithm that takes in a circuit $C \in \mathcal{C}$ and
+%   outputs the syntactic equivalence relation on the gates of $C$ and runs in
+%   time polynomial in the size of the input circuit.
+% \end{definition}
+
+\begin{lem}
+  There is an algorithm that takes as input a transparent circuit $C$ and
+  outputs the syntactic-equivalence relation on the gates of $C$. The algorithm
+  runs in time polynomial in the size of $C$.
+  \label{lem:unique-labels-syntactic-equiv}
+\end{lem}
+\begin{proof}
+  Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a transparent
+  $(\mathbb{B}, \rho)$-circuit of order $n$. We define a relation $\sim$ by
+  induction on height (i.e. distance from an input gate). This relation will be
+  the syntactic-equivalence relation on $G$. It is easy to check the conditions
+  for syntactic-equivalence for gates of height 0 as all such gates are input
+  gates and so are either constant gates or relational gates. Suppose $g$ and
+  $h$ are gates of height greater than zero. We only need to check conditions
+  (i), (iv) and (v) of syntactic-equivalence. It is easy to check (i) and (v).
+  If either condition is false then $g$ and $h$ are not syntacticly equivalent.
+  So suppose $g$ and $h$ are two internal gates such that $\Sigma (g) =
+  \Sigma(h)$ and suppose that if they are both output gates then $\Omega^{-1}(g)
+  = \Omega^{-1}(h)$. It remains to check if $L(g)/{\sim}$ and $L(h)/{\sim}$ are
+  isomorphism equivalent. First check if $H_h /{\sim} = H_g /{\sim}$. If not,
+  $g$ and $h$ are not syntactically equivalent. So suppose $H_h /{\sim} = H_g
+  /{\sim}$. If $g$ and $h$ are symmetric gates then $H_h /{\sim} = H_g/{\sim}$
+  if, and only if, $L(g)/{\sim}$ and $L(h)/{\sim}$ are isomorphism equivalent,
+  so let $g \sim h$. If $g$ and $h$ are not symmetric gates then, since $C$ is
+  transparent, $g$ and $h$ have unique labels. We thus have that $L(g)/{\sim}$
+  and $L(h)/{\sim}$ are isomorphism equivalent if, and only if, $L(g)^{-1}L(h)$
+  acts like an isomorphism. This can be checked by first checking that the
+  function induces a sorted permutation on the universe of $g$ (which can be
+  checked efficiently). This is sufficient as $L(g)(L(g)^{-1}L(h)) = L(h)$.
+
+  It is easy to see that, given a reasonable binary encoding of a circuit, the
+  above procedure can be implemented so as to run in polynomial time, and that
+  the relation $\sim$ is the syntactic-equivalence relation on the gates of $C$.
+ 
+\end{proof}
+
+We now prove that transparent circuits can be transformed in polynomial time
+into equivalent circuits with unique extensions, and that this transformation
+preserves important properties of the circuit.
+
+\begin{lem}
+  Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a transparent
+  $(\mathbb{B}, \rho)$-circuit. There is an algorithm that that takes in such a
+  circuit and outputs a $(\mathbb{B} \cup \mathbb{B}_{\std}, \rho)$-circuit $C'$
+  such that $C$ and $C'$ compute the same function, $C'$ has unique labels, and
+  if $C$ is symmetric then $C'$ is symmetric. Moreover, this algorithm runs in
+  time polynomial in the size of the input circuit.
+  \label{lem:transparent-unique}
+\end{lem}
+\begin{proof}
+  Let $C' := \op{make-injective-all}(\op{merge-all} (C, G))$ (see
+  Definition~\ref{def:make-injective} and~\ref{def:merge-all} for the
+  definitions of these functions). It follows that if $C$ is symmetric then $C'$
+  is symmetric. We have from Lemma~\ref{lem:unique-labels-syntactic-equiv} that
+  the syntactic-equivalence relation can be computed in polynomial time for
+  transparent circuits. It follows that the construction of $C'$ from $C$ can be
+  implemented so as to run in time polynomial in the size of $C$. Clearly every
+  gate $g$ in $C'$ belongs to a singleton syntactic-equivalence equivalence
+  class, and as such $C'$ has unique labels.
+\end{proof}
+% GW: read this when fresh
+
+We now show that it is possible to compute the action of $\sym_n$ on the gates
+of a circuit of order $n$ with unique labels in polynomial time. Recall that
+from Proposition~\ref{prop:transparent-unique} we may, without a loss of
+generality, restrict of attention from transparent circuits to circuits with
+unique labels. The proof technique used here is similar to the one used by
+Anderson and Dawar~\cite{AndersonD17}.
+
+\begin{lem}
+  There is an algorithm takes as input a $(\mathbb{B}, \rho)$-circuit $C$ of
+  order $n$ with unique labels and $\sigma \in \sym_n$ and outputs for each gate
+  $g$ its image under the unique automorphism extending $\sigma$ (if it exists).
+  This algorithm runs in time polynomial in the combined size of the input
+  circuit and the encoding of the permutation.
+  \label{lem:compute-automorphisms}
+\end{lem}
+\begin{proof}
+  Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$. We recursively build
+  up the mapping $\pi$ extending $\sigma$. If at some point in the recursive
+  construction we arrive at a point where no mapping for $g$ can be found we
+  halt at that point and return that no automorphism exists.
+
+  Let $h$ be any gate in the circuit. Suppose $h$ is an input gate. If $h$ is a
+  constant gate then let $\pi (h) = h'$. If $h$ is a relational gate such that
+  $R := \Sigma(h)$, then check if there exists $h'$ such that $\Sigma (h') = R$,
+  $\sigma \Lambda_R(h) = \Lambda_R(h')$, and either both $h$ and $h'$ are output
+  gates or neither are. If no such $h'$ exists then halt and output that no
+  automorphism exists. If both $h$ and $h'$ are not output gates then set $\pi
+  (h) = h'$. If both are output gates then check if $\sigma \Omega^{-1}(h) =
+  \Omega^{-1}(h')$. If equality holds set $\pi(h) = h'$, otherwise halt and
+  output that no automorphism exists. We have from Lemma~\ref{} that there is at
+  most one gate $h'$ that meets the above criteria, and so $\pi(h)$ is well
+  defined.
+
+  Let $h$ be an internal gate in the circuit and assume we have defined $\pi
+  (g)$ for every gate $g$ of height less than $h$. Let $h'$ be a gate in the
+  circuit such that $\Sigma(h) = \Sigma (h')$, $\pi L(h)$ is
+  isomorphism-equivalent to $L(h')$ and, if $h$ is an output gate then $h'$ is
+  an output gate such that $\sigma \Omega^{-1}(h) = \Omega^{-1}(h')$. Since $C$
+  has unique labels (and so unique extensions) we have that $\pi L(h)$ is
+  isomorphism-equivalent to $L(h')$ if, and only if, $L(h')^{-1}\pi L(h)$ acts
+  on $\ind(h)$ like an automorphism of $\str{h}$. This can be determined easily.
+  If no such $h'$ exists halt and output that there is no automorphism extending
+  $\sigma$. Again, we have that if $C$ has unique labels then there is at most
+  one such $h'$.
+
+  This recursive approach can be implemented as an algorithm that runs in time
+  polynomial in the combined size of the inputs and outputs the required
+  automorphism if it exists.
+\end{proof}
+
+We now that, using the algorithm from Lemma~\ref{lem:compute-automorphisms}, we
+can similarly compute the action of $\sym_n$ on the elements of the universes of
+the gates of a circuit of order $n$ in polynomial time.
+
+\begin{lem}
+  There is an algorithm takes as input a $(\mathbb{B}, \rho)$-circuit $C$ of
+  order $n$, $\sigma \in \sym_n$, $g$ a gate in $C$, and $a \in \universe{g}$
+  and, if there exists an automorphism of $C$ extending $\sigma$ such that
+  $\sigma in \stab(g)$, outputs image of $a$ under $\sigma$. The algorithm runs
+  in time polynomial in the size of $C$ and the encoding of $\sigma$.
+  \label{lem:compute-automorphisms-labels}
+\end{lem}
+\begin{proof}
+  Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$. Use the algorithm
+  from Lemma \ref{lem:compute-automorphisms} to check if $\sigma$ extends to an
+  automorphism on $C$ and $\sigma \in \stab(g)$. If not, return that no such
+  automorphism exists. We thus have that $C$ is symmetric. Let $h \in H_g$ and
+  $\vec{a} := L(g)^{-1}(h)$ be such that $a \in \vec{a}$, and let $i$ be the
+  index of $a$ in $\vec{a}$. Output $\sigma \cdot a := L(g)^{-1}(\sigma h)(i)$.
+\end{proof}
+
+We now show that it is possible to compute the orbits and canonical supporting
+partitions of gates in circuits with unique labels in polynomial-time. We also
+show that it is possible to compute the orbits and canonical supporting
+partitions of elements on the universes of gates in circuits with unique labels
+in polynomial-time. In order to prove both of these results we first prove a
+more general result for group actions.
+
+\begin{lem}
+  \label{lem:computing-support-orbit}
+  There is an algorithm that takes in a subset $S \subseteq [n]$ and $x \in X$,
+  where $X$ is some finite set such that there is a group action of $\stab(S)$
+  on $X$ computable in time polynomial in both $n$ and $\vert X \vert$ and
+  outputs $\orb_{\stab(S)} (x)$ and $\SP_{\stab(S)}(x)$. This algorithm runs in
+  time polynomial in both $\vert X \vert$ and $n$.
+\end{lem}
+\begin{proof}
+  Let $(u, v) \in \sym_{[n] \setminus S}$ be a transposition. We note that
+  $(u,v) \in \stab(S)$ and there are ${n - \vert S \vert}\choose{2}$ many such
+  transpositions. For a transposition $(u, v) \in \sym_{[n] \setminus S}$, let
+  \begin{align*}
+    \mathcal{P}_{(u,v)} := \{ \{u,v\}\} \bigcup_{w \in [n] \setminus \{ u,v \}} \{ \{ w \} \}
+  \end{align*}
+  be a partition of $[n]$. Then $\mathcal{P}_{(u,v)}$ supports
+  $\stab_{\stab(S)}(x)$ if, and only if, $(u,v) \cdot x = x$.
+
+  Let $\mathcal{P}$ be the partition formed by applying $\mathcal{E}$ to all
+  $\mathcal{P}_{(u,v)}$ such that $(u,v) \cdot x = x$ (which can be checked in
+  time polynomial in $\vert X \vert$ and $n$). From
+  Proposition~\ref{prop:combining-supporting-patitions} we have that
+  $\mathcal{P}$ supports $\stab_{\stab(S)}(x)$. Suppose that $\mathcal{P}$ is
+  not the coarsest supporting partition of $\stab_{\stab(S)}(x)$. Then there
+  exists a partition $\mathcal{P}'$ supporting $\stab_{\stab(S)}(x)$ such that
+  $\mathcal{P}' \preceq P$ and $\mathcal{P}' \neq \mathcal{P}$. And so there
+  exists $P \in \mathcal{P}$ and $P' \in \mathcal{P}'$ such that $P \subsetneq
+  P'$. But then there exists $a , b \in P'$ such that $a \not\in P$. Note that
+  $(a,b)$ fixes $\mathcal{P}'$ and, since $\mathcal{P}'$ supports
+  $\stab_{\stab(S)}(x)$, it follows that $(a,b) \in \stab_{\stab(S)}(x)$ and $a
+  \not\in S$ and $b \not\in S$. But then we have that $(a,b) \cdot x = x$, and
+  so $\mathcal{P}_{(a,b)}$ supports $\stab_{\stab(S))}(x)$ and thus, from the
+  construction of $\mathcal{P}$, $\mathcal{P}$ is fixed by $(a,b)$. But we
+  selected $a$ and $b$ such that $\mathcal{P}$ is not fixed by $(a,b)$, and so
+  we have a contradiction. We thus have that $\mathcal{P}$ is the coarsest
+  supporting partition of $\stab_{\stab(S)}(x)$.
+
+  It remains to compute $\orb_{\stab(S)}(x)$. Let $M_0 := \{x\}$ and for each $i
+  \geq 0$ let $M_{i+1} := M_i\cup \bigcup_{(u,v) \in \sym_{[n] \setminus S}}
+  ((u,v) \cdot M_i)$. Let $M$ be the least fixed point of this sequence. It is
+  easy to see that $M \subseteq \orb_{\stab(S)}(x)$ as every element of $M$ is
+  equal to the action of some finite sequence of transpositions acting on $x$.
+  Moreover, if $y \in \orb_{\stab(S)}(x)$, then there exists $\pi \in \stab(S)$
+  such that $y = \pi \cdot x$. But then, since $\sym_{[n] \setminus S}$, is
+  generated by the set of all transpositions in $\sym_{[n] \setminus S}$, it
+  follows that $\pi$ can be written as a sequence of $t$ transpositions (for
+  some $t \in \nats$). Thus $y \in M_t \subseteq M$, and hence
+  $\orb_{\stab(S)}(x) \subseteq M$, and so $\orb_{\stab(S)}(x) = M$.
+
+  Note that the set of all transpositions in $\sym_{[n] \setminus S}$ can be
+  computed in time $\mathcal{O}(n^{2})$ and whether a transposition fixes $x$
+  can be computed in time polynomial in both $\vert X \vert$ and $n$. Moreover,
+  since it is easy to show that $\mathcal{E}$ can be computed in time polynomial
+  in $n$, it follows that $\mathcal{P}$ (defined above) can be computed in
+  $\mathcal{O} (n^{2} q(\vert X \vert, n))$, for some polynomial $q$.
+
+  Furthermore, since, when computing the orbit, the least fixed point must be
+  reached in fewer than $\vert X \vert$ iterations, and each iteration requires
+  at most $\mathcal{O} (n^{2})$ applications of the group action, it follows
+  that the procedure terminates in time $\mathcal{O}(\vert X \vert n^{2} q'
+  (\vert X \vert, n))$, for some polynomial $q'$. The result follows.
+\end{proof}
+
+We now use Lemma~\ref{lem:computing-support-orbit} to prove the result for the
+orbits and canonical supporting partitions of gates in the circuit.
+
+\begin{lem}
+  There is an algorithm that takes in a circuit $C$ of order $n$ with unique
+  labels and outputs if the circuit is symmetric. If it is symmetric then it
+  outputs the orbit and coarsest supporting partition of every gate. This
+  algorithm runs in time polynomial in the size of the circuit.
+  \label{lem:computing-support-orbit-gate}
+\end{lem}
+
+\begin{proof}
+  For each transposition $(u,v) \in \sym_n$ and each gate $g$ in $C$ use
+  Lemma~\ref{lem:compute-automorphisms} to check if the image of $g$ under
+  $(u,v)$ exists. If for any transposition and gate the algorithm returns that
+  no image exists then output that the circuit is not symmetric.
+
+  We note that if all gates have an image under all transpositions then, since
+  $\sym_n$ is generated by the set of transpositions, we have that $C$ is
+  symmetric.
+  
+  We have from Lemma~\ref{lem:compute-automorphisms} that computing the action
+  of $\sym_n$ on the gates of $C$ can be done in time polynomial in the size of
+  the circuit. For each gate $g$ in $C$ we run the algorithm from
+  Lemma~\ref{lem:computing-support-orbit} with $S := \emptyset$, $X := G$ (the
+  set of gates in C), and $x := g$, and output the results.
+  
+  Since there are ${{n}\choose{2}} \leq n^2$ transpositions in $\sym_n$, the
+  initial symmetry check can be completed in time polynomial in the size of the
+  circuit. Moreover, from Lemmas~\ref{lem:compute-automorphisms} and
+  \ref{lem:computing-support-orbit}, and the fact that $\vert C \vert \geq n$
+  and $\vert C \vert \geq \vert \universe{g} \vert$, we have that the rest of
+  the algorithm also runs in time polynomial in the size of the circuit.
+\end{proof}
+
+We now use Lemma~\ref{lem:computing-support-orbit} to prove the result for the
+orbits and canonical supporting partitions of elements of the universes of gates
+in the circuit.
+
+\begin{lem}
+  There is an algorithm that takes in a circuit $C$ of order $n$ with unique
+  labels, a gate $g$ in $C$ with small support, and $a \in \universe{g}$, and
+  outputs if the circuit is symmetric. If $C$ is symmetric it outputs the orbit
+  $\orb_{\consp(g)} (a)$ and coarsest supporting partition $\SP_{\consp(g)}(a)$.
+  This algorithm runs in time polynomial in the size of the circuit.
+  \label{lem:computing-support-orbit-index}
+\end{lem}
+\begin{proof}
+  Use the algorithm from Lemma~\ref{lem:computing-support-orbit-gate} in order
+  to compute the canonical support of $g$. If the algorithm returns that $C$ is
+  not symmetric, output that $C$ is not symmetric.
+
+  Use the algorithm from Lemma~\ref{lem:computing-support-orbit}, with $S :=
+  \consp(g)$, $X := \universe{g}$ and $x:= a$, and output the results.
+
+  Notice that, since $\vert \universe{g} \vert \leq \vert C \vert$ and $n \leq
+  \vert C \vert$, this algorithm runs in polynomial time.
+\end{proof}
+
+Anderson and Dawar~\cite{AndersonD17}, in their study of circuits with symmetric
+gates, show that such circuits may be transformed in polynomial time into
+equivalent circuits with unique extensions. They do this by showing that a
+circuit with symmetric gates may be transformed into an equivalent \emph{rigid}
+circuit in polynomial time, and that all rigid circuits have unique extensions.
+Moreover, they also prove the existence of polynomial-time algorithms computing
+the action of a permutation on a rigid circuit, and the orbits and coarsest
+supporting partitions of gates in a rigid circuits. We have shown that
+transparent circuits can be translated into equivalent circuits with unique
+labels in polynomial time, and that circuits with unique labels have unique
+extensions (see Proposition~\ref{}). Moreover, we have similarly shown that, for
+transparent circuits, the action of a permutation, as well as the coarsest
+supporting partition and orbit of a gate (or element of the universe of a gate),
+can be computed in polynomial-time. Since all circuits with symmetric gates are
+transparent, this is direct generalisation of the results of Anderson an Dawar.
+
+\subsection{The Necessity of Transparency}
+% The reader will notice that while we have included a specific requirement that
+% each non-symmetric internal gate in a circuit have unique labels (i.e. that
+% the circuit be transparent) no similar condition In this section we discuss
+% the transparency condition on circuits. It is worth noting that, since the
+% symmetric circuits of Anderson and Dawar~\cite{AndersonD17} have no
+% non-symmetric internal gates, these circuits are transparent.
+
+% we provide evidence f (which from lemma~\ref{} may be assumed to have unique
+% extensions)or necessity of the transparency condition, presenting reductions
+% from the graph-isomorphism problem to the problem of deciding some of this
+% important properties (e.g. symmetry, syntactic-equivalence, computing the
+% orbit of a gate, etc.) over general, not necessarily transparent, circuits. we
+% note that in all of these cases the decision problem restricted to transparent
+% circuits is polynomial-time decidable.
+
+% we further argue that, since most natural algorithms for transforming an
+% arbitrary symmetric circuit into an equivalent transparent circuit make use of
+% the polynomial-time decidability of these properties, we should consider these
+% hardness results evidence that computing this transformation may be as hard as
+% the graph-isomorphism problem.
+We have from the first subsection that a great number of useful properties are
+polynomial-time computable on transparent circuits. However, it is still
+reasonable to ask if the explicit inclusion of the transparency restriction is
+strictly necessary for proving these results. In this subsection we present a
+number of results suggesting the importance of the transparency requirement. In
+particular, we present reductions from the graph-isomorphism problem to many
+important decision problems addressed in the first subsection (e.g. deciding if
+a circuit is symmetric, if a gate has unique labels, if two gates are
+syntactically-equivalent, of if two gates are in the same orbit).
+
+These results together strongly suggest the necessity of the transparency
+condition for enabling the polynomial-time decidability of many basic properties
+of circuits with non-symmetric gates. Moreover, while we do not show that there
+is no polynomial-time computable transformation from a general circuit to an
+equivalent transparent circuit, the difficulty associated with computing basic
+circuit properties that seem essential for defining such a transformation
+provide evidence in favour of this conjecture. (Indeed, the translation defined
+by Anderson and Dawar~\cite{AndersonD17} from circuits with symmetric gates to
+equivalent circuits with unique extensions makes explicit use of the
+polynomial-time computability of syntactic-equivalence on such circuits).
+
+As a final point, we note that while we present evidence against the ability to
+transform arbitrary circuits into transparent circuits in polynomial-time, we do
+show that the class of transparent circuits is polynomial-time decidable. In contrast, we show
+that deciding the class of circuits with unique extensions is at least as hard
+as the graph-isomorphism problem.
+
+% We particularly note the hardness results for syntactic-equivalence note The
+% difficulty of computing the orbit for non-transparent circuits is particularly
+% important to note, as we make use of the existence of the polynomial-time
+% decidability of the orbit in the proof of our main result.
+
+% In particular, we show that the graph-isomorphism problem reduces to the
+% problem of computing the syntactic-equivalence relation for general circuits.
+
+% As we noted, Anderson and Dawar~\cite{AndersonD17} show that circuits (with
+% symmetric gates) can be transformed in polynomial time into equivalent rigid
+% circuits (in fact, their algorithm transforms these circuits into equivalent
+% circuits with unique labels, a stronger condition than rigidity). Their proof
+% of this result makes explicit use of the fact that the syntactic-equivalence
+% relation on the gates of these circuits can be computed in polynomial-time
+
+
+
+
+
+
+% These results together suggest that the a polynomial-time definable
+
+
+
+% use of to compute the orbit is a particularly important limitation, as we make
+% use of a polynomial-time algorithm for deciding the orbit of a gate (or
+% element of a universe of a gate) in our proof of the main result.
+
+% Moreover, we also show that
+
+% However, if we allow gates that compute non-symmetric functions, it is not
+% clear that the syntactic-equivalence relation remains polynomial-time
+% decidable.
+
+
+% . prove results analogous to Lemma~\cite{} The reader will notice that, while
+% we require that the circuit families in our main result consist of transparent
+% circuits, no similar explicit condition is introduced in Anderson and
+% Dawar~\cite{}.
+
+
+% When Anderson and Dawar~\cite{} prove these results for symmetric circuits
+% (with symmetric gates) they explicitly use the fact that the syntactic
+% equivalence relation can be computed in polynomial time.
+
+% The proofs of these results by Anderson and Dawar~\cite{} can prove all of
+% these results
+
+
+% We now turn to the question of the importance of the transparency condition.
+% It could be that, just as for the case of circuits with symmetric gates, a
+% general circuit (not necessarily transparent) can be transformed in polynomial
+% time into an equivalent transparent circuit. If so, from the argument above,
+% we could assume without a loss of generality that $P$-uniform families of
+% symmetric circuit have unique extensions, eliminating the need for the
+% explicit transparency requirement present in the main theorem.
+
+% While we do not show that no such transformation exists, we do show that many
+% related problems are as hard as the graph isomorphism problem for a general,
+% not-necessarily transparent, circuit). In particular, we show that the related
+% problems of computing the syntactic equivalence relation for a circuit, or
+% whether a gate in the circuit has unique labels, or unique extensions (in the
+% sense defined below), are all also at least as hard as the graph isomorphism
+% problem. We also show that computing other basic properties of a symmetric
+% circuit, such as the orbit of a gate, is also at least as hard as the graph
+% isomorphism problem. This is a particularly important limitation, as we make
+% use of a polynomial-time algorithm for deciding the orbit of a gate (or
+% element of a universe of a gate) in our proof of the main result.
+
+% ,; address two related decision problems in Proposition \ref{} and Corollaries
+% \ref{} and \ref{}. In partic
+
+% As we will show in Proposition \ref{}, formulas of $\FPR$ can be translated
+% into. For this transparent circuits. However, the transformation is
+% complicated by the requirement that the resultant circuit be transparent.
+% However, it is worth asking if the transparency condition is required, i.e. if
+% it can be shown that
+
+% \emph{rigid} circuit. They show that all circuits such circuits can be
+% transformed into equivalent rigid circuits . They show that if a circuit is
+% rigid then it has unique extensions and that every circuit with injective
+% labels and symmetric gates can be transformed into an equivalent rigid circuit
+% in polynomial time. We have similarly shown that a transparent circuit can be
+% transformed into an equivalent one with unique labels in polynomial time, and
+% that circuits with unique labels have unique extensions. Moreover, since all
+% circuits with symmetric gates and injective labels are transparent, this is a
+% strict generalisation of their result.
+
+% and they show that a symmetric gate
+
+
+% Using the language developed in this paper, a circuit $C_n$ is \emph{rigid} if
+% it has injective labels and there are no two gates $g$ and $h$ in $C_n$ such
+% that $g$ and $h$ are syntactically equivalent. Since their discussion is
+% limited to circuits with symmetric gates and injective labels this is equ
+
+
+% circuit, a condition analogous to the rigidity condition defined in this
+% paper. The following
+
+% It is worth noting that all symmetric circuits are transparent, and
+
+% prove that it's a sufficient condition for establishing the uniqueness of the
+% induced automorphism on the circuit. Moreover, they prove that any circuit
+% (noting that they limit themselves to a discussion of circuits over a
+% symmetric basis) may be transformed into an equivalent rigid circuit in
+% polynomial time. As such, they may assume $P$-uniform symmetric circuit
+% families are rigid without a loss of generality, and hence be may assume
+% without a loss of generality that each permutation in $\sym_n$ uniquely
+% extends to an automorphism of the circuit.
+
+
+
+% However, in this subsection we show that deciding the rigidity of circuits
+% over bases which may include non-symmetric functions is at least as hard as
+% the graph isomorphism problem. However, we shoudl that on classes
+
+% Although the rigidity condition we present in this paper is similarly defined,
+% the existence of a polynomial-time computable transformation of a circuit into
+% an equivalent rigid circuit is not as straight forward. Indeed, it is possible
+% to show that the problem of determining if a given $(\mathbb{B},
+% \tau)$-circuit is rigid is as least as hard as the graph isomorphism problem.
+% This is a direct consequence of the following result.
+
+% \begin{definition}
+%   The \emph{syntactic equivalence class problem} is the decision problem for
+%   the set of all triples $(C, g_1, g_2)$, where $C$ is a $(\mathbb{B},
+%   \tau)$-circuit, and $g_1$ and $g_2$ are two syntactically equivalent gates
+%   in $C$.
+% \end{definition}
+
+% \begin{definition}
+%   The \emph{rigidity problem} is the decision problem for the set of all
+%   circuits $C$ where $C$ is a rigid circuit.
+% \end{definition}
+
+% \begin{definition}
+%   The \emph{unique labels problem} is the decision problem for the set of all
+%   circuits $C$ where $C$ has unique labels.
+% \end{definition}
+
+% \begin{prop}
+%   Let $\tau$ be any non-empty relational vocabulary and let $n, r, p \in
+%   \nats$ with $p$ prime. There is a a polynomial time reduction from the graph
+%   isomorphism problem to the problem of deciding if a given pair of gates in a
+%   given symmetric rank-circuit for structures of size $n$ that (i) has
+%   injective labels, (ii) contains no constant gates, and (iii) contains at
+%   most two rank gates with bound $r$ and prime $p$, are syntactically
+%   equivalent.
+%   \label{prop:syntactic-graph-iso}
+% \end{prop}
+% \begin{proof}
+%   We have from \cite{} that there is a polynomial time reduction from the
+%   graph isomorphism problem to the bipartite isomorphism problem. The
+%   bipartite isomorphism problem is the decision problem for the set of all
+%   pairs of partitioned bipartite graphs $B_1 := (U_1, V_1, E_1)$ and $B_2 :=
+%   (U_2, V_2, E_2)$ such that there exists a graph isomorphism $\pi : B_1
+%   \rightarrow B_2$ with $\restr{\pi}{U_1} = U_2$ and $\restr{\pi}{V_1} = V_2$.
+
+%   Suppose we are given two partitioned bipartite graphs $B_1 := (U_1, V_1,
+%   E_1)$ and $B_2 := (U_2, V_2, E_2)$. We assume, without a loss of generality,
+%   that there exists $a, b \in \nats$ such that $U_1 = U_2 = [a]$ and $V_1 =
+%   V_2 = [b]$.
+
+%   Let $R$ be a relation symbol in $\tau$ and let $k := \arty{R}$. Let $G_{R}
+%   := \{g_{R, \vec{c}} : \vec{c} \in [n]^k\}$, $G_{\text{mid}} := \{\land_0,
+%   \land_1, \neg_0, \land_{\text{out}} \}$, $G_{\rank} : = \{ g_{\rank, 1},
+%   g_{\rank, 2}\}$, and $G_{\land} := \{g_{i, (u,v)} : i \in [2] \, (u,v) \in
+%   E_i \}$. Let $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a
+%   $(\{\rank^{1}_2\}, \tau)$-circuit defined as follows. Let $G = G_R \cup
+%   G_{\text{mid}} \cup G_{\rank} \cup G_{\land}$ and $\Omega$ be the $0$-ary
+%   function $\land_{\text{out}}$. For each $\vec{c} \in [n]^{\arty{R}}$ let
+%   $\Lambda(\vec{c}) = g_{R, \vec{c}}$. Define $\Sigma$ as follows. For each $g
+%   \in G$,
+%   \begin{itemize}
+%     \setlength\itemsep{0mm}
+%   \item if $g \in G_R$ then $\Sigma(g) = R$,
+%   \item if $g$ equals $\land_0$ or $\land_1$ then $\Sigma(g) = \land[n^k]$
+%   \item if $g$ equals $\land_{\text{out}}$ then $\Sigma(g) = \land[2]$,
+%   \item if $g \in G_\rank$ let $\Sigma(g) = \rank^r_p [a,b]$, and
+%   \item if $g \in G_{\text{in}}$ and $g$ then $\Sigma(g) = \land[1]$.
+%   \end{itemize}
+%   Define $L$ as follows. For each $g \in G$,
+%   \begin{itemize}
+%     \setlength\itemsep{0mm}
+%   \item if $g \in G$ and $g = g_{\text{out}}$ then for each $i \in [2]$,
+%     $L(g)(i) := g_{\rank, i}$,
+%   \item if $g \in G_\rank$ and $g = g_{\rank, i}$ then $L(g)(p,q) = g_{i,
+%     (p,q)}$,
+%   \item if $g \in G_{\land}$ and $g = g_{i, (p,q)}$ then $L(g)(1) = \land_1$
+%     if $(p,q) \in E_i$ and $L(g)(1) = \neg_0$ otherwise,
+%   \item if $g = \neg_0$ then $L(g)(1) = \land_0$, and
+%   \item if $g = \land_0$ or $g = \land_1$ then for all $p \in [n^k]$ we have
+%     that $L(g)(p)$ equals $\Lambda^{-1}(\vec{c}_p)$, where $\vec{c}_p$ is the
+%     $p$th element of $[n]^k$ in the lexicographical ordering on $[n]^k$.
+%   \end{itemize}
+
+%   We note that for $i \in [2]$, $L(g_{\rank, i})(p,q) = \land_1$ if $(p,q)$ is
+%   an edge in in $B_i$ and $L(g_\rank, i)(p,q) = \neg_0$ if $(p,q)$ is not an
+%   edge in $B_i$. We thus have that $B_1$ and $B_2$ are bipartite isomorphic
+%   (in the sense defined above) if, and only if, $g_{\rank, 1}$ is
+%   syntactically equivalent to $g_{\rank, 2}$.
+
+%   Since the construction of $C_n$ can be implemented in time polynomial in the
+%   combined sizes of the input graphs, the mapping of $(B_1, B_2)$ to the tuple
+%   $(C_n, (g_{\rank, 1}, g_{\rank, 2}))$ witnesses the reduction. The result
+%   follows.
+% \end{proof}
+
+We now present a reduction from the graph-isomorphism problem to the problem of
+deciding if two gates in a circuit are syntactically-equivalent. In fact, we
+prove a stronger result, presenting a reduction from the graph-isomorphism
+problem to the problem of computing the syntactic-equivalence relation over an
+ostensibly simpler class of circuits.
+
+\begin{prop}
+  Let $\rho$ be any non-empty relational vocabulary and let $n, r, p \in \nats$,
+  with $p$ prime. There is a a polynomial time reduction from the
+  graph-isomorphism problem to the problem of deciding if a given pair of gates
+  in a given symmetric rank-circuit for structures of size $n$ that (i) has
+  injective labels, (ii) contains no constant gates, and (iii) contains at most
+  two rank gates with bound $r$ and prime $p$, are syntactically equivalent.
+  \label{prop:syntactic-graph-iso}
+\end{prop}
+\begin{proof}
+  We have from \cite{} that there is a polynomial time reduction from the graph
+  isomorphism problem to the bipartite isomorphism problem. The bipartite
+  isomorphism problem is the decision problem for the set of all pairs of
+  partitioned bipartite graphs $B_1 := (U_1, V_1, E_1)$ and $B_2 := (U_2, V_2,
+  E_2)$ such that there exists a graph isomorphism $\pi : B_1 \rightarrow B_2$
+  with $\restr{\pi}{U_1} = U_2$ and $\restr{\pi}{V_1} = V_2$.
+
+  Suppose we are given two partitioned bipartite graphs $B_1 := (U_1, V_1, E_1)$
+  and $B_2 := (U_2, V_2, E_2)$. We assume, without a loss of generality, that
+  there exists $a, b \in \nats$ such that $U_1 = U_2 = [a]$ and $V_1 = V_2 =
+  [b]$.
+
+  Let $R$ be a relation symbol in $\rho$ and let $k := \arty(R) > 0$. Let $G_{R}
+  := \{g_{R, \vec{c}} : \vec{c} \in [n]^k\}$, $G_{\text{mid}} := \{\land_0,
+  \land_1, \neg_0, \land_{\text{out}} \}$, $G_{\rank} : = \{ g_{\rank, 1},
+  g_{\rank, 2}\}$, and $G_{\text{nodes}} := \{g_{i, (u,v)} : i \in [2] \, (u,v)
+  \in E_i \}$. Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a
+  $(\{\rank^{1}_2\}, \rho)$-circuit of order $n$ defined as follows. Let $G =
+  G_R \cup G_{\text{mid}} \cup G_{\rank} \cup G_{\text{nodes}}$ and $\Omega$ be
+  the $0$-ary function $\land_{\text{out}}$. For each $\vec{c} \in
+  [n]^{\arty(R)}$ let $\Lambda(\vec{c}) = g_{R, \vec{c}}$. Define $\Sigma$ as
+  follows. For each $g \in G$,
+  \begin{itemize}
+    \setlength\itemsep{0mm}
+  \item if $g = \land_{\text{out}}$ then $\Sigma(g) = \land[2]$,
+  \item if $g \in G_\rank$ then $\Sigma(g) = \rank^r_p [a,b]$,
+  \item if $g \in G_{\text{nodes}}$ then $\Sigma(g) = \land[1]$,
+  \item if $g= \neg_0$ then $\Sigma(g) = \neg$,
+  \item if $g$ equals $\land_0$ or $\land_1$ then $\Sigma(g) = \land[n^k]$, and
+  \item if $g \in G_R$ then $\Sigma(g) = R$.
+  \end{itemize}
+  Define $L$ as follows. For each $g \in G$,
+  \begin{itemize}
+    \setlength\itemsep{0mm}
+  \item if $g = \land_{\text{out}}$ then for each $i \in [2]$, $L(g)(i) :=
+    g_{\rank, i}$,
+  \item if $g \in G_\rank$ and $g = g_{\rank, i}$ then $L(g)(p,q) = g_{i,
+      (p,q)}$,
+  \item if $g \in G_{\text{nodes}}$ and $g = g_{i, (p,q)}$ then if $(p, q \in
+    E_i)$ then $L(g)(1) = \land_1$, otherwise $L(g)(1) = \neg_0$,
+  \item if $g = \neg_0$ then $L(g)(1) = \land_0$, and
+  \item if $g = \land_0$ or $g = \land_1$ then for all $p \in [n^k]$ we have
+    that $L(g)(p)$ equals $\Lambda^{-1}(\vec{c}_p)$, where $\vec{c}_p$ is the
+    $p$th element of $[n]^k$ in the lexicographical ordering on $[n]^k$.
+  \end{itemize}
+
+  We note that for $i \in [2]$, $L(g_{\rank, i})(p,q) = \land_1$ if, and only
+  if, $(p,q)$ is an edge in in $B_i$ and $L(g_\rank, i)(p,q) = \neg_0$ if, and
+  only if, $(p,q)$ is not an edge in $B_i$. We thus have that $B_1$ and $B_2$
+  are bipartite-isomorphic (in the sense defined above) if, and only if,
+  $g_{\rank, 1}$ is syntactically equivalent to $g_{\rank, 2}$.
+
+  Since the construction of $C$ can be implemented in time polynomial in the
+  combined sizes of the input graphs, the mapping of $(B_1, B_2)$ to the tuple
+  $(C, (g_{\rank, 1}, g_{\rank, 2}))$ is a reduction, and the result follows.
+\end{proof}
+
+Since there is a trivial reduction from the problem of computing the
+syntactic-equivalence relation over a restricted class of circuits to the
+problem over the general class of circuits, we have the following corollary.
+
+\begin{cor}
+  There is a polynomial-time reduction from the graph isomorphism problem to the
+  problem of determining if a given pair of gates in a given circuit are
+  syntactically-equivalent.
+  \label{lem:syntactically-equivilent-general-hard}
+\end{cor}
+
+We also have a reduction from the problem of computing the syntactic-equivalence
+relation to the problem of deciding if a given gate in a circuit has unique
+labels. From then transitivity of polynomial-time many-one reductions, this gives
+us a reduction from the graph-isomorphism problem to the problem of deciding if
+a gate has unique labels.
+
+\begin{lem}
+  There are a polynomial-time reduction from the problem of determining if a
+  given pair of gates in a given circuit are syntactically equivalent to the
+  problems of determining if a given gate in a given circuit has unique labels.
+  \label{lem:syntactically-equivalent-unique-labels}
+\end{lem}
+
+\begin{proof}
+  Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a circuit of order
+  $n$ and let $g_1, g_2 \in G$. Let $D$ be the circuit formed from $C$ by
+  removing every gate $g \in G \setminus\{g_1, g_2\}$ such that $\neg W_t(g,
+  g_1) \land \neg W_t(g, g_2)$ (i.e. all those gates in the circuit such that
+  there is no path from them to either $g_1$ or $g_2$). Here $W_t$ is the
+  relation defined in the proof of Lemma~\ref{}. Let $C'$ be the circuit formed
+  from $D$ by adding in a single two-input $\AND$ gate $g'$ and connecting the
+  outputs of $g_1$ and $g_2$ to the inputs of $g'$. Moreover, we let this $g'$
+  be the single output gate of $C'$.
+
+  It follows that $g_1$ and $g_2$ are syntactically equivalent in $C$ if, and
+  only if, $g'$ has unique labels in $C'$. Since the construction of $C'$ from
+  $C$ can be completed in polynomial time, the mapping of $(C, (g_1, g_2))$ to
+  $(C', g')$ is a reduction.
+\end{proof}
+
+We can construct a similar argument for reducing the problem of deciding if two
+gates are syntactically equivalent to the problem of deciding if a given gate
+$g$ in a circuit $C$ does not have \emph{unique extensions}. We say a gate $g$
+has unique extensions if there is no permutation such that two automorphisms of
+the circuit extend the permutation and disagree with each other on $g$ (i.e. $g$
+is not a counterexample to $C$ having unique extensions).
+
+\begin{lem}
+  There is a polynomial-time reduction from the problem of determining if a
+  given pair of gates gates in a given $(\mathbb{B}, \rho)$-circuit are
+  syntactically-equivalent to the problem of determining if for a given triple
+  $(C, g)$, where $C$ is a circuit of order $n$, $g$ is a gate in $C$, that
+  there exists $\sigma \in \sym_n$ and automorphisms $\pi, \pi' \in \aut(C)$
+  extending $\sigma$ such that $\pi (g) \neq \pi' (g)$.
+  \label{lem:syntactically-equivilent-unique-extensions}
+\end{lem}
+\begin{proof}
+  Let $C$ be a circuit of order $n$ and let $g_1$ and $g_2$ be two gates in $C$.
+  Note that for any gate $g$ in $\sigma \in sym_n$, if $\pi, \pi' \in \aut(C)$
+  extend $\sigma$ and $\pi_e := \pi'\pi{-1}$ then $\pi(g) \neq \pi'(g)$ if, and
+  only if, $\pi_e (g) \neq g$. It follows that there exists $\sigma \in sym_n$
+  such that there are automorphisms $\pi, \pi' \in \aut(C)$ extending $\sigma$
+  such that $\pi (g) \neq \pi'(g)$ if, and only if, there exists $\pi_e$
+  extending the trivial permutation such that $\pi (g) \neq g$.
+
+  Let $C'$ be the circuit constructed from $C$ as in the proof of
+  Lemma~\ref{lem:syntactically-equivalent-unique-labels}. We now prove that the
+  mapping $(C, (g_1, g_2))$ to $(C', g_1)$ is a reduction. Let $\pi_e$ be a
+  function from the gates of $C'$ to the gates of $C'$ that swaps $g_1$ and
+  $g_2$ and fixes all other gates. It follows that if $g_1$ and $g_2$ are
+  syntactically-equivalent in $C$, then they are syntactically-equivalent in
+  $C'$, and so $\pi_e$ is a non-trivial automorphism extending the trivial
+  permutation, and $g_1$ does not have unique extensions in $C'$. In the other
+  direction, suppose $g_1$ does not have unique extensions in $C'$. Then there
+  exists an automorphism $\pi_e \in \aut(C')$ extending the trivial permutation
+  and such that $\pi_e(g_1) \neq g_1$. But $g_1$ is a child of the single output
+  gate $g'$ (which must be fixed by any automorphism), and the only other child
+  of $g'$ is $g_2$. It follows $\pi_e$ swaps $g_1$ and $g_2$, and so $g_1$ and
+  $g_2$ are syntactically-equivalent in $C'$. The result follows.
+\end{proof}
+
+We now show that there is a reduction from the graph-isomorphism problem to the
+problem of deciding if a given circuit is symmetric.
+
+\begin{prop}
+  The graph-isomorphism problem is polynomial-time reducible to the problem of
+  determining if a circuit is symmetric.
+  \label{prop:graph-iso-symmetric}
+\end{prop}
+
+\begin{proof}
+  We use a similar approach as in Proposition~\ref{prop:syntactic-graph-iso},
+  and so proving a reduction from the bipartite-graph-isomorphism to the problem
+  of deciding if a circuit is symmetric.
+ 
+  Suppose we are given two partitioned bipartite graphs $B_1 := (U_1, V_1, E_1)$
+  and $B_2 := (U_2, V_2, E_2)$. We assume, without a loss of generality, that
+  there exists $a, b \in \nats$ such that $U_1 = U_2 = [a]$ and $V_1 = V_2 =
+  [b]$.
+
+  Let $\rho:= \{R\}$ be a relational vocabulary, where $R$ is a unary relational
+  symbol. Fix any number $r$ and $p$ prime. We define a $(\rho, \RB)$-circuit $C
+  := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ of order two as follows. Let
+  $G_{R} := \{g_{R, 1}, g_{R_2}\}$ and $G_{\text{ands}} := \{\land^1_0,
+  \land^2_0, \land^1_1, \land^2_1 , \land_{\text{out}}\}$, $G_{\text{negs}} :=
+  \{,neg^1_0, \neg^2_0\}$, $G_{\rank} : = \{ g_{\rank, 1}, g_{\rank, 2}\}$, and
+  $G_{\text{nodes}} := \{g_{i, (u,v)} : i \in [2] \, (u,v) \in E_i \}$. Let $G =
+  G_R \cup G_{\text{ands}} \cup G_{\text{negs}} \cup G_{\rank} \cup
+  G_{\text{nodes}}$ and $\Omega$ be the $0$-ary function $\land_{\text{out}}$.
+  Let $\Lambda(1) := g_{R, 1}$ and $\Lambda(2) := g_{R,2}$. Define $\Sigma$ as
+  follows. For each $g \in G$,
+  \begin{itemize}
+    \setlength\itemsep{0mm}
+  \item if $g$ equals $\land_{\text{out}}$ then $\Sigma(g) = \land[2]$,
+  \item if $g \in G_\rank$ let $\Sigma(g) = \rank^r_p [a,b]$,
+  \item if $g \in G_{\text{nodes}}$ then $\Sigma(g) = \land[1]$,
+  \item if $g \in G_{\text{ands}}$ then $\Sigma(g) = \land[1]$ and if $g \in
+    G_{\text{negs}}$ then $\Sigma(g) = \neg$, and
+  \item if $g \in G_R$ then $\Sigma(g) = R$.
+  \end{itemize}
+  Define $L$ as follows. For each $g \in G$,
+  \begin{itemize}
+    \setlength\itemsep{0mm}
+  \item if $g = g_{\text{out}}$ then for each $i \in [2]$, $L(g)(i) := g_{\rank,
+      i}$,
+  \item if $g \in G_\rank$ and $g = g_{\rank, i}$ then $L(g)(p,q) = g_{i,
+      (p,q)}$,
+  \item if $g \in G_{\text{nodes}}$ and $g = g_{i, (p,q)}$ for some $i \in [2]$,
+    then $L(g)(1) = \land^i_1$ if $(p,q) \in E_i$ and $L(g)(1) = \neg^i_0$
+    otherwise ,
+  \item if $g = \neg^i_0$ for some $i \in [2]$, then $L(g)(1) = \land^i_0$, and
+  \item if $g = \land^i_0$ or $g = \land^i_1$ for some $i \in [2]$, then
+    $L(g)(p) = \Lambda^{-1}(i)$.
+  \end{itemize}
+
+  We note that for $i \in [2]$, $L(g_{\rank, i})(p,q) = \land^i_1$ if, and only
+  if, $(p,q)$ is an edge in $B_i$ and $L(g_\rank, i)(p,q) = \neg^i_0$ if, and
+  only if, $(p,q)$ is not an edge in $B_i$. It can be shown that $C$ is
+  symmetric if, and only if, there exists an extension of the transposition
+  $(1,2)$ to an automorphism of the circuit, which holds if, and only if, there
+  exists an extension of $(1,2)$ to an automorphism of the circuit such that
+  $(1,2) (L(g_{\rank, 1}))$ is isomorphism-equivilent to $L(g_{\rank, 2})$,
+  which holds if, and only if, $B_1$ and $B_2$ are biparetite-isomorphic.
+
+  % Suppose $C$ is not symmetric. If $\vert L(g_{\rank,1})^{-1}(\land^1_1) \vert
+  % \neq L_(g_{\rank,2})^{-1}(\land^2_1) \vert$ then clear $B_1$ and $B_2$ are
+  % not biparetite-isomorphic as they have different numbers of edges. Suppose
+  % $\vert L(g_{\rank,1})^{-1}(\land^1_1) \vert =
+  % L_(g_{\rank,2})^{-1}(\land^2_1) \vert$. Then the only reason $C$ would not
+  % be symmetric is that there is no extension of $\sigma$ to the circuit t
+
+  % If $B_1$ and $B_2$ are
+
+
+  % We thus have that if $B_1$ and $B_2$ are bipartite-isomorphic
+
+
+  % (in the sense defined in the proof of
+  % Proposition~\ref{prop:syntactic-graph-iso}) if, and only if, $g_{\rank, 1}$
+  % is syntactically-equivalent to $g_{\rank, 2}$.
+
+  Since the construction of $C$ can be implemented in time polynomial in the
+  combined sizes of the input graphs, the mapping of $(B_1, B_2)$ to $C$ is a
+  reduction, and the result follows.
+\end{proof}
+
+We now show that computing the orbit of a gate for a general circuit is as hard
+as the graph isomorphism problem. We make use of the ability to compute the
+orbit of a gate in polynomial-time in
+Section~\ref{sec:translating-formulas-to-FPR}, when translating families of
+circuits into equivalent formulas.
+
+\begin{lem}
+  There is a polynomial-time reduction from the graph isomorphism problem to the
+  problem of computing if two gates in a given circuit are in the same orbit.
+  \label{lem:graph-iso-to-orbit}
+\end{lem}
+\begin{proof}
+  Let $C$ be a circuit. Let $g_1$ and $g_2$ be two gates in $C$ such that
+  $H_{g_1} = H_{g_2}$. Then there exists $\pi \in \aut(C)$ such that $\pi (g_1)
+  = g_2$ if, and only if, $g_1$ is syntactically-equivalent to $g_2$. As such,
+  we may use the same construction as in
+  Proposition~\ref{prop:syntactic-graph-iso} to prove this result.
+\end{proof}
+We have from Propositions~\ref{prop:syntactic-graph-iso}
+and~\ref{prop:graph-iso-symmetric}, and
+Lemmas~\ref{lem:syntactically-equivalent-unique-labels},
+\ref{lem:graph-iso-to-orbit}
+and~\ref{lem:syntactically-equivilent-unique-extensions}, that a number of basic
+circuit properties are at least as hard for general circuits as the
+graph-isomorphism problem. In contrast, all of these properties are known to be
+polynomial-time computable for transparent circuits (as follows from
+Lemmas~\ref{lem:unique-labels-syntactic-equiv}
+and~\ref{lem:computing-support-orbit-gate}).
+
+The hardness results for the problems of computing syntactic-equivalence
+relation and deciding if a gate has unique labels are particularly worth noting
+as many natural algorithms for translating a circuit into an equivalent
+transparent circuit (or one with unique labels) make use of polynomial-time
+decidability of these properties. Indeed, the translation defined by Anderson
+and Dawar~\cite{AndersonD17} from circuits with symmetric gates to equivalent
+circuits with unique extensions makes explicit use of the polynomial-time
+computability of the syntactic-equivalence relation on such circuits. As such,
+these results, along with the hardness results for many other basic circuit
+properties (e.g. symmetry, unique extensions, or the orbits of a gate) provides
+evidence against the existence of an easily-definable polynomial-time
+translation from circuits to transparent circuits, or circuits with unique
+labels.
+
+% We note that in all of the above casesgive us that many circuit properties of
+% interest are harder to compute than the graph-isomorphism problem. In
+% particular, determining
+
+% We have shown that basic properties of a circuit, including the ability to
+% compute the syntactic equivalence relation or whether a gate has unique
+% labels, are as hard to decide as the graph-isomorphism problem. Moreover,
+
+% incluidng that various properties of the circuit that seem necessary for
+% defining a translation of a circuit into an equivalent transparent circuit are
+% as hard to compute as the graph-isomorphism problem. We note that all of these
+% properties are polynomial-time computable for transparent circuits (as follows
+% from Lemma~\ref{} and Lemma~\ref{}).
+
+While we have provided evidence against the ability to efficiently transform a
+circuit into an equivalent transparent circuit, we now show that, in contrast,
+there is a polynomial-time algorithm for checking if a circuit is transparent.
+This has a certain significance, as we now have transparency is not some
+unverifiable condition on circuits, further motivating the usefulness of this
+definition.
+
+\begin{prop}
+  There is an algorithm that takes as input a circuit, decides if that circuit
+  is transparent and runs in time polynomial in the size of the circuit.
+  \label{prop:transparent-polynomial-time}
+\end{prop}
+\begin{proof}
+  Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
+  \rho)$-circuit. We first check that, for each non-symmetric gate $g \in G$,
+  $L(g)$ is an injection. If not, we return that $C$ is not transparent.
+
+  The height of a gate $g$ in the circuit is the distance from $g$ to the set of
+  input gates. For each $p \in \nats$ let $G^p \subseteq G$ be the set of all
+  gates of height $p$ and let $G^{\leq p} = \bigcup_{0 \leq i \leq p}G^i$. Note
+  that each $g \in G^1$, $g$ has unique labels. Thus, from
+  Lemma~\ref{lem:unique-labels-syntactic-equiv}, we can compute the syntactic
+  equivalence relation between gates in $G^{\leq 1}$ efficiently. We construct a
+  loop as follows. Let $p$ be initialised to $1$. We have that every
+  non-symmetric gate $g \in G^{\leq p}$ has unique gates. We compute the
+  syntactic-equivalence relation on $G^{\leq p}$ and check if each non-symmetric
+  gate in $g \in G^{i + 1}$ has unique labels. If not, halt and output that the
+  circuit is not transparent. If $p = \depth(C) -1$ then halt and output that
+  the circuit is transparent. If neither halt state is reached, then increment
+  $p$ by one and continue to the next iteration of the loop.
+
+  We note that in every iteration of the loop we have that every non-symmetric
+  gate in $G^{\leq p}$ has unique labels. Thus, from Proposition
+  \ref{prop:unique-labels-syntactic-equiv}, we may compute the
+  syntactic-equivalence relation on this set of gates efficiently. It follows
+  that the above algorithm can be implemented so as to run in polynomial time.
+\end{proof}
+
+We similarly have that the unique labels property on circuits can be decided in
+time polynomial in the number of gates in the circuit.
+
+\begin{cor}
+  There is an algorithm that takes in a circuit and decides if that circuit has
+  unique labels and runs in time polynomial in the size of the circuit.
+\end{cor}
+\begin{proof}
+  Let $C$ be the input circuit. From Proposition
+  \ref{prop:transparent-polynomial-time} we may check if $C$ is transparent in
+  polynomial time. If $C$ is not transparent halt and output that $C$ does not
+  have unique labels. If $C$ is transparent then from Lemma \ref{} we may
+  compute the syntactice-equivalence relation on the gates of $C$ efficiently.
+  This then allows us to check if each gate in $C$ has unique labels.
+\end{proof}
+
+% perhaps related to the problem of translating a circuit into an equivalent
+% transparent circuit are at least as hard as the graph isomorphism problem. We
+% now show that additionally recognising if a circuit has unique extensions is
+% at least as hard as the graph isomorphism problem.
+
+We have restricted ourselves to transparent circuits in large part because they
+can be transformed in polynomial-time into circuits with unique extensions and
+because the transparency property is polynomial-time verifiable. It may be asked
+why we do not just include an explicit restriction to circuits with unique
+extensions. We now show that, in contrast with transparency, the problem of
+deciding if a circuit has unique-extensions is at least as hard as the
+graph-isomorphism problem.
+
+\begin{lem}
+  There is a polynomial-time reduction from the graph isomorphism problem to the
+  problem of determining if a given circuit does not have unique extensions.
+  \label{lem:unique-extensions-hard}
+\end{lem}
+\begin{proof}
+  We use a similar argument as for Proposition \ref{prop:syntactic-graph-iso}.
+  We again argue using a reduction from thee bipartite isomorphism problem. Let
+  $B_1 := (U_1, V_1, E_1)$ and $B_2 := (U_2, V_2, E_2)$ and let $C$ be the
+  associated circuit defined in the proof of Proposition
+  \ref{prop:syntactic-graph-iso}. Let $C' = \op{merge-all} (C, G_{\land})$.
+  Notice that $B_1$ and $B_2$ are isomorphic if, and only if, $g_{\rank, 1}$ and
+  $g_{\rank, 2}$ are syntactically equivalent, which holds if, and only if,
+  there exists $\pi \in \aut(C')$ extending the trivial permutation such that
+  $\pi (g_{\rank, 1}) = g_{\rank, 2}$, which is true if, and only if, $C'$ does
+  not have unique extensions. it follows that the mapping of $(B_1, B_2)$ to
+  $C'$ defines a reduction.
+\end{proof}
+
+\begin{remark}
+  It's interesting to note that the circuit used in the reduction does not have
+  injective labels. If we instead ask about a reduction from GI to the problem
+  of deciding if a circuit has unique extensions and injective labels, then I
+  can reduce from to the problem of deciding if two rigid graphs are isomorphic.
+  It is unknown if this decision problem is as hard as the full graph
+  isomorphism problem. After looking around a bit I discovered that it's a very
+  important open problem in quantum computation. Is this worth mentioning?
+\end{remark}
+
+% We have that if a circuit is transparent then we may compute in polynomial
+% time the syntactic equivalence relation on the gates of that circuit, and
+% hence compute an equivalent circuit that has unique extensions. However, we've
+% shown that absent the transparency condition, computing the the syntactic
+% equivalence relation is at least as hard as the graph isomorphism problem.
+% Moreover, other properties that can be computed in polynomial time for
+% transparent circuits, e.g. deciding if particular gates have unique labels or
+% might act as counterexamples to the unique extensions, have also been shown to
+% be at least as the graph isomorphism problem.
+
+% While we have not shown that there is no polynomial time algorithm that
+% translates an arbitrary circuit into an equivalent transparent circuit, we
+% have provided evidence in favour of the conjecture that such an algorithm
+% might not exist.
+
+% \begin{remark}
+%   I really don't like the slightly vague language here. I would prefer to say
+%   this differently. How does one provide `evidence' that a functional problem
+%   is hard, when one has proved results about a few related decision problems?
+% \end{remark}
+
+% However, we must then address another question: If we must include an explicit
+% requirement on circuits, why not simply require that the circuit have unique
+% extensions? But we have from Lemma \ref{lem:unique-extensions-hard} that at
+% the least verifying that a circuit have unique extensions is at least as hard
+% as the graph isomorphism problem. We show that, in contrast, deciding if a
+% circuit is transparent is in $\PT$.
+
+% \begin{prop}
+%   There is an algorithm that takes as input a circuit, decides if that circuit
+%   is transitive and runs in time polynomial in the size of the circuit.
+%   \label{prop:tansitive-polynomial-time}
+% \end{prop}
+% \begin{proof}
+%   Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
+%   \tau)$-circuit. We first check that, for each non-symmetric gate $g \in G$,
+%   $L(g)$ is an injection. If not, we return that $C$ is not transitive.
+
+%   The height of a gate $g$ in the circuit is the distance from $g$ to the set
+%   of input gates. For each $p \in nats$ let $G^p \subseteq G$ be the set of
+%   all gates of height $p$ and let $G^{\leq p} = \bigcup_{0 \leq i \leq p}G^i$.
+%   Note that each $g \in G^1$, $g$ has unique labels. Thus, from Lemma \ref{},
+%   we can compute the syntactic equivalence relation between gates in $G^{\leq
+%   1}$ efficiently. We construct a loop as follows. Let $p$ be initialised to
+%   $1$. We have that every non-symmetric gate $g \in G^{\leq p}$ has unique
+%   gates. We compute the syntactic equivalence relation on $G^{\leq p}$ and
+%   check if each non-symmetric gate in $g \in G^{i + 1}$ has unique labels. If
+%   not, halt and output that the circuit is not transitive. If $p = \depth(C)
+%   -1$ then halt and output that the circuit is transitive. If neither halt
+%   state is reached, then increment $p$ by one and continue to the next
+%   iteration of the loop.
+
+%   We note that in every iteration of the loop we have that every non-symmetric
+%   gate in $G^{\leq p}$ has unique labels. Thus, from Proposition
+%   \ref{prop:unique-labels-syntactic-equiv}, we may compute the syntactic
+%   equivalence relation on this set of gates efficiently. Thus it is easy to
+%   see that the above algorithm can be implemented so as to run in polynomial
+%   time.
+% \end{proof}
+
+% A similar result for circuits with unique labels.
+
+% \begin{cor}
+%   There is an algorithm that takes in a circuit and decides if that circuit
+%   has unique labels and runs in time polynomial in the size of the circuit.
+% \end{cor}
+% \begin{proof}
+%   Let $C$ be the input circuit. From Proposition
+%   \ref{prop:transitive-polynomial-time} we may check if $C$ is transitive in
+%   polynomial time. If $C$ is not transitive halt and output that $C$ does not
+%   have unique labels. If $C$ is transitive then from Lemma \ref{} we may
+%   compute the syntactic equivalence relation on the gates of $C$ efficiently.
+%   This then allows us to check if each gate in $C$ has unique labels.
+% \end{proof}
+
+% We thus have that we can verify in polynomial time that a family of circuits
+% indeed is transparent or has unique labels. The same cannot be said for the
+% unique extensions property.
+
+
+% \begin{lem}
+%   There is an algorithm that takes in a symmetric circuit $C$ of order $n$
+%   with unique labels, a gate $g$ in $C$ and $a \in \universe{g}$, the orbit
+%   $\orb_g (a)$ and coarsest supporting partition $\SP_g (a)$.
+% \end{lem}
+% \begin{proof}
+%   Let $(u,v) \in \sym_n$ be a transposition. We can check if $(u,v) \in
+%   \stab(g)$ using Lemma~\ref{lem:compute-automorphisms}. Then $(u,v)$ acts
+%   like an isomorphism at $g$, and hence $(u,v) \cdot a = L(g)^{-1}((\sigma
+%   L(g)(\vec{x}))) (i)$, where $\vec{x} \in \ind(g)$ such that $\vec{x} (i) =
+%   a$ for some $i \in [\vert \vec{x} \vert]$. Thus, since
+%   Lemma~\ref{lem:compute-automorphisms} gives us that that we can compute
+%   $\sigma L(g)(\vec{x})$ in polynomial time, we can compute $(u,v) \cdot a$ in
+%   polynomial-time.
+
+%   We note that
+  
+%   and hence we can compute $\sigma \cdot a$ effeciently. and hence compute
+%   $\orb_g(a) = \{ \sigma \cdot a : \sigma \in \stab(g)\}$.
+
+% \end{proof}
+
+% Once again we note that computing the orbit of a gate for a general circuit is
+% as hard as the graph isomorphism problem. We make use of the ability to
+% compute the orbit of a gate in polynomial time in sub-section
+% \ref{sec:translating-formulas-to-FPR} when translating families of circuits
+% into equivalent formulas. As such the approach in this paper would fail for
+% the general circuit.
+
+% \begin{prop}
+%   There is a polynomial-time reduction from the graph isomorphism problem to
+%   the problem of computing if two gates in a given circuit are in the same
+%   orbit.
+%   \label{prop:graph-iso-to-orbit}
+% \end{prop}
+% \begin{proof}
+%   Let $C$ be a circuit. Let $g_1$ and $g_2$ be two gates in $C$ such that
+%   $H_{g_1} = H_{g_2}$. Then there exists $\pi \in \aut(C)$ such that $\pi
+%   (g_1) = g_2$ if, and only if, $g_1$ is syntactically equivalent to $g_2$. As
+%   such, we may use the same construction as in
+%   Proposition~\ref{prop:syntactic-graph-iso} to prove this result.
+% \end{proof}
+
+
+
+% \begin{lem}
+%   There is a polynomial-time Turing reduction from the problem of determining
+%   if a given pair of gates in a given circuit are syntactically equivalent to
+%   the problem of deciding if a circuit is transparent.
+%   %   If the problem of deciding if a given circuit is transparent can be
+%   %   decided
+%   %   in
+%   %   polynomial time then the graph isomorphism problem is in polynomial
+%   %   time.
+% \end{lem}
+% \begin{proof}
+%   Suppose there is an algorithm that takes as input, runs in time polynomial
+%   in the size of the circuit, and decides whether or not the circuit is
+%   transparent.
+
+%   From Corollary \ref{} it is sufficient to show that there is a
+%   polynomial-time algorithm for the problem of deciding if a pair of gates in
+%   a given circuit are syntactically equivalent. Let $C_n$ be a circuit and
+%   $g_1$ and $g_2$ be two gates in the circuit.
+
+  
+%   %   We simply need a polynomial-time reduction from the problem of computing
+%   %   t
+%   %   to the problem
+%   %   of checking if a given circuit is transparent. Let $C_n =\langle G,
+%   %   \Omega,
+%   %   \Sigma, \Lambda, L\rangle$ be a circuit and let $g_1$ and $g_2$ be two
+%   %   gates
+%   %   in $G$. We now construct a circuit $C_n'$. If $g_1 = g_2$ then let
+%   %   $C_n'$ be
+%   %   any transparent circuit. If $g_1$ and $g_2$ do not satisfy any of
+%   %   conditions
+%   %   (i), (ii), (iii) or (v) of syntactic equivalence then let $C_n'$ be any
+%   %   non-transparent circuit. So suppose all these conditions are met and
+%   %   $g_1
+%   %   \neq
+%   %   g_2$, then let $D_n$ be the sub-circuit of $C_n$ consisting of exactly
+%   %   those
+%   %   gates $g$ in $C_n$ such that $W_t(g, g_1)$ or $W_t(g, g_2)$. Then let
+%   %   $C_n'$
+%   %   be $D_n'$ with an additional gate $g_\rank$, such that $g_\rank $ is
+%   %   labelled
+%   %   by the function $\rank^1_2[2,1]$ and $g_\rank$
+% \end{proof}
+
+% \begin{corollary}
+% \end{corollary}
+
+% We have from this proposition that even many nice properties Since there is a
+% polynomial-time reduction from this problem reduces the general problem of
+% deciding the syntatic equivilence relation for an arbitary
+
+
+
+% \begin{corollary}
+%   There is a polynomial-time reduction from the graph isomorphism problem to
+%   the problem of determining if a given $(\mathbb{B}, \tau)$-circuit is rigid.
+% \end{corollary}
+
+% \begin{corollary}
+%   There is a polynomial-time reduction from the graph isomorphism problem to
+%   the problem of determining if a given gate in a given $(\mathbb{B},
+%   \tau)$-circuit has unique labels.
+% \end{corollary}
+
+
+% reduction from the graph isomorphism from to the problem of of computing the
+% the syntactic equivalence relation on the gates of an arbitrary $(\mathbb{B},
+% \tau)$-circuit.
+
+% It is worth noting that if we restrict the input to a class of circuits
+% defined over symmetric bases then we can decide the syntactic equivalence
+% relation in polynomial time.
+
+% % \begin{prop}
+% %   Let $C_n$ be a circuit with symmetric gates. There is an algorithm that
+% %   takes in such a circuit, runs in time polynomial in the size of the circuit,
+% %   and outputs the syntactic equivalence relation on the gates of $C_n$.
+% %   \label{prop:symmetric-syntactic}
+% % \end{prop}
+% % \begin{proof}
+% % \end{proof}
+
+% Moreover, it turns out that being able to compute the syntactic equivalence
+% relation in polynomial time for some class of circuits $\mathcal{C}$ implies
+% that the existence of a polynomial-time algorithm for converting circuits in
+% $C$ into equivalent rigid circuit.
+
+% % \begin{prop}
+% %   Let $\mathcal{C}$ be a set of circuits. Suppose the syntactic equivalence
+% %   relation can be computed in polynomial time for circuits in $\mathcal{C}$.
+% %   It follows that there is an algorithm that runs in polynomial time that
+% %   takes in a circuit $C \in \mathcal{C}$ and outputs a rigid circuit $C''$
+% %   such that if $C$ is symmetric then $C'$ is symmetric.
+% %   \label{prop:syntactic-equivilence-rigid}
+% % \end{prop}
+% % \begin{proof}
+% % \end{proof}
+
+% The following result gives us that the unique labels condition is sufficient.
+
+% % \begin{prop}
+% %   Let $\mathcal{C}$ be syntactically transparent class of circuits. It follows
+% %   that there exists an algorithm that takes in a $(\mathbb{B}, \tau)$-circuit
+% %   $C \in \mathcal{C}$ and outputs a $(\mathbb{B} \cup \mathbb{B}_{\std},
+% %   \tau)$-circuit $C'$ such that $C$ and $C'$ compute the same function, $C'$
+% %   is rigid, and if $C$ is symmetric then $C'$ is symmetric. Moreover, this
+% %   algorithm runs in time polynomial in the size of the input circuit.
+% % \end{prop}
+% % \begin{proof}
+% %   Let $C' = \make-injective-all(\op{merge-all} (C, G)($). We have that $C'$ is
+% %   symmetric if $C$ is symmetric. Since the syntactic equivalence relation can
+% %   be computed in polynomial time for circuits in $\mathcal{C}$ it follows that
+% %   this operation can be implemented so as to run in time polynomial in the
+% %   size of $C$. Clearly every gate $g$ in $C'$ belongs to a singleton syntactic
+% %   equivalence class.
+% % \end{proof}
+
+% \begin{lem}
+%   Let $\mathbb{B}$ be a basis of symmetric functions. Then for any class of
+%   circuits $\mathcal{C}$ defined over the basis $\mathbb{B}$, $\mathcal{C}$ is
+%   a syntactically transparent class of circuits.
+% \end{lem}
+% In contrast to
+% \begin{lem}
+%   If the class of all circuits is syntactically transparent then then graph
+%   isomorphism problem is in $\PT$.
+% \end{lem}
+
+% \begin{lem}
+%   Let $\mathcal{C}$ be a syntactically transparent class of circuits. There is
+%   an algorithm that takes as input a $(\mathbb{B}, \tau)$-circuit $C \in
+%   \mathcal{C}$ and decides if $C$
+% \end{lem}
+
+% Since the class of The following result, also proved by Anderson and Dawar
+% \cite{AndersonD17}, follows as a corollary.
+
+% \begin{lem}
+%   Let $\mathcal{C}$
+% \end{lem}
+
+% \begin{lem}
+%   Let $C_n = \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be a $(\mathbb{B},
+%   \tau)$-circuit computing a $q$-ary query. If $C_n$ has unique labels then it
+%   is $C_n$ rigid
+%   \label{lem:unique-implies-rigid}
+% \end{lem}
+% \begin{proof}
+
+%   %   Suppose there exists a gate $g'$ such that $W_t (g, g')$ and $W_t
+%   %   (\pi(g),
+%   %   g')$ and $\pi (g') = g'$, then $\pi H_{g'} = H_{g'}$, and since $g'$ has
+%   %   unique labels it follows that $\pi$ acts trivially on $H_{g'}$ (i.e. for
+%   %   all
+%   %   $h \in H_{g'}$, $\pi(h) = h$). Moreover, for any pair of gates $h,h' \in
+%   %   G$
+%   %   such that $W(h, h')$ and $W_t(h', g')$, if $\pi$ acts on trivially on
+%   %   the
+%   %   children of $h'$ then $\pi (h) = h$ and so $\pi$ must act trivially
+
+%   %   $\pi$ acts trivially on the children of $h$.
+
+%   %   If $\Omega_g \cap \Omega_{\pi(g)} = \emptyset$ then, since
+%   %   $\Omega_{\pi(g)}
+%   %   =
+%   %   \pi \Omega_g$, there exists $g' \in \Omega_g$ such that $\pi g' \neq
+%   %   g'$.
+%   %   But
+%   %   $\pi$ must act trivially on output gates, so this is a contradiction. So
+%   %   there
+%   %   exists $g' \in \Omega_g \cap \Omega_{\pi(g)}$. But then $W_t (g, g')$
+%   %   and
+%   %   $W_t
+%   %   (\pi (g), g')$.
+
+
+%   %   We have that $g$ must be a non-output internal gate. So $g$ is
+%   %   syntactically
+%   %   equivalent to $\pi (g)$.
+
+%   %   and let $h$ be a gate such that $W_t (g, h)$.
+% \end{proof}
+
+% \begin{prop}
+%   Let $C_n$ be a circuit with unique labels. If
+% \end{prop}
+
+% \begin{prop}
+  
+% \end{prop}
+% \begin{proof}
+% \end{proof}
+
+% \begin{prop}
+%   Let $\mathcal{C}$ be a class on which the Let $C_n := \langle G, \Omega,
+%   \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B}, \tau)$-circuit with unique
+%   labels. There is a deterministic algorithm that takes in such a circuit and
+%   outputs the syntactic equivalence relation on $G$. Moreover, this algorithm
+%   runs in time polynomial in the size of the circuit.
+%   \label{prop:unique-labels-syntactic-equiv}
+% \end{prop}
+
+% % \begin{prop}
+% %   There is an algorithm that takes in a $(\mathbb{B}, \tau)$-circuit $C$ with
+% %   unique labels and outputs the syntactic equivalence relation on its gates.
+% %   This algorithm runs in time polynomial in the size of $C$.
+% %   \label{prop:unique-labels-syntactic-equiv}
+% % \end{prop}
+% % \begin{proof}
+% %   We build of the relation by induction. Let $g$
+% % \end{proof}
+
+% Putting together Propositions \ref{prop:symmetric-syntactic},
+% \ref{prop:syntactic-equivilence-rigid}, and
+% \ref{prop:unique-labels-syntactic-equiv}, we have that there is a
+% polynomial-time algorithm that takes as input a circuit with unique labels and
+% outputs an equivalent rigid circuit. In fact, there is an equivalence of sorts
+% between the unique labels condition and the rigidity condition.
+
+% \begin{prop}
+%   Let $\mathcal{C}$ be a family of circuits. There is an algorithm that runs
+%   in polynomial-time that takes in a circuit $C \in \mathcal{C}$ and outputs a
+%   rigid circuit $C'$ such that if $C$ is symmetric then $C'$ is symmetric if,
+%   and only if, there is an algorithm that runs in polynomial-time and takes in
+%   a circuit $C \in \mathcal{C}$ and outputs a circuit $C'$ with unique labels
+%   such that if $C$ is symmetric then $C'$ is symmetric.
+% \end{prop}
+
+% It follows then that for the symmetric circuits defined over bases of
+% symmetric functions discussed by Anderson and Dawar~\cite{} we may assume the
+% circuits are rigid and/or have unique labels without a loss of generality. For
+% the more general circuit discussed in this paper we cannot make such an
+% assumption as deciding rigidity is harder then graph isomorphism. However, if
+% we restrict ourselves to families of circuits with unique labels then again we
+% may assume rigidity without a loss of generality.
+
+% Of course, this restriction to circuits with unique labels is only useful if
+% we can show that formulas in rank logic can be translated into $P$-uniform
+% families circuits with unique labels. In the next subsection we prove that
+% this is indeed the case.
+
+
+\end{document}

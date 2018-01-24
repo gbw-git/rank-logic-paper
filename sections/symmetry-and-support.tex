@@ -180,18 +180,15 @@ some useful terminology.
 % \end{definition}
 
 \begin{definition}
-  Let $X$ be a set on which a left group action of $G \leq \sym_n$ on $X$ is
+  Let $X$ be a set on which a left group action of $\sym_n$ on $X$ is
   defined. We denote the \emph{canonical supporting partition} of $x \in X$ by
-  $\SP_G (x) = \SP (\stab_G(x))$. Similarly we let $\| \SP_G (x) \| = \| \SP
-  (\stab_G(x)) \|$. We say that $x \in X$ has \emph{small support} if
-  $\stab_G(x)$ has small support. We say that $X$ has small supports if each $x
+  $\SP (x) = \SP (\stab(x))$. Similarly we let $\| \SP (x) \| = \| \SP
+  (\stab(x)) \|$. We say that $x \in X$ has \emph{small support} if
+  $\stab(x)$ has small support. We say that $X$ has small supports if each $x
   \in X$ has small support.
 
   If $x \in X$ has small support, we denote the \emph{canonical support} of $x$
-  by $\consp_G(x) = \consp (stab_G(x))$.
-
-  In the event that the choice of group $G$ is clear from context we omit the
-  subscript.
+  by $\consp(x) = \consp (stab(x))$.
 \end{definition}
 
 % Let $X$ is a set on which a left group action of $G \leq \sym_n$ is defined,
@@ -291,7 +288,7 @@ if, and only if, $\sigma \in \setstab_n(H_g)$ and there exists $\pi \in \aut(g)$
 such that $\sigma \cdot \vec{x} = \pi (\vec{x})$ for all $\vec{x} \in \ind(g)$.
 The final equivalence expresses the fact that $\sigma \in \sym_n$ stabilises $g$
 if, and only if, $\sigma$ behaves on all elements of $\ind(g)$ like an
-automorphism of $\str(g)$. This observation allows us to define a local
+automorphism of $\str{g}$. This observation allows us to define a local
 condition for testing whether a given $\sigma \in \sym_n$ stabilises the gate
 $g$. We say that a pair $(h, h') \in H^{2}_g$ is \emph{compatible} with $\sigma$
 if $\sigma$ acts like a member of $\aut(g)$ when restricted to the labels of $h$
@@ -338,19 +335,16 @@ and $h'$.
 % If the group action is obvious from context we write $\sortsym_D(\cdot)$
 % instead of $\sortsym_D(\phi)$.
 
-
-
 \begin{definition}
   Let $C$ be a circuit of order $n$ with unique labels and let $g$ be a gate in
-  the circuit. Let $\tau$ be the vocabulary of $g$ and $D$ be the universe of
-  $g$. Let $\sigma \in \sym_n$, $h, h' \in H_g$, and let $\vec{x} :=
-  L(g)^{-1}(h)$ and $\vec{y} := L(g)^{-1}(h')$. We say that $(h, h')$ is
-  \emph{compatible} with $\sigma$ if $\sigma h, \sigma h' \in H_g$ and for every
-  $R_i$ and $R_j$ be relation symbols in $\tau$ such that $\vec{x} \in R^{D}_i$
-  and $\vec{y} \in R^{D}_j$, $\sigma \cdot \vec{x} \in R^{D}_i$ and $\sigma
-  \cdot \vec{y} \in R^D_j$, and for all $a \in [\arty(R_i)]$ and $b \in
-  [\arty(R_j)]$, $\vec{x}(a) = \vec{y}(b)$ if, and only if, $(\sigma \cdot
-  \vec{x})(a) = (\sigma \cdot \vec{y})(b)$.
+  the circuit. Let $\tau := \vocab{g}$ and $D := \unv{g}$. Let $\sigma \in
+  \sym_n$, $h, h' \in H_g$, and let $\vec{x} := L(g)^{-1}(h)$ and $\vec{y} :=
+  L(g)^{-1}(h')$. We say that $(h, h')$ is \emph{compatible} with $\sigma$ if
+  $\sigma h, \sigma h' \in H_g$ and for every $R_i, R_j\in \tau$ such that $\vec{x} \in R^{D}_i$ and $\vec{y} \in R^{D}_j$,
+  $\sigma \cdot \vec{x} \in R^{D}_i$ and $\sigma \cdot \vec{y} \in R^D_j$, and
+  for all $a \in [\arty(R_i)]$ and $b \in [\arty(R_j)]$, $\vec{x}(a) =
+  \vec{y}(b)$ if, and only if, $(\sigma \cdot \vec{x})(a) = (\sigma \cdot
+  \vec{y})(b)$.
 \end{definition}
 
 % \begin{definition}

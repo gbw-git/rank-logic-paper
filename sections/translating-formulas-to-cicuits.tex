@@ -1,23 +1,25 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
+In this section we first introduce a number of useful polynomial-time computable
+functions which define transformations on circuits. In the second subsection we
+use these these functions to define a transformation of $\FPR$-formulas into
+equivalent families of transparent rank-circuits.
 
 \subsection{Algorithms for Circuits}
-In order to translate between $P$-uniform families of circuits and formulas of
-$\FPR$ we will require that certain important circuit transformations can be
-completed in polynomial time. In this subsection we define a number of
-operations that perform commonly invoked operations on circuits, and which can
-easily be shown to be implementable as algorithms that run in polynomial time.
-In each case we assume a reasonable encoding of the circuit.
+In order to simplify the presentation of the translation between $P$-uniform
+families of circuits and formulas of $\FPR$, as well as the proofs of other
+results (see Lemma~\ref{lem:transparent-unique}), we define a number of
+often-used polynomial-time computable circuit transformations.
 
-We first define the operation $\op{merge}$ that takes in a circuit and a set of
-syntactically equivalent gates and produces a new circuit by combining those
-gates into a single gate.
+We first define the function $\op{merge}$, which maps a circuit and a set of
+syntactically-equivalent gates to a circuit formed by combining those gates into
+a single gate.
 
 \begin{definition}
-  The operation $\op{merge}(C, H)$ takes as input a circuit $C = \langle G,
-  \Omega, \Sigma , \Lambda, L \rangle$ and a set of syntactically equivalent
-  gates $H := \{h_1, \ldots , h_p\}$ and outputs the circuit $C' = \langle G',
-  \Omega', \Sigma', \Lambda', L' \rangle$, where
+  Let $C := \langle G, \Omega, \Sigma , \Lambda, L \rangle$ be a circuit and $H
+  := \{h_1, \ldots, h_p\}$ be a set of syntactically equivalent gates. We let
+  $\op{merge}(C, H) := C' := \langle G', \Omega', \Sigma', \Lambda', L'
+  \rangle$, where
   \begin{itemize}
     \setlength\itemsep{0mm}
   \item $G' = G \setminus \{h_2, \ldots, h_q\}$,
@@ -30,54 +32,67 @@ gates into a single gate.
   \end{itemize}
 \end{definition}
 
-It can be shown that $\op{merge}$ can be computed by an algorithm running in
-time polynomial in the size of the input circuit. We note that the input and
-output circuits compute the same function. Moreover, if the input circuit is
-symmetric (resp. has unique labels, is transparent) then the output circuit will
-also be symmetric (resp. have unique labels, is transparent).
+It can be shown that $\op{merge}$ can be computed in time polynomial in the size
+of the input circuit. We note that the input and output circuits compute the
+same function. Moreover, if the input circuit is symmetric (resp. has unique
+labels, is transparent) then the output circuit will also be symmetric (resp.
+have unique labels, is transparent).
 
-The the operation $\op{merge-all}$ simply applies $\op{merge}$ to the syntactic
-equivalence classes of some input set of gates.
+We now define the function $\op{merge-all}$ which maps a circuit and a set of
+gates to a new circuit formed by applying $\op{merge}$ to the
+syntactic-equivalence classes of the set of gates.
 
 \begin{definition}
-  The operation $\op{merge-all}(C, H)$ takes as input an ordered circuit $C$ and
-  a set of gates $H$ and outputs another circuit $C'$. Let $H_1, \ldots, H_p$ be
-  the syntactic equivalence classes of $H$ linearly ordered using the order on
-  the circuit but such that for all $i, j \in [p]$ if $i \leq j$ then the height
-  of the gates in $H_i$ is less than or equal to the height of the gates in
-  $H_j$. Let $C'$ be the result of successively executing $\op{merge}$ on each
-  equivalence class.
+  \label{def:merge-all}
+  The function $\op{merge-all}$ maps a circuit $C$ and a set of gates $H$ to a
+  circuit $\op{merge-all}(C, H) := C'$, where $C'$ is defined as follows. Let
+  $H_1, \ldots, H_p$ be the syntactic equivalence classes of $H$, and let $C'$
+  be defined from $C$ by successively applying $\op{merge}$ to each of these
+  equivalence classes.
 \end{definition}
 
-For an input tuple $(C, H)$ if $H$ is a set of gates with unique labels it
-follows from Lemma \cite{} that the syntactic equivalence relation on $H$ can be
-computed in time polynomial in the size of $C$. Thus, if the set $H$ has unique
-labels it can be shown that the operation $\op{merge-all}$ can be computed in
-time polynomial in the size of the input circuit. As in the case of
-$\op{merge}$, the operation $\op{merge-all}$ preserves symmetry, unique labels
-and the ensures that the input and output circuits compute the same function. If
-$C$ is an ordered circuit and $H$ is a set of gates with unique labels, then if
-$g$ is a gate in both $C$ and $C' := \op{merge-all}(C, H)$, then if all of the
-input gates of $g$ in $C$ are in $H$ then no two distinct input gates of $g$ in
-$C'$ are syntactically equivalent (but $g$ does not have unique labels in $C'$
-as $L'(g)$ may not be injective).
+We can compute $\op{merge-all}$ using the following algorithm. Let $(C, H)$ be a
+tuple in the domain of $\op{merge-all}$. We assume a reasonable encoding of the
+circuit, and note that any such encoding induces a linear order on the
+structure. Let $H_1, \ldots, H_p$ be the syntactic equivalence classes of $H$
+linearly ordered such that for all $i, j \in [p]$ if $i \leq j$ the height of
+the gates in $H_i$ is less than or equal to the height of the gates in $H_j$.
+Let $C'$ be the result of successively executing the algorithm for $\op{merge}$
+on each such equivalence class in order.
+
+It is worth noting that for an input tuple $(C, H)$, if follows from
+Lemma~\cite{lem:unique-labels-syntactic-equiv} that if $H$ has unique labels
+then the syntactic equivalence relation on $H$ can be computed in time
+polynomial in the size of $C$. Thus, if the set $H$ has unique labels, it can be
+shown that the operation $\op{merge-all}$ can be computed in time polynomial in
+the size of the input circuit.
+
+As in the case of $\op{merge}$, the function $\op{merge-all}$ preserves
+symmetry, unique labels and the ensures that the input and output circuits
+compute the same function. Let be a circuit $C$ a circuit and $H$ a set of gates
+in $C$ with unique labels. Then if $g$ is a gate in both $C$ and $C' :=
+\op{merge-all}(C, H)$, and all of the children of $g$ in $C$ are in $H$, then no
+two distinct children of $g$ in $C'$ are syntactically-equivalent. We note we
+have no guarantee that $g$ will have unique labels in $C'$ as $L'(g)$ may not be
+injective.
 
 % Moreover, if we run merge on a circuit $C$ and a set $H$ then if $C$ has
 % unique labels and $H$ has the property that there is no gate $g$ in $C$ such
 % that two elements of $H$ are in $H_g$ then if $C$ has unique labels then so
 % does $C'$. Moreover, if $C$ is symmetric then so is $C'$.
 
-The operation $\op{make-injective}$ takes in a circuit and a symmetric gate and
-outputs an equivalent circuit but such that the selected gate now has injective
-labels.
+The now define the function $\op{make-injective}$ that maps a circuit and a
+symmetric gate to an equivalent circuit containing all the same gates as the
+input circuit but such that the specified gate now has injective labels.
 
 \begin{definition}
-  The operation $\op{make-injective}(C, h)$ takes as input an ordered
-  $(\mathbb{B}, \tau)$-circuit $C := \langle G, \Omega, \Sigma , \Lambda, L
-  \rangle$ and a gate $h \in G$ and outputs the circuit $C' := \langle G',
-  \Omega', \Sigma', \Lambda', L' \rangle$. Let $c = \max \{\vert
-  L(g)^{-1}(h)\vert : g \in W(h, \cdot)\}$. If $c = 1$ then $C' := C$. If $c >
-  1$ then $C'$ is defined such that
+  \label{def:make-injective}
+  The function $\op{make-injective}$ maps a circuit $C := \langle G, \Omega,
+  \Sigma , \Lambda, L \rangle$ and a gate $h \in G$ to the circuit
+  $\op{make-injective}(C, h) := C' := \langle G', \Omega', \Sigma', \Lambda', L'
+  \rangle$, defined as follows. Let $c = \max \{\vert L(g)^{-1}(h)\vert : g \in
+  W(h, \cdot)\}$. If $c = 1$ then $C' := C$. If $c > 1$ then $C'$ is defined
+  such that
   \begin{itemize}
     \setlength\itemsep{0mm}
   \item $G' = G \uplus \{h_2, \ldots, h_{c-1}\}$,
@@ -102,27 +117,28 @@ and output circuits of this operation compute the same function.
 % non-injective symmetric gates in $C'$ is strictly less than the number of
 % non-injective symmetric gates in $C'$.
 
-The operation $\op{make-injective-all}$ takes in a circuit and outputs an
-equivalent circuit such that every symmetric-gate in that circuit has injective
-labels.
+We now define the function $\op{make-injective-all}$ that maps a circuit to an
+equivalent circuit such that every symmetric gate now has injective labels.
 
 \begin{definition}
-  The operation $\op{make-injective-all}(C)$ takes as input an ordered
-  $(\mathbb{B}, \tau)$-circuit $C := \langle G, \Omega, \Sigma , \Lambda, L
-  \rangle$ and outputs the circuit $C' := \langle G', \Omega', \Sigma',
-  \Lambda', L' \rangle$ defined as follows. Let $F(C*) = \op{make-injective}(C*,
-  h)$, where $h$ is the first gate in $C*$ such that there exists a gate $g$ in
-  $C*$ where $\vert L*(g)^{-1}(h)\vert > 1$. Let $(C^0, C^1, \ldots)$ be a
-  sequence of circuits where $C^0 := C$ and for $i > 1$, $C^i = F(C^{i-1})$. It
-  can be shown that this sequence converges after at most $\vert C \vert$ many
-  steps. Let $C'$ be this limit.
+  The function $\op{make-injective-all}$ maps a circuit $C := \langle G, \Omega,
+  \Sigma , \Lambda, L \rangle$ to a circuit $\op{make-injective}(C) := C' :=
+  \langle G', \Omega', \Sigma', \Lambda', L' \rangle$ defined as follows.
+
+  Let $F$ be a function that maps an ordered circuit $C*$ to the circuit
+  $\op{make-injective}(C*, h)$, where $h$ is the topologically first gate such
+  that there exists a gate $g$ in $C*$ where $h$ is a child of $g$ and $\vert
+  L*(g)^{-1}(h) \vert > 1$. Let $(C^0, C^1, \ldots)$ be a sequence of circuits
+  where $C^0 := C$ and for $i > 1$, $C^i := F(C^{i-1})$. It can be shown that
+  this sequence converges after at most $\vert C \vert$ many steps. Let $C'$ be
+  the limit of this sequence.
 \end{definition}
 
 Since $\op{make-injective}$ can be computed in polynomial time, and the number
-of iterations required in order to reach is a fixed-point in the definition of
-$\op{make-injective-all}$ is bounded by the size of the input circuit, it
-follows that $\op{make-injective-all}$ can be computed in time polynomial in the
-size of the input circuit. Moreover, $\op{make-injective-all}$ preserves
+of iterations required to converge to the limit in the above definition is
+bounded by the size of the circuit, it can be shown that
+$\op{make-injective-all}$ can be computed in time polynomial in the size of the
+input circuit. Furthermore, we note that $\op{make-injective-all}$ preserves
 symmetry, rigidity and unique labels. Moreover, the input and output circuits
 compute the same function.
 
@@ -180,16 +196,16 @@ compute the same function.
 % circuit $C'$ computing the same function as $C$ but the gate $g$ in $C$ has
 % unique labels.
 
-The operation $\op{insert}$ takes as input two circuits and outputs a circuit
+We now define the function $\op{insert}$ that maps two circuits to a circuit
 formed by inserting the gates of the first circuit into the second circuit.
 
 \begin{definition}
-  The operation $\op{insert}(C^1, C^2)$ takes as input a $(\mathbb{B}_1,
-  \tau_1)$-circuit $C^1 := \langle G_1, \Omega_1, \Sigma_1 , \Lambda_1, L_1
-  \rangle$ and a $(\mathbb{B}_2, \tau_2)$-circuit $C^2 := \langle G_2, \Omega_2,
-  \Sigma_2 , \Lambda_2, L_2 \rangle$ and outputs a $(\mathbb{B}_1 \cup
-  \mathbb{B}_2, \tau_1 \uplus \tau_2)$-circuit $C = \langle G, \Omega, \Sigma ,
-  \Lambda, L \rangle$ where
+  The function $\op{insert}$ maps a $(\mathbb{B}_1, \tau_1)$-circuit $C^1 :=
+  \langle G_1, \Omega_1, \Sigma_1 , \Lambda_1, L_1 \rangle$ and a
+  $(\mathbb{B}_2, \tau_2)$-circuit $C^2 := \langle G_2, \Omega_2, \Sigma_2 ,
+  \Lambda_2, L_2 \rangle$ to a $(\mathbb{B}_1 \cup \mathbb{B}_2, \tau_1 \uplus
+  \tau_2)$-circuit $\op{insert}(C^1, C^2) := C := \langle G, \Omega, \Sigma ,
+  \Lambda, L \rangle$, where
   \begin{itemize}
     \setlength\itemsep{0mm}
   \item $G = G_1 \uplus G_2$,
@@ -200,23 +216,25 @@ formed by inserting the gates of the first circuit into the second circuit.
   \end{itemize}
 \end{definition}
 
-It can be shown that $\op{insert}$ can be be computed in polynomial time. If the
-input circuits are symmetric then the output circuit will be symmetric.
+It can be shown that $\op{insert}$ can be be computed in time polynomial in the
+size of the input circuits. Moreover, if the input circuits are symmetric then
+the output circuit will be symmetric.
 
-The operation $\op{replace}$ removes a gate from a circuit and replaces it with
-another gate.
-  
+We now define the function $\op{replace}$ that maps a circuit $C$ and a pair of
+gates $(g_1, g_2)$ in $C$ to a circuit $C'$ formed by replacing $g_1$ with $g_2$
+in $C$.
+
 \begin{definition}
-  The operation $\op{replace}(C, g_1, g_2)$ takes as input a circuit $C =
-  \langle G, \Omega, \Sigma, \Lambda, L\rangle$ and a pair of gates $(g_1, g_2)$
-  in $C$ and outputs a circuit $C' = \langle G', \Omega', \Sigma', \Lambda', L'
-  \rangle$ such that
+  The function $\op{replace}$ maps a circuit $C = \langle G, \Omega, \Sigma,
+  \Lambda, L\rangle$ and a pair of gates $(g_1, g_2)$ in $C$ to a circuit
+  $\op{replace}(C, g_1, g_2) := C' := \langle G', \Omega', \Sigma', \Lambda', L'
+  \rangle$, where
   \begin{itemize}
     \setlength\itemsep{0mm}
   \item $G' = G \setminus \{g_1\}$,
   \item $\Omega'$ is an function from the domain of $\Omega$ to $G'$ such that
     for each $\vec{a} \in \dom(\Omega)$ if $\Omega(\vec{a}) = g_1$ then
-    $\Omega'(\vec{a}) = g_2$ and if then $\Omega'(\vec{a}) = \Omega(\vec{a})$.
+    $\Omega'(\vec{a}) = g_2$ and otherwise $\Omega'(\vec{a}) = \Omega(\vec{a})$.
   \item $\Sigma' = \restr{\Sigma}{G'}$
   \item $\Lambda' = \restr{\Lambda}{G'}$
   \item For each $g \in G'$ and each $\vec{a} \in \ind(g)$ if $L(g)(\vec{a}) =
@@ -225,35 +243,34 @@ another gate.
   \end{itemize}
 \end{definition}
 
-It can be shown that the operation $\op{replace}$ can be computed in time
+It can be shown that the function $\op{replace}$ can be computed in time
 polynomial in the size of the input circuit.
 
-The operation $\op{tag}$ takes in a circuit, a gate in that circuit, a relation
-symbol and a tuple and outputs a circuit computing the same function but with an
-additional gadget, constructed using the gates labelled by the given relation
-symbol and tuple, marking the designated gate. The idea is that marking a gate
-can be used as a step to ensure unique labels in a circuit.
+We now define the function $\op{tag}$ that maps a circuit, a relation symbol, a
+gate in that circuit, and a tuple to a circuit computing the same function as
+the input circuit but with an additional gadget, constructed using the gates
+labelled by the given relation symbol and tuple, marking the designated gate.
+The intuition is that this marking helps to distinguish a gate, and is used as a
+step to ensure that a circuit has unique labels.
 
 \begin{definition}
-  The operation $\op{tag}(C, R, g, \vec{a})$ takes in a $(\mathbb{B},
-  \tau)$-circuit $C_n := \langle G, \Omega, \Sigma, \Lambda, L \rangle$, a
-  relation symbol $R \in \tau$, a gate $g \in G$ and a tuple $\vec{a} \in [n]^k$
-  for some $k$ and outputs the circuit $C_n' = \langle G', \Omega', \Sigma',
-  \Lambda', L'\rangle$ defined by the following algorithm. Let $G' = G \uplus
-  \{\land_g, \land_{g'}, \land_1, \ldots , \land_k\}$, $\Omega' = \Omega$, and
-  $\Lambda' = \Lambda$. Define $L'$ and $\Sigma'$ as follows. For each $g \in G$
-  $\Sigma'(g) = \Sigma(g)$. For each $g \in \{\land_0, \land_1, \ldots , \land_k
-  \}$, $\Sigma(g)$ is an $\AND$-gate that takes in two inputs. $\Sigma(\land_g)$
-  is an $\AND$-gate that takes in a single input. Set $g$ to be the lone input
-  to $\land_g$. Set the two inputs to $\land_0$ to be $\land_g$ and $\land_1$.
-  For each $i \in [k-1]$ set the inputs of $\land_i$ to be $\land_{i+1}$ and the
-  gate $g_i \in G'$ such that $\Sigma(g_i) = R$ and $\Lambda^{-1}(g_i) =
-  \vec{a}_i$, where $\vec{a}_i$ is the $k$-tuple $(\vec{a}(i), \ldots,
-  \vec{a}(i))$. Set the inputs of $\land_k$ to be the constant gate $1$ and the
-  gate $g_k$ such that $\Sigma(g) = R$ and $\Lambda^{-1}(g_k) = \vec{a}_k$.
-
-  For each gate $h \in G \setminus \{g\}$ and $\vec{b} \in \ind(h)$, if
-  $L(h)(\vec{b}) = g$ then let $L'(h)(\vec{b}) = \land_0$, otherwise let
+  The function $\op{tag}$ maps a $(\mathbb{B}, \tau)$-circuit $C := \langle G,
+  \Omega, \Sigma, \Lambda, L \rangle$ of order $n$, a relation symbol $R \in
+  \tau$, a gate $g \in G$, and a tuple $\vec{a} \in [n]^k$ for some $k$ to a
+  circuit $\op{tag}(C, R, g, \vec{a}) := C' := \langle G', \Omega', \Sigma',
+  \Lambda', L'\rangle$ of order $n$, such that $G' = G \uplus \{\land_g,
+  \land_{g'}, \land_1, \ldots , \land_k\}$, $\Omega' = \Omega$, and $\Lambda' =
+  \Lambda$. For each $g \in G$ $\Sigma'(g) = \Sigma(g)$. For each $g \in
+  \{\land_0, \land_1, \ldots , \land_k \}$, $\Sigma(g)$ is an $\AND$-gate that
+  takes in two inputs. $\Sigma(\land_g)$ is an $\AND$-gate that takes in a
+  single input, $g$ is the lone input to $\land_g$, and $\land_0$ has as input
+  $\land_g$ and $\land_1$. For each $i \in [k-1]$ the inputs of $\land_i$ are
+  $\land_{i+1}$ and the gate $g_i \in G'$ such that $\Sigma(g_i) = R$ and
+  $\Lambda^{-1}(g_i) = \vec{a}_i$, where $\vec{a}_i$ is the $k$-tuple
+  $(\vec{a}(i), \ldots, \vec{a}(i))$. The inputs of $\land_k$ are the constant
+  gate $1$ and the gate $g_k$ such that $\Sigma(g) = R$ and $\Lambda^{-1}(g_k) =
+  \vec{a}_k$. For each gate $h \in G \setminus \{g\}$ and $\vec{b} \in \ind(h)$,
+  if $L(h)(\vec{b}) = g$ then $L'(h)(\vec{b}) = \land_0$, otherwise
   $L'(h)(\vec{b}) = L(h)(\vec{b})$.
 \end{definition}
 
@@ -282,43 +299,116 @@ can be used as a step to ensure unique labels in a circuit.
 
 % \end{definition}
 
+It can be shown that $\op{tag}$ can be computed in time polynomial in the size
+of its input. The input and output circuits compute the same function. Moreover,
+if the input circuit has unique labels then the output circuit will have unique
+labels. If the input relation symbol is obvious from the context we omit it when
+invoking $\op{tag}$.
 
-It can be shown that $\op{concatenate}$ can be implemented so as to run in time
-polynomial in the size of the input. The input and output circuits compute the
-same function. Moreover, if the input circuit had unique labels then the output
-circuit will have unique labels. In the event that the input relation symbol is
-obvious from the context we omit it when invoking this algorithm.
+\begin{definition}
+  The function $\op{tag-all}$ maps a $(\mathbb{B}, \tau)$-circuit $C := \langle
+  G, \Omega, \Sigma, \Lambda, L \rangle$ of order $n$, a relation symbol $R \in
+  \tau$, a set of gates $H \subseteq G$, and $T := (\vec{a}_h)_{h \in H}
+  \subseteq [n]^{k}$ a sequence of tuples indexed by $H$ for some fixed $k$, to
+  a circuit $\op{tag-all}(C, R, H, T) := C' := \langle G', \Omega', \Sigma',
+  \Lambda', L'\rangle$ of order $n$ defined as follows.
 
-The operation $\op{concatenate}$ takes in a circuit and a set of appropriate
-circuits and forms a new circuit by replacing the relational gates of the
-designated circuit with the output gates of the circuits in the given set of
+  Suppose there is a linear order on $H$, and write $H = \{h_1, \ldots, h_t\}$.
+  Let $C_0 := C$ and for all $i \in [t]$ let $C_i := \op{tag}(C_{i-1}, R, h_i,
+  T(h_i))$. Then $C' = C_{t}$.
+
+  % such that $G' = G \uplus \{\land_g, \land_{g'}, \land_1, \ldots ,
+  % \land_k\}$,
+  % $\Omega' = \Omega$, and $\Lambda' = \Lambda$. For each $g \in G$ $\Sigma'(g)
+  % =
+  % \Sigma(g)$. For each $g \in \{\land_0, \land_1, \ldots , \land_k \}$,
+  % $\Sigma(g)$ is an $\AND$-gate that takes in two inputs. $\Sigma(\land_g)$ is
+  % an $\AND$-gate that takes in a single input, $g$ is the lone input to
+  % $\land_g$, and $\land_0$ has as input $\land_g$ and $\land_1$. For each $i
+  % \in
+  % [k-1]$ the inputs of $\land_i$ are $\land_{i+1}$ and the gate $g_i \in G'$
+  % such that $\Sigma(g_i) = R$ and $\Lambda^{-1}(g_i) = \vec{a}_i$, where
+  % $\vec{a}_i$ is the $k$-tuple $(\vec{a}(i), \ldots, \vec{a}(i))$. The inputs
+  % of
+  % $\land_k$ are the constant gate $1$ and the gate $g_k$ such that $\Sigma(g)
+  % =
+  % R$ and $\Lambda^{-1}(g_k) = \vec{a}_k$. For each gate $h \in G \setminus
+  % \{g\}$ and $\vec{b} \in \ind(h)$, if $L(h)(\vec{b}) = g$ then
+  % $L'(h)(\vec{b})
+  % = \land_0$, otherwise $L'(h)(\vec{b}) = L(h)(\vec{b})$.
+\end{definition}
+
+It is easy to see that, since $\op{tag}$ can be computed in time polynomial in
+the combined size of its inputs, $\op{tag-all}$ can also be computed in time
+polynomial in the combined size of its inputs.
+
+We now define the function $\op{compose}$ that maps a circuit and a sequence of
+appropriate circuits and to a circuit formed by replacing the input gates of the
+designated circuit with the output gates of the circuits in the sequence of
 circuits.
 
 \begin{definition}
-  The operation $\op{concatenate}(C, \mathcal{C}, \tau_R, R)$, where $C :=
-  \langle G, \Omega, \Sigma, \Lambda, L \rangle$ is a $(\mathbb{B},
-  \tau)$-circuit, $\tau_R := (R_1, \ldots, R_t)$ is a sequence of relation
-  symbols such that $\tau_R \subseteq \tau$, $\mathcal{C} := ( C^1, \ldots,
-  C^t)$ is a finite sequence of circuits, where for each $i \in [t]$, $C^i =
-  \langle G_i, \Omega_i, \Sigma_i, \Lambda_i, L_i \rangle$ is a $(\mathbb{B}_i,
-  \tau_i)$-circuit such that $\tau_i \not\subset \tau_R$ and $C^i$ computes a
-  query of arity $\arty(R_i)$, and $R$ is a relation symbol in $(\tau \setminus
-  \tau_R) \cup (\bigcup_{1 \leq i \leq t},\tau_i))$. The operation outputs a
-  circuit $C' = \langle G', \Omega', \Sigma', \Lambda', L' \rangle$ defined from
-  the input as follows. Note that all circuits take in structures of size $n$.
+  The function $\op{compose}$ maps a $(\mathbb{B}, \tau)$-circuit $C := \langle
+  G, \Omega, \Sigma, \Lambda, L \rangle$, a sequence of relation sybmols $\tau_R
+  := (R_1, \ldots, R_t)$ such that $\tau_R \subseteq \tau$, a sequence of
+  circuits $\mathcal{C} := ( C^1, \ldots, C^t)$, where for each $i \in [t]$,
+  $C^i = \langle G_i, \Omega_i, \Sigma_i, \Lambda_i, L_i \rangle$ is a
+  $(\mathbb{B}_i, \tau_i)$-circuit, and $\tau_i \not\subset \tau_R$ and $C^i$
+  computes a query of arity $\arty(R_i)$ to a circuit $\op{compose}(C,
+  \mathcal{C}, \tau_R) := C' := \langle G', \Omega', \Sigma', \Lambda', L'
+  \rangle$. Note that all circuits take in structures of size $n$. The circuit
+  $C'$ is defined as follows.
   
-  Let ${C^0}' := \langle G^0, \Omega^0, \Sigma^0, \Lambda^0, L^0 \rangle := C$.
-  For each $i \in [t]$ fix a relation symbol $V_i \in \tau_i \setminus \tau_R$.
-  For each $i \in [t]$ construct the circuit ${C^{i}}' = \langle G_i',
-  \Omega_i', \Sigma_i', \Lambda_i', L_i' \rangle $ by $\op{inserting}$ $C^i$
-  into ${C^{i-1}}'$, and call the resultant circuit ${D^{i-1}}'$. For each
-  relational gate $g$ in $D^{i-1}$ labelled by the symbol $R_i$, $\op{replace}$
-  $g$ with the gate $\Omega_{i}(\Lambda_{i-1}'(g))$ in $D^{i-1}$ and $\op{tag}$
-  the gate $\Omega_i(\Lambda_{i-1}'(g))$ in $D^{i-1}$ using the tuple
-  $\Lambda_{i-1}'(g)$ and the relation symbol $R$. Output the circuit $C' :=
-  {C^t}'$.
+  Let ${C^0}' := \langle G_0', \Omega_0', \Sigma_0', \Lambda_0', L_0' \rangle :=
+  C$, and let $i \in [t]$. Let $D^{i-1}:= \op{insert} (C^i, {C^{i-1}}')$ and
+  $G^{i-1}_{R_i}$ be the set of all relational gates in $D^{i-1}$ labelled by
+  the relational symbol in $R_i$. Let ${C^{i-1}}' := \langle G_i', \Omega_i',
+  \Sigma_i', \Lambda_i', L_i' \rangle$ be the circuit formed from $D^{i-1}$ by
+  replacing each gate in $g \in G^{i-1}_{R_i}$ with the gate
+  $\Omega_{i}(\Lambda_{i-1}'(g))$ in $D^{i-1}$ (by repeated calls to the
+  $op{replace}$ function). Let $C' = {C^{t}}'$.
 \end{definition}
 
+% \begin{definition}
+%   The function $\op{concatenate}$ maps a $(\mathbb{B}, \tau)$-circuit $C :=
+%   \langle G, \Omega, \Sigma, \Lambda, L \rangle$, a sequence of relation
+%   sybmols $\tau_R := (R_1, \ldots, R_t)$ such that $\tau_R \subseteq \tau$, a
+%   sequence of circuits $\mathcal{C} := ( C^1, \ldots, C^t)$, where for each $i
+%   \in [t]$, $C^i = \langle G_i, \Omega_i, \Sigma_i, \Lambda_i, L_i \rangle$ is
+%   a $(\mathbb{B}_i, \tau_i)$-circuit, $\tau_i \not\subset \tau_R$ and $C^i$
+%   computes a query of arity $\arty(R_i)$, and $R$ is a relation symbol in
+%   $(\tau \setminus \tau_R) \cup (\bigcup_{1 \leq i \leq t},\tau_i))$ to a
+%   circuit $\op{concatenate}(C, \mathcal{C}, \tau_R, R) := C' := \langle G',
+%   \Omega', \Sigma', \Lambda', L' \rangle$. Note that all circuits take in
+%   structures of size $n$. The circuit $C'$ is defined as follows.
+  
+%   Let ${C^0}' := \langle G^0, \Omega^0, \Sigma^0, \Lambda^0, L^0 \rangle :=
+%   C$. For each $i \in [t]$ fix a relation symbol $V_i \in \tau_i \setminus
+%   \tau_R$. For each $i \in [t]$ let ${C^{i}}' := \langle G_i', \Omega_i',
+%   \Sigma_i', \Lambda_i', L_i' \rangle := \op{insert} (C^i, {C^{i-1}}')$ be
+%   defined as follows. Let $D^{i-1}:= \op{insert} (C^i, {C^{i-1}}')$. Let
+%   $G_{R_i}$ be the set of all relational gates in $D^{i-1}$ labelled by the
+%   relational symbol in $R_i$. Let ${C^{i}}'$ be the circuit formed by
+%   replacing each gate in $g \in G_{R_i}$ with the gate
+%   $\Omega_{i}(\Lambda_{i-1}'(g))$ in $D^{i-1}$ (by repeated calls to the
+%   $op{replace}$ function) and using the $\op{tag}$ function on each gate
+%   $\Omega_i (\Lambda_{i-1}'(g))$ in $D^{i-1}$ using the tuple
+%   $\Lambda_{i-1}'(g)$ and the relation symbol $V_i$. We then let $C' :=
+%   {C^{t}}'$.
+
+%   %   For each relational gate $g$ in $D^{i-1}$ labelled by the symbol
+%   %   $R_i$,
+%   %   $\op{replace}$ $g$ with the gate $\Omega_{i}(\Lambda_{i-1}'(g))$ in
+%   %   $D^{i-1}$
+%   %   and $\op{tag}$ the gate $\Omega_i(\Lambda_{i-1}'(g))$ in $D^{i-1}$
+%   %   using
+%   %   the
+%   %   tuple $\Lambda_{i-1}'(g)$ and the relation symbol $R$. Output the
+%   %   circuit
+%   %   $C'
+%   %   := {C^t}'$.
+% \end{definition}
+% GW: do this tomorrow.
 
 % \begin{definition}
 %   The operation $\op{concatenate-circuits}(C, \mathcal{C}, \tau_R) = C'$,
@@ -343,1218 +433,268 @@ circuits.
 %   {C^t}'$.
 % \end{definition}
 
-It can be shown that $\op(concatenate)$ can be computed in time polynomial in
-the sum of the sizes of the input circuits. Moreover, if the input circuits are
-all symmetric then the output circuit will be symmetric. Furthermore, if the
-input sequences of circuits and relations have just a single element, then if
-the input circuits have unique labels then the output circuit will have unique
-labels.
+It can be shown that $\op{compose}$ can be computed in time polynomial in the
+sum of the sizes of the input circuits. Moreover, if the input circuits are all
+symmetric then the output circuit will be symmetric. Also, for an input tuple
+$(C, \mathcal{C}, \tau_R)$, we have that if $C$ has symmetric gates and
+transparent, and all the circuits in $\mathcal{C}$ are transparent, then $C' :=
+\op{compose}(C, \mathcal{C}, \tau_R)$ is transparent. If $C$ does not have
+symmetric gates then, as the output gates of the circuits in $\mathcal{C}$ are
+no longer labelled as output gates in $C'$, it may be that some of these gates
+are syntactically-equivalent in $C'$, resulting in $C'$ not being transparent.
 
-\subsection{Transparency and Unique Extensions}
-\label{sec:transparency-and-unique-extensions}
-% In contrast with the work of Anderson and Dawar~\cite{AndersonD17}, the
-% circuit families we use to establish the main result of this paper are
-% additionally required to be transparent. In this subsection we briefly discuss
-% this condition, and present results suggesting its necessity.
-
-As mentioned earlier, the unique extensions condition plays a crucial role in
-the definition of needed theoretical tools, such as supports, and for proving
-the existence of polynomial-time algorithms computing important functions, such
-as the coarsest supporting partition or the orbit of a gate (see Proposition
-\ref{lem:computing support}).
-
-In this subsection we show that if a circuit is transparent then it may be
-transformed in polynomial time into an equivalent circuit with unique labels.
-Since we already have that circuits with unique labels have unique extensions
-(see Proposition \ref{prop:unique-labels-unique-extensions}), it follows that we
-may assume, without a loss of generality, that $P$-uniform families of
-transparent circuits have unique labels, and hence unique extensions. We also
-discuss relevant special cases and the motivate the explicit requirement that
-the $P$-uniform families of circuit referenced in the main result of this paper
-consist of transparent circuits.
-
-% Anderson and Dawar~\cite{AndersonD17} introduce the notion of a `rigid'
-% circuit, a condition analogous to the rigidity condition defined in this
-% paper. The following
-
-% \begin{definition}
-%   We say a circuit $C_n$ is que labels it has unique extensions. We finally
-%   discuss th\emph{rigid} if it has injective labels and for every pair of
-%   gates $(g, g')$ in $C_n$ such that $H_g = H_{g'}$ and $g \equiv g'$.
-% \end{definition}
-
-We first show that the syntactic equivalence relation can be efficiently
-computed for transparent circuits.
-
-\begin{remark}
-  I have introduced the notion of a syntactically transparent class. The reason
-  I did this seems to have dissipated, I will probably remove this definition
-  and simply the statement of the below proposition.
-\end{remark}
+In certain contexts we are interested composing gates such that if the input circuits are
+transparent (resp. have unique labels) then the output circuits will be
+transparent (resp. have unique labels). In this case, while composing the
+circuits we could apply the $\op{tag}$ function to the output gates of the
+circuits in the input sequence. We now define the function
+$\op{compose-and-tag}$ that implements this mapping.
 
 \begin{definition}
-  We say a class of circuits $\mathcal{C}$ is \emph{syntactically transparent}
-  if there is an algorithm that takes in a circuit $C \in \mathcal{C}$ and
-  outputs the syntactic equivalence relation on the gates of $C$ and runs in
-  time polynomial in the size of the input circuit.
+  The function $\op{compose-and-tag}$ maps a $(\mathbb{B}, \tau)$-circuit $C :=
+  \langle G, \Omega, \Sigma, \Lambda, L \rangle$, a sequence of relation symbols
+  $\tau_R := (R_1, \ldots, R_t)$ such that $\tau_R \subseteq \tau$, a sequence
+  of circuits $\mathcal{C} := ( C^1, \ldots, C^t)$, where for each $i \in [t]$,
+  $C^i = \langle G_i, \Omega_i, \Sigma_i, \Lambda_i, L_i \rangle$ is a
+  $(\mathbb{B}_i, \tau_i)$-circuit, and $\tau_i \not\subset \tau_R$ and $C^i$
+  computes a query of arity $\arty(R_i)$ to a circuit $\op{compose-and-tag}(C,
+  \mathcal{C}, \tau_R, R) := C'$. The circuit $C'$ is defined as follows. Note
+  that all circuits take in structures of size $n$.
+  
+  Let $D^0 := \op{compose}(C, \mathcal{C}, \tau_R)$. For each $i \in [t]$, let
+  $D^{i} := \op{tag-all}(D^{i-1}, R, \img(\Omega^{-1}_i), \Omega^{-1}_i)$. Let
+  $C' := D^t$.
 \end{definition}
 
-\begin{prop}
-  Any class of transparent circuits is syntactically transparent.
-  % Let $C_n := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a
-  % $(\mathbb{B},
-  % \tau)$-circuit with unique labels. There is a deterministic algorithm that
-  % takes in such a circuit and outputs the syntactic equivalence relation on
-  % $G$.
-  % Moreover, this algorithm runs in time polynomial in the size of the circuit.
-  \label{prop:unique-labels-syntactic-equiv}
-\end{prop}
-\begin{proof} Let $C_n := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a
-  transparent $(\mathbb{B}, \tau)$-circuit. We define a relation $\sim$ by
-  induction on height (i.e. distance from an input gate). This relation will be
-  the syntactic equivalence relation on $G$. It is easy to check the conditions
-  for syntactic equivalence for gates of height 0 as all such gates are input
-  gates and so are either constant gates or relational gates. Suppose $g$ and
-  $h$ are gates of height greater than zero. We only need to check conditions
-  (i), (iv) and (v) of syntactic equivalence. It is easy to check (i) and (v).
-  If either condition is false then $g$ and $h$ are not syntacticly equivalent.
-  So suppose $g$ and $h$ are two internal gates such that $\Sigma (g) =
-  \Sigma(h)$ and suppose that if they are both output gates then $\Omega^{-1}(g)
-  = \Omega^{-1}(h)$. It remains to check if $L(g)/{\sim}$ and $L(h)/{\sim}$ are
-  isomorphism equivalent. First check if $H_h /{\sim} = H_g /{\sim}$. If not,
-  $g$ and $h$ are not syntactically equivalent. So suppose $H_h /{\sim} = H_g
-  /{\sim}$. If $g$ and $h$ are symmetric gates then $H_h /{\sim} = H_g/{\sim}$
-  if, and only if, $L(g)/{\sim}$ and $L(h)/{\sim}$ are isomorphism equivalent,
-  so let $g \sim h$. If $g$ and $h$ are not symmetric gates then, since $C_n$ is
-  transparent, $g$ and $h$ have unique labels. We thus have that $L(g)/{\sim}$
-  and $L(h)/{\sim}$ are isomorphism equivalent if, and only if, $L(g)^{-1}L(h)$
-  acts like an isomorphism. This can be checked by first checking that the
-  function induces a sorted permutation on the universe of $g$ (which can be
-  checked efficiently). This is sufficient as $L(g)(L(g)^{-1}L(h)) = L(h)$.
-
-  It is easy to see that, given a reasonable binary encoding of a circuit, the
-  above procedure can be implemented so as to run in polynomial time, and that
-  the relation $\sim$ is the syntactic equivalence relation on $C_n$.
-\end{proof}
-
-\begin{prop}
-  Let $C_n \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a transparent
-  $(\mathbb{B}, \tau)$-circuit. There is an algorithm that that takes in such a
-  circuit and outputs a $(\mathbb{B} \cup \mathbb{B}_{\std}, \tau)$-circuit $C'$
-  such that $C$ and $C'$ compute the same function, $C'$ has unique labels, and
-  if $C$ is symmetric then $C'$ is symmetric. Moreover, this algorithm runs in
-  time polynomial in the size of the input circuit.
-  \label{prop:transparent-unique}
-\end{prop}
-\begin{proof}
-  Let $C' := \op{make-injective-all}(\op{merge-all} (C, G))$. We have that $C'$
-  is symmetric if $C$ is symmetric. Since the syntactic equivalence relation can
-  be computed in polynomial time for circuits in $\mathcal{C}$ it follows that
-  this operation can be implemented so as to run in time polynomial in the size
-  of $C$. Clearly every gate $g$ in $C'$ belongs to a singleton syntactic
-  equivalence class.
-\end{proof}
-
-Anderson and Dawar~\cite{AndersonD17}, in their study of circuits with symmetric
-gates, show that such circuits may be transformed in polynomial time into
-equivalent circuits with unique extensions. They do this by showing that a
-circuit with symmetric gates may be transformed into an equivalent \emph{rigid}
-circuit in polynomial time and that all rigid circuits have unique extensions.
-We have similarly shown that transparent circuits can be translated into
-equivalent circuits with unique labels in polynomial time and that circuits with
-unique labels have unique extensions. Since all circuits with symmetric gates
-are transparent, this is a generalisation of their result.
-
-It is natural to ask if the requirement in the main theorem of this paper that
-the circuits be transparent is strictly necessary. It may be that, just as for
-the case of circuits with symmetric gates, a circuit (not necessarily
-transparent) can be transformed in polynomial time into an equivalent
-transparent circuit. While we do not address this question exactly, we do show
-that the problem of computing the syntactic equivalence relation for a circuit
-is at least as hard as the graph isomorphism problem. We also show that that the
-related problems of checking if given gate in a circuit has unique labels or has
-unique extensions (in a sense we define below) are all also at least as hard as
-the graph isomorphism problem. We move on to show that computing other basic
-facts about the circuit, such as the orbit of a gate, is also at least as hard
-as the graph isomorphism problem.
-
-
-% ,; address two related decision problems in Proposition \ref{} and Corollaries
-% \ref{} and \ref{}. In partic
-
-% As we will show in Proposition \ref{}, formulas of $\FPR$ can be translated
-% into. For this transparent circuits. However, the transformation is
-% complicated by the requirement that the resultant circuit be transparent.
-% However, it is worth asking if the transparency condition is required, i.e. if
-% it can be shown that
-
-% \emph{rigid} circuit. They show that all circuits such circuits can be
-% transformed into equivalent rigid circuits . They show that if a circuit is
-% rigid then it has unique extensions and that every circuit with injective
-% labels and symmetric gates can be transformed into an equivalent rigid circuit
-% in polynomial time. We have similarly shown that a transparent circuit can be
-% transformed into an equivalent one with unique labels in polynomial time, and
-% that circuits with unique labels have unique extensions. Moreover, since all
-% circuits with symmetric gates and injective labels are transparent, this is a
-% strict generalisation of their result.
-
-% and they show that a symmetric gate
-
-
-% Using the language developed in this paper, a circuit $C_n$ is \emph{rigid} if
-% it has injective labels and there are no two gates $g$ and $h$ in $C_n$ such
-% that $g$ and $h$ are syntactically equivalent. Since their discussion is
-% limited to circuits with symmetric gates and injective labels this is equ
-
-
-% circuit, a condition analogous to the rigidity condition defined in this
-% paper. The following
-
-% It is worth noting that all symmetric circuits are transparent, and
-
-% prove that it's a sufficient condition for establishing the uniqueness of the
-% induced automorphism on the circuit. Moreover, they prove that any circuit
-% (noting that they limit themselves to a discussion of circuits over a
-% symmetric basis) may be transformed into an equivalent rigid circuit in
-% polynomial time. As such, they may assume $P$-uniform symmetric circuit
-% families are rigid without a loss of generality, and hence be may assume
-% without a loss of generality that each permutation in $\sym_n$ uniquely
-% extends to an automorphism of the circuit.
-
-
-
-% However, in this subsection we show that deciding the rigidity of circuits
-% over bases which may include non-symmetric functions is at least as hard as
-% the graph isomorphism problem. However, we shoudl that on classes
-
-% Although the rigidity condition we present in this paper is similarly defined,
-% the existence of a polynomial-time computable transformation of a circuit into
-% an equivalent rigid circuit is not as straight forward. Indeed, it is possible
-% to show that the problem of determining if a given $(\mathbb{B},
-% \tau)$-circuit is rigid is as least as hard as the graph isomorphism problem.
-% This is a direct consequence of the following result.
-
-% \begin{definition}
-%   The \emph{syntactic equivalence class problem} is the decision problem for
-%   the set of all triples $(C, g_1, g_2)$, where $C$ is a $(\mathbb{B},
-%   \tau)$-circuit, and $g_1$ and $g_2$ are two syntactically equivalent gates
-%   in $C$.
-% \end{definition}
-
-% \begin{definition}
-%   The \emph{rigidity problem} is the decision problem for the set of all
-%   circuits $C$ where $C$ is a rigid circuit.
-% \end{definition}
-
-% \begin{definition}
-%   The \emph{unique labels problem} is the decision problem for the set of all
-%   circuits $C$ where $C$ has unique labels.
-% \end{definition}
-
-% \begin{prop}
-%   Let $\tau$ be any non-empty relational vocabulary and let $n, r, p \in
-%   \nats$ with $p$ prime. There is a a polynomial time reduction from the graph
-%   isomorphism problem to the problem of deciding if a given pair of gates in a
-%   given symmetric rank-circuit for structures of size $n$ that (i) has
-%   injective labels, (ii) contains no constant gates, and (iii) contains at
-%   most two rank gates with bound $r$ and prime $p$, are syntactically
-%   equivalent.
-%   \label{prop:syntactic-graph-iso}
-% \end{prop}
-% \begin{proof}
-%   We have from \cite{} that there is a polynomial time reduction from the
-%   graph isomorphism problem to the bipartite isomorphism problem. The
-%   bipartite isomorphism problem is the decision problem for the set of all
-%   pairs of partitioned bipartite graphs $B_1 := (U_1, V_1, E_1)$ and $B_2 :=
-%   (U_2, V_2, E_2)$ such that there exists a graph isomorphism $\pi : B_1
-%   \rightarrow B_2$ with $\restr{\pi}{U_1} = U_2$ and $\restr{\pi}{V_1} = V_2$.
-
-%   Suppose we are given two partitioned bipartite graphs $B_1 := (U_1, V_1,
-%   E_1)$ and $B_2 := (U_2, V_2, E_2)$. We assume, without a loss of generality,
-%   that there exists $a, b \in \nats$ such that $U_1 = U_2 = [a]$ and $V_1 =
-%   V_2 = [b]$.
-
-%   Let $R$ be a relation symbol in $\tau$ and let $k := \arty{R}$. Let $G_{R}
-%   := \{g_{R, \vec{c}} : \vec{c} \in [n]^k\}$, $G_{\text{mid}} := \{\land_0,
-%   \land_1, \neg_0, \land_{\text{out}} \}$, $G_{\rank} : = \{ g_{\rank, 1},
-%   g_{\rank, 2}\}$, and $G_{\land} := \{g_{i, (u,v)} : i \in [2] \, (u,v) \in
-%   E_i \}$. Let $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a
-%   $(\{\rank^{1}_2\}, \tau)$-circuit defined as follows. Let $G = G_R \cup
-%   G_{\text{mid}} \cup G_{\rank} \cup G_{\land}$ and $\Omega$ be the $0$-ary
-%   function $\land_{\text{out}}$. For each $\vec{c} \in [n]^{\arty{R}}$ let
-%   $\Lambda(\vec{c}) = g_{R, \vec{c}}$. Define $\Sigma$ as follows. For each $g
-%   \in G$,
-%   \begin{itemize}
-%     \setlength\itemsep{0mm}
-%   \item if $g \in G_R$ then $\Sigma(g) = R$,
-%   \item if $g$ equals $\land_0$ or $\land_1$ then $\Sigma(g) = \land[n^k]$
-%   \item if $g$ equals $\land_{\text{out}}$ then $\Sigma(g) = \land[2]$,
-%   \item if $g \in G_\rank$ let $\Sigma(g) = \rank^r_p [a,b]$, and
-%   \item if $g \in G_{\text{in}}$ and $g$ then $\Sigma(g) = \land[1]$.
-%   \end{itemize}
-%   Define $L$ as follows. For each $g \in G$,
-%   \begin{itemize}
-%     \setlength\itemsep{0mm}
-%   \item if $g \in G$ and $g = g_{\text{out}}$ then for each $i \in [2]$,
-%     $L(g)(i) := g_{\rank, i}$,
-%   \item if $g \in G_\rank$ and $g = g_{\rank, i}$ then $L(g)(p,q) = g_{i,
-%     (p,q)}$,
-%   \item if $g \in G_{\land}$ and $g = g_{i, (p,q)}$ then $L(g)(1) = \land_1$
-%     if $(p,q) \in E_i$ and $L(g)(1) = \neg_0$ otherwise,
-%   \item if $g = \neg_0$ then $L(g)(1) = \land_0$, and
-%   \item if $g = \land_0$ or $g = \land_1$ then for all $p \in [n^k]$ we have
-%     that $L(g)(p)$ equals $\Lambda^{-1}(\vec{c}_p)$, where $\vec{c}_p$ is the
-%     $p$th element of $[n]^k$ in the lexicographical ordering on $[n]^k$.
-%   \end{itemize}
-
-%   We note that for $i \in [2]$, $L(g_{\rank, i})(p,q) = \land_1$ if $(p,q)$ is
-%   an edge in in $B_i$ and $L(g_\rank, i)(p,q) = \neg_0$ if $(p,q)$ is not an
-%   edge in $B_i$. We thus have that $B_1$ and $B_2$ are bipartite isomorphic
-%   (in the sense defined above) if, and only if, $g_{\rank, 1}$ is
-%   syntactically equivalent to $g_{\rank, 2}$.
-
-%   Since the construction of $C_n$ can be implemented in time polynomial in the
-%   combined sizes of the input graphs, the mapping of $(B_1, B_2)$ to the tuple
-%   $(C_n, (g_{\rank, 1}, g_{\rank, 2}))$ witnesses the reduction. The result
-%   follows.
-% \end{proof}
-\begin{prop}
-  Let $\tau$ be any non-empty relational vocabulary and let $n, r, p \in \nats$,
-  with $p$ prime. There is a a polynomial time reduction from the graph
-  isomorphism problem to the problem of deciding if a given pair of gates in a
-  given symmetric rank-circuit for structures of size $n$ that (i) has injective
-  labels, (ii) contains no constant gates, and (iii) contains at most two rank
-  gates with bound $r$ and prime $p$, are syntactically equivalent.
-  \label{prop:syntactic-graph-iso}
-\end{prop}
-\begin{proof}
-  We have from \cite{} that there is a polynomial time reduction from the graph
-  isomorphism problem to the bipartite isomorphism problem. The bipartite
-  isomorphism problem is the decision problem for the set of all pairs of
-  partitioned bipartite graphs $B_1 := (U_1, V_1, E_1)$ and $B_2 := (U_2, V_2,
-  E_2)$ such that there exists a graph isomorphism $\pi : B_1 \rightarrow B_2$
-  with $\restr{\pi}{U_1} = U_2$ and $\restr{\pi}{V_1} = V_2$.
-
-  Suppose we are given two partitioned bipartite graphs $B_1 := (U_1, V_1, E_1)$
-  and $B_2 := (U_2, V_2, E_2)$. We assume, without a loss of generality, that
-  there exists $a, b \in \nats$ such that $U_1 = U_2 = [a]$ and $V_1 = V_2 =
-  [b]$.
-
-  Let $R$ be a relation symbol in $\tau$ and let $k := \arty{R}$. Let $G_{R} :=
-  \{g_{R, \vec{c}} : \vec{c} \in [n]^k\}$, $G_{\text{mid}} := \{\land_0,
-  \land_1, \neg_0, \land_{\text{out}} \}$, $G_{\rank} : = \{ g_{\rank, 1},
-  g_{\rank, 2}\}$, and $G_{\land} := \{g_{i, (u,v)} : i \in [2] \, (u,v) \in E_i
-  \}$. Let $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a
-  $(\{\rank^{1}_2\}, \tau)$-circuit defined as follows. Let $G = G_R \cup
-  G_{\text{mid}} \cup G_{\rank} \cup G_{\land}$ and $\Omega$ be the $0$-ary
-  function $\land_{\text{out}}$. For each $\vec{c} \in [n]^{\arty{R}}$ let
-  $\Lambda(\vec{c}) = g_{R, \vec{c}}$. Define $\Sigma$ as follows. For each $g
-  \in G$,
-  \begin{itemize}
-    \setlength\itemsep{0mm}
-  \item if $g \in G_R$ then $\Sigma(g) = R$,
-  \item if $g$ equals $\land_0$ or $\land_1$ then $\Sigma(g) = \land[n^k]$
-  \item if $g$ equals $\land_{\text{out}}$ then $\Sigma(g) = \land[2]$,
-  \item if $g \in G_\rank$ let $\Sigma(g) = \rank^r_p [a,b]$, and
-  \item if $g \in G_{\text{in}}$ and $g$ then $\Sigma(g) = \land[1]$.
-  \end{itemize}
-  Define $L$ as follows. For each $g \in G$,
-  \begin{itemize}
-    \setlength\itemsep{0mm}
-  \item if $g \in G$ and $g = g_{\text{out}}$ then for each $i \in [2]$,
-    $L(g)(i) := g_{\rank, i}$,
-  \item if $g \in G_\rank$ and $g = g_{\rank, i}$ then $L(g)(p,q) = g_{i,
-      (p,q)}$,
-  \item if $g \in G_{\land}$ and $g = g_{i, (p,q)}$ then $L(g)(1) = \land_1$ if
-    $(p,q) \in E_i$ and $L(g)(1) = \neg_0$ otherwise,
-  \item if $g = \neg_0$ then $L(g)(1) = \land_0$, and
-  \item if $g = \land_0$ or $g = \land_1$ then for all $p \in [n^k]$ we have
-    that $L(g)(p)$ equals $\Lambda^{-1}(\vec{c}_p)$, where $\vec{c}_p$ is the
-    $p$th element of $[n]^k$ in the lexicographical ordering on $[n]^k$.
-  \end{itemize}
-
-  We note that for $i \in [2]$, $L(g_{\rank, i})(p,q) = \land_1$ if $(p,q)$ is
-  an edge in in $B_i$ and $L(g_\rank, i)(p,q) = \neg_0$ if $(p,q)$ is not an
-  edge in $B_i$. We thus have that $B_1$ and $B_2$ are bipartite isomorphic (in
-  the sense defined above) if, and only if, $g_{\rank, 1}$ is syntactically
-  equivalent to $g_{\rank, 2}$.
-
-  Since the construction of $C_n$ can be implemented in time polynomial in the
-  combined sizes of the input graphs, the mapping of $(B_1, B_2)$ to the tuple
-  $(C_n, (g_{\rank, 1}, g_{\rank, 2}))$ witnesses the reduction. The result
-  follows.
-\end{proof}
-
-We have from Proposition \ref{prop:syntactic-graph-iso} that the problem of
-computing the syntactic equivalence relation, even if we restrict the input
-circuit to have very particular properties, as least as hard as the graph
-isomorphism problem. Since there is a trivial reduction from the problem of
-computing the syntactic equivalence relation over a restricted class of circuits
-to the general problem we have the following corollary.
-
-\begin{cor}
-  There is a polynomial-time reduction from the graph isomorphism problem to the
-  problem of determining if a given pair of gates in a given $(\mathbb{B},
-  \tau)$-circuit are syntactically equivalent.
-  \label{lem:syntactically-equivilent-general-hard}
-\end{cor}
-
-We also have a reduction from the problem of computing the syntactic equivalence
-relation to the problem of deciding if a given gate has unique labels.
-
-\begin{lem}
-  There are a polynomial-time reduction from the problem of determining if a
-  given pair of gates in a given $(\mathbb{B}, \tau)$-circuit are syntactically
-  equivalent to the problems of determining if a given gate in a given circuit
-  has unique labels.
-  \label{lem:syntactically-equivalent-unique-labels}
-\end{lem}
-
-\begin{proof}
-  Let $C_n := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a circuit and
-  let $g_1, g_2 \in G$. Let $D_n$ be the circuit formed from $C_n$ by removing
-  every gate $g \in G \setminus\{g_1, g_2\}$ such that $\neg W_t(g, g_1) \land
-  \neg W_t(g, g_2)$ (i.e. all those gates in the circuit such that there is no
-  path from them to either of the two gates). Let $C_n'$ be the circuit formed
-  from $D_n$ by adding in a single two-input $\AND$ gate $g'$ and connect both
-  $g_1$ and $g_2$ as inputs to $g'$ Moreover, we let this $g'$ be the single
-  output gate of $C_n'$.
-
-  It follows that $g_1 \equiv g_2$ in $C_n$ if, and only if, $g'$ has unique
-  labels in $C_n'$. Since the construction of $C_n'$ from $C_n$ can be completed
-  in polynomial time, the mapping of $(C_n, (g_1, g_2))$ to $(C_n', g')$
-  witnesses the reduction.
-\end{proof}
-
-We can construct a similar argument reducing the problem of deciding if two
-gates are syntactically equivalent to the problem of deciding if a given gate
-$g$ in a circuit $C_n$ has the property that there exists a permutation and two
-automorphisms extending that permutation that disagree with each other on $g$.
-
-\begin{lem}
-  There is a polynomial-time reduction to the problem from the problem of
-  determining if a given pair of gates gates in a given $(\mathbb{B},
-  \tau)$-circuit are syntactically equivalent to the problem of determining if
-  for a given triple $(C_n, g)$, where $C_n$ is a circuit, $g$ is a gate in
-  $C_n$, that there exists $\sigma \in \sym_n$ and automorphisms $\pi, \pi' \in
-  \aut(C_n)$ extending $\sigma$ such that $\pi (g) \neq \pi' (g)$.
-  \label{lem:syntactically-equivilent-unique-extensions}
-\end{lem}
-\begin{proof}
-  Let $C_n$ be a circuit and let $g_1$ and $g_2$ be two gates in $C_n$. Note
-  that for any gate $g$ in $\sigma \in sym_n$, if $\pi, \pi' \in \aut(C_n)$
-  extend $\sigma$ and $\pi_e := \pi'\pi{-1}$ then $\pi(g) \neq \pi'(g)$ if, and
-  only if, $\pi_e (g) \neq g$. It follows that there exists $\sigma \in sym_n$
-  such that there are automorphisms $\pi, \pi' \in \aut(C_n)$ extending $\sigma$
-  such that $\pi (g) \neq \pi'(g)$ if, and only if, there exists $\pi_e$
-  extending the trivial permutation such that $\pi (g) \neq g$.
-
-  Let $C_n'$ be the circuit constructed in the proof of Lemma
-  \ref{lem:syntactically-equivalent}. Let $\pi_e$ be a function from the gates
-  of $C_n$ to the gates of $C_n$ that swaps $g_1$ and $g_2$ and fixes all other
-  gates. Then if $g_1 \equiv g_2$ then $\pi_e$ is an automorphism extending the
-  trivial permutation. Moreover, if there exists an automorphism $\pi_e$
-  extending the trivial permutation such that $\pi_e(g_1) \neq g_1$ then it must
-  be that $\pi_e (g_1) = g_2$ and $\pi_e(g_2) = \pi(g_1)$, and so $g_1 \equiv
-  g_2$.
-
-  It follows that the mapping $(C_n, (g_1, g_2))$ to $(C_n', g_1)$ witnesses the
-  reduction and the result follows.
-\end{proof}
-
-We have shown in Proposition \ref{prop:syntactic-graph-iso}, Lemma
-\ref{lem:syntactically-equivalent-unique-labels} and Lemma
-\ref{lem:syntactically-equivilent-unique-extensions}, that various problems
-perhaps related to the problem of translating a circuit into an equivalent
-transparent circuit are at least as hard as the graph isomorphism problem. We
-now show that additionally recognising if a circuit has unique extensions is at
-least as hard as the graph isomorphism problem.
-
-\begin{lem}
-  There is a polynomial-time reduction from the graph isomorphism problem to the
-  problem of determining if a given circuit does not have unique extensions.
-  \label{lem:unique-extensions-hard}
-\end{lem}
-\begin{proof}
-  We use a similar argument as for Proposition \ref{prop:syntactic-graph-iso}.
-  We again argue using a reduction from thee bipartite isomorphism problem. Let
-  $B_1 := (U_1, V_1, E_1)$ and $B_2 := (U_2, V_2, E_2)$ and let $C_n$ be the
-  associated circuit defined in the proof of Proposition
-  \ref{prop:syntactic-graph-iso}. Let $C_n' = \op{merge-all} (C_n, G_{\land})$.
-  Notice that $B_1$ and $B_2$ are isomorphic if, and only if, $g_{\rank, 1}$ and
-  $g_{\rank, 2}$ are syntactically equivalent, which holds if, and only if,
-  there exists $\pi \in \aut(C_n')$ extending the trivial permutation such that
-  $\pi (g_{\rank, 1}) = g_{\rank, 2}$, which is true if, and only if, $C_n'$
-  does not have unique extensions. The mapping $(B_1, B_2)$ to $C_n'$ thus
-  witnesses the reduction.
-\end{proof}
-
-\begin{remark}
-  It's interesting to note that the circuit used in the reduction does not have
-  injective labels. If we instead ask about a reduction from GI to the problem
-  of deciding if a circuit has unique extensions and injective labels, then I
-  can reduce from to the problem of deciding if two rigid graphs are isomorphic.
-  It is unknown if this decision problem is as hard as the full graph
-  isomorphism problem. After looking around a bit I discovered that it's a very
-  important open problem in quantum computation. Is this worth mentioning?
-\end{remark}
-
-We have that if a circuit is transparent then we may compute in polynomial time
-the syntactic equivalence relation on the gates of that circuit, and hence
-compute an equivalent circuit that has unique extensions. However, we've shown
-that absent the transparency condition, computing the the syntactic equivalence
-relation is at least as hard as the graph isomorphism problem. Moreover, other
-properties that can be computed in polynomial time for transparent circuits,
-e.g. deciding if particular gates have unique labels or might act as
-counterexamples to the unique extensions, have also been shown to be at least as
-the graph isomorphism problem.
-
-While we have not shown that there is no polynomial time algorithm that
-translates an arbitrary circuit into an equivalent transparent circuit, we have
-provided evidence in favour of the conjecture that such an algorithm might not
-exist.
-
-\begin{remark}
-  I really don't like the slightly vague language here. I would prefer to say
-  this differently. How does one provide `evidence' that a functional problem is
-  hard, when one has proved results about a few related decision problems?
-\end{remark}
-
-However, we must then address another question: If we must include an explicit
-requirement on circuits, why not simply require that the circuit have unique
-extensions? But we have from Lemma \ref{lem:unique-extensions-hard} that at the
-least verifying that a circuit have unique extensions is at least as hard as the
-graph isomorphism problem. We show that, in contrast, deciding if a circuit is
-transparent is in $\PT$.
-
-\begin{prop}
-  There is an algorithm that takes as input a circuit, decides if that circuit
-  is transitive and runs in time polynomial in the size of the circuit.
-  \label{prop:tansitive-polynomial-time}
-\end{prop}
-\begin{proof}
-  Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
-  \tau)$-circuit. We first check that, for each non-symmetric gate $g \in G$,
-  $L(g)$ is an injection. If not, we return that $C$ is not transitive.
-
-  The height of a gate $g$ in the circuit is the distance from $g$ to the set of
-  input gates. For each $p \in nats$ let $G^p \subseteq G$ be the set of all
-  gates of height $p$ and let $G^{\leq p} = \bigcup_{0 \leq i \leq p}G^i$. Note
-  that each $g \in G^1$, $g$ has unique labels. Thus, from Lemma \ref{}, we can
-  compute the syntactic equivalence relation between gates in $G^{\leq 1}$
-  efficiently. We construct a loop as follows. Let $p$ be initialised to $1$. We
-  have that every non-symmetric gate $g \in G^{\leq p}$ has unique gates. We
-  compute the syntactic equivalence relation on $G^{\leq p}$ and check if each
-  non-symmetric gate in $g \in G^{i + 1}$ has unique labels. If not, halt and
-  output that the circuit is not transitive. If $p = \depth(C) -1$ then halt and
-  output that the circuit is transitive. If neither halt state is reached, then
-  increment $p$ by one and continue to the next iteration of the loop.
-
-  We note that in every iteration of the loop we have that every non-symmetric
-  gate in $G^{\leq p}$ has unique labels. Thus, from Proposition
-  \ref{prop:unique-labels-syntactic-equiv}, we may compute the syntactic
-  equivalence relation on this set of gates efficiently. Thus it is easy to see
-  that the above algorithm can be implemented so as to run in polynomial time.
-\end{proof}
-
-A similar result for circuits with unique labels.
-
-\begin{cor}
-  There is an algorithm that takes in a circuit and decides if that circuit has
-  unique labels and runs in time polynomial in the size of the circuit.
-\end{cor}
-\begin{proof}
-  Let $C$ be the input circuit. From Proposition
-  \ref{prop:transitive-polynomial-time} we may check if $C$ is transitive in
-  polynomial time. If $C$ is not transitive halt and output that $C$ does not
-  have unique labels. If $C$ is transitive then from Lemma \ref{} we may compute
-  the syntactic equivalence relation on the gates of $C$ efficiently. This then
-  allows us to check if each gate in $C$ has unique labels.
-\end{proof}
-
-We thus have that we can verify in polynomial time that a family of circuits
-indeed is transparent or has unique labels. The same cannot be said for the
-unique extensions property.
-
-It is also possible to show that we may compute orbits and supports on circuits
-with unique labels in polynomial-time (recall that we may assume, without a loss
-of generality, that transparent circuits have unique labels). The proof
-technique used here is analogous to the one used by Anderson and
-Dawar~\cite{AndersonD17}.
-
-\begin{lem}
-  There is an algorithm takes as input a $(\mathbb{B}, \tau)$-circuit $C$ of
-  order $n$ with unique labels and $\sigma \in \sym_n$ and outputs for each gate
-  $g$ its image under the unique automorphism extending $\sigma$ (if it exists).
-  This algorithm runs in time polynomial in the combined size of the input
-  circuit and the encoding of the permutation.
-  \label{lem:compute-automorphisms}
-\end{lem}
-\begin{proof}
-  Suppose $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$. We build up the
-  mapping $\pi$ extending $\sigma$ recursively. If at some point in the
-  recursive construction we arrive at a point where no mapping for $g$ can be
-  found we halt at that point and return that no automorphism exists.
-
-  Let $h$ be any gate in the circuit. Suppose $h$ is an input gate. If $h$ is a
-  constant gate then let $\pi (h) = h'$. If $h$ is a relational gate such that
-  $R := \Sigma(h)$ and check if there exists $h'$ such that $\Sigma (h') = R$
-  and $\sigma \Lambda_R(h) = \Lambda_R(h')$ and, if $h$ is an output gate then
-  $h'$ is an output gate such that $\sigma Omega^{-1}(h) = \Omega^{-1}(h')$. If
-  such a $h'$ does not exist halt and output that there is no automorphism
-  extending $\sigma$. We have from Lemma \ref{} that if such an $h'$ exists it
-  must be unique, and we set $\pi(h) = h'$.
-
-  Let $h$ be an internal gate in the circuit and assume we have defined $\pi
-  (g)$ for every gate $g$ of height less than $h$. Let $h'$ be a gate in the
-  circuit such that $\Sigma(h) = \Sigma (h')$, $\pi L(h)$ is isomorphism
-  equivalent to $L(h')$ and, if $h$ is an output gate then $h'$ is an output
-  gate such that $\sigma \Omega^{-1}(h) = \Omega^{-1}(h')$. Since $C$ has unique
-  labels we have that $\pi L(h)$ is isomorphism equivalent to $L(h')$ if, and
-  only if, $L(h')^{-1}\pi L(h)$ acts like an isomorphism. This can be determined
-  easily. If no such $h'$ exists halt and output that there is no automorphism
-  extending $\sigma$. We have from Lemma \ref{} that if $C$ has unique labels
-  then there is at most one such $h'$.
-
-  This recursive approach can be implemented as an algorithm that runs in time
-  polynomial in the combined size of the inputs and outputs the required
-  automorphism if it exists.
-\end{proof}
-
-\begin{cor}
-  There is an algorithm takes as input a $(\mathbb{B}, \tau)$-circuit $C$ of
-  order $n$, $\sigma \in \sym_n$, $g$ a gate in $C$, and $a \in \universe{g}$
-  and, if there exists an automorphism of $C$ extending $\sigma$ such that
-  $\sigma in \stab(g)$, outputs image of $a$ under $\sigma$.
-  \label{cor:compute-automorphisms-labels}
-\end{cor}
-\begin{proof}
-  Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$. Use the algorithm
-  from Lemma \ref{lem:compute-automorphisms} to check if $\sigma$ extends to an
-  automorphism on $C$ and $\sigma \in \stab(g)$. If not, return that no such
-  automorphism exists. We thus have that $C$ is symmetric. Let $h \in H_g$ and
-  $\vec{a} := L(g)^{-1}(h)$ be such that $a \in \vec{a}$, and let $i$ be the
-  index of $a$ in $\vec{a}$. Output $\sigma \cdot a := L(g)^{-1}(\sigma h)(i)$.
-\end{proof}
-
-% \begin{lem}
-%   Let $C_n$ be a $(\mathbb{B}, \tau)$-circuit with unique labels of size $n$
-%   and $\sigma \in \sym_n$. There is an algorithm takes as input a circuit
-%   $C_n$ and $\sigma \in \sym_n$ and outputs for each gate $g$ its image under
-%   the unique automorphism extending $\sigma$ (if it exists). This algorithm
-%   runs in time polynomial in the combined size of the input circuit and the
-%   encoding of the permutation.
-%   \label{lem:compute-automorphisms}
-% \end{lem}
-% \begin{proof}
-%   Suppose $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$. We build up
-%   the mapping $\pi$ extending $\sigma$ recursively. If at some point in the
-%   recursive construction we arrive at a point where no mapping for $g$ can be
-%   found we halt at that point and return that no automorphism exists.
-
-%   Let $h$ be any gate in the circuit. Suppose $h$ is an input gate. If $h$ is
-%   a constant gate then let $\pi (h) = h'$. If $h$ is a relational gate such
-%   that $R := \Sigma(h)$ and check if there exists $h'$ such that $\Sigma (h')
-%   = R$ and $\sigma \Lambda_R(h) = \Lambda_R(h')$ and, if $h$ is an output gate
-%   then $h'$ is an output gate such that $\sigma Omega^{-1}(h) =
-%   \Omega^{-1}(h')$. If such a $h'$ does not exist halt and output that there
-%   is no automorphism extending $\sigma$. We have from Lemma \ref{} that if
-%   such an $h'$ exists it must be unique, and we set $\pi(h) = h'$.
-
-%   Let $h$ be an internal gate in the circuit and assume we have defined $\pi
-%   (g)$ for every gate $g$ of height less than $h$. Let $h'$ be a gate in the
-%   circuit such that $\Sigma(h) = \Sigma (h')$, $\pi L(h)$ is isomorphism
-%   equivalent to $L(h')$ and, if $h$ is an output gate then $h'$ is an output
-%   gate such that $\sigma \Omega^{-1}(h) = \Omega^{-1}(h')$. Since $C_n$ has
-%   unique labels we have that $\pi L(h)$ is isomorphism equivalent to $L(h')$
-%   if, and only if, $L(h')^{-1}\pi L(h)$ acts like an isomorphism. This can be
-%   determined easily. If no such $h'$ exists halt and output that there is no
-%   automorphism extending $\sigma$. We have from Lemma \ref{} that if $C_n$ has
-%   unique labels then there is at most one such $h'$.
-
-%   This recursive approach can be implemented as an algorithm that runs in time
-%   polynomial in the combined size of the inputs and outputs the required
-%   automorphism if it exists.
-% \end{proof}
-
-This result uses a proof very similar to the one for a similar result proved by
-Anderson and Dawar~\cite{AndersonD17}.
-
-\begin{lem}
-  \label{lem:computing-support-orbit}
-  There is an algorithm that takes in a subset $S \subseteq [n]$ and $x \in X$,
-  where $X$ is some finite set such that there is a group action of $\stab(S)$
-  on $X$ computable in time polynomial in $n$ and $\vert X \vert$ and outputs
-  $\orb_{\stab(S)} (x)$ and $\SP_{\stab(S)}(x)$. This algorithm runs in time
-  polynomial in $\vert X \vert$ and $n$.
-\end{lem}
-\begin{proof}
-  Let $(u, v) \in \sym_{[n] \setminus S}$ be a transposition. We note that
-  $(u,v) \in \stab(S)$ and there are ${n - \vert S \vert}\choose{2}$ many such
-  transpositions. For a transposition $(u, v) \in \sym_{[n] \setminus S}$, let
-  \begin{align*}
-    \mathcal{P}_{(u,v)} := \{ \{u,v\}\} \bigcup_{w \in [n] \setminus \{ u,v \}} \{ \{ w \} \}
-  \end{align*}
-  be a partition of $[n]$. Then $\mathcal{P}_{(u,v)}$ supports
-  $\stab_{\stab(S)}(x)$ if, and only if, $(u,v) \cdot x = x$.
-
-  Let $\mathcal{P}$ be the partition formed by applying $\mathcal{E}$ to all
-  $\mathcal{P}_{(u,v)}$ such that $(u,v) \cdot x = x$ (which can be checked in
-  time polynomial in $\vert X \vert + n$). From
-  Proposition~\ref{prop:combining-supporting-patitions} we have that
-  $\mathcal{P}$ supports $\stab_{\stab(S)}(x)$. Suppose that $\mathcal{P}$ is
-  not the coarsest supporting partition of $\stab_{\stab(S)}(x)$. Then there
-  exists a partition $\mathcal{P}'$ supporting $\stab_{\stab(S)}(x)$ such that
-  $\mathcal{P}' \preceq P$ and $\mathcal{P}' \neq \mathcal{P}$. And so there
-  exists $P \in \mathcal{P}$ and $P' \in \mathcal{P}'$ such that $P \subsetneq
-  P'$. But then there exists $a , b \in P'$ such that $a \not\in P$. Note that
-  $(a,b)$ fixes $\mathcal{P}'$ and, since $\mathcal{P}'$ supports
-  $\stab_{\stab(S)}(x)$, it follows that $(a,b) \in \stab_{\stab(S)}(x)$ and $a
-  \not\in S$ and $b \not\in S$. But then we have that $(a,b) \cdot x = x$, and
-  so $\mathcal{P}_{(a,b)}$ supports $\stab_{\stab(S))}(x)$ and thus, from the
-  construction of $\mathcal{P}$, $\mathcal{P}$ is fixed by $(a,b)$. But we
-  selected $a$ and $b$ such that $\mathcal{P}$ is not fixed by $(a,b)$, and so
-  we have a contradiction. We thus have that $\mathcal{P}$ is the coarsest
-  supporting partition of $\stab_{\stab(S)}(x)$.
-
-  It remains to compute $\orb_{\stab(S)}(x)$. Let $M_0 := \{x\}$ and for each $i
-  \geq 0$ let $M_{i+1} := M_i \bigcup_{(u,v) \in \sym_{[n] \setminus S}} (u,v)
-  \cdot M_i$. Let $M$ be the least fixed point. It is easy to see that $M
-  \subseteq \orb_{\stab(S)}(x)$ as every element of $M$ is equal to the action
-  of some finite sequence of transpositions acting on $x$. Moreover, if $y \in
-  \orb_{\stab(S)}(x)$, then there exists $\pi \in \stab(S)$ such that $y = \pi
-  \cdot x$. But then, since $\sym_{[n] \setminus S}$, is generated by the set of
-  all transpositions in $\sym_{[n] \setminus S}$, it follows that $\pi$ can be
-  written as a sequence of $t$ transpositions (for some $t \in nats$). Thus $y
-  \in M_t \subseteq M$, and hence $\orb_{\stab(S)}(x) \subseteq M$ and so
-  $\orb_{\consp(G)}(x) = $.
-
-  Note that the set of all transpositions in $\sym_{[n] \setminus S}$ can be
-  computed in time $\mathcal{O}(n^{2})$ and whether such a transposition fixes
-  $x$ can be computed in time polynomial in $\vert X \vert + n$. Moreover, since
-  it is easy to show that $\mathcal{E}$ can be computed in time polynomial in
-  $n$, it follows that $\mathcal{P}$ (defined above) can be computed in
-  $\mathcal{O} (n^{2} q(\vert X \vert + n))$, for some polynomial $q$.
-
-  Furthermore, since, when computing the orbit, the least fixed point must be
-  reached in fewer than $\vert X \vert$ iterations, and each iteration requires
-  at most $\mathcal{O} (n^{2})$ applications of the group action, it follows
-  that the procedure terminates in time $\mathcal{O}(\vert X \vert n^{2} q'
-  (\vert X \vert + n))$, for some polynomial $q'$. The result follows.
-\end{proof}
-
-\begin{lem}
-  There is an algorithm that takes in a circuit $C$ of order $n$ with unique
-  labels and outputs if the circuit is symmetric. If it is symmetric then it
-  outputs the orbit and coarsest supporting partition of every gate. This
-  algorithm runs in time polynomial in the size of the circuit.
-  \label{lem:computing-support-orbit-gate}
-\end{lem}
-
-\begin{proof}
-  For each transposition $(u,v) \in \sym_n$ and each gate $g$ in $C$ use
-  Lemma~\ref{lem:compute-automorphisms} to check if the image of $g$ under
-  $(u,v)$ exists. If for any transposition and gate the algorithm returns that
-  no image exists then output that the circuit is not symmetric.
-
-  We note that if all gates have an image under all transpositions then, since
-  $\sym_n$ is generated by the set of transpositions, we have that $C$ is
-  symmetric.
-  
-  We have from Lemma~\ref{lem:compute-automorphisms} that computing the action
-  of $\sym_n$ on the gates of $C$ can be done in time polynomial in the size of
-  the circuit. For each $g$ in $C$ use the algorithm from
-  Lemma~\ref{lem:computing-support-orbit} with $S := \emptyset$, $X := G$, and
-  $x := g$, and output the results.
-  
-  Since there are ${{n}\choose{2}} \leq n^2$ transpositions in $\sym_n$, the
-  initial symmetry check can be completed in time polynomial in the size of the
-  circuit. Moreover, from Lemmas~\ref{lem:compute-automorphisms} and
-  \ref{lem:computing-support-orbit}, and the fact that $\vert C \vert \geq n$
-  and $\vert C \vert \geq \vert \universe{g} \vert$, we have that the rest of
-  the algorithm also runs in time polynomial in the size of the circuit.
-\end{proof}
-
-\begin{lem}
-  There is an algorithm that takes in a circuit $C$ of order $n$ with unique
-  labels, a gate $g$ in $C$ with small support, and $a \in \universe{g}$, and
-  outputs if the circuit is symmetric. If it is symmetric it outputs the orbit
-  $\orb_{\vec{\consp(g)}} (a)$ and coarsest supporting partition
-  $\SP_{\vec{\consp(g)}} (a)$. This algorithm runs in time polynomial in the
-  size of the circuit.
-  \label{lem:computing-support-orbit-index}
-\end{lem}
-\begin{proof}
-  Use the algorithm from Lemma~\ref{lem:computing-support-orbit-gate} in order
-  to compute the canonical support of $g$. If the algorithm returns that $C$ is
-  not symmetric, output that $C$ is not symmetric.
-
-  Use the algorithm from Lemma~\ref{lem:computing-support-orbit}, with $S :=
-  \consp(g)$, $X := \universe{g}$ and $x:= a$, and output the results.
-
-  Notice that, since $\vert \universe{g} \vert \leq \vert C \vert$ and $n \leq
-  \vert C \vert$, this algorithm runs in polynomial time.
-\end{proof}
-
-% \begin{lem}
-%   There is an algorithm that takes in a symmetric circuit $C$ of order $n$
-%   with unique labels, a gate $g$ in $C$ and $a \in \universe{g}$, the orbit
-%   $\orb_g (a)$ and coarsest supporting partition $\SP_g (a)$.
-% \end{lem}
-% \begin{proof}
-%   Let $(u,v) \in \sym_n$ be a transposition. We can check if $(u,v) \in
-%   \stab(g)$ using Lemma~\ref{lem:compute-automorphisms}. Then $(u,v)$ acts
-%   like an isomorphism at $g$, and hence $(u,v) \cdot a = L(g)^{-1}((\sigma
-%   L(g)(\vec{x}))) (i)$, where $\vec{x} \in \ind(g)$ such that $\vec{x} (i) =
-%   a$ for some $i \in [\vert \vec{x} \vert]$. Thus, since
-%   Lemma~\ref{lem:compute-automorphisms} gives us that that we can compute
-%   $\sigma L(g)(\vec{x})$ in polynomial time, we can compute $(u,v) \cdot a$ in
-%   polynomial-time.
-
-%   We note that
-  
-%   and hence we can compute $\sigma \cdot a$ effeciently. and hence compute
-%   $\orb_g(a) = \{ \sigma \cdot a : \sigma \in \stab(g)\}$.
-
-% \end{proof}
-
-\begin{remark}
-  The above result shouldn't be here. They are about group theory, or rather
-  group action, I don't think they actually has anything to do with circuits.
-\end{remark}
-
-Once again we note that computing the orbit of a gate for a general circuit is
-as hard as the graph isomorphism problem. We make use of the ability to compute
-the orbit of a gate in polynomial time in sub-section
-\ref{sec:translating-formulas-to-FPR} when translating families of circuits into
-equivalent formulas. As such the approach in this paper would fail for the
-general circuit.
-
-\begin{prop}
-  There is a polynomial-time reduction from the graph isomorphism problem to the
-  problem of computing if two gates in a given circuit are in the same orbit.
-\end{prop}
-\begin{proof}
-  This is a really simple circuit similar to the one from an earlier
-  proposition. I will fill this result in later.
-\end{proof}
-
-
-
-% \begin{lem}
-%   There is a polynomial-time Turing reduction from the problem of determining
-%   if a given pair of gates in a given circuit are syntactically equivalent to
-%   the problem of deciding if a circuit is transparent.
-%   %   If the problem of deciding if a given circuit is transparent can be
-%   %   decided
-%   %   in
-%   %   polynomial time then the graph isomorphism problem is in polynomial
-%   %   time.
-% \end{lem}
-% \begin{proof}
-%   Suppose there is an algorithm that takes as input, runs in time polynomial
-%   in the size of the circuit, and decides whether or not the circuit is
-%   transparent.
-
-%   From Corollary \ref{} it is sufficient to show that there is a
-%   polynomial-time algorithm for the problem of deciding if a pair of gates in
-%   a given circuit are syntactically equivalent. Let $C_n$ be a circuit and
-%   $g_1$ and $g_2$ be two gates in the circuit.
-
-  
-%   %   We simply need a polynomial-time reduction from the problem of computing
-%   %   t
-%   %   to the problem
-%   %   of checking if a given circuit is transparent. Let $C_n =\langle G,
-%   %   \Omega,
-%   %   \Sigma, \Lambda, L\rangle$ be a circuit and let $g_1$ and $g_2$ be two
-%   %   gates
-%   %   in $G$. We now construct a circuit $C_n'$. If $g_1 = g_2$ then let
-%   %   $C_n'$ be
-%   %   any transparent circuit. If $g_1$ and $g_2$ do not satisfy any of
-%   %   conditions
-%   %   (i), (ii), (iii) or (v) of syntactic equivalence then let $C_n'$ be any
-%   %   non-transparent circuit. So suppose all these conditions are met and
-%   %   $g_1
-%   %   \neq
-%   %   g_2$, then let $D_n$ be the sub-circuit of $C_n$ consisting of exactly
-%   %   those
-%   %   gates $g$ in $C_n$ such that $W_t(g, g_1)$ or $W_t(g, g_2)$. Then let
-%   %   $C_n'$
-%   %   be $D_n'$ with an additional gate $g_\rank$, such that $g_\rank $ is
-%   %   labelled
-%   %   by the function $\rank^1_2[2,1]$ and $g_\rank$
-% \end{proof}
-
-% \begin{corollary}
-% \end{corollary}
-
-% We have from this proposition that even many nice properties Since there is a
-% polynomial-time reduction from this problem reduces the general problem of
-% deciding the syntatic equivilence relation for an arbitary
-
-
-
-% \begin{corollary}
-%   There is a polynomial-time reduction from the graph isomorphism problem to
-%   the problem of determining if a given $(\mathbb{B}, \tau)$-circuit is rigid.
-% \end{corollary}
-
-% \begin{corollary}
-%   There is a polynomial-time reduction from the graph isomorphism problem to
-%   the problem of determining if a given gate in a given $(\mathbb{B},
-%   \tau)$-circuit has unique labels.
-% \end{corollary}
-
-
-% reduction from the graph isomorphism from to the problem of of computing the
-% the syntactic equivalence relation on the gates of an arbitrary $(\mathbb{B},
-% \tau)$-circuit.
-
-% It is worth noting that if we restrict the input to a class of circuits
-% defined over symmetric bases then we can decide the syntactic equivalence
-% relation in polynomial time.
-
-% % \begin{prop}
-% %   Let $C_n$ be a circuit with symmetric gates. There is an algorithm that
-% %   takes in such a circuit, runs in time polynomial in the size of the circuit,
-% %   and outputs the syntactic equivalence relation on the gates of $C_n$.
-% %   \label{prop:symmetric-syntactic}
-% % \end{prop}
-% % \begin{proof}
-% % \end{proof}
-
-% Moreover, it turns out that being able to compute the syntactic equivalence
-% relation in polynomial time for some class of circuits $\mathcal{C}$ implies
-% that the existence of a polynomial-time algorithm for converting circuits in
-% $C$ into equivalent rigid circuit.
-
-% % \begin{prop}
-% %   Let $\mathcal{C}$ be a set of circuits. Suppose the syntactic equivalence
-% %   relation can be computed in polynomial time for circuits in $\mathcal{C}$.
-% %   It follows that there is an algorithm that runs in polynomial time that
-% %   takes in a circuit $C \in \mathcal{C}$ and outputs a rigid circuit $C''$
-% %   such that if $C$ is symmetric then $C'$ is symmetric.
-% %   \label{prop:syntactic-equivilence-rigid}
-% % \end{prop}
-% % \begin{proof}
-% % \end{proof}
-
-% The following result gives us that the unique labels condition is sufficient.
-
-% % \begin{prop}
-% %   Let $\mathcal{C}$ be syntactically transparent class of circuits. It follows
-% %   that there exists an algorithm that takes in a $(\mathbb{B}, \tau)$-circuit
-% %   $C \in \mathcal{C}$ and outputs a $(\mathbb{B} \cup \mathbb{B}_{\std},
-% %   \tau)$-circuit $C'$ such that $C$ and $C'$ compute the same function, $C'$
-% %   is rigid, and if $C$ is symmetric then $C'$ is symmetric. Moreover, this
-% %   algorithm runs in time polynomial in the size of the input circuit.
-% % \end{prop}
-% % \begin{proof}
-% %   Let $C' = \make-injective-all(\op{merge-all} (C, G)($). We have that $C'$ is
-% %   symmetric if $C$ is symmetric. Since the syntactic equivalence relation can
-% %   be computed in polynomial time for circuits in $\mathcal{C}$ it follows that
-% %   this operation can be implemented so as to run in time polynomial in the
-% %   size of $C$. Clearly every gate $g$ in $C'$ belongs to a singleton syntactic
-% %   equivalence class.
-% % \end{proof}
-
-% \begin{lem}
-%   Let $\mathbb{B}$ be a basis of symmetric functions. Then for any class of
-%   circuits $\mathcal{C}$ defined over the basis $\mathbb{B}$, $\mathcal{C}$ is
-%   a syntactically transparent class of circuits.
-% \end{lem}
-% In contrast to
-% \begin{lem}
-%   If the class of all circuits is syntactically transparent then then graph
-%   isomorphism problem is in $\PT$.
-% \end{lem}
-
-% \begin{lem}
-%   Let $\mathcal{C}$ be a syntactically transparent class of circuits. There is
-%   an algorithm that takes as input a $(\mathbb{B}, \tau)$-circuit $C \in
-%   \mathcal{C}$ and decides if $C$
-% \end{lem}
-
-% Since the class of The following result, also proved by Anderson and Dawar
-% \cite{AndersonD17}, follows as a corollary.
-
-% \begin{lem}
-%   Let $\mathcal{C}$
-% \end{lem}
-
-% \begin{lem}
-%   Let $C_n = \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be a $(\mathbb{B},
-%   \tau)$-circuit computing a $q$-ary query. If $C_n$ has unique labels then it
-%   is $C_n$ rigid
-%   \label{lem:unique-implies-rigid}
-% \end{lem}
-% \begin{proof}
-
-%   %   Suppose there exists a gate $g'$ such that $W_t (g, g')$ and $W_t
-%   %   (\pi(g),
-%   %   g')$ and $\pi (g') = g'$, then $\pi H_{g'} = H_{g'}$, and since $g'$ has
-%   %   unique labels it follows that $\pi$ acts trivially on $H_{g'}$ (i.e. for
-%   %   all
-%   %   $h \in H_{g'}$, $\pi(h) = h$). Moreover, for any pair of gates $h,h' \in
-%   %   G$
-%   %   such that $W(h, h')$ and $W_t(h', g')$, if $\pi$ acts on trivially on
-%   %   the
-%   %   children of $h'$ then $\pi (h) = h$ and so $\pi$ must act trivially
-
-%   %   $\pi$ acts trivially on the children of $h$.
-
-%   %   If $\Omega_g \cap \Omega_{\pi(g)} = \emptyset$ then, since
-%   %   $\Omega_{\pi(g)}
-%   %   =
-%   %   \pi \Omega_g$, there exists $g' \in \Omega_g$ such that $\pi g' \neq
-%   %   g'$.
-%   %   But
-%   %   $\pi$ must act trivially on output gates, so this is a contradiction. So
-%   %   there
-%   %   exists $g' \in \Omega_g \cap \Omega_{\pi(g)}$. But then $W_t (g, g')$
-%   %   and
-%   %   $W_t
-%   %   (\pi (g), g')$.
-
-
-%   %   We have that $g$ must be a non-output internal gate. So $g$ is
-%   %   syntactically
-%   %   equivalent to $\pi (g)$.
-
-%   %   and let $h$ be a gate such that $W_t (g, h)$.
-% \end{proof}
-
-% \begin{prop}
-%   Let $C_n$ be a circuit with unique labels. If
-% \end{prop}
-
-% \begin{prop}
-  
-% \end{prop}
-% \begin{proof}
-% \end{proof}
-
-% \begin{prop}
-%   Let $\mathcal{C}$ be a class on which the Let $C_n := \langle G, \Omega,
-%   \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B}, \tau)$-circuit with unique
-%   labels. There is a deterministic algorithm that takes in such a circuit and
-%   outputs the syntactic equivalence relation on $G$. Moreover, this algorithm
-%   runs in time polynomial in the size of the circuit.
-%   \label{prop:unique-labels-syntactic-equiv}
-% \end{prop}
-
-% % \begin{prop}
-% %   There is an algorithm that takes in a $(\mathbb{B}, \tau)$-circuit $C$ with
-% %   unique labels and outputs the syntactic equivalence relation on its gates.
-% %   This algorithm runs in time polynomial in the size of $C$.
-% %   \label{prop:unique-labels-syntactic-equiv}
-% % \end{prop}
-% % \begin{proof}
-% %   We build of the relation by induction. Let $g$
-% % \end{proof}
-
-% Putting together Propositions \ref{prop:symmetric-syntactic},
-% \ref{prop:syntactic-equivilence-rigid}, and
-% \ref{prop:unique-labels-syntactic-equiv}, we have that there is a
-% polynomial-time algorithm that takes as input a circuit with unique labels and
-% outputs an equivalent rigid circuit. In fact, there is an equivalence of sorts
-% between the unique labels condition and the rigidity condition.
-
-% \begin{prop}
-%   Let $\mathcal{C}$ be a family of circuits. There is an algorithm that runs
-%   in polynomial-time that takes in a circuit $C \in \mathcal{C}$ and outputs a
-%   rigid circuit $C'$ such that if $C$ is symmetric then $C'$ is symmetric if,
-%   and only if, there is an algorithm that runs in polynomial-time and takes in
-%   a circuit $C \in \mathcal{C}$ and outputs a circuit $C'$ with unique labels
-%   such that if $C$ is symmetric then $C'$ is symmetric.
-% \end{prop}
-
-% It follows then that for the symmetric circuits defined over bases of
-% symmetric functions discussed by Anderson and Dawar~\cite{} we may assume the
-% circuits are rigid and/or have unique labels without a loss of generality. For
-% the more general circuit discussed in this paper we cannot make such an
-% assumption as deciding rigidity is harder then graph isomorphism. However, if
-% we restrict ourselves to families of circuits with unique labels then again we
-% may assume rigidity without a loss of generality.
-
-% Of course, this restriction to circuits with unique labels is only useful if
-% we can show that formulas in rank logic can be translated into $P$-uniform
-% families circuits with unique labels. In the next subsection we prove that
-% this is indeed the case.
+It is easy to see that $\op{compose-and-tag}$ can be computed in time polynomial
+in the sizes of the input circuits. Furthermore, if the input sequences of
+circuits and relations are both singletons, then if the input circuits are all
+transparent (resp. have unique labels) then the output circuit is transparent
+(resp. have unique labels).
 
 \subsection{Translating FPR to Symmetric Matrix Circuits}
-In this subsection we translate formulas of $\FPR$ into circuits. In particular,
-we show that for $\theta(\vec{x}) \in \FPR[\tau]$ there exists a $P$-uniform
-family of symmetric majority-circuits $(C_n)_{n \in \nats}$ such that the query
-computed by $(C_n)_{n \in \nats}$ is equal to the query defined by $\theta
-(\vec{x})$. In this subsection we develop a similar translation from formulas of
-$\FPR$ into $P$-uniform families of symmetric matrix-circuits.
+In this subsection we translate $\FPR$-formulas into families of transparent
+rank-circuits. In particular, we now show that for $\theta(\vec{x}) \in
+\FPR[\tau]$ there exists a $P$-uniform family of symmetric rank-circuits
+$(C_n)_{n \in \nats}$ such that the query computed by $(C_n)_{n \in \nats}$ is
+equal to the query defined by $\theta (\vec{x})$.
 
 % From Lemma \cite{} we may assume, without a loss of generality, that $(C_n)_{n
 % \in nats}$ is a family of rigid circuits (and hence has unique labels).
 
-We are now ready to prove the main theorem of this section.
-
 \begin{thm}
   For any relational vocabulary $\tau$ and each $\theta(\vec{x}) \in \FPR[\tau]$
-  there is an algorithm that takes as input a natural number $n$ and outputs a
-  symmetric matrix-circuit $C_n$ with unique labels. This algorithm runs in time
-  polynomial in $n$ and the family of circuits produced by this algorithm
-  $(C_n)_{n \in \nats}$ computes the same query as the one defined by
-  $\theta(\vec{x})$.
+  there is a map $n \mapsto C_n$, where $C_n$ is a transparent symmetric
+  rank-circuit, and is computable in time polynomial in $n$. The family of
+  circuits $(C_n)_{n \in \nats}$ defined by this mapping computes the same query
+  as the one defined by $\theta(\vec{x})$.
+  \label{thm:translating-formulas-to-circuits}
 \end{thm}
 
 \begin{proof}
-  We say a formula $\psi(\vec{x}) \in \FPR[tau]$ is \emph{circuit-translatable}
-  if there is a $P$-uniform family of transparent symmetric matrix-circuits that
-  compute the same query as $\psi(\vec{x})$. If a formula $\psi(\vec{x}) \in
-  \FPR[tau]$ is circuit-translatable we let $(C^\psi_n)_{n \in \nats}$ denote
-  the corresponding $P$-uniform family of transparent symmetric matrix-circuits.
-
-  We prove that $\theta(\vec{x}) \in \FPR[\tau]$ is circuit-translatable by
-  structural induction. That is, we first prove that if every sub-formula of
-  $\theta(\vec{x})$ is circuit-translatable then $\theta(\vec{x})$ is
-  circuit-translatable and, second, we note that every atomic formula in
-  $\FPR[\tau]$ is circuit-translatable. We have already that formulas of
-  $\FPC[\tau]$ are circuit translatable (Anderson and Dawar~\cite{AndersonD17}),
-  and in fact we may assume, without a loss of generality, that this translation
-  yields a family of transparent circuits with unique extensions.
+  We say a formula $\psi(\vec{x})$ is \emph{circuit-translatable} if there is a
+  $P$-uniform family of transparent symmetric rank-circuits computing the query
+  as the one defined by $\psi(\vec{x})$. If a formula $\psi(\vec{x})$ is
+  circuit-translatable we let $(C^\psi_n)_{n \in \nats}$ denote a $P$-uniform
+  family of transparent symmetric rank-circuits computing the same query as
+  defined by $\psi(\vec{x})$.
   
-  We first consider the case where $\theta(\vec{x})$ is a conjunction of
-  circuit-translatable formulas. Suppose $\phi_1, \phi_2 \in \FPR[\tau]$ are
+  Let $\theta(\vec{x}) \in \FPR[\tau]$. We prove that $\theta(\vec{x})$ is
+  circuit-translatable by structural induction. That is, we prove that if every
+  sub-formula of $\theta(\vec{x})$ is circuit-translatable then
+  $\theta(\vec{x})$ is circuit-translatable. Since it is obvious that every
+  atomic formula in $\FPR[\tau]$ is circuit-translatable, the result thus
+  follows. We already have that the formulas of $\FPC[\tau]$ are
+  circuit-translatable (Anderson and Dawar~\cite{AndersonD17}), and in fact we
+  may assume, without a loss of generality, that this translation yields a
+  family of transparent circuits with unique labels (and unique extensions).
+
+  We begin by showing that for any $\theta(\vec{x}) \in \FPR[\tau]$, there
+  exists a $P$-uniform family of formulas $(\theta(\vec{x}))_{n \in \nats}$ such
+  that for each $n \in \nats$, $\theta_n(\vec{x})$ is a first order formula with
+  counting and rank quantifiers and is equivalent to $\theta(\vec{x})$ on
+  structures of size $n$. This fact follows immediately from three observations.
+  First, we note that for any $\phi \in FPR[\tau]$ of the form $\lfp{V,
+    \vec{y}}{\psi(\vec{x}, \vec{y}, V)}(\vec{x})$ , there is a mapping $n
+  \mapsto \phi_n$, computable in time polynomial in $n$, such that for all $n
+  \in \nats$, both $\phi_n$ and $\phi$ are equivalent on structures of size $n$,
+  and $\phi_n$ contains no least-fixed-point operator. The formula $\phi_n$ is
+  define from $\phi$ by `unfurling' the least-fixed-point operator, producing,
+  for a given $n \in \nats$, a formula that explicitly implements the definition
+  of the operator in the obvious manner (for details on this implementation see
+  \ref{}). This construction of $\phi_n$ involves adding a constant number of
+  terms to $\phi$ for each iteration involved in computing the
+  least-fixed-point. Since there are at most $n^k$ such iterations, where $k$ is
+  the width of the formula $\psi$, the construction of $\phi_n$ can be completed
+  in time polynomial in $n$.
+
+  Similar arguments holds for number terms and rank operators. We have
+  from~\cite{} that for any formula $\phi$ containing number-terms there is a
+  $P$-uniform family of formulas $(\phi_n)_{n \in \nats}$ containing counting
+  quantifiers and no number-terms, and such that for all $n \in \nats$, $\phi$
+  and $\phi_n$ are equivalent on structures of size $n$. We have from Dawar et
+  al.~\cite{Dawar09logicswith} that for every formula $\phi \in \FPR[\tau]$
+  containing rank operators, there exists a $P$-uniform family that takes as
+  input a natural number $n$ and outputs a formula $\phi_n$ with rank
+  quantifiers and no rank operators, and such that for all $n \in \nats$, $\phi$
+  and $\phi_n$ are equivalent on structures of size $n$.
+
+  The algorithm given by executing each of the above three algorithms in
+  succession computes the required mapping $n \mapsto \theta_n(\vec{x})$ in time
+  polynomial in $n$, thus giving us the required $P$-uniform family
+  $(\theta_n(\vec{x}))_{n \in \nats}$.
+
+  It follows that the number of sub-formulas of $\theta_n$
+
+  It follows that in order to prove that $\theta(\vec{x})$ is
+  circuit-translatable it is sufficient to prove that there exists a function
+  that maps $\theta_n$ (for any $n \in \nats$) to $C^{\theta}_n$, a transparent
+  symmetric rank-circuit that computes the same query as defined by
+  $\theta_n(\vec{x})$ (and so $\theta(\vec{x})$) for structures of size $n$, and
+  is computable in time polynomial in in both $n$ and the number of sub-formulas
+  in $\theta_n$. This is sufficient as the number of sub-formulas in $\theta_n$
+  is bounded by some polynomial in $n$, and so composing functions, we can
+  compute the map that takes $n$ to $\theta_n$ to $C^{\theta}_n$ in time
+  polynomial in $n$.
+  
+  We define an algorithm for constructing $C^{\theta}_n$ given
+  $\theta_n(\vec{x})$ by recursion on the structure of the input formula. The
+  first note that if $\theta_n(\vec{x})$ an atomic formula then there is a
+  trivial construction of $C^{\theta}_n$.
+
+  We consider the conjunctive case. Suppose $\phi_1, \phi_2 \in \FPR[\tau]$ are
   circuit-translatable and $\theta (\vec{x}) = \phi_1(\vec{x}) \land
   \phi_2(\vec{x})$. Let $R_{\phi_1}$ and $R_{\phi_2}$ be two $\vert \vec{x}
   \vert$-ary relation symbols not in $\tau$. Let $\theta' (\vec{x}) :=
   R_{\phi_1}(\vec{x}) \land R_{\phi_2}(\vec{x})$. Let $n \in \nats$. Since
-  $\theta'(\vec{x})$ is a formula of $\FPC$, we may efficiently compute
-  $C^{\theta'}_n$ using the construction in \cite{AndersonD17}. From the
-  inductive hypothesis, for each $i \in \{1,2\}$ we may efficiently compute the
-  circuit $C^{\phi_i}_n = \langle G_i, \Omega_i, \Sigma_i \Lambda_i, L_i
-  \rangle$. Let $R \in \tau$ and let $D^{\theta}_n :=
-  \op{compose}(C^{\theta'}_n, (C^{\phi_1}_n, C^{\phi_2}_n), (R_1, R_2), R)$. Let
-  $H$ consist of all non-output gates in $D^{\theta}_n$. From the inductive
-  hypothesis all gates in $H$ have unique labels. Let $C^{\theta}_n :=
-  \op{make-injective-all}(\op{merge-all}(D^{\theta}_n, H))$.
+  $\theta'(\vec{x})$ is a formula of $\FPC[\tau]$, we have from Anderson and
+  Dawar~\cite{AndersonD17} that $\theta'(\vec{x})$ is circuit-translatable. We
+  let $C^{\theta}_n := \op{compose}(C^{\theta'}, (C^{\phi_1}, C^{\phi_2}),
+  (R_{\phi_1}, R_{\phi_2}))$.
+
+  Since all internal gates in $C^{\theta'}$ are symmetric, and both $C^{\phi_1}$
+  and $C^{\phi_2}$ are transparent, it follows that $C^{\theta}_n$ is
+  transparent. Moreover, it is easy to see that the construction of
+  $C^{\theta}_n$ can be carried implemented so as to run in time polynomial in
+  $n$, and that $(C^{\theta}_n)_{n \in \nats}$ computes the same query defined
+  by $\theta(\vec{x})$. It follows that $\theta(\vec{x})$ is
+  circuit-translatable.
   
-  Notice that $D^{\theta}_n$ computes the same relation as defined by
-  $\theta(\vec{x})$ for structures of size $n$. Moreover, since the remaining
-  two operations preserve the function computed, it follows $C^{\theta}_n$
-  computes the same relation as defined by $\theta(\vec{x})$ for structures of
-  size $n$. Furthermore, since $C^{\phi_1}_n$, $C^{\phi_2}_n$ and $C^{\theta'}_n$
-  are symmetric so is $C^{\theta}_n$. Lastly, notice that all non-output gates
-  in $D^{\theta}_n$ have unique labels. After the $\op{merge-all}$ and
-  $\op{make-injective-all}$ operation the output gates have unique labels, and
-  thus $C^{\theta}_n$ has unique labels. This construction takes in a natural
-  number $n$ and produces the required circuit $C^{\theta}_n$. This construction
-  can be computed by an algorithm in time polynomial in $n$. Thus
-  $\theta(\vec{x})$ is circuit-translatable.
+  % Notice that $D^{\theta}_n$ computes the same relation as defined by
+  % $\theta(\vec{x})$ for structures of size $n$. Moreover, since the remaining
+  % two operations preserve the function computed, it follows $C^{\theta}_n$
+  % computes the same relation as defined by $\theta(\vec{x})$ for structures of
+  % size $n$. Furthermore, since $C^{\phi_1}_n$, $C^{\phi_2}_n$ and
+  % $C^{\theta'}_n$ are symmetric so is $C^{\theta}_n$. Lastly, notice that all
+  % non-output gates in $D^{\theta}_n$ have unique labels. After the
+  % $\op{merge-all}$ and $\op{make-injective-all}$ operation the output gates
+  % have
+  % unique labels, and thus $C^{\theta}_n$ has unique labels. This construction
+  % takes in a natural number $n$ and produces the required circuit
+  % $C^{\theta}_n$. Moreover, it is easy to see that this construction can be
+  % implement as an algorithm running in time polynomial in $n$. It follows that
+  % $\theta(\vec{x})$ is circuit-translatable.
 
-  The approach used above for resolving the conjunctive case can be thought of
-  as having three steps. First, replacing each sub-formula with a relation
-  symbol, resulting in a formula of $\FPC$. Second, using the algorithms from
-  the inductive hypothesis' on sub-formulas, producing appropriate families of
-  circuits computing each sub-formula, and the known circuit-translation for
-  formulas of $\FPC$, in order to to produce an appropriate family of circuits
-  computing the operation on these sub-formulas. Third, using the concatenation
-  operation to combine these circuit families and two final operations in order
-  to ensure the family has the required properties.
+  The approach used for resolving the conjunctive case can be thought of as
+  having three steps. First, replacing each sub-formula in $\theta$ with a
+  relation symbol, resulting in a formula $\theta'$ of $\FPC$. Second, using the
+  algorithms from the inductive hypothesis' (and the results of Anderson and
+  Dawar) on $\theta'$ and the sub-formulas, producing appropriate families for
+  $\theta'$ and each sub-formula of $\theta$. Third, for each $n \in \nats$
+  composing the circuit $C^{\theta'}_n$ with the circuits for each sub-formula,
+  producing the the circuit $C^{\theta}_n$. Since this process can be executed
+  in time polynomial in $n$, we conclude that $\theta$ is circuit-translatable.
   
-  This same approach can be used for to handle many other cases. For
-  circuit-translatable $\phi, \phi_1, \phi_2 \in \FPR[\tau]$ similar
-  constructions can be used to prove that if $\theta(\vec{x}) \in FPR[\tau]$ is
-  equal to $\phi_1(\vec{x}) \lor \phi_2(\vec{x})$, $\neg \phi(\vec{x})$,
-  $\forall y. \phi (\vec{x}, y)$ or $\exists y. \phi (\vec{x}, y)$ then
-  $\theta(\vec{x})$ is circuit-translatable.
+  This same approach can be used to handle many other cases. For
+  circuit-translatable $\phi, \phi_1, \phi_2 \in \FPR[\tau]$, and $k \in \nats$,
+  similar constructions can be used to prove that if $\theta(\vec{x}) \in
+  \FPR[\tau]$ is of the form $\phi_1(\vec{x}) \lor \phi_2(\vec{x})$, $\neg
+  \phi(\vec{x})$, $\forall y. \phi (\vec{x}, y)$, $\exists y. \phi (\vec{x}, y)$
+  or $C^k y. \phi(\vec{x}, y)$ then $\theta(\vec{x})$ is circuit-translatable.
 
-  Suppose $\theta(\vec{x}) = \lfp{V, \vec{y}}{\phi(\vec{x}, \vec{y},
-    V)}(\vec{x})$ for some circuit-translatable formula $\phi(\vec{x},
-  \vec{y}) \in FPR[\tau \uplus \{V\}]$ and $k$-ary relation symbol $V$. Let $n$
-  be a natural number. We construct $C^{\theta}_n$ as follows. We have that we
-  may efficiently compute $C^{\phi}_n$. For each $i \in [n^k]$ we construct a
-  circuit $C^i = \langle G^i, \Omega^i, \Sigma^i, \Lambda^i, L \rangle $ as
-  follows. Let $C^0$ be a circuit consisting of exactly $n^k$ gates, such that
-  each gate is a constant $0$ gate and each gate is an output gate. Let $R$ be a
-  relation symbol in $\tau$. For each $i > 0$ let $C^i :=
-  \op{concatinate}(C^{\phi}_n, (C^{i-1}_n), (V), R)$ be $C^{\phi}_n$ but with
-  all relational gates labelled by the symbol $V$ replaced with the constant
-  $0$. Since $C^1$ and $C^\phi_n$ are symmetric and have unique labels, and the
-  operation $\op{concatinate}$ preserves the properties of symmetric and unique
-  labels, it follows by induction that for each $i \geq 1$, $C^i$ is a symmetric
-  rank-circuit with unique labels. It follows that $C^{\theta}_n := C^{n^k}$ is
-  a symmetric rank-circuit and has unique labels. Moreover, since the
-  least-fixed-point operator must converge in at most $n^k$ steps, this
-  construction can be implemented so as to run in time polynomial in $n$. The
-  construction also guarantees that $(C^{\theta}_n)_{n \in \nats}$ computes the
-  same query as $\theta(\vec{x})$.
+  % Suppose $\phi(\vec{x},y) \in \FPR[\tau]$ is circuit-translatable and
+  % $\theta(\vec{x}) := C^{k}y. \phi(\vec{x}, y)$. Let $k := \vert \vec{x}
+  % \vert$
+  % and $R$ be a $(k+1)-$-ary relational symbol. Let $D_n$ be a $(\MB,
+  % \{R\})$-circuit computing the $k$-ary query such that for each $\vec{a} \in
+  % [n]^k$, the output gate labelled by $\vec{a}$ computes the Boolean function
+  % \begin{align*}
+  %   \countgate_{\vec{a}} &(x_{(\vec{a}, 1)}, \ldots, x_{({\vec{a}, n})}) 
+  %                          := \\ & \begin{cases} \land ( \maj ( x_{(\vec{a}, 1)}, \ldots, x_{(\vec{a}, n)},
+  %                            \underbrace {0, \ldots, 0}_{2k - n} ), \neg ( \maj ( x_{(\vec{a}, 1)},
+  %                            \ldots, x_{(\vec{a}, n)}, \underbrace{0, \ldots,
+  %                              0}_{2k - n + 2} ) )) &  k \geq \frac{n}{2} \\
+  %                            \land ( \maj ( x_{(\vec{a}, 1)}, \ldots, x_{(\vec{a}, n)}, \underbrace {1,
+  %                              \ldots, 1}_{n - 2k} ), \neg ( \maj ( x_{(\vec{a}, 1)}, \ldots,
+  %                            x_{(\vec{a}, n)}, \underbrace{1, \ldots, 1}_{n - 2k -2} ) )) & k <
+  %                            \frac{n}{2},
+  %                          \end{cases}
+  % \end{align*}
+  % using the obvious circuit (for a more detailed construction see the proof of
+  % Proposition~\ref{prop:fuctions-maj}), and where for each $i \in [n]$, the
+  % variable $x_{(\vec{a}, i)}$ is replaced by the relational gate in the
+  % circuit
+  % labelled by $(\vec{a}, i)$. Then $C^{\theta}_n := \op{compose}(D_n,
+  % {C^\phi_n}, \{R\})$. It is easy to see that this construction can be carried
+  % out in time polynomial in $n$.
 
-  The result in \cite{} establishes that for every formula $\theta(\vec{x})$
-  containing number-terms there is a $P$-uniform family of formulas
-  $(\theta_n(\vec{x}))_{n \in \nats}$ containing counting quantifiers and no
-  number-terms, and such that for all $n \in \nats$, $\theta(\vec{x})$ and
-  $\theta_n(\vec{x})$ are equivalent on structures of size $n$.
-  
-  Thus, in order to handle the number-term case, it is sufficient to show that
-  if $\phi(\vec{x}) \in \FPR[\tau]$ is circuit-translatable then
-  $\theta(\vec{x}) := C^{k}y. \phi(\vec{x}, y)$ is circuit-translatable.
-  A similar construction as for the universal and existential quantifier gives
-  the required algorithm.
+  % GW: include here the result of inserting the circuit
 
-  The result in \cite{} establishes that for every formula $\theta(\vec{x}) \in
-  \FPR[\tau]$ containing rank operators, there exists an algorithm that takes as
-  input a natural number $n$ and outputs a formula $\theta_n(\vec{x})$ with rank
-  quantifiers and no rank operators such that $\theta(\vec{x})$ and
-  $\theta_n(\vec{x})$ are equivalent on structures of size $n$. It is thus
-  sufficient to prove that, for circuit-translatable $\phi(\vec{z},
-  \vec{y}, \vec{x}) \in \FPR[\tau]$ is, a prime $p$, and a natural number $r$,
+  Suppose $\phi(\vec{z}, \vec{y}, \vec{x}) \in \FPR[\tau]$ is
+  circuit-translatable, $p$ is a prime, $r$ is a natural number, and
   $\theta(\vec{x}) := \rank^{\leq r}_p \vec{z} \vec{y}. \phi(\vec{z}, \vec{y},
-  \vec{x})$ is circuit-translatable. We define an algorithm that takes as input
-  a natural number $n$ outputs the required circuit $C^{\theta}_n$.
+  \vec{x})$. We define an algorithm that takes as input a natural number $n$
+  outputs the required circuit $C^{\theta}_n$.
 
   From the inductive hypothesis we may efficiently compute $C^{\phi}_n = \langle
   G^{\phi}, \Omega^{\phi}, \Sigma^{\phi}, \Lambda^{\phi}, L^{\phi} \rangle$. Let
   $k:= \vert \vec{x} \vert$, $k_1 : = \vert \vec{z} \vert$ and $k_2 := \vert
   \vec{y} \vert$. Let $R_\phi$ be a $(k_1 + k_2 + k)$-ary relation symbol not in
-  $\tau$. Let $\theta'(\vec{x}) = \rank^{\leq r}_r := \vec{z}, \vec{y}. \phi
-  (\vec{z}, \vec{y}, \vec{x})$. We now define a $(\mathbb{B}_{\rank}, \{
-  R_{\phi} \})$-circuit $C^{\theta'}_n:= \langle G^{\theta'}, \Omega^{\theta'},
-  \Sigma^{\theta'}, \Lambda^{\theta'}, L^{\theta'}\rangle$ as follows. Let $G_1
-  := \{g_{\rank, \vec{c}} : \vec{c} \in [n]^k\}$ and $G_2 : = \{ g_{R_{\phi},
-    \vec{a}, \vec{b}, \vec{c}} : \vec{a} \in [n]^{k_1}, \vec{b} \in [n]^{k_2},
-  \vec{c} \in [n]^{k}\}$.
+  $\tau$.
+
+  Let $\theta'(\vec{x}) = \rank^{\leq r}_r := \vec{z}, \vec{y}. R_{\phi}
+  (\vec{z}, \vec{y}, \vec{x})$. We define the $(\mathbb{B}_{\rank}, \{ R_{\phi}
+  \})$-circuit $C^{\theta'}_n:= \langle G^{\theta'}, \Omega^{\theta'},
+  \Sigma^{\theta'}, \Lambda^{\theta'}, L^{\theta'}\rangle$ as follows. Let
+  $G_{\text{out}} := \{g_{\vec{c}} : \vec{c} \in [n]^k\}$ and $G_{\text{in}} : =
+  \{ g_{\vec{a}, \vec{b}, \vec{c}} : \vec{a} \in [n]^{k_1}, \vec{b} \in
+  [n]^{k_2}, \vec{c} \in [n]^{k}\}$.
   
   \begin{itemize}
     \setlength\itemsep{0mm}
-  \item Let $G^{\theta'} := G_1 \uplus G_2$,
-  \item $\Omega^{\theta'}$ be an injection from $[n]^k$ to $G'$ defined by
-    $\Omega^{\theta'}(\vec{c}) = g_{\rank, \vec{c}}$,
-
-  \item $\Sigma^{\theta'} (g) := rank^r_p$ if $g \in G_1$ and
-    $\Sigma^{\theta'}(g) = R_\phi$ if $g \in G_2$,
+  \item Let $G^{\theta'} = G_{\text{out}} \uplus G_{\text{in}}$,
+  \item $\Omega^{\theta'}$ be an injection from $[n]^k$ to $G^{\theta'}$ defined
+    by $\Omega^{\theta'}(\vec{c}) = g_{\vec{c}}$ for all $\vec{c} \in [n]^k$,
+  \item $\Sigma^{\theta'} (g) = \rank^r_p$ if $g \in G_{\text{out}}$ and
+    $\Sigma^{\theta'}(g) = R_\phi$ if $g \in G_{\text{in}}$,
   \item For each $(\vec{a}, \vec{b}, \vec{c}) \in [n]^{k_1 +k_2 + k}$ let
-    $\Lambda^{\theta'} (\vec{a}, \vec{b}, \vec{c}) := g_{R_{\phi}, \vec{a},
-      \vec{b}, \vec{c}}$, and
-
-  \item For each gate $g_{\rank, \vec{a}} \in G_1$ let $L(g_{\rank, \vec{a}}):
+    $\Lambda^{\theta'} (\vec{a}, \vec{b}, \vec{c}) := g_{\vec{a}, \vec{b},
+      \vec{c}}$, and
+  \item For each gate $g_{\vec{c}} \in G_{\text{out}}$ let $L(g_{\vec{c}}):
     [n]^{k_1} \times [n]^{k_2} \rightarrow G^{\theta'}$ be defined by
-    $L(g_{\rank, \vec{c}})(\vec{a}, \vec{b}) := g_{R_\phi, \vec{a}, \vec{b},
-      \vec{c}}$ for each $\vec{a} \in [n]^{k_1}$ and $\vec{b} \in [n]^{k_2}$.
+    $L(g_{\vec{c}})(\vec{a}, \vec{b}) := g_{\vec{a}, \vec{b}, \vec{c}}$ for each
+    $\vec{a} \in [n]^{k_1}$ and $\vec{b} \in [n]^{k_2}$.
   \end{itemize}
  
-  It is easy to see that both $C^{\theta'}_n$ (and $C^{\phi}_n$) are symmetric
-  rank-circuits with unique labels. Let $R$ be a relation symbol in $\tau$. Let
-  $D^{\theta}_n := \op{compose}(C^{\theta'}_n, (C^{\phi}_n), (R_\phi), R)$. Let
-  $H$ consist of all non-output gates in $D^{\theta}_n$. From the inductive
-  hypothesis all gates in $H$ have unique labels. Let $C^{\theta}_n :=
-  \op{make-injective-all}(\op{merge-all}(D^{\theta}_n, H))$.
+  % It is easy to see that both $C^{\theta'}_n$ (and $C^{\phi}_n$) are symmetric
+  % rank-circuits with unique labels.
 
-  Since $C^{\theta'}_n$ and $C^{\phi}_n$ are symmetric, have unique labels, and
-  the input tuples of relations and circuits are singletons, it follows that
-  $D^{\theta}_n$ is a symmetric rank-circuit with unique labels. It can be shown
-  that the construction of $C^{\theta}_n$ from the natural number $n$ can be
-  implemented as an algorithm running in time polynomial in $n$. The
-  construction ensures that the circuit family $(C^{\theta}_n)_{n \in \nats}$
-  computes the same query as the one defined by $\theta(\vec{x})$.
+
+  % It is easy to see that every gate in $$
+
+  % be the result of calling $\op{tag}$ on
+
+
+  % Let $C^{\theta}_n := \op{make-injective-all}(\op{merge-all}(D_n, H))$.
+  Let $R$ be a relation symbol in $\tau$. Let $C^{\theta}_n :=
+  \op{compose-and-tag}(C^{\theta'}_n, (C^{\phi}_n), (R_\phi), R)$. It is easy to
+  see that for all $n \in \nats$, $C^{\theta}_n$ computes the same query as
+  defined by $\theta(\vec{x})$ for structures of size $n$. Moreover, since
+  $C^{\theta'}_n$ and $C^{\phi}_n$ are symmetric, transparent, and the input
+  sequences of relations and circuits are singletons, it follows that
+  $C^{\theta}_n$ is a transparent symmetric rank-circuit. W have thus defined a
+  mapping from $n \mapsto C^{\theta}_n$, that, and that mapping can be computed
+  in time polynomial in $n$.
  
   It remains only to note that any atomic formula of $\FPR[\tau]$ is trivially
   circuit-translatable. The result thus follows.

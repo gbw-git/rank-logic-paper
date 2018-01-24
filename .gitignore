@@ -43,6 +43,22 @@ sections/indent.log
 sections/indent.log
 sections/background.log
 sections/background.synctex.gz
+.dropbox.attr
+.vscode/.dropbox.attr
+sections/.dropbox.attr
+sections/references.bib
+sections/symmetry-and-support.bbl
+sections/symmetry-and-support.blg
+sections/translating-formulas-to-cicuits.bbl
+sections/translating-formulas-to-cicuits.blg
+sections/transparency-and-unique-extensions.aux
+sections/transparency-and-unique-extensions.bbl
+sections/transparency-and-unique-extensions.blg
+sections/transparency-and-unique-extensions.fdb_latexmk
+sections/transparency-and-unique-extensions.fls
+sections/transparency-and-unique-extensions.log
+sections/transparency-and-unique-extensions.pdf
+sections/transparency-and-unique-extensions.synctex.gz
 
 
 
