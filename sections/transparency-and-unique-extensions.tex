@@ -215,8 +215,9 @@ working with $\PT$-uniform families of transparent circuits, to assume without a
 loss of generality that these circuits have unique labels and unique extensions.
 This is a crucial step in the proof of our main result, as the unique labels
 requirement is needed to apply the support theorem, and the unique extensions
-property is necessary for applying (and even defining) a great many technical tools (e.g. supports
-and supporting partitions) used extensively throughout this paper.
+property is necessary for applying (and even defining) a great many technical
+tools (e.g. supports and supporting partitions) used extensively throughout this
+paper.
 
 We now show that the syntactic-equivalence relation can be computed in
 polynomial time for transparent circuits.
@@ -261,6 +262,34 @@ polynomial time for transparent circuits.
   It is easy to see that, given a reasonable binary encoding of a circuit, the
   above procedure can be implemented so as to run in polynomial time, and that
   the relation $\sim$ is the syntactic-equivalence relation on the gates of $C$.
+  
+  
+  % Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a transparent
+  % $(\mathbb{B}, \rho)$-circuit of order $n$. We define a relation $\sim$ by
+  % induction on height (i.e. distance from an input gate). This relation will be
+  % the syntactic-equivalence relation on $G$. It is easy to check the conditions
+  % for syntactic-equivalence for gates of height 0 as all such gates are input
+  % gates and so are either constant gates or relational gates. Suppose $g$ and
+  % $h$ are gates of height greater than zero. We only need to check conditions
+  % (i), (iv) and (v) of syntactic-equivalence. It is easy to check (i) and (v).
+  % If either condition is false then $g$ and $h$ are not syntacticly equivalent.
+  % So suppose $g$ and $h$ are two internal gates such that $\Sigma (g) =
+  % \Sigma(h)$ and suppose that if they are both output gates then $\Omega^{-1}(g)
+  % = \Omega^{-1}(h)$. It remains to check if $L(g)/{\sim}$ and $L(h)/{\sim}$ are
+  % isomorphism equivalent. First check if $H_h /{\sim} = H_g /{\sim}$. If not,
+  % $g$ and $h$ are not syntactically equivalent. So suppose $H_h /{\sim} = H_g
+  % /{\sim}$. If $g$ and $h$ are symmetric gates then $H_h /{\sim} = H_g/{\sim}$
+  % if, and only if, $L(g)/{\sim}$ and $L(h)/{\sim}$ are isomorphism equivalent,
+  % so let $g \sim h$. If $g$ and $h$ are not symmetric gates then, since $C$ is
+  % transparent, $g$ and $h$ have unique labels. We thus have that $L(g)/{\sim}$
+  % and $L(h)/{\sim}$ are isomorphism equivalent if, and only if, $L(g)^{-1}L(h)$
+  % acts like an isomorphism. This can be checked by first checking that the
+  % function induces a sorted permutation on the universe of $g$ (which can be
+  % checked efficiently). This is sufficient as $L(g)(L(g)^{-1}L(h)) = L(h)$.
+
+  % It is easy to see that, given a reasonable binary encoding of a circuit, the
+  % above procedure can be implemented so as to run in polynomial time, and that
+  % the relation $\sim$ is the syntactic-equivalence relation on the gates of $C$.
  
 \end{proof}
 
@@ -550,9 +579,9 @@ polynomial-time computability of syntactic-equivalence on such circuits).
 
 As a final point, we note that while we present evidence against the ability to
 transform arbitrary circuits into transparent circuits in polynomial-time, we do
-show that the class of transparent circuits is polynomial-time decidable. In contrast, we show
-that deciding the class of circuits with unique extensions is at least as hard
-as the graph-isomorphism problem.
+show that the class of transparent circuits is polynomial-time decidable. In
+contrast, we show that deciding the class of circuits with unique extensions is
+at least as hard as the graph-isomorphism problem.
 
 % We particularly note the hardness results for syntactic-equivalence note The
 % difficulty of computing the orbit for non-transparent circuits is particularly
@@ -849,9 +878,9 @@ problem over the general class of circuits, we have the following corollary.
 
 We also have a reduction from the problem of computing the syntactic-equivalence
 relation to the problem of deciding if a given gate in a circuit has unique
-labels. From then transitivity of polynomial-time many-one reductions, this gives
-us a reduction from the graph-isomorphism problem to the problem of deciding if
-a gate has unique labels.
+labels. From then transitivity of polynomial-time many-one reductions, this
+gives us a reduction from the graph-isomorphism problem to the problem of
+deciding if a gate has unique labels.
 
 \begin{lem}
   There are a polynomial-time reduction from the problem of determining if a
@@ -864,14 +893,14 @@ a gate has unique labels.
   Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a circuit of order
   $n$ and let $g_1, g_2 \in G$. Let $D$ be the circuit formed from $C$ by
   removing every gate $g \in G \setminus\{g_1, g_2\}$ such that $\neg W_t(g,
-  g_1) \land \neg W_t(g, g_2)$ (i.e. all those gates in the circuit such that
-  there is no path from them to either $g_1$ or $g_2$). Here $W_t$ is the
-  relation defined in the proof of Lemma~\ref{}. Let $C'$ be the circuit formed
-  from $D$ by adding in a single two-input $\AND$ gate $g'$ and connecting the
-  outputs of $g_1$ and $g_2$ to the inputs of $g'$. Moreover, we let this $g'$
-  be the single output gate of $C'$.
+  g_1) \land \neg W_t(g, g_2)$, where $W_t$ is the transitive closure of the $W$
+  relation (i.e. we move all those gates in the circuit such that there is no
+  path from the gate to either $g_1$ or $g_2$). Let $C'$ be the circuit formed from $D$ by adding in a
+  single two-input $\AND$ gate $g'$ and connecting the outputs of $g_1$ and
+  $g_2$ to the inputs of $g'$. Moreover, we let this $g'$ be the single output
+  gate of $C'$.
 
-  It follows that $g_1$ and $g_2$ are syntactically equivalent in $C$ if, and
+  It follows that $g_1$ and $g_2$ are syntactically-equivalent in $C$ if, and
   only if, $g'$ has unique labels in $C'$. Since the construction of $C'$ from
   $C$ can be completed in polynomial time, the mapping of $(C, (g_1, g_2))$ to
   $(C', g')$ is a reduction.
@@ -887,7 +916,7 @@ is not a counterexample to $C$ having unique extensions).
 \begin{lem}
   There is a polynomial-time reduction from the problem of determining if a
   given pair of gates gates in a given $(\mathbb{B}, \rho)$-circuit are
-  syntactically-equivalent to the problem of determining if for a given triple
+  syntactically-equivalent to the problem of determining if for a given pair
   $(C, g)$, where $C$ is a circuit of order $n$, $g$ is a gate in $C$, that
   there exists $\sigma \in \sym_n$ and automorphisms $\pi, \pi' \in \aut(C)$
   extending $\sigma$ such that $\pi (g) \neq \pi' (g)$.
@@ -904,8 +933,8 @@ is not a counterexample to $C$ having unique extensions).
 
   Let $C'$ be the circuit constructed from $C$ as in the proof of
   Lemma~\ref{lem:syntactically-equivalent-unique-labels}. We now prove that the
-  mapping $(C, (g_1, g_2))$ to $(C', g_1)$ is a reduction. Let $\pi_e$ be a
-  function from the gates of $C'$ to the gates of $C'$ that swaps $g_1$ and
+  mapping $(C, g_1, g_2)$ to $(C', g_1)$ is a reduction. Let $\pi_e$ be
+  bijection from the gates of $C'$ to the gates of $C'$ that swaps $g_1$ and
   $g_2$ and fixes all other gates. It follows that if $g_1$ and $g_2$ are
   syntactically-equivalent in $C$, then they are syntactically-equivalent in
   $C'$, and so $\pi_e$ is a non-trivial automorphism extending the trivial

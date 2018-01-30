@@ -162,40 +162,55 @@ We state the following two results proved by Anderson and Dawar
 \end{lem}
 
 \subsection{Group Action on Supports}
+\label{subsec:group-actions-on-supports}
 In this paper, unlike in the case of Anderson and Dawar \cite{AndersonD17}, we
 often wish to speak of supports and group actions on elements of the circuit
 other than gates (particularly elements of the universe or index of a gate). As
 such, we need to develop theory and terminology for dealing with group actions
 (and supports) in this more general settings. In this subsection we introduce
 some useful terminology.
-% \begin{definition}
-%   Let $G \leq X$ be a set on which a left group action of $G$ on $X$ is
-%   defined and let $x \in X$. Then $\stab_G (x) = \{\pi \in G : \pi x = x\}$
-%   and $\orb_G (x) = \{\pi x : \pi \in G\}$. In the event that the context
-%   makes the group obvious we omit the subscript. We use $\stab_n$ and $\orb_n$
-%   to abbreviate $\stab_{\sym_n}$ and $\orb_{\sym_n}$. Let $Y$ be a set on
-%   which a left group action of $G$ on $Y$ is defined and let $y \in Y$. Then
-%   we let $\stab_y(x) := \stab_{\stab_G(y)}(x)$ and $\orb_y(x) :=
-%   \orb_{\stab_{G}(y)}(x)$.
-% \end{definition}
 
 \begin{definition}
-  Let $X$ be a set on which a left group action of $\sym_n$ on $X$ is
+  Let $X$ be a set on which a left group action of $G \leq \sym_n$ on $X$ is
   defined. We denote the \emph{canonical supporting partition} of $x \in X$ by
-  $\SP (x) = \SP (\stab(x))$. Similarly we let $\| \SP (x) \| = \| \SP
-  (\stab(x)) \|$. We say that $x \in X$ has \emph{small support} if
-  $\stab(x)$ has small support. We say that $X$ has small supports if each $x
+  $\SP_G (x) = \SP (\stab_G(x))$. Similarly we let $\| \SP_G (x) \| = \| \SP
+  (\stab_G(x)) \|$. We say that $x \in X$ has \emph{small support} if
+  $\stab_G(x)$ has small support. We say that $X$ has small supports if each $x
   \in X$ has small support.
 
   If $x \in X$ has small support, we denote the \emph{canonical support} of $x$
-  by $\consp(x) = \consp (stab(x))$.
+  by $\consp_G(x) = \consp (stab_G(x))$.
+
+  If $G = \sym_n$ we omit the subscript. If $G \neq \sym_n$ we refer to $\SP_G$
+  (resp. $\consp_G(g)$) as the canonical supporting partition (resp. canonical
+  support) of $x$ \emph{relative to $G$}.
 \end{definition}
 
-% Let $X$ is a set on which a left group action of $G \leq \sym_n$ is defined,
-% and let $x \in X$. We often let the group $G$ be the stabiliser group of some
-% other set (or element) $S$ on which the action of $\sym_n$ is defined. In this
-% case we write $\SP_S(x)$ and $\consp_S(x)$ to abbreviate $\SP_{\stab(S)}(x)$
-% and $\consp_{\stab(S)}(x)$.
+If the subgroup $G \leq \sym_n$ is obvious from context we omit the subscript in
+the canonical support and canonical support partition without the subscript. The
+group action that will most often be referenced in this paper is the action of
+the entire group $\sym_n$ on the gates of a symmetric circuit with unique
+extensions given by extending a permutation to an automorphism of the circuit,
+and in this case we omit the subscript.
+
+We most often use relative supports when we are interested in some set of
+objects that have a support relative to the stabiliser group of some other
+objects. In this case we make use of the following abbreviation in order to
+avoid complex subscripts. Let $X$ be a set on which a group action of $G \leq
+\sym_n$ is defined, and let $x \in X$. If $S$ is a set of elements on which the
+action of $sym_n$ is defined, we let $\SP_S(x)$ and $\consp_S(x)$ abbreviate
+$\SP_{\stab(S)}(x)$ and $\consp_{\stab(S)}(x)$, respectively. We similarly let
+$\orb_S(x)$ and $\stab_S(x)$ abbreviate $\orb_{\stab(S)}(x)$ and
+$\stab_{\stab(S)}(x)$, respectively. In the event that $S$ is a singleton we
+omit the set bracers in the subscript.
+
+% However, in some cases we have that a group action is only defined for some
+% subgroup of $\sym_n$ acting on a subset of gates in the circuit or elements of
+% the universe of a gate. It is in this case that we make use of supports
+% relative to some subgroup of $\sym_n$. For a concrete use of supports relative
+% to a subgroup see Subsection~\ref{}.
+
+
 
 \begin{lem}
   \label{lem:stab_conjugation}
@@ -275,24 +290,38 @@ orbit would exceed the required bound, thus allowing us to conclude the result
 by contradiction.
 
 We begin by first building up a few observations about the size of the
-stabiliser group, and hence the orbit of a gate. Let $C$ be a circuit of order
-$n$ with unique labels and let $g$ be a gate in the circuit. Let $\vec{x} \in
-\ind(g)$ and $\sigma \in \sym_n$ be such that $\sigma L(g)(\vec{x}) \in H_g$.
-Let $\sigma \cdot \vec{x} := L(g)^{-1}\sigma L(g)(\vec{x})$. We note that this
-operation does not define a group action of $\sym_n$ on $\ind(g)$, but does
-define a group action of $\setstab_n(H_g)$ on $\ind(g)$.
+stabiliser group, and hence the orbit of a gate. Let $C$ be a symmetric circuit
+of order $n$ with unique labels and let $g$ be a gate in the circuit. Let
+$\vec{a}_R \in \ind(g)$ and $\sigma \in \sym_n$ be such that $\sigma
+L(g)(\vec{a}_R) \in H_g$. We let $\sigma \cdot \vec{a}_R := L(g)^{-1}\sigma
+L(g)(\vec{a}_R)$. We note that $\sigma \cdot \vec{a}_R$ may not be defined for
+every $\sigma \in \sym_n$, and so this operation does not define a group action
+of $\sym_n$ on $\ind(g)$. However, we note that this operation does define a
+group action of $\setstab_n(H_g)$ on $\ind(g)$.
 
-Notice that, for $\sigma in \sym_n$, $\sigma \in \setstab_n(H_g)$ and $L(g)$ is
-isomorphism-equivalent to $\sigma L(g)$ if, and only if, $\sigma \in \stab_n(g)$
-if, and only if, $\sigma \in \setstab_n(H_g)$ and there exists $\pi \in \aut(g)$
-such that $\sigma \cdot \vec{x} = \pi (\vec{x})$ for all $\vec{x} \in \ind(g)$.
-The final equivalence expresses the fact that $\sigma \in \sym_n$ stabilises $g$
-if, and only if, $\sigma$ behaves on all elements of $\ind(g)$ like an
-automorphism of $\str{g}$. This observation allows us to define a local
-condition for testing whether a given $\sigma \in \sym_n$ stabilises the gate
-$g$. We say that a pair $(h, h') \in H^{2}_g$ is \emph{compatible} with $\sigma$
-if $\sigma$ acts like a member of $\aut(g)$ when restricted to the labels of $h$
-and $h'$.
+Moreover, we notice that, for $\sigma \in \sym_n$, we have that $\sigma \in
+\setstab_n(H_g)$ and $L(g)$ is isomorphism-equivalent to $\sigma L(g)$ if, and
+only if, $\sigma \in \stab_n(g)$ if, and only if, $\sigma \in \setstab_n(H_g)$
+and there exists $\pi \in \aut(g)$ such that $\sigma \cdot \vec{x} = \pi
+(\vec{x})$ for all $\vec{x} \in \ind(g)$. The final equivalence expresses the
+fact that $\sigma \in \sym_n$ stabilises $g$ if, and only if, $\sigma$ behaves
+on all elements of $\ind(g)$ like an automorphism of $\str{g}$.
+
+We now show that $\sigma$ acts like an automorphism of $\str{g}$ if, and only
+if, $\sigma$ acts like a partial automorphism on the labels associated with
+every pair of gates in $H_g$. We first define what it means for $\sigma$ to act
+like a partial automorphism on a pair of gates. In this case we say that the two
+gates are \emph{compatible} with $\sigma$.
+
+% We now define introduce the notion of $\sigma$ being compatible with a pair of
+% gates $$ in particular is that $\sigma$ preserves the type and for any subset
+% of tuples
+
+% We now show that if $\sigma$ This observation allows us to define a local
+% condition for testing whether a given $\sigma \in \sym_n$ stabilises the gate
+% $g$. We say that a pair $(h, h') \in H^{2}_g$ is \emph{compatible} with
+% $\sigma$ if $\sigma$ acts like a member of $\aut(g)$ when restricted to the
+% labels of $h$ and $h'$.
 
 % We say that $\sigma in \sym_n$ \emph{acts like an isomorphism} at $g$ if
 % $\sigma \in \setstab(H_h)$ and $L(g)$ is isomorphism-equivalent to $\sigma
@@ -335,138 +364,82 @@ and $h'$.
 % If the group action is obvious from context we write $\sortsym_D(\cdot)$
 % instead of $\sortsym_D(\phi)$.
 
-\begin{definition}
-  Let $C$ be a circuit of order $n$ with unique labels and let $g$ be a gate in
-  the circuit. Let $\tau := \vocab{g}$ and $D := \unv{g}$. Let $\sigma \in
-  \sym_n$, $h, h' \in H_g$, and let $\vec{x} := L(g)^{-1}(h)$ and $\vec{y} :=
-  L(g)^{-1}(h')$. We say that $(h, h')$ is \emph{compatible} with $\sigma$ if
-  $\sigma h, \sigma h' \in H_g$ and for every $R_i, R_j\in \tau$ such that $\vec{x} \in R^{D}_i$ and $\vec{y} \in R^{D}_j$,
-  $\sigma \cdot \vec{x} \in R^{D}_i$ and $\sigma \cdot \vec{y} \in R^D_j$, and
-  for all $a \in [\arty(R_i)]$ and $b \in [\arty(R_j)]$, $\vec{x}(a) =
-  \vec{y}(b)$ if, and only if, $(\sigma \cdot \vec{x})(a) = (\sigma \cdot
-  \vec{y})(b)$.
-\end{definition}
-
 % \begin{definition}
-%   Let $G$ be a group and let $\phi : G \rightarrow \sym_{\ind(\tau, D)}$ be a
-%   group action. Let $\sigma \in G$, $\vec{x}, \vec{y} \in \ind(\tau, D)$, and
-%   let $R_i$ and $R_j$ be relation symbols in $\tau$ such that $\vec{x} \in
-%   R^{D}_i$ and $\vec{y} \in R^{D}_j$. We say that $(\vec{x}, \vec{y})$ is
-%   \emph{compatible} with $\sigma$ with respect to $\phi$ if $\sigma \cdot
-%   \vec{x} \in R^{D}_i$ and $\sigma \cdot \vec{y} \in R^D_j$, and for all $a
-%   \in [\arty(R_i)]$ and $b \in [\arty(R_j)]$, $\vec{x}(a) = \vec{y}(b)$ if,
-%   and only if, $(\sigma \cdot \vec{x})(a) = (\sigma \cdot \vec{y})(b)$. If the
-%   group action in question is obvious from context we omit it, and write just
-%   that $(\vec{x}, \vec{y})$ is compatible with $\sigma$.
+%   Let $C$ be a circuit of order $n$ with unique labels and let $g$ be a gate
+%   in the circuit. Let $\tau := \vocab{g}$ and $D := \unv{g}$. Let $\sigma \in
+%   \sym_n$, $h, h' \in H_g$, and let $\vec{x} := L(g)^{-1}(h)$ and $\vec{y} :=
+%   L(g)^{-1}(h')$. We say that $(h, h')$ is \emph{compatible} with $\sigma$ if
+%   $\sigma h, \sigma h' \in H_g$ and there exists $\pi : \img(\vec{x}) \cup
+%   \img{vec{y}}$, a partial-automorphism on $\str(g)$, such that $\pi (\vec{x})
+%   = \sigma \cdot \vec{x}$ and $\pi (\vec{y}) = \sigma \cdot \vec{y}$ that
+%   appears in $\vec{x}$ or $\vec{y}$, $\sigma $
+
+%   $\vec{x} \in R^{D}_i$ and $\vec{y} \in R^{D}_j$, $\sigma \cdot \vec{x} \in
+%   R^{D}_i$ and $\sigma \cdot \vec{y} \in R^D_j$, and for all $a \in
+%   [\arty(R_i)]$ and $b \in [\arty(R_j)]$, $\vec{x}(a) = \vec{y}(b)$ if, and
+%   only if, $(\sigma \cdot \vec{x})(a) = (\sigma \cdot \vec{y})(b)$.
 % \end{definition}
 
-For a gate $g$ in a circuit with unique labels, we show that a permutation
-$\sigma$ acts like an element of $\aut(g)$ (or, equivalently, stabilises $g$)
-if, and only if, every pair of gates in $H_g$ is compatible with $\sigma$. This
-gives us a useful local condition for checking if a permutation acts like an
-isomorphism at $g$, and hence stabilises $g$.
+\begin{definition}
+  Let $C$ be a symmetric circuit of order $n$ with unique labels and let $g$ be
+  a gate in the circuit. Let $\sigma \in \sym_n$ and $h, h' \in H_g$. Let
+  $\vec{a}_R:= L(g)^{-1}(h)$ and $\vec{b}_{R'} := L(g)^{-1}(h')$. We say that
+  $(h, h')$ is \emph{compatible} with $\sigma$ if (i) $\sigma h, \sigma h' \in
+  H_g$, (ii) $\sigma \vec{a}_R$ and $\vec{a}_R$ have the same type and $\sigma
+  \vec{b}_{R'}$ and $\vec{b}_{R'}$ have the same type, and (iii) for all $i \in
+  [\arty(R)]$ and $j \in [\arty(R')]$, $\vec{a}(i) = \vec{b}(j)$ if, and only
+  if, $(\sigma \vec{a}_R)(i) = (\sigma \vec{b}_{R'})(j).$
+\end{definition}
 
 \begin{lem}
-  Let $C$ be a circuit of order $n$ with unique labels, $g$ be a gate in the
-  circuit, and $\sigma \in \sym_n$. Then $\sigma$ stabilises $g$ if, and only
-  if, for all $h, h' \in H_g$, $(h, h')$ is compatible with $\sigma$.
+  Let $C$ be a symmetric circuit of order $n$ with unique labels, $g$ be a gate
+  in the circuit, and $\sigma \in \sym_n$. Then $\sigma \in \stab_n(g)$ if, and
+  only if, for all $h, h' \in H_g$, $(h, h')$ is compatible with $\sigma$.
   \label{lem:isostab-compatible}
 \end{lem}
 
 \begin{proof}
-  % Let $\tau$ be the vocabulary and $D$ the universe of $g$.
-  $`\Rightarrow'$: Suppose $\sigma \in \stab_n(g)$. Then $\sigma H_g = H_g$ and
-  there exists $\pi \in \aut(g)$ such that $\sigma \cdot \vec{x} = \pi
-  (\vec{x})$ for all $\vec{x} \in \ind(g)$. Let $h, h' \in H_g$ and let $\vec{x}
-  := L(g)^{-1}(h)$ and $\vec{y} = L^{-1}(h)$. Since $\sigma \cdot \vec{x} = \pi
-  (\vec{x})$ for $\vec{x} \in \ind(g)$, it is easy to see that $\sigma$ maps
-  tuples in a relation to tuples in the same relation. Let $R_i$ and $R_j$ be
-  relation symbols in $\vocab{g}$ such that $\vec{x} \in R^D_i$ and $\vec{y} \in
-  R^D_j$. Let $w \in [\arty (R_i)]$ and $z \in [\arty (R_j)]$, then $\sigma
-  \cdot \vec{x} (w) = \sigma \cdot \vec{y}(z)$ if, and only if, $\pi(\vec{x}(w))
-  = \pi (\vec{x})(w) = \pi (\vec{y})(z) = \pi(\vec{y}(z))$ if, and only if,
-  $\vec{x}(w) = \vec{y}(z)$. The final equivalence follows from the injectivety
-  of $\pi$.
+  `$\Rightarrow$': Suppose $\sigma \in \stab_n(g)$. Then $\sigma H_g = H_g$ and
+  there exists $\pi \in \aut(g)$ such that $\sigma \vec{a}_R = \pi \vec{a}_R$
+  for all $\vec{a}_R \in \ind(g)$. It follows that the action of $\sigma$ on
+  $\ind(g)$ preserves type. Let $h, h' \in H_g$ and let $\vec{a}_R :=
+  L(g)^{-1}(h)$ and $\vec{b}_{R'} := L^{-1}(h)$. Let $i \in [\arty (R)]$ and $j
+  \in [\arty (R')]$. Then $(\sigma \vec{a}_R) (i) = (\pi \vec{a}_R)(i) = (\pi
+  \vec{b}_{R'})(j) = (\sigma \vec{b}_{R'})(j)$ if, and only if, $(\pi
+  \vec{a}_R)(i) = \pi (\vec{a}(i)) = \pi (\vec{b}(j)) = (\pi\vec{b}_{R'})(j)$
+  if, and only if, $\vec{a}(i) = \vec{b}(j)$. The final equivalence follows from
+  the injectivety of $\pi$.
   
-  $`\Leftarrow'$: We have that for all $h, h' \in H_g$ that $(h, h')$ is
-  compatible with $\sigma$. It follows that $\sigma H_g = H_g$. We now define
-  $\pi$ such that $\pi \in \aut(g)$ and $\sigma \cdot \vec{x} = \pi (\vec{x})$
-  for all $\vec{x} \in \ind(g)$. Let $a \in \universe{g}$ and $\vec{x} \in
-  \ind(g)$ be a tuple containing $a$. Then let $\pi (a) = \sigma \cdot \vec{x}
-  (\vec{x}^{-1}(a))$. The compatibility condition ensures that this definition
-  is independent of the particular choice of $\vec{x}$ and that, since $\sigma$
-  takes tuples in a given relation to tuples of the same relation, $a$ and $\pi
-  (a)$ must be of the same sort.
+  `$\Leftarrow$': Suppose for all $h, h' \in H_g$ we have that $(h, h')$ is
+  compatible with $\sigma$. It follows that $\sigma H_g = H_g$, and the actions
+  of $\sigma$ on $H_g$ and $\ind(g)$ are both injective (and so surjective). We
+  now define $\pi$ such that $\pi \in \aut(g)$ and $\sigma \vec{a}_R = \pi
+  \vec{a}_R$ for all $\vec{a}_R \in \ind(g)$. Let $a \in \universe{g}$ and
+  $\vec{a}_R \in \ind(g)$ be a tuple containing $a$. Let $\pi (a) = (\sigma
+  \vec{a}_R) (\vec{a}^{-1}_R(a))$. The compatibility condition ensures that this
+  definition is independent of the particular choice of $\vec{a}_R$ and that,
+  since $\sigma$ takes tuples in a given relation to tuples of the same
+  relation, $a$ and $\pi (a)$ must be of the same sort.
   
-  We show that $\pi$ is injective. Suppose $\pi(a) = \pi(b)$. Suppose $a$
-  appears in $\vec{x} \in \ind(g)$ and $b$ appears in $\vec{y} \in \ind(g)$,
-  then $\sigma \cdot \vec{x} (\vec{x}^{-1}(a)) = \pi (a) = \pi(b) = \sigma \cdot
-  \vec{y}(\vec{y}^{-1}(b))$. From the hypothesis $(\vec{x}, \vec{y})$ is
-  compatible with $\sigma$, and so $a = \vec{x}(\vec{x}^{-1}(a)) =
-  \vec{y}(\vec{y}^{-1}(b)) = b$. It follows $\pi$ is an injection.
+  Suppose $\pi(a) = \pi(b)$. Suppose $a$ appears in $\vec{a}_R \in \ind(g)$ and
+  $b$ appears in $\vec{b}_{R'} \in \ind(g)$, then $(\sigma \vec{a}_R)
+  (\vec{a}^{-1}(a)) = \pi (a) = \pi(b) = (\sigma
+  \vec{b}_{R'})(\vec{b}^{-1}(b))$. From the hypothesis $(L(g)(\vec{a}_R),
+  L(g)(\vec{b}_{R'}))$ is compatible with $\sigma$, and so $a =
+  \vec{a}_R(\vec{a}^{-1}_R(a)) = \vec{b}_{R'}(\vec{b}^{-1}_{R'}(b)) = b$. It
+  follows $\pi$ is an injection.
   
-  We now prove surjectivity. Let $b \in \universe{g}$. Suppose $b$ appears in
-  $\vec{x} \in \ind(g)$ and let $i \in \dom(\vec{x})$ be such that $\vec{x}(i) =
-  b$. Let $\vec{y} = \sigma \cdot \vec{x}$. Then $\pi (\vec{y}(i)) = \sigma
-  \cdot \vec{y} (\vec{y}^{-1}(\vec{y}(i))) = \vec{x}(i) = b$. It follows that
-  $\pi$ is surjective, and so bijective. Thus $\pi \in \aut(g)$.
+  Let $c \in \universe{g}$. Suppose $c$ appears in $\vec{a}_R \in \ind(g)$ and
+  let $i \in \dom(\vec{a}_R)$ be such that $\vec{a}_R(i) = c$. Since the action
+  of $\sigma$ on $\ind(g)$ defines is a surjection, there exists $\vec{b}_R \in
+  \ind(g)$ such that $\sigma \vec{b}_R = \vec{a}_R$. It follows that $\pi
+  (\vec{b}_R(i)) = (\sigma \vec{b}_R) (\vec{b}^{-1}_R(\vec{b}_R(i))) =
+  \vec{a}_R(i) = c$. Thus $\pi$ surjective, and so bijective, and $\pi \in
+  \aut(g)$.
 
-  Clearly $\pi (\vec{x}) = \sigma \cdot \vec{x}$ for all $\vec{x} \in \ind(g)$,
+  Clearly $\pi \vec{a}_R = \sigma \vec{a}_R$ for all $\vec{a}_R \in \ind(g)$,
   and the result follows.
 \end{proof}
-
-% \begin{lem}
-%   Let $G$ be a group, suppose $\phi : G \rightarrow \sym_{\ind(\tau, D)}$ is a
-%   group action and let $\sigma \in G$. Then $\sigma$ acts like an automorphism
-%   with respect to $\phi$ if, and only if, for all $\vec{x}, \vec{y} \in
-%   \ind(\tau, D)$, $(\vec{x}, \vec{y})$ is compatible with $\sigma$ with
-%   respect to $\phi$.
-%   \label{lem:isostab-compatible}
-% \end{lem}
-
-% \begin{proof}
-%   $`\Rightarrow'$: Let $\vec{x}, \vec{y} \in \ind(\tau, D)$ and suppose
-%   $\sigma$ acts like a sorted permutation. Let $\pi \in \sortsym(\tau, D)$ be
-%   the permutation that witnesses this. Then $\sigma$ acts on $\ind (\tau, D)$
-%   as an isomorphism, and so maps tuples in a relation to tuples of the same
-%   relation. Let $R_i$ and $R_j$ be relation symbols in $\tau$ such that
-%   $\vec{x} \in R^D_i$ and $\vec{y} \in R^D_j$. Let $w \in [\arty (R_i)]$ and
-%   $z \in [\arty (R_j)]$, then $\sigma \cdot \vec{x} (w) = \sigma \cdot
-%   \vec{y}(z)$ iff $\pi \cdot \vec{x}(w) = \pi \cdot \vec{y}(z)$ iff
-%   $\vec{x}(w) = \vec{y}(z)$.
-  
-%   $`\Leftarrow'$: We have that for all $\vec{x}, \vec{y} \in \ind(\tau, D)$,
-%   $(\vec{x}, \vec{y})$ is compatible with $\sigma$. We now define $\pi$ such
-%   that $\pi \in \sortsym(D)$ and $\sigma \cdot \vec{x} = \pi \cdot$. Let
-%   $\vec{x} \in \ind(\tau, D)$ be a tuple containing $a$ and let $\pi (a) =
-%   \sigma \cdot \vec{x} (\vec{x}^{-1}(a))$. The compatibility condition ensures
-%   that this definition is independent of the particular choice of $\vec{x}$.
-  
-%   We show that $\pi$ is injective. Suppose $\pi(a) = \pi(b)$. Suppose $a$
-%   appears in $\vec{x} \in \ind(\tau, D)$ and $b$ appears in $\vec{y} \in
-%   \ind(\tau, D)$, then $\sigma \cdot \vec{x} (\vec{x}^{-1}(a)) = \pi (a) =
-%   \pi(b) = \sigma \cdot \vec{y}(\vec{y}^{-1}(b))$. From the hypothesis
-%   $(\vec{x}, \vec{y})$ is compatible with $\sigma$, and so $a =
-%   \vec{x}(\vec{x}^{-1}(a)) = \vec{y}(\vec{y}^{-1}(b)) = b$. It follows $\pi$
-%   is an injection.
-  
-%   We now prove surjectivity. Let $b \in D$. Suppose $b$ appears in $\vec{x}
-%   \in \ind(\tau, D)$ and let $i \in \dom(\vec{x})$ be such that $\vec{x}(i) =
-%   b$. Let $\vec{y} = \sigma \cdot \vec{x}$. Then $\pi (\vec{y}(i)) = \sigma
-%   \cdot \vec{y} (\vec{y}^{-1}(\vec{y}(i))) = \vec{x}(i) = b$. It follows that
-%   $\pi$ is surjective, and thus bijective. The compatibility condition gives
-%   us that $\pi (R^D_i) = R^D_i$ for any relation symbol $R_i$ in $\tau$. Thus
-%   $\pi \in \sortsym(D)$.
-
-%   Clearly $\pi \cdot \vec{x} = \sigma \cdot \vec{x}$ for all $\vec{x} \in
-%   \ind(\tau, D)$, and the result follows.
-% \end{proof}
-
-
-% is a group action of $G$ on $\ind(\tau, D)$. We also use $\sortsym_G (D)$ (or
-% $\sortsym_n(D)$ if $G = \sym_n$) to refer to the subgroup of $G$ consisting of
-% those permutations that act like a sorted permutation (or, equivalently, are
-% compatible with every pair of vectors in $\ind(\tau, D)$).
 
 In the proof of the support theorem we show that if we assume a gate has a
 support exceeding a certain size bound then its orbit must be larger than the
@@ -482,32 +455,6 @@ first briefly give an intuition for these terms. The idea here is that the
 permutation in the set fixes both $h$ and $h'$ and the action of $\sigma$ on $h$
 and $h'$. This means that $\sigma$ is the only permutation that moves $h$ or
 $h'$, and that this property extends to the image of these gates under $\sigma$.
-
-% \begin{definition}
-%   Let $G$ and $G'$ be groups and suppose be a group and suppose $\phi : G
-%   \rightarrow \sym_{\ind(\tau, D)}$ is a group action. We say that $(\sigma,
-%   \vec{x}, \vec{y}) \in G \times \ind(\tau, D)^{2}$ is \emph{useful} if
-%   $(\vec{x}, \vec{y})$ is not compatible with $\sigma$ with respect to $\phi$.
-
-%   We say that two distinct pairs $(\sigma_1, \vec{x}_1, \vec{y}_1), (\sigma_2,
-%   \vec{x}_2, \vec{y}_2) \in G\times \ind(\tau, D)^2$ are \emph{mutually
-%   independent} if
-%   \begin{itemize}
-%     \setlength\itemsep{0mm}
-%   \item $\sigma_2 cdot \vec{x}_1 = \vec{x}_1$,
-%   \item $\sigma_2 \sigma_1 \cdot \vec{x}_1 = \sigma_1 \cdot \vec{x}_1$,
-%   \item $\sigma_2 \cdot \vec{y}_1 = \vec{y}_1$, and
-%   \item $\sigma_2 \sigma_1 \cdot \vec{y}_1 = \sigma_1 \cdot \vec{y}_1$.
-%   \end{itemize}
-  
-%   We say that a set $S \subseteq G \times \ind(\tau, D)^2$ is \emph{useful}
-%   (with respect to $\phi$) if each pair in it is useful. We say that $S$ is
-%   \emph{independent} (with respect to $\phi$) if any two distinct elements of
-%   $S$ are mutually independent.
-% \end{definition}
-
-% AD: isn't this definition missing something about y_2 and x_2? I also think it
-% needs some intuitive explanation to accompany it.
 
 \begin{definition}
   Let $C$ be a circuit with injective labels of order $n$ and $g$ be a gate in
@@ -527,94 +474,6 @@ $h'$, and that this property extends to the image of these gates under $\sigma$.
   each pair in it is useful. We say that $S$ is \emph{independent} (at $g$) if
   every two distinct elements of $S$ are mutually independent.
 \end{definition}
-
-% \begin{lem}
-%   \label{lem:duel-sort-equivalence-compatible}
-%   Let $H$ be a set on which an action of $\sym_n$ is defined and let $L :
-%   \ind(\mathcal{D} \rightarrow H$ be a bijection. Let $\sigma_1, \sigma_2 \in
-%   \sym_n$ be such that $\sigma_1 \cdot L$ is isomorphism-equivalent to
-%   $\sigma_2 \cdot L$. Then for any $h, h' \in H$, $(h, h')$ is compatible with
-%   $\sigma_1$ iff $(h, h')$ is compatible with $\sigma_2$.
-% \end{lem}
-% \begin{proof}
-%   We have that $\sigma_1 \cdot L$ is isomorphism-equivalent to $\sigma_2 \cdot
-%   L$, and thus there exists $\pi \in \aut(\mathcal{D})$ such that $\sigma_1
-%   \cdot L \cdot \pi = \sigma_2 \cdot L $.
-
-%   Suppose $h, h' \in H$, and suppose $(h, h')$ is compatible with $\sigma_1$.
-%   Let $\vec{x} := L^{-1}(h)$ and $\vec{y} := L^{-1} (h')$. We then have that
-%   $(\vec{x}, \vec{y})$ is compatible with $L^{-1} \cdot \sigma_1 \cdot L$. Let
-%   $R_i$ and $R_j$ be relation symbols in the vocabulary of $\mathcal{D}$ such
-%   that $\vec{x} \in R^{\mathcal{D}}_i$ and $\vec{y} \in R^{\mathcal{D}}_j$.
-%   Then $L^{-1} \cdot \sigma_2 \cdot L (\vec{x}) = L^{-1} \cdot \sigma_1 \cdot
-%   L (\pi \cdot \vec{x})$. But since $\pi$ is an automorphism of $\mathcal{D}$
-%   we have that $\pi \cdot \vec{x} \in R_i$
-
-%   Similarly $\sigma_2 \cdot \vec{x}' = \sigma_2 \cdot (\pi \cdot \vec{x}')$.
-%   Let $i \in \dom (\vec{x})$, then $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma_1
-%   \cdot \vec{x})(i) = (\sigma_2 \cdot \vec{x}')(i)$ iff $(\sigma_1 \cdot (\pi
-%   \vec{x}))(i) = (\sigma_2 \cdot (\pi \vec{x}'))(i)$ iff $(\sigma_2 \cdot
-%   \vec{x})(i) = (\sigma_2 \cdot \vec{x}')(i)$. The other direction follows by
-%   symmetry.
-% \end{proof}
-
-% \begin{lem}
-%   \label{lem:duel-sort-equivalence-compatible}
-%   Let $g \in C_n$ and $\sigma_1, \sigma_1 \in \sym_n$ such that $\sigma_1
-%   \cdot L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$. Then for any $h,h'
-%   \in H_g$, $(h,h')$ is compatible with $\sigma_1$ iff $(h,h')$ is compatible
-%   with $\sigma_2$.
-% \end{lem}
-% \begin{proof}
-%   Suppose $\sigma_1 \cdot L(g)$ is sort-equivalent to $\sigma_2 \cdot L(g)$.
-%   Then there exists $\pi \in \sym_{A_1} \times \ldots \times \sym_{A_s}$ such
-%   that $\sigma_1 \cdot L(g) (\pi \cdot \vec{x}) = \sigma_2 \cdot L(g)
-%   (\vec{x})$.
-
-%   Suppose $(h, h')$ is compatible with $\sigma_1$. Let $\vec{x} =
-%   L(g)^{-1}(h)$ and $\vec{x}' = L(g)^{-1}(h')$. Then $\sigma_2 \cdot \vec{x} =
-%   (L(g)^{-1} \cdot \sigma_2 \cdot L(g)) (\vec{x}) = L(g)^{-1} \cdot \sigma_1
-%   \cdot L(g)(\pi \cdot \vec{x}) = \sigma_1 \cdot (\pi \cdot \vec{x})$.
-%   Similarly $\sigma_2 \cdot \vec{x}' = \sigma_2 \cdot (\pi \cdot \vec{x}')$.
-%   Let $i \in \dom (\vec{x})$, then $\vec{x}(i) = \vec{x}'(i)$ iff $(\sigma_1
-%   \cdot \vec{x})(i) = (\sigma_2 \cdot \vec{x}')(i)$ iff $(\sigma_1 \cdot (\pi
-%   \vec{x}))(i) = (\sigma_2 \cdot (\pi \vec{x}'))(i)$ iff $(\sigma_2 \cdot
-%   \vec{x})(i) = (\sigma_2 \cdot \vec{x}')(i)$. The other direction follows by
-%   symmetry.
-% \end{proof}
-
-
-% \begin{lem}
-%   \label{lem:useful-independant-set}
-%   Let $G$ and $G'$ be groups such that $G \leq G'$ and $\phi: G \rightarrow
-%   \sym_{\ind(\tau, D)}$ be a group action. Let $S \subseteq G \times
-%   \ind(\tau, D)^2$ be a useful and independent set with respect to $\phi$.
-%   Then $[G' : \sortsym_D(\phi)] \geq 2^{\vert S \vert}$.
-% \end{lem}
-
-% \begin{proof}
-%   For any $R \subseteq S$ define $\sigma_R = \Pi_{(\sigma, \vec{x}, \vec{y})
-%   \in R} \sigma$ (with some arbitrary order assumed on $S$). We prove that the
-%   mapping $R \mapsto \sigma_R \sortsym_D(\phi)$ is injective. Let $R$ and $Q$
-%   be distinct subsets of $S$ and WLOG let $\vert R \vert \geq \vert Q \vert$.
-%   It suffices to show that $\sigma^{-1}_Q \sigma_R \notin \sortsym (D)$. Pick
-%   any $(\sigma, \vec{x}, \vec{y}) \in R \setminus Q \neq \emptyset$.
-%   %   AD: the claim below doesn't follow just from independence.
-%   %   GW: It seems like it does. What in particular do you think should be
-%   %   added
-%   %   here?
-%   From independence we have $\sigma_R \cdot \vec{x} = \sigma \cdot \vec{x}$,
-%   $\sigma_R \cdot \vec{y} = \sigma \cdot \vec{y}$, $\sigma_Q \sigma \cdot
-%   \vec{x} = \sigma \cdot \vec{x} $, and $\sigma_Q \sigma \cdot \vec{y} =
-%   \sigma \cdot \vec{y}$. By substitution we get that $\sigma^{-1}_Q \sigma_R
-%   \cdot \vec{x} = \sigma^{-1}_Q \sigma \cdot \vec{x} = \sigma \cdot \vec{x}$,
-%   and similarly $\sigma^{-1}_Q\sigma_R \cdot \vec{y} = \sigma \cdot \vec{y}$.
-%   Thus, since $(\sigma, \vec{x}, \vec{y})$ is useful, we have that $(\vec{x},
-%   \vec{y})$ is incompatible with $\sigma$ and so $(\vec{x}, \vec{y})$ is
-%   incompatible with $\sigma^{-1}_Q\sigma_R$. We thus have from Lemma
-%   \ref{lem:isostab-compatible} that $\sigma^{-1}_Q\sigma_R \notin
-%   \sortsym_D(\phi)$.
-% \end{proof}
 
 We now prove the upper-bound on the powerset of useful and independent sets used
 in the proof of the support theorem.
@@ -742,7 +601,7 @@ constant for polynomial-size circuits).
 % \stab_n(g)] = [\sym_n : \sortsym_D(\phi_g)]$.
 
 \begin{thm}
-  \label{thm:support_thm}
+  \label{thm:support-thm}
   For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and $n
   \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric circuit of order $n$ with
   unique labels and $s := \max_{g \in C} \vert \orb (g)\vert \leq
@@ -858,7 +717,8 @@ must be polynomially bounded, and so the theorem implies that there exists $k
 
 \begin{cor}
   Let $\mathcal{C} := (C_n)_{n \in \nats}$ be a polynomial-size family of
-  symmetric circuits with unique labels. Then $n \mapsto \SP(C_n) \in O(1)$.
+  symmetric circuits with unique labels. The function that maps $n \mapsto
+  \SP(C_n) $ is in $O(1)$.
   \label{cor:constant-size-support}
 \end{cor}
 
@@ -872,70 +732,169 @@ must be polynomially bounded, and so the theorem implies that there exists $k
 % $a_i \in A_$
 
 \subsection{Supports on Indexes}
+We have shown that families of polynomial-size symmetric circuits with unique
+labels have constant-size supports. In this subsection we introduce the notion
+of a support of an element of the universe of a gate, and show that the support
+theorem can be extended to apply to the supports of these elements as well.
+
 Let $C$ be a symmetric circuit of order $n$ with unique labels and $g$ be a gate
-in the circuit. Since $C$ symmetric and has unique labels, we know that each
-permutation in $\sym_n$ extends uniquely to an action on the whole circuit. We
-have also defined an action of $\setstab(H_g) \leq \sym_n$ on $\ind(g)$. We have
-also noted that $\sigma \in \stab(g)$ if, and only if, $\sigma in \setstab(H_g)$
-and there exists $\pi_{\sigma} \in \aut(g)$ such that $\sigma \cdot \vec{x} =
-\pi_{\sigma} (\vec{x})$ for all $\vec{x} \in \ind(g)$. Thus we may define an
-action of $\stab(g)$ on $\universe{g}$ by $\sigma \cdot a := \pi_{\sigma}
-(\vec{x}) (\vec{x}^{-1}(a))$, for $\sigma \in \stab(g)$ and $a \in
-\universe{g}$, and where $\vec{x} \in \ind(g)$ is any tuple containing $a$. The
-fact that $\pi_{\sigma}$ is both uniquely determined by $\sigma$ and is an
-automorphism gives that this action is well-defined.
+in the circuit. Since $C$ is symmetric and has unique labels, we have from
+Lemma~\ref{} that each permutation in $\sym_n$ extends uniquely to an
+automorphism of $C$. We have defined an action of $\setstab(H_g) \leq \sym_n$ on
+$\ind(g)$, and noted that $\sigma \in \stab(g)$ if, and only if, $\sigma \in
+\setstab(H_g)$ and there exists $\pi_{\sigma} \in \aut(g)$ such that $\sigma
+\vec{a}_R = \pi_{\sigma} \vec{a}_R$ for all $\vec{a}_R \in \ind(g)$.
 
-We establish in this subsection that an analogue of the support theorem holds
-for elements of the universe. In order to do this, we show that the canonical
-support of an element of the universe of a gate is bounded above by the size of
-the supports of two gates in the circuit. We first define a few useful
-abbreviations. For $a \in \universe{g}$, let $\stab_{g}(a) :=
-\stab_{\stab(g)}(a)$, $\orb_{g}(a) := \orb_{\stab(g)}(a)$, $\stab_{\consp(g)}(a)
-:= \stab_{\stab(\consp(g))}(a)$, and $\orb_{\consp(g)}(a) :=
-\orb_{\stab(\consp(g))}(a)$. For $a \in \universe{g}$ let $\SP_g(a) :=
-\SP_{\stab(g)}(a)$, $\SP_{\consp(g)}(a) := \SP_{\spstab{g}}(a)$, $\consp_g(a) :=
-\consp_{\stab(g)}(a)$, and $\consp_{\consp(g)}(a) := \consp_{\spstab{g}}(a)$, be
-the canonical supporting partitions and canonical supports with respect to the
-stabiliser of $g$ and stabiliser of the support of $g$.
+We now define a group action of $\stab(g)$ on $\universe{g}$ by $\sigma \cdot a
+:= (\pi_{\sigma}\vec{a}_R) (\vec{a}^{-1}_R(a))$, for $\sigma \in \stab(g)$ and
+$a \in \universe{g}$, and where $\vec{a}_R \in \ind(g)$ contains the element
+$a$. Since $\pi_{\sigma}$ is an automorphism uniquely determined by $\sigma$
+this action is well-defined.
 
-% GW: Is this needed? It might have small support already? I want to clean this
-% up.
+Since we have a group action of $\stab{g}$ on $\universe{g}$, but not $\sym_n$
+on $\universe{g}$, we must speak of the support of $a \in \universe{g}$ relative
+to $\stab{g}$. We now prove an analogue of the support theorem, showing that for
+that for any polynomial-size family $(C_n)_{n \in \nats}$ of symmetric circuits
+with unique labels, we have for large enough $n$ that for each $g$ in $C_n$ the
+supports of $a \in \universe{g}$ relative to the subgroups $\stab(g)$ and
+$\spstab{g}$ are bounded by a constant. In the proof of the following result we
+make use of the abbreviations introduced in Section~\ref{subsec:group-actions-on-supports} for relative supports.
 
-Suppose that $n$ is large enough to apply the support theorem and such that each
-gate in $C$ has small support. Let $a \in \universe{g}$, and $h \in H_g$ be such
-that $a \in \vec{a} := (a_1, \ldots , a_r) := L(g)^{-1}(h)$. We have that
-$\stab(\consp(h) \cup \consp(g)) = \stab(\consp(h)) \cap \stab(\consp(g)) \leq
-\stab(h) \cap \spstab{g} = \stab_{\consp(g)}(h) = \bigcap_{i \in
-  [r]}\stab_{\consp(g)}(a_i)$. We thus have that $\stab_{\consp(g)}(h)$ has
-small support. It follows from Lemma~\ref{lem:row-column-supports-well-behaved}
-that $\consp(h) \cup \consp(g)$ we have that $\consp(\stab_{\consp(g)}(h)) =
-\consp(\stab(h)) \cap \consp(\stab(\consp(g))) = \consp(h) \cap \consp(g)$ is
-the canonical support of $\stab_g(h)$. Moreover, by repeated application of
-Lemma \ref{lem:row-column-supports-well-behaved} it follows that each $a_i$ also
-has small support and $\consp_{\consp(g)}(a) \subseteq \bigcup_{i \in
-  [r]}\consp_{\consp(g)}(a_i) = \consp(\stab_{\consp(g)}(h)) = \consp(h) \cup
-\consp(g)$ for each $i \in [r]$. We conclude the following lemma from the above
-argument.
+% We first define a few useful abbreviations. For $a \in \universe{g}$, let
+% $\stab_{g}(a) := \stab_{\stab(g)}(a)$, $\orb_{g}(a) := \orb_{\stab(g)}(a)$,
+% $\stab_{\consp(g)}(a) := \stab_{\stab(\consp(g))}(a)$, and
+% $\orb_{\consp(g)}(a) := \orb_{\stab(\consp(g))}(a)$. For $a \in \universe{g}$
+% let $\SP_g(a) := \SP_{\stab(g)}(a)$, $\SP_{\consp(g)}(a) :=
+% \SP_{\spstab{g}}(a)$, $\consp_g(a) := \consp_{\stab(g)}(a)$, and
+% $\consp_{\consp(g)}(a) := \consp_{\spstab{g}}(a)$, be the canonical supporting
+% partitions and canonical supports with respect to the stabiliser of $g$ and
+% stabiliser of the support of $g$.
+
+
+% We recall that a set $S \subseteq [n]$ is a support of a gate $g$ if, and only
+% if, $\stab_n(S) \subseteq stab_n(g)$. We say that a set $S \subseteq [n]$ su
+
+% We should now like to define the notion of a support of $a \in \universe{g}$,
+% but there is a difficulty in that there is no defined action of $\sym_n$ on
+% the universe of $g$. Instead, we
+
+
+% We establish in this subsection that an analogue of the support theorem holds
+% for elements of the universe. In order to do this, we show that the canonical
+% support of an element of the universe of a gate is bounded above by the size
+% of the supports of two gates in the circuit. We first define a few useful
+% abbreviations. For $a \in \universe{g}$, let $\stab_{g}(a) :=
+% \stab_{\stab(g)}(a)$, $\orb_{g}(a) := \orb_{\stab(g)}(a)$,
+% $\stab_{\consp(g)}(a) := \stab_{\stab(\consp(g))}(a)$, and
+% $\orb_{\consp(g)}(a) := \orb_{\stab(\consp(g))}(a)$. For $a \in \universe{g}$
+% let $\SP_g(a) := \SP_{\stab(g)}(a)$, $\SP_{\consp(g)}(a) :=
+% \SP_{\spstab{g}}(a)$, $\consp_g(a) := \consp_{\stab(g)}(a)$, and
+% $\consp_{\consp(g)}(a) := \consp_{\spstab{g}}(a)$, be the canonical supporting
+% partitions and canonical supports with respect to the stabiliser of $g$ and
+% stabiliser of the support of $g$.
+
+% % GW: Is this needed? It might have small support already? I want to clean
+% % this
+% % up.
+
+% Suppose that $n$ is large enough to apply the support theorem and such that
+% each gate in $C$ has small support. Let $a \in \universe{g}$, and $h \in H_g$
+% be such that $a \in \vec{a} := (a_1, \ldots , a_r) := L(g)^{-1}(h)$. We have
+% that $\stab(\consp(h) \cup \consp(g)) = \stab(\consp(h)) \cap \stab(\consp(g))
+% \leq \stab(h) \cap \spstab{g} = \stab_{\consp(g)}(h) = \bigcap_{i \in
+% [r]}\stab_{\consp(g)}(a_i)$. We thus have that $\stab_{\consp(g)}(h)$ has
+% small support. It follows from
+% Lemma~\ref{lem:row-column-supports-well-behaved} that $\consp(h) \cup
+% \consp(g)$ we have that $\consp(\stab_{\consp(g)}(h)) = \consp(\stab(h)) \cap
+% \consp(\stab(\consp(g))) = \consp(h) \cap \consp(g)$ is the canonical support
+% of $\stab_g(h)$. Moreover, by repeated application of Lemma
+% \ref{lem:row-column-supports-well-behaved} it follows that each $a_i$ also has
+% small support and $\consp_{\consp(g)}(a) \subseteq \bigcup_{i \in
+% [r]}\consp_{\consp(g)}(a_i) = \consp(\stab_{\consp(g)}(h)) = \consp(h) \cup
+% \consp(g)$ for each $i \in [r]$. We conclude the following lemma from the
+% above argument.
 
 \begin{lem}
-  Let $C$ be a symmetric circuit with unique labels and let $n_0$ be a constant
-  sufficient for application of the support theorem. Let $g$ be a gate in $C$,
-  let $h \in H_g$ and let $(a_1, \ldots, a_r) := L(g)^{-1}(h)$. Then $\consp(h)
-  \cup \consp(g) = \bigcup_{i \in [r]} \consp_{\consp(g)}(a_i)$.
   \label{lem:row-column-supports}
+  Let $(C_n)_{n \in \nats}$ be a polynomial-size family of symmetric circuits
+  with unique labels. There exists $n_0, k \in \nats$ such that for all $n >
+  n_0$, $g$ a gate $C_n$ and $a \in \universe{g}$
+  \begin{itemize}
+    
+    \setlength\itemsep{0mm}
+  \item $\stab_n(g)$, $\stab_{\consp(g)}(a)$ and $\stab_{g}(a)$ have small
+    supports,
+  \item if $h \in H_g$ and $a$ appears in $L(g)^{-1}(h)$ then $\consp_g(a)
+    \subseteq \consp_{\consp(g)}(a) \subseteq \consp(g) \cup \consp(h)$, and
+  \item $\vert \consp(g) \leq k$ and $\vert \consp_g(a) \vert \leq \vert
+    \consp_{\consp(g)}(a) \vert \leq 2k$.
+    
+  \end{itemize}
+  
+  % $g$ a gate in $C_n$ and $a \in \universe{g}$, we have that $\stab_g(a)$,
+  % $\stab_{\consp(g)}(a)$ and $\stab_n (g)$ have small supports, $\consp_g(a)
+  % \subseteq \consp_{\consp(g)}(a) \subseteq \consp(g) \cup \consp(h)$, where
+  % $h$
+  % and $\vert \consp(g) \vert \leq k$.
+
+  
+  % For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$
+  % and
+  % $n
+  % \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric circuit of order $n$
+  % with
+  % unique labels and $s := \max_{g \in C} \vert \orb (g)\vert \leq
+  % 2^{n^{1-\epsilon}}$, then, $\SP_{\uni}(C) \leq 2* \SP(C) \leq
+  % \frac{66}{\epsilon}\frac{\log s}{\log n}$.
+
+  % Let $C$ be a symmetric circuit with unique labels and let $n_0$ be a
+  % constant
+  % sufficient for application of the support theorem. Let $g$ be a gate in
+  % $C$,
+  % let $h \in H_g$ and let $(a_1, \ldots, a_r) := L(g)^{-1}(h)$. Then
+  % $\consp(h)
+  % \cup \consp(g) = \bigcup_{i \in [r]} \consp_{\consp(g)}(a_i)$.
+  % \label{lem:row-column-supports}
 \end{lem}
 
-We may apply Lemma \ref{lem:row-column-supports} in order to generalise
-Corollary \ref{cor:constant-size-support}.
+\begin{proof}
+  We have from Corollary~\ref{cor:constant-size-support} that there exists $k,
+  n_0' \in \nats$ such that for all $n \geq n_0'$, $\SP(C_n) \leq k$. Let $n_0 =
+  \max(n_0', 4k + 1)$. Let $g$ be a gate in $C_n$, $a \in \universe{g}$, and $h
+  \in H_g$ be such that $a \in \vec{a}_R := (a_1, \ldots , a_r)_R :=
+  L(g)^{-1}(h)$.
 
-\begin{cor}
-  \label{cor:constant-size-support-for-everything}
-  Let $\mathcal{C} := (C_n)_{n \in \nats}$ be a polynomial-size family of
-  symmetric circuits with unique labels and let $n_0$ be the constant from the
-  support theorem. Then there exists $k$ such that for all $n > n_0$, $g$ a gate
-  in $C_n$, and $a$ in the universe of $g$, $\vert \consp_{\consp(g)}(a) \vert
-  \leq 2* \SP(C) \leq k$.
-\end{cor}
+  Since $\SP(C_n) \leq k$ and $n > 2k$, we have that $g$ and $h$ have small
+  supports of size at most $k$. Moreover, we have that $\stab(\consp(h) \cup
+  \consp(g)) = \stab(\consp(h)) \cap \stab(\consp(g)) \leq \stab(h) \cap
+  \spstab{g} = \stab_{\consp(g)}(h)$. It follows that $\consp(h) \cup \consp(g)$
+  supports $\stab_{\consp(g)}(h)$ and so, since $\vert \consp(h) \cup \consp(g)
+  \vert \leq 2k < \frac{n}{2}$, $\stab_{\consp(g)}(h)$ has small support and
+  $\consp_{\consp(g)}(h) \subseteq \consp(h) \cup \consp(g)$.
+
+  We also have that $\stab_{\consp(g)}(h) = \bigcap_{i \in
+    [r]}\stab_{\consp(g)}(a_i)$, and so by repeated application of
+  Lemma~\ref{lem:row-column-supports-well-behaved}, we have that
+  $\consp_{\consp(g)}(a) \subseteq \bigcup_{i \in [r]}\consp_{\consp(g)}(a_i) =
+  \consp_{\consp(g)}(h) \subseteq \consp(h) \cup \consp(g)$. We thus also have
+  that $\vert \consp_{\consp(g)}(a) \vert \leq 2k$.
+
+  Lastly, we note that $\stab_{\consp(g)}(a) \subseteq \stab_g(a)$, and so
+  $\stab_g(a)$ has small support and $\consp_g(a) = \subseteq
+  \consp_{\consp(g)}(a)$. The result follows.
+\end{proof}
+
+% We may apply Lemma \ref{lem:row-column-supports} in order to generalise
+% Corollary \ref{cor:constant-size-support}.
+
+% \begin{cor}
+%   \label{cor:constant-size-support-for-everything}
+%   Let $\mathcal{C} := (C_n)_{n \in \nats}$ be a polynomial-size family of
+%   symmetric circuits with unique labels and let $n_0$ be the constant from the
+%   support theorem. Then there exists $k$ such that for all $n > n_0$, $g$ a
+%   gate in $C_n$, and $a$ in the universe of $g$, $\vert \consp_{\consp(g)}(a)
+%   \vert \leq 2* \SP(C) \leq k$.
+% \end{cor}
 
 % Let $C_n$ be a rigid symmetric circuit with bijective labels. We now extend
 % the given action of $\sym_n$ on the gates of $C_n$ to the indexes. Let $g$ be
