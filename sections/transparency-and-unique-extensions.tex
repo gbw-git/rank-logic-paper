@@ -168,7 +168,7 @@ inclusion of the transparency restriction.
 
 
 % consider only symmetric circuits with symmetric gates, which are transparent,
-% and as such include no such condition.
+% and as such include no such condition
 
 
 % make use of an explicit condition on circuits we call \emph{transparency}. In
@@ -198,6 +198,7 @@ inclusion of the transparency restriction.
 %   discuss th\emph{rigid} if it has injective labels and for every pair of
 %   gates $(g, g')$ in $C_n$ such that $H_g = H_{g'}$ and $g \equiv g'$.
 % \end{definition}
+
 \subsection{The Usefulness of Transparency}
 In the this subsection we show that a number of important circuit properties are
 polynomial-time decidable for transparent circuits (e.g. symmetry, the
@@ -237,59 +238,236 @@ polynomial time for transparent circuits.
 \end{lem}
 \begin{proof}
   Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a transparent
-  $(\mathbb{B}, \rho)$-circuit of order $n$. We define a relation $\sim$ by
-  induction on height (i.e. distance from an input gate). This relation will be
-  the syntactic-equivalence relation on $G$. It is easy to check the conditions
-  for syntactic-equivalence for gates of height 0 as all such gates are input
-  gates and so are either constant gates or relational gates. Suppose $g$ and
-  $h$ are gates of height greater than zero. We only need to check conditions
-  (i), (iv) and (v) of syntactic-equivalence. It is easy to check (i) and (v).
-  If either condition is false then $g$ and $h$ are not syntacticly equivalent.
-  So suppose $g$ and $h$ are two internal gates such that $\Sigma (g) =
-  \Sigma(h)$ and suppose that if they are both output gates then $\Omega^{-1}(g)
-  = \Omega^{-1}(h)$. It remains to check if $L(g)/{\sim}$ and $L(h)/{\sim}$ are
-  isomorphism equivalent. First check if $H_h /{\sim} = H_g /{\sim}$. If not,
-  $g$ and $h$ are not syntactically equivalent. So suppose $H_h /{\sim} = H_g
-  /{\sim}$. If $g$ and $h$ are symmetric gates then $H_h /{\sim} = H_g/{\sim}$
-  if, and only if, $L(g)/{\sim}$ and $L(h)/{\sim}$ are isomorphism equivalent,
-  so let $g \sim h$. If $g$ and $h$ are not symmetric gates then, since $C$ is
-  transparent, $g$ and $h$ have unique labels. We thus have that $L(g)/{\sim}$
-  and $L(h)/{\sim}$ are isomorphism equivalent if, and only if, $L(g)^{-1}L(h)$
-  acts like an isomorphism. This can be checked by first checking that the
-  function induces a sorted permutation on the universe of $g$ (which can be
-  checked efficiently). This is sufficient as $L(g)(L(g)^{-1}L(h)) = L(h)$.
+  $(\mathbb{B}, \rho)$-circuit of order $n$. We define the syntactic-equivalence
+  relation on $G$ by induction on the height of a gate We note that this
+  definition can be implemented by a dynamic program.
+  
+  Suppose $g$ and $h$ are gates in $C$ such that $\Sigma (g) = \Sigma(h)$ and
+  either both $g$ and $h$ are output gates and $\Omega^{-1}(g) = \Omega^{-1}(h)$
+  or neither are output gates. Let $g$ and $h$ be input gates, then set $g
+  \equiv h$ if, and only if, both $g$ and $h$ are constant gates or both are
+  relational gates and $\Lambda(g) = \Lambda (h)$. Let $g$ and $h$ be internal
+  gates and suppose we have defined the syntactic-equivalence relation for all
+  gates of height less than the height of either $g$ or $h$. Then $g \equiv h$
+  if, and only if, $L(g)$ and $L(h)$ are isomorphism equivalent up to $\equiv$.
 
-  It is easy to see that, given a reasonable binary encoding of a circuit, the
-  above procedure can be implemented so as to run in polynomial time, and that
-  the relation $\sim$ is the syntactic-equivalence relation on the gates of $C$.
+  % Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a transparent
+  % $(\mathbb{B}, \rho)$-circuit of order $n$. We define the
+  % syntactic-equivalence
+  % relation on $G$ by induction on the height of a gate. We note that this
+  % definition can be implemented as a recursive algorithm.
+
+  % Suppose $g$ and $h$ are gates in $C$, and check if $\Sigma (g) = \Sigma(h)$
+  % and either both $g$ and $h$ are output gates and $\Omega^{-1}(g) =
+  % \Omega^{-1}(h)$ or neither are output gates. If this check fails, return
+  % that
+  % $g \not\equiv h$. Otherwise, check if $g$ and $h$ are input gates and, if
+  % so,
+  % set $g \equiv h$ if, and only if, both $g$ and $h$ are constant gates or
+  % both
+  % are relational gates and $\Lambda(g) = \Lambda (h)$. Check if $g$ and $h$
+  % are
+  % internal gates and, if so, set $g \equiv h$ if, and only if, $L(g)$ and
+  % $L(h)$
+  % are isomorphism equivalent up to $\equiv$. ()
+
+  The above algorithm can be implemented by a dynamic program with the number of
+  iterations bounded by the number of pairs of gates in $C$, i.e. $\vert C
+  \vert$ choose $2$. It remains to show that each iterative step can be
+  implemented so as to run in time polynomial in the size of $C$. The only
+  condition that is not obviously polynomial-time decidable is checking if
+  $L(g)$ is isomorphism-equivalent to $L(h)$ up to $\equiv$. We sketch an
+  algorithm that decides this condition in time polynomial in the size of the
+  circuit.
+  
+  Let $g$ and $h$ be two internal gates in $C$ and suppose we have defined the
+  syntactic-equivalence relation for all gates of height less than the height of
+  either $g$ or $h$. We test if for each gate in $g' \in H_g$, there exists
+  $h_{g'} \in H_h$ such that $g' \equiv h_{g'}$ and $\vert \{g'' \in H_g : g''
+  \equiv g'\} \vert = \vert \{h'' \in H_h : h'' \equiv h'\}$. If this test
+  fails, we set $g \not\equiv h$.
+
+  We then check if both $g$ and $h$ are symmetric gates or if both are
+  non-symmetric gates. Suppose both $g$ and $h$ are symmetric gates. We have
+  that $L(g)$ is isomorphism-equivalent to $L(h)$ up to $\equiv$ if, and only
+  if, there exists a bijection $f : H_g \rightarrow H_h$ such that $f(g') \equiv
+  g'$, for all $g' \in H_g$ if, and only if, for each gate in $g' \in H_g$,
+  there exists $h' \in H_h$ such that $g' \equiv h'$ and $\vert \{g'' \in H_g :
+  g'' \equiv g'\} \vert = \vert \{h'' \in H_h : h'' \equiv h'\}$. Since we have
+  already checked this condition we set $g \equiv h$.
+
+  Suppose $g$ and $h$ are non-symmetric gates. Then, since $C$ is transparent,
+  both $g$ and $h$ have unique labels. We thus have that for each $g' \in H_g$
+  there is exactly one $h_{g'} \in H_h$ such that $g' \equiv h_{g'}$, and so we
+  can define the bijection $f : H_g \rightarrow H_h$ by $f(g') := h_{g'}$ for
+  all $g' \in H_g$. It can be shown that $L(g)$ is isomorphism-equivalent to
+  $L(h)$ up to $\equiv$ if, and only if, $f \circ L(g)$ is
+  isomorphism-equivalent to $L(h)$ if, and only if, $L(h)^{-1} f L(g)$ acts on
+  $\ind (g)$ like an element of $\aut(g)$. We have from
+  Lemma~\ref{lem:aut-partial} that $\sigma := L(h)^{-1} f L(g)$ acts like an
+  element of $\aut(g)$ if, and only if, for all $\vec{a}_R, \vec{b}_{R'} \in \ind(g)$,
+  $\sigma$ acts like a partial automorphism on $(\vec{a}_R, \vec{b}_{R'})$. We
+  thus conduct the test by iterating through every pair $(\vec{a}_R,
+  \vec{b}_{R'}) \in \ind(g)$, and set $g \equiv h$ if, and only if, $\sigma$
+  acts like a partial automorphism on every such pair.
+
+
+  % for all $\vec{a}_R \in \ind(g)$, $\sigma \vec{a}_R$ has type $R$, and for all
+  % $\vec{b}_{R'}$, $i \in [\arty(R)]$, and $j \in [\arty(R')]$ we have that
+  % $\vec{a}(i) = \vec{b}(j)$ if, and only if, $(\sigma \vec{a}_R)(i) = (\sigma
+  % \vec{b}_R)(j)$. Since $\vert \ind(g) \vert \leq \vert C \vert$, we can check
+  % if $\sigma$ acts like an element of $\aut(g)$ by iterating through $\ind(g)$
+  % and checking each tuple satisfies the above conditions. We set $g \equiv h$
+  % if, and only if, $\sigma$ acts like an element of $\aut(g)$.
+
+  % This relation will be the syntactic-equivalence relation on $G$.
+
+  % Let $g, h \in G$. Suppose $g$ and $h$ are input gates, then $g \sim h$ if,
+  % and only if, $\Sigma (g) = \Sigma (h)$,
+  % \item if $g$ and $h$ are relational gates then $\Lambda (g) = \Lambda (h)$,
+  % \item either both or neither of $g$ and $h$ are output gates, and
+  % \item if both $g$ and $h$ are output gates then $\Omega^{-1}(g) =
+  %   \Omega^{-1}(h)$.
+  % \end{itemize}
+  % \setlength\itemsep{0mm} Suppose $g$ and $h$ are internal gates, and suppose
+  % we have defined $\sim$ for all gates of height less than either $g$ or $h$.
+  % Then $g \sim h$ if, and only if,
+  % \begin{itemize}
+  % \item $\Sigma (g) = \Sigma (h)$,
+  % \item either both or neither of $g$ and $h$ are output gates,
+  % \item if both $g$ and $h$ are output gates then $\Omega^{-1}(g) =
+  %   \Omega^{-1}(h)$, and
+  % \item $L (g)$ is isomorphism-equivalent to $L(h)$ up to $\sim$.
+  % \end{itemize}
+
+  % The above inductive definition can be implemented as a recursive algorithm
+  % with the number of recursive steps bounded by the number of pairs of gates
+  % in
+  % $C$, i.e. $\vert C \vert$ choose $2$. It remains to show that each recursive
+  % call can be implemented so as to run in time polynomial in the size of $C$.
+  % It
+  % is easy to see that we can check if a pair of input gates are
+  % syntactically-equivalent in time polynomial in the size of $C$. The only
+  % condition that is not obviously polynomial-time decidable is checking if
+  % $L(g)$ is isomorphism-equivalent to $L(h)$ up to $\sim$. We sketch an
+  % algorithm for deciding this condition for two internal gates.
+
+  % Let $g$ and $h$ be two internal gates in $C$. We first check if both $g$ and
+  % $h$ are symmetric gates or non-symmetric gates. Suppose both $g$ and $h$ are
+  % symmetric gates. It can be shown that $L(g)$ is isomorphism-equivalent to
+  % $L(h)$ up to $\sim$ if, and only if, there exists a bijection $f : H_g
+  % \rightarrow H_h$ such that $f(g') \sim g'$, for all $g' \in H_g$ if, and
+  % only
+  % if, for each gate in $g' \in H_g$, there exists $h' \in H_h$ such that $g'
+  % \sim h'$ and $\vert [g']_{\sim}\cap H_g \vert = \vert [h']_{\sim} \cap H_h$.
+  % It is easy to see that this last condition can be checked in polynomial
+  % time,
+  % and so we can check if $g \sim h$ in polynomial-time.
+
+  % Suppose $g$ and $h$ are non-symmetric gates. Then, since $C$ is transparent,
+  % $g$ and $h$ have unique labels. First check if there exists for each $g' \in
+  % H_g$ a gate $h_{g'} \in H_h$ such that $g' \sim h_{g'}$. If there exists
+  % $g'$
+  % such that no corresponding $h_{g'}$ exists, then we return that $g \not\sim
+  % h$. Since $g$ and $h$ have unique labels for each $g' \in H_g$ there is at
+  % most one $h_{g'} \in H_h$, and so we can define $f : H_g \rightarrow H_h$ by
+  % $f(g') := h_{g'}$ for all $g' \in H_g$. We note that there exists $\sigma
+  % \in
+  % aut(g)$ such that $f(L(g)(\vec{a}_R)) \sim L(h)(\sigma \vec{a}_R)$ for all
+  % $\vec{a}$, if and only if, $L(h)^{-1} f L(g)$ is compatible with every pair
+  % $(h', h'') \in H^2_h$.
+
+  
+  % If this algorthm terminates and $f$ is constructed then we have that $L(g)$
+  % is
+  % isomorphism-equivalent to $L(h)$ up to $\sim$ and if this Suppose both $g$
+  % and
+  % $h$ are non-symmetric gates. Then both have unique labels, and so there is
+  % exactly
+
+
+
+  
+  % Suppose $g$ is a symmetric gate. We then have that $L(g)$ is
+  % isomorphism-equivalent to $L(h)$
+
+  
+
+  % It easy to see that for any pair of input gates we can check $g \sim h$ in
+  % polynomial time. If $\Sigma (g) \neq \Sigma (h)$ then set $g \not\sim h$. If
+  % exactly one of the two gates is an output gate then set $g \not\sim h$. If
+  % both $g$ and $h$ are output gates and $\Omega^{-1}(g) \neq \Omega^{-1}(h)$,
+  % then set $g \not\sim h$. If $g$ and $h$ are both relational gates and
+  % $\Lambda
+  % (g) \neq \Lambda (h)$ then set $g \not\sim h$.
+
+  % We have thus far handled the base case.
+
+  % If $g$ and $h$ are not both internal gates or both not input gates then set
+  % $g
+  % \not\sim h$. If $g$ and $h$ are both
+
+  
+  % is easy to check the conditions for syntactic-equivalence for gates of
+  % height
+  % 0 as all such gates are input gates and so are either constant gates or
+  % relational gates. Suppose $g$ and $h$ are gates of height greater than zero.
+  % We only need to check conditions (i), (iv) and (v) of syntactic-equivalence.
+  % It is easy to check (i) and (v). If either condition is false then $g$ and
+  % $h$
+  % are not syntacticly equivalent. So suppose $g$ and $h$ are two internal
+  % gates
+  % such that $\Sigma (g) = \Sigma(h)$ and suppose that if they are both output
+  % gates then $\Omega^{-1}(g) = \Omega^{-1}(h)$. It remains to check if
+  % $L(g)/{\sim}$ and $L(h)/{\sim}$ are isomorphism equivalent. First check if
+  % $H_h /{\sim} = H_g /{\sim}$. If not, $g$ and $h$ are not syntactically
+  % equivalent. So suppose $H_h /{\sim} = H_g /{\sim}$. If $g$ and $h$ are
+  % symmetric gates then $H_h /{\sim} = H_g/{\sim}$ if, and only if,
+  % $L(g)/{\sim}$
+  % and $L(h)/{\sim}$ are isomorphism equivalent, so let $g \sim h$. If $g$ and
+  % $h$ are not symmetric gates then, since $C$ is transparent, $g$ and $h$ have
+  % unique labels. We thus have that $L(g)/{\sim}$ and $L(h)/{\sim}$ are
+  % isomorphism equivalent if, and only if, $L(g)^{-1}L(h)$ acts like an
+  % isomorphism. This can be checked by first checking that the function induces
+  % a
+  % sorted permutation on the universe of $g$ (which can be checked
+  % efficiently).
+  % This is sufficient as $L(g)(L(g)^{-1}L(h)) = L(h)$.
+
+  % It is easy to see that, given a reasonable binary encoding of a circuit, the
+  % above procedure can be implemented so as to run in polynomial time, and that
+  % the relation $\sim$ is the syntactic-equivalence relation on the gates of
+  % $C$.
   
   
   % Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a transparent
   % $(\mathbb{B}, \rho)$-circuit of order $n$. We define a relation $\sim$ by
-  % induction on height (i.e. distance from an input gate). This relation will be
-  % the syntactic-equivalence relation on $G$. It is easy to check the conditions
-  % for syntactic-equivalence for gates of height 0 as all such gates are input
-  % gates and so are either constant gates or relational gates. Suppose $g$ and
-  % $h$ are gates of height greater than zero. We only need to check conditions
-  % (i), (iv) and (v) of syntactic-equivalence. It is easy to check (i) and (v).
-  % If either condition is false then $g$ and $h$ are not syntacticly equivalent.
-  % So suppose $g$ and $h$ are two internal gates such that $\Sigma (g) =
-  % \Sigma(h)$ and suppose that if they are both output gates then $\Omega^{-1}(g)
-  % = \Omega^{-1}(h)$. It remains to check if $L(g)/{\sim}$ and $L(h)/{\sim}$ are
-  % isomorphism equivalent. First check if $H_h /{\sim} = H_g /{\sim}$. If not,
-  % $g$ and $h$ are not syntactically equivalent. So suppose $H_h /{\sim} = H_g
-  % /{\sim}$. If $g$ and $h$ are symmetric gates then $H_h /{\sim} = H_g/{\sim}$
-  % if, and only if, $L(g)/{\sim}$ and $L(h)/{\sim}$ are isomorphism equivalent,
-  % so let $g \sim h$. If $g$ and $h$ are not symmetric gates then, since $C$ is
-  % transparent, $g$ and $h$ have unique labels. We thus have that $L(g)/{\sim}$
-  % and $L(h)/{\sim}$ are isomorphism equivalent if, and only if, $L(g)^{-1}L(h)$
-  % acts like an isomorphism. This can be checked by first checking that the
-  % function induces a sorted permutation on the universe of $g$ (which can be
-  % checked efficiently). This is sufficient as $L(g)(L(g)^{-1}L(h)) = L(h)$.
+  % induction on height (i.e. distance from an input gate). This relation will
+  % be the syntactic-equivalence relation on $G$. It is easy to check the
+  % conditions for syntactic-equivalence for gates of height 0 as all such gates
+  % are input gates and so are either constant gates or relational gates.
+  % Suppose $g$ and $h$ are gates of height greater than zero. We only need to
+  % check conditions (i), (iv) and (v) of syntactic-equivalence. It is easy to
+  % check (i) and (v). If either condition is false then $g$ and $h$ are not
+  % syntacticly equivalent. So suppose $g$ and $h$ are two internal gates such
+  % that $\Sigma (g) = \Sigma(h)$ and suppose that if they are both output gates
+  % then $\Omega^{-1}(g) = \Omega^{-1}(h)$. It remains to check if $L(g)/{\sim}$
+  % and $L(h)/{\sim}$ are isomorphism equivalent. First check if $H_h /{\sim} =
+  % H_g /{\sim}$. If not, $g$ and $h$ are not syntactically equivalent. So
+  % suppose $H_h /{\sim} = H_g /{\sim}$. If $g$ and $h$ are symmetric gates then
+  % $H_h /{\sim} = H_g/{\sim}$ if, and only if, $L(g)/{\sim}$ and $L(h)/{\sim}$
+  % are isomorphism equivalent, so let $g \sim h$. If $g$ and $h$ are not
+  % symmetric gates then, since $C$ is transparent, $g$ and $h$ have unique
+  % labels. We thus have that $L(g)/{\sim}$ and $L(h)/{\sim}$ are isomorphism
+  % equivalent if, and only if, $L(g)^{-1}L(h)$ acts like an isomorphism. This
+  % can be checked by first checking that the function induces a sorted
+  % permutation on the universe of $g$ (which can be checked efficiently). This
+  % is sufficient as $L(g)(L(g)^{-1}L(h)) = L(h)$.
 
   % It is easy to see that, given a reasonable binary encoding of a circuit, the
   % above procedure can be implemented so as to run in polynomial time, and that
-  % the relation $\sim$ is the syntactic-equivalence relation on the gates of $C$.
+  % the relation $\sim$ is the syntactic-equivalence relation on the gates of
+  % $C$.
  
 \end{proof}
 
@@ -895,10 +1073,10 @@ deciding if a gate has unique labels.
   removing every gate $g \in G \setminus\{g_1, g_2\}$ such that $\neg W_t(g,
   g_1) \land \neg W_t(g, g_2)$, where $W_t$ is the transitive closure of the $W$
   relation (i.e. we move all those gates in the circuit such that there is no
-  path from the gate to either $g_1$ or $g_2$). Let $C'$ be the circuit formed from $D$ by adding in a
-  single two-input $\AND$ gate $g'$ and connecting the outputs of $g_1$ and
-  $g_2$ to the inputs of $g'$. Moreover, we let this $g'$ be the single output
-  gate of $C'$.
+  path from the gate to either $g_1$ or $g_2$). Let $C'$ be the circuit formed
+  from $D$ by adding in a single two-input $\AND$ gate $g'$ and connecting the
+  outputs of $g_1$ and $g_2$ to the inputs of $g'$. Moreover, we let this $g'$
+  be the single output gate of $C'$.
 
   It follows that $g_1$ and $g_2$ are syntactically-equivalent in $C$ if, and
   only if, $g'$ has unique labels in $C'$. Since the construction of $C'$ from

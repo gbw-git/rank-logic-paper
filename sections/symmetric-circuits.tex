@@ -202,15 +202,15 @@ is \emph{matrix-invariant}. In this subsection we develop a general framework
 for dealing with functions that take in structures.
 
 % AD - rewrote the paragraph to reduce the use of subscripts and superscripts.
-Let $\tau := (R, S, \nu)$ be a many-sorted vocabulary. Let $D := \biguplus_{s \in
-  S} D_{s} = \{(s,d) : d \in D_s\}$, be a disjoint union of non-empty sets,
+Let $\tau := (R, S, \nu)$ be a many-sorted vocabulary. Let $D := \biguplus_{s
+  \in S} D_{s} = \{(s,d) : d \in D_s\}$, be a disjoint union of non-empty sets,
 indexed by $S$. For $R_i \in R$ let $R^D_i$ denote the trivial relation over the
 many-sorted universe $D$, i.e.\ $R^D_i := D_{a_1} \times \ldots \times
 D_{a_{r}}$, where $\nu(R_i) = (a_1, \ldots , a_{r)})$. There is an obvious
-interpretation of $\tau$ over $D$ given by assigning each sort symbol in $\tau$
-in the obvious manner and each relation symbol in $\tau$ to the trivial relation
-over $D$. We call this \emph{the structure defined by $(\tau, D)$}, and denote
-it by $\str{\tau, D}$.
+interpretation of $\tau$ over $D$ given by assigning each sort symbol $s$ in
+$\tau$ to the set $D_s$ and each relation symbol in $\tau$ to the trivial
+relation over $D$. We call this \emph{the structure defined by $(\tau, D)$}, and
+denote it by $\str{\tau, D}$.
 
 The idea is to use the tuples in the relations of this structure as an index
 set, and with the automorphisms of this structure defining a group action. Let
@@ -220,10 +220,10 @@ often use this set to index the input to a Boolean function, and as such we
 denote the index defined by $(\tau, D)$ by $\ind(\tau, D)$, and call $\tau$ the
 vocabulary and $D$ the universe of $\ind(\tau, D)$.
 
-We abbreviate $(\vec{a}, R) \in \ind(\tau, D)$ by $\vec{a}_R$, and refer
-to $R$ as \emph{the type} of $\vec{a}_R$. We often abuse notation and treat
-$\vec{a}_R$ as the tuple $\vec{a}$ in $R^D$. In the event that there is only one
-relational symbol in $\tau$ we identify $\vec{a}_R$ with $\vec{a}$. 
+We abbreviate $(\vec{a}, R) \in \ind(\tau, D)$ by $\vec{a}_R$, and refer to $R$
+as the \emph{tag} of $\vec{a}_R$. We often abuse notation and treat $\vec{a}_R$
+as the tuple $\vec{a}$ in $R^D$. In the event that there is only one relational
+symbol in $\tau$ we identify $\vec{a}_R$ with $\vec{a}$.
 
 % Although we often use the convention of identifying the elements of the
 % disjoint union with the elements of the sets from which the union was formed
@@ -235,16 +235,18 @@ relational symbol in $\tau$ we identify $\vec{a}_R$ with $\vec{a}$.
 
 % GW: move sorted permutations into the background section
 For the remainder of this subsection we fix a vocabulary $\tau$ and a
-many-sorted set $D := \biguplus_{s \in S} D_{s}$, let $X := \ind (\tau, D)$ and $G \leq \sym_{X}$.
-There is an obvious action of $G$ on $X$. There is also an action of the
-automorphism group $\str{\tau, D}$ on $X$ defined for the automorphism $\sigma$
-by $\sigma \cdot \vec{a}_R := (\sigma \vec{a})_R$. We denote the group of
-automorphisms of $\str{\tau, D}$ by $\aut(\tau, D)$, and identify it with the
-subgroup of $\sym_X$ that acts equivalently on $X$.
+many-sorted set $D := \biguplus_{s \in S} D_{s}$. Let $X := \ind (\tau, D)$ and
+$G \leq \sym_{X}$. We note that $G$ there is an obvious group action of $G$ on
+$X$. Let $\aut (\tau, D)$ be the automorphism group of $\str{\tau, D}$. We
+define a group action of $\aut (\tau, D)$ on $X$ for $\sigma \in \aut(\tau, D)$
+by $\sigma \cdot \vec{a}_R := (\sigma \vec{a})_R$, for all $\vec{a}_R \in X$. We
+identify $\aut(\tau, D)$ with the subgroup of $\sym_X$ that acts equivalently on
+$X$.
 
-We can extend the action of $G$ on $X$ to an action on the set of functions of
-the form $f: X \rightarrow H$, for any set $H$, defined by $\sigma \cdot f(x) :=
-f(\sigma \cdot x)$ for all $x \in X$, $\sigma \in G$.
+We can extend the action of $G$ on $X$ to a right group action on the set of
+functions of the form $f: X \rightarrow H$, for any set $H$, defined by $(f \cdot
+\sigma)(x) := f(\sigma x)$ for all $x \in X$, $\sigma \in G$.
+
 
 % and let $\sortsym_D := \prod_{s \in S} \sym_{D_{s}}$. We call the elements of
 % $\sortsym_D$ \emph{sorted permutations}. Note that $\sortsym(D)$ can be
@@ -256,22 +258,21 @@ f(\sigma \cdot x)$ for all $x \in X$, $\sigma \in G$.
 
 We say that two functions $f: \ind(\tau, D) \rightarrow H$ and $g: \ind(\tau,
 D') \rightarrow H$ are \emph{isomorphism-equivalent} if there exists an
-isomorphism $\pi :\str{\tau, D} \rightarrow \str{\tau, D'}$ such that $f (\vec{a}_R) =
-g (\pi \vec{a}_R)$ for all $\vec{a}_R \in \ind(\tau, D)$. It is easy to see that
-isomorphism-equivalence is an equivalence relation.
+isomorphism $\pi :\str{\tau, D} \rightarrow \str{\tau, D'}$ such that
+$f(\vec{a}_R) = g(\pi \vec{a}_R)$ for all $\vec{a}_R \in \ind(\tau, D)$. It is
+easy to see that isomorphism-equivalence is an equivalence relation.
 
 We are often interested in the case where $X = \ind(\tau, D) = \ind(\tau, D')$.
 We say that $f, g: X \rightarrow H$ are \emph{$G$-equivalent} if there exists
-$\sigma \in G$ such that $f = \sigma \cdot g$. We note that in this case $f$ and
-$g$ are isomorphism-equivalent if, and only if, they are $\aut(\tau,
-D)$-equivalent.
+$\sigma \in G$ such that $f = g \sigma$. We note that in this case $f$ and $g$
+are isomorphism-equivalent if, and only if, they are $\aut(\tau, D)$-equivalent.
 
-In this paper we will often take the co-domain $H$ to be $\{0,1\}$, and so $f :
-X \rightarrow \{0,1\}$. In this case we may think of $f$ as defining for each
-relation $R^D_i$ a subset of that relation, and so determining a
-$\tau$-structure over the universe $D$. We note that two functions $f, g: X
-\rightarrow \{0,1\}$ are isomorphism-equivalent if, and only if, the two
-$\tau$-structures they determine are isomorphic.
+In this paper we will often take the co-domain to be $\{0,1\}$, and so have a
+function of the form $f : X \rightarrow \{0,1\}$. In this case we may think of
+$f$ as defining for each relation $R^D_i$ a subset of that relation, and thus
+determining a $\tau$-structure over the universe $D$. We note that two functions
+$f, g: X \rightarrow \{0,1\}$ are isomorphism-equivalent if, and only if, the
+two $\tau$-structures they determine are isomorphic.
 
 We call a function of the form $F:\{0,1\}^{X} \rightarrow \{0,1\}$ a
 \emph{$(\tau, D)$-structured function}, or just a \emph{structured function}
@@ -322,36 +323,35 @@ At the beginning of this subsection we defined three Boolean functions with
 differently indexed inputs and corresponding symmetry conditions. We now look at
 how these functions might be thought of as structured functions, and how the
 symmetry conditions we discussed are naturally reproduced. Suppose $\tau$ is
-single-sorted and consists of a single unary relation symbol. Then any structured
-function $F$ with vocabulary $\tau$ is isomorphism-invariant if, and only if, it
-is symmetric. If instead the vocabulary of $F$ is the graph vocabulary, then $F$
-is isomorphism-invariant if, and only if, $F$ decides a property of directed
-graphs. Lastly, if the vocabulary of $F$ has just two sorts $(s_1, s_2)$ and one
-binary relation with type $(s_1, s_2)$, then $F$ is isomorphism-invariant if,
-and only if, it is matrix-invariant.
+single-sorted and consists of a single unary relation symbol. Then any
+structured function $F$ with vocabulary $\tau$ is isomorphism-invariant if, and
+only if, it is symmetric. If instead the vocabulary of $F$ is the graph
+vocabulary, then $F$ is isomorphism-invariant if, and only if, $F$ decides a
+property of directed graphs. Lastly, if the vocabulary of $F$ has just two sorts
+$(s_1, s_2)$ and one binary relation with type $(s_1, s_2)$, then $F$ is
+isomorphism-invariant if, and only if, it is matrix-invariant.
 
 In each case a natural choice of $\tau$ (and $D$) indexes the input to the
 structured function appropriately and produces the appropriate symmetry
 condition. It is worth mentioning that the graph-invariant case is not strictly
-reproduced using structured functions. This is because structured functions
-index the input string using the elements of the relations of the complete
-$\tau$-structure (in this case, edges in the complete graph). As such, the input
-string is indexed by ordered pairs of elements, rather than two-element
-subsets, and as such the symmetry condition on the relation is not enforced. As
-such, in the structured function case the function decides properties of
-directed graphs, rather than ordinary graphs. We should note, however, that the symmetry
-of the edge relation is a property of directed-graph, and as such can be decided
-by an isomorphism-invariant structured function over the graph vocabulary.
+reproduced using structured functions. This is because in the structured
+function case the input string is indexed by all possible elements of the binary
+relation (i.e. all ordered pairs over the universe). As such, the input string
+of the structured function may encode any structure over the universe with a
+single binary relation, i.e. a directed graph. In contrast, the graph-invariant
+function discussed at the beginning of this subsection indexes the input string
+using two element subsets of the universe, rather pairs of elements, an encoding
+that naturally enforces the symmetry and irreflexivity properties the edge
+relation. We should note, however, that symmetry and irreflexivity are
+properties of directed-graph, and as such can be decided by an
+isomorphism-invariant structured function over the graph vocabulary.
 
-% , and any
-% input sequence encodes a sub-relation of that complete relation. As such, the
-% function  This is because in the event that $\tau := {E}$ (where $E$ is
-% a binary relation, thought of as the edge relation) there is no assurance that
-% the function $f : \ind
-% (\tau, D) \rightarrow \{0,1\}$ is encoding
+% , and any input sequence encodes a sub-relation of that complete relation. As
+% such, the function This is because in the event that $\tau := {E}$ (where $E$
+% is a binary relation, thought of as the edge relation) there is no assurance
+% that the function $f : \ind (\tau, D) \rightarrow \{0,1\}$ is encoding
 
-% as the structured functions are rather defined over directed
-% graphs.
+% as the structured functions are rather defined over directed graphs.
 
 From the above observations, we may think of symmetric functions as
 isomorphism-invariant structured functions over the single-sorted vocabulary
@@ -368,7 +368,7 @@ without a loss of generality, we assume that the universe of any structured
 function is always a disjoint union of initial segments of the natural numbers,
 i.e.\ if $F$ is structured function with universe $D_{s_1} \uplus \ldots \uplus
 D_{s_p}$, then for all $s \in \{s_1 , \ldots , s_p\}$ there exists $d_s \in
-\nats{N}$ such that $D_{s} = [d_s]$. We also assume that every $(\tau,
+\nats$ such that $D_{s} = [d_s]$. We also assume that every $(\tau,
 D)$-structured function has the property that every $a \in D$ appears in at
 least one element of $\ind(\tau, D)$.
 
@@ -438,7 +438,7 @@ non-symmetric functions.
 % \in \mathbb{N}$.
 
 
-We now define a \emph{$(\mathbb{B}, \rho)$-circuit} . This is a circuit that
+We now define a \emph{$(\mathbb{B}, \rho)$-circuit}. This is a circuit that
 computes a function on structures in the relational vocabulary $\rho$ and where
 the gates are labelled by elements of the basis $\mathbb{B}$ consisting of
 structured functions. Note that, in the interests of keeping our definitions
@@ -511,20 +511,20 @@ functions over multi-sorted vocabularies.
 
 Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
 \rho)$-circuit of order $n$. The order of a circuit denotes the fact that it
-takes as input structures of size $n$. We often consider families of circuits of
-the form $(C_n)_{n \in \nats}$, and here we assume that each $C_n$ is a circuit
-of order $n$. For a gate $g \in C$, we define the \emph{index} of $g$, denoted
-by $\ind(g)$, as $\ind(\Sigma(g))$. We define the relation $W \subseteq G^2$ by
-$W(h,g)$ if, and only if, $h \in \range(L(g))$. For each $g \in G$ we let
-$W(\cdot, g) := \{h \in G : W(h,g)\}$ and $W(g, \cdot) := \{h \in G : W(g,h)\}$.
-We call the elements of $W(\cdot, g)$ the \emph{children} of $g$ and the
-elements of $W(g, \cdot)$ the \emph{parents} of $g$. We also abbreviate $W(g,
-\cdot)$ by $H_g$.
+takes as input structures of size $n$. If $(C_n)_{n \in \nats}$ is a family of
+circuits we assume that each $C_n$ is a circuit of order $n$.
+
+For a gate $g \in C$, we let the \emph{index} of $g$, denoted by $\ind(g)$, be
+$\ind(\Sigma(g))$. We define the relation $W \subseteq G^2$ by $W(h,g)$ if, and
+only if, $h \in \img(L(g))$. For each $g \in G$ we let $W(\cdot, g) := \{h \in G
+: W(h,g)\}$ and $W(g, \cdot) := \{h \in G : W(g,h)\}$. We call the elements of
+$W(\cdot, g)$ the \emph{children} of $g$ and the elements of $W(g, \cdot)$ the
+\emph{parents} of $g$. We also abbreviate $W(g, \cdot)$ by $H_g$.
 
 We let the vocabulary and universe of $g$ be the vocabulary and universe of
 $\Sigma(g)$, respectively, and denote the vocabulary of $g$ by $\vocab{g}$ and
-the universe by $\universe{g}$. We also let $\aut(g) := \aut(\vocab{g}, \universe{g})$ and
-$\str{g} := \str{\vocab{g}, \universe{g}}$.
+the universe by $\universe{g}$. We also let $\aut(g) := \aut(\vocab{g},
+\universe{g})$ and $\str{g} := \str{\vocab{g}, \universe{g}}$.
 
 % It is worth noting that in general computing the syntactic equivalence
 % relation in polynomial time may not be possible. In fact, given two bipartite
@@ -638,8 +638,9 @@ paper.
   so define a bijection. Moreover, we notice that for all $\sigma \in \sym_n$ we
   have that $f_{\sigma \mathcal{B}}(\vec{a}_R) = 1$ if, and only if, $\vec{a}
   \in R^{\sigma \mathcal{B}}$ if, and only if, $\sigma^{-1} \vec{a} \in
-  R^{\mathcal{B}}$ if, and only if, $\sigma ^{-1} f_{\mathcal{B}}(\vec{a}_R) =
-  f_{\mathcal{B}}(\sigma^{-1} \vec{a}_R)= 1$.
+  R^{\mathcal{B}}$ if, and only if, $(f_{\mathcal{B}} \sigma^{-1})(\vec{a}_R) =
+  f_{\mathcal{B}}(\sigma^{-1} \vec{a}_R)= 1$. It follows $f_{\sigma \mathcal{B}}
+  = f_{\mathcal{B}} \sigma^{-1}$.
 
   Let $\mathcal{A}$ be a $\rho$-structure of size $n$ over the universe $U$, and
   let $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$. From the definition of $F_C$
@@ -651,23 +652,23 @@ paper.
   \begin{align*}
     C[\gamma_1 \mathcal{A}](g_{\text{o}}) = C[\gamma_2 \mathcal{A}](g_{\text{o}}) & \Leftrightarrow  F_C(f_{\gamma_1 \mathcal{A}}) = F_C (f_{\gamma_2 \mathcal{A}}) \\
                                                                                   & \Leftrightarrow F_C(f_{\gamma_1 \mathcal{A}}) = F_C (f_{\sigma^{-1}\gamma_1 \mathcal{A}}) \\
-                                                                                  & \Leftrightarrow F_C(f_{\gamma_1 \mathcal{A}}) = F_C (\sigma f_{\gamma_1 \mathcal{A}}).
+                                                                                  & \Leftrightarrow F_C(f_{\gamma_1 \mathcal{A}}) = F_C ( f_{\gamma_1 \mathcal{A}} \sigma).
   \end{align*}
 
   We now combine the above observations to prove the result. Suppose $F_C$ is
   isomorphism-invariant. Let $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$ and
   let $\sigma \in \sym_n$ be such that $\gamma_1 = \sigma \gamma_2$. Then, from
-  isomorphism-invariance, we have $F_C(f_{\gamma_1 \mathcal{A}}) = F_C (\sigma
-  f_{\gamma_1 \mathcal{A}})$, and so $C[\gamma_1 \mathcal{A}](g_{\text{o}}) =
-  C[\gamma_2 \mathcal{A}](g_{\text{o}})$.
+  isomorphism-invariance, we have $F_C(f_{\gamma_1 \mathcal{A}}) = F_C (
+  f_{\gamma_1 \mathcal{A}}\sigma)$, and so $C[\gamma_1
+  \mathcal{A}](g_{\text{o}}) = C[\gamma_2 \mathcal{A}](g_{\text{o}})$.
   
-  Suppose $C$ is invariant. Fix the bijection $\gamma_1 \in
-  [n]^{\underline{U}}$. Let $\sigma \in \sym_n$ and $f: \ind(\rho, [n])
-  \rightarrow \{0,1\}$. Let $\mathcal{A} = \gamma^{-1}_1 \mathcal{B}_f$ and
-  $\gamma_2 := \sigma^{-1}\gamma_1 $. Since $C$ is invariant we have $C[\gamma_1
+  Suppose $C$ is invariant. Fix a bijection $\gamma_1 \in [n]^{\underline{U}}$.
+  Let $\sigma \in \sym_n$ and $f: \ind(\rho, [n]) \rightarrow \{0,1\}$. Let
+  $\mathcal{A} = \gamma^{-1}_1 \mathcal{B}_f$ and $\gamma_2 :=
+  \sigma^{-1}\gamma_1 $. Since $C$ is invariant we have $C[\gamma_1
   \mathcal{A}](g_{\text{o}}) = C[\gamma_2\mathcal{A}](g_{\text{o}})$, and so
-  $F_C (\sigma f_{\gamma_1 \mathcal{A}}) = F_C(f_{\gamma_1 \mathcal{A}})$. But
-  $f_{\gamma_1 \mathcal{A}} = f_{\mathcal{B}_f} = f$, and so $F_C (\sigma f) =
+  $F_C (f_{\gamma_1 \mathcal{A}} \sigma) = F_C(f_{\gamma_1 \mathcal{A}})$. But
+  $f_{\gamma_1 \mathcal{A}} = f_{\mathcal{B}_f} = f$, and so $F_C (f \sigma) =
   F_C (f)$. It follows that $F_C$ is isomorphism-invariant.
 
 
@@ -750,7 +751,7 @@ permutation in $\sym_n$ extends to an automorphism of the circuit.
 \end{definition}
 
 It follows that for any symmetric circuit $C$ of order $n$ there is a
-homomorphism $h$ that maps $\sym_n$ to $\aut(C)$, taking any $\sigma \in \sym_n$
+homomorphism $h$ that maps $\sym_n$ to $\aut(C)$ that takes $\sigma \in \sym_n$
 to an automorphism that extends it. Suppose $C$ contains no relational gates of
 non-zero arity. In that case $C$ computes a constant function. As such, in this
 paper we always assume a circuit contains at least one relational gate with
@@ -786,64 +787,27 @@ to be rigid (and hence have unique extensions) without a loss of generality.
 % In this paper we establish an approximately analogous argument
 
 Anderson and Dawar's argument makes use of the fact that many important circuit
-properties are polynomial-time decidable for circuits defined over a symmetric
-bases. We show in Section~\label{sec:transparency-and-unique-extension} that for
-circuits that include gates computing non-symmetric functions most of these
+properties are polynomial-time decidable for circuits defined over symmetric
+bases. While we should like to construct an analogous argument, we show in
+Section~\ref{sec:transparency-and-unique-extension} that for circuits that
+include gates computing non-symmetric functions most of these important circuit
 properties are at least as hard to decide as the graph-isomorphism problem. As
-such, constructing an analogous translation, as well as establishing the many
-other results that rely on certain properties being polynomial-time decidable,
-would be highly non-trivial.
+such, constructing an analogous translation, as well as establishing the
+numerous other needed results whose proofs rely on certain properties being
+polynomial-time decidable, would be non-trivial.
 
-In order to deal with this problem we limit the ways in which gates computing
-non-symmetric functions can be wired into the circuit and we show in
-Section~\label{sec:transparency-and-unique-extensions} that this limitation is
-sufficient for our purposes.
+In order to proceed we will restrict ourselves to circuits with certain
+constraints on how those gates computing non-symmetric functions can be wired
+into the circuit. We call these circuits \emph{transparent} circuits. We show in
+Sections~\ref{sec:transparency-and-unique-extensions} and~\ref{} that
+transparency is sufficient to allow for the polynomial-time decidability of many
+important circuit properties, while still keeping the circuit model powerful
+enough for us to establish a translation from formulas to families of circuits.
 
-% ourselves to circuits in which those gates that compute non-symmetric
-% functions
-
-
-% While we should like to establish an analogous polynomial-time computable
-% translation from a general circuit to a equivalent circuit with unique
-% extensions, it turns out that the inclusion of gates that compute
-% non-symmetric functions greatly complicates the analysis of the circuit. We
-% show in Section~\label{sec:transparency-and-unique-extensions} that most of
-% the polynomial-time decidable properties used by Anderson and Dawar in order
-% to define this translation are at least as hard to decide for general circuits
-% as the graph-isomorphism problem.
-
-
-% Since the proof of our main result requires that many circuit properties are
-% polynomial-time decidable, we introduce restrictions on how gates computing
-% non-symmetric functions can be wired into the circuit.
-
-
-
-% The inclusion of gates that inclusion greatly complicates the analysis of a
-% general circuit, resulting in many circuit polynomial-time decidable circuit
-% properties
-
-% It turns out that allowing non-symmetric functions greatly complicates the the
-% structure of a circuit, and makes certain many circuit properties difficult to
-% decide (in a technical sense).
-
-
-% inclusion of non-symmetric functions in the basis makes deciding certain
-% circuits properties non-trivial,
-
-
-% determining certain properties
-
-% in the basis greatly complicates the argument, unfortunately, for the general
-% $(\mathbb{B}, \rho)$-circuit, establishing an exactly analogous condition is a
-% non-trivial problem. We discuss this problem in more detail in
-% Section \label{sec:transparency-and-unique-extensions}
-.
-
-We now introduce the notion of a circuit with \emph{unique labels}, and show
-that if a circuit has unique labels then it has unique extensions. Before we do
-so, we define the \emph{syntactic equivalence} relation on the gates of a
-circuit.
+Before we can formally define \emph{transparency} we need to define the
+\emph{syntactic-equivalence} relation on the gates of a circuit. The intuition
+is that two gates in a circuit are syntactically-equivalent if the circuits
+underneath them are `hereditary similar'.
 
 % In order to prove this result, Anderson and Dawar introduce the notion of a
 % \emph{rigid} circuit, proving that symmetric circuits may be
@@ -913,20 +877,20 @@ circuit.
   it's very easy to prove.
 \end{remark}
 
-We could define an equivalence relation on gates that identifies a pair of gates
-if, and only if, they compute the same function in the circuit. However, it is
-not hard to show that deciding this equivalence relation is $\NP$-hard. The
-syntactic-equivalence relation instead identifies gates that have `hereditary
-similar' circuits underneath them. Since it can be shown that two
-syntactically-equivalent gates must compute the same function in the circuit, it
-follows that the syntactic-equivalence relation refines the above-referenced
-equivalence relation.
+We could think of any gate $g$ in the circuit as computing a function that maps
+a given assignment to the input gates to the evaluation of the circuit at $g$
+for the given assignment. While we would like to be able to identify gates that
+compute the same function in this sense, it is not hard to show that deciding
+this property is $\NP$-hard. The syntactic-equivalence relation is an
+easier-to-compute refinement of this relation, instead identifying pairs of
+gates if the circuits underneath them are hereditary similar.
 
-We may also define an equivalence relation between gates identifying a pair of
-gates $(h, h')$ in a circuit $C$ of order $n$ if, and only if, there exists
-$\sigma \in \sym_n$, $\pi, \pi' \in \aut(C)$ both extending $\sigma$, and $g$ a
-gate in $C$, such that $h = \pi (g)$ and $h' = \pi' (g)$. We now show this
-relation is a refinement of syntactic-equivalence.
+We could also define a similar equivalence relation using the automorphisms of a
+circuit. In this case we identify a pair of gates $(h, h')$ in a circuit $C$ of
+order $n$ if, and only if, there exists $\sigma \in \sym_n$, $\pi, \pi' \in
+\aut(C)$ both extending $\sigma$, and $g$ a gate in $C$, such that $h = \pi (g)$
+and $h' = \pi' (g)$. We now show this relation is a refinement of
+syntactic-equivalence.
 
 \begin{remark}
   It's interesting to note that if $C$ has unique extensions then this relation
@@ -984,12 +948,7 @@ relation is a refinement of syntactic-equivalence.
   % follows.
 \end{proof}
 
-It is easy to show that, for a circuit $C$ of order $n$, if $\sigma \in \sym_n$
-and both $\pi, \pi' \in \aut(C)$ extend $\sigma$, then for every gate $g$ in
-$C$, $\pi (g)$ and $\pi'(g)$ are syntactically-equivalent.
-
-
-We now introduce the \emph{unique labels} and \emph{transparency} conditions on
+We now define the \emph{unique labels} and \emph{transparency} conditions on
 circuits.
 
 \begin{definition}
@@ -1003,10 +962,11 @@ circuits.
 \end{definition}
 
 There is a small technical point that needs some discussion before we continue.
-The definition of a circuit allows for the inclusion of gates whose outputs need
-not lead to any output gate. In other words, we can be sure, not matter the rest
-of the circuit, that these gates cannot have any effect the function computed by
-the circuit. We say these gates are \emph{redundant}.
+The definition of a circuit allows for the inclusion of a gate such that there
+is no path from this gate to any of the output gates. In other words, we can be
+sure, not matter the rest of the circuit, that any such gate cannot have any
+effect the function computed by the circuit. We say these gates are
+\emph{redundant}.
 
 \begin{definition}
   Let $C$ be a circuit and $W_t$ be the transitive closure of the $W$ relation
@@ -1015,22 +975,24 @@ the circuit. We say these gates are \emph{redundant}.
   g')$.
 \end{definition}
 
-It is easy to see that we can simply remove the redundant gates from a circuit,
-and so construct from a given circuit an equivalent circuit without redundant
-gates. Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a circuit of
-order $n$ and let $g$ be a redundant circuit in $C$. It is easy to see that $g$
-is not the child of a non-redundant gate, nor is it a relational or output gate.
-Thus we can define $C' := \langle G', \Omega, \restr{\Sigma}{G'}, \Lambda,
-\restr{L}{G'} \rangle$, where $G' \subseteq G$ is the set of all non-redundant
-gates in $C$.
+It is easy to see that we can construct from a given circuit an equivalent
+circuit without redundant gates by simply removing all of the redundant gates.
+Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a circuit of order
+$n$ and let $g$ be a redundant circuit in $C$. It is easy to see that $g$ is not
+the child of a non-redundant gate, nor is it a relational or output gate. Thus
+we can define the circuit $C' := \langle G', \Omega, \restr{\Sigma}{G'},
+\Lambda, \restr{L}{G'} \rangle$, where $G' \subseteq G$ is the set of all
+non-redundant gates in $C$.
 
 It is easy to see that $C'$ computes the same query as $C$, and that each $g \in
 G'$ has unique labels in $C$ if, and only if, $g$ has unique labels in $C'$.
-Moreover, it can be shown that if $C$ is symmetric and $g'$ is in the orbit of
-$g$ in $C$ then $g' \in G'$. As such, if $C$ is symmetric then so is $C'$. We
-thus have the following Lemma.
+Moreover, it can be shown that if $C$ is symmetric and $g, g' \in G$ then if $g$
+and $g'$ are in the same orbit then either both $g$ and $g'$ are in $G'$ or
+neither are in $G'$. As such, if $C$ is symmetric then so is $C'$. We thus have
+the following Lemma.
 
 \begin{lem}
+  \label{lem:redundant-gates}
   Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a circuit of order
   $n$. Let $G'$ be the set of non-redundant gates in $C$. Let $C' := \langle G',
   \Omega, \restr{\Sigma}{G'}, \Lambda, \restr{L}{G'} \rangle$. Then (i) $C$ and
@@ -1039,11 +1001,12 @@ thus have the following Lemma.
   has unique labels, and (v) if $C$ is transparent then $C'$ is transparent
 \end{lem}
 
-We note that the construction of $C'$ from $C$ in Lemma~\ref{lem:redudant-gates}
-can be implemented so as to run in time polynomial in the size of $C$. As such,
-for the remainder of this paper we assume every circuit has no redundant gates.
-With this assumption stated we now show that every circuit with unique labels
-has unique extensions.
+We note that the construction of $C'$ from $C$ in
+Lemma~\ref{lem:redundant-gates} can be implemented so as to run in time
+polynomial in the size of $C$. As such, for the remainder of this paper we
+assume, unless stated otherwise, every circuit has no redundant gates. With this
+assumption in mind we now show that every circuit with unique labels has unique
+extensions.
 
 % \begin{lem}
 %   Let $C$ be a circuit and suppose there is an automorphism $\pi \in \aut(C)$
@@ -1072,13 +1035,8 @@ has unique extensions.
   extensions.
   \label{prop:unique-labels-unique-extensions}
 \end{prop}
-% \begin{prop}
-%   Let $C_n := \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be an injective
-%   $(\mathbb{B}, \tau)$-circuit. Then $C_n$ has unique labels if, and only if,
-%   $C_n$ has unique extensions.
-% \end{prop}
 \begin{proof}
-  Suppose $C$ has unique labels. Let $\pi_{\sigma}, \pi_{\sigma}' \in \aut(C_n)$
+  Suppose $C$ has unique labels. Let $\pi_{\sigma}, \pi_{\sigma}' \in \aut(C)$
   be automorphisms extending $\sigma \in \sym_n$. We now prove that $\pi_\sigma
   = \pi_{\sigma}'$. Let $\pi := \pi_{\sigma}'\pi^{-1}_\sigma$. We have that
   $\pi$ is an automorphism of the circuit and that $\pi$ extends
@@ -1105,12 +1063,12 @@ has unique extensions.
   (g, \Omega(\vec{a}))\}$, and the result follows.
 \end{proof}
 
-We also show that a transparent circuit can be converted into an equivalent
-circuit with unique labels in time polynomial in the size of the circuit. Since
-we are working with $P$-uniform families of transparent circuits, this fact
-allows us to assume, without a loss of generality, that transparent circuits
-have unique labels. We prove this formally in Proposition
-\ref{prop:transparent-unique}.
+We show in Proposition~\ref{prop:transparent-unique} that a transparent circuit
+can be converted into an equivalent circuit with unique labels in time
+polynomial in the size of the circuit. Since we are
+working with $P$-uniform families of transparent circuits, this fact allows us
+to assume, without a loss of generality, that transparent circuits have unique
+labels (and so unique extensions).
 
 % \begin{definition}
 %   We say that a circuit $C_n$ is \emph{rigid} if every equivalence class of
@@ -1144,7 +1102,7 @@ have unique labels. We prove this formally in Proposition
 % matrix-invariant.
 
 In many contexts, circuits are defined over a basis of symbols, usually the
-usual logical symbols $\land, \neg, \lor$ and perhaps $\maj$ (for majority).
+standard logical symbols $\land, \neg, \lor$, and perhaps $\maj$ (for majority).
 When evaluating a circuit, a gate labelled by a particular symbol is evaluated
 using a Boolean function appropriate to the particular symbol. We have instead
 defined a basis to be a set of Boolean functions. However, when reasoning about
@@ -1183,18 +1141,18 @@ every function in $\BB$ is symmetric or matrix-symmetric.
 % say $g$ is an \emph{\AND-gate} if $g$ is an internal gate labelled a function
 % of the . We say $g$ is a a \emph{majority gate}
 
-Let $C_n = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
-\rho)$-circuit and let $g \in G$. We say a gate $g \in G$ is a \emph{symmetric
-  gate} if $\Sigma(g)$ is a symmetric function. We say a gate $g \in G$ is a
-\emph{matrix-symmetric gate} if $\Sigma(g)$ is a matrix-symmetric structured
-function. We say that $g$ is an \emph{$\AND$ gate} if $\Sigma(g) := \land [a]$
-for some $a \in \nats$. Similarly we define \emph{$\OR$- gates}, \emph{$\NOT$
-  gates}, \emph{$MAJ$ gates} and \emph{$\rank$ gates}.
+Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
+\rho)$-circuit of order $n$ and let $g \in G$. We say a gate $g \in G$ is a
+\emph{symmetric gate} if $\Sigma(g)$ is a symmetric function. We say a gate $g
+\in G$ is a \emph{matrix-symmetric gate} if $\Sigma(g)$ is a matrix-symmetric
+structured function. We say that $g$ is an \emph{$\AND$ gate} if $\Sigma(g) :=
+\land [a]$ for some $a \in \nats$. Similarly we define \emph{$\OR$- gates},
+\emph{$\NOT$ gates}, \emph{$MAJ$ gates} and \emph{$\rank$ gates}.
 
-We say $C_n$ is a \emph{circuit with symmetric gates} if every gate in $C_n$ is
-symmetric. We say $C_n$ is a \emph{matrix-circuit} if every gate in $C_n$ is
-matrix-symmetric or symmetric. We say $C_n$ is a \emph{rank-circuit} if $C_n$ is
-a matrix-circuit and every non-symmetric gate is a $\rank$ gate.
+We say $C$ is a \emph{circuit with symmetric gates} if every gate in $C$ is
+symmetric. We say $C$ is a \emph{matrix-circuit} if every gate in $C$ is
+matrix-symmetric or symmetric. We say $C$ is a \emph{rank-circuit} if $C$ is a
+matrix-circuit and every non-symmetric gate is a $\rank$ gate.
 
 % \begin{definition}
 %   Let $C_n = \langle G, \Omega, \Simga, \Lambda, L \rangle$ be a $(\mathbb{B},

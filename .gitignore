@@ -63,6 +63,15 @@ sections/symmetric-circuits.bbl
 sections/symmetric-circuits.blg
 sections/symmetric-circuits.fdb_latexmk
 sections/symmetric-circuits.fls
+mymacros.sty.tex
+sections/background.bbl
+sections/background.blg
+sections/mymacros.sty.backup2
+sections/mymacros.sty.tex
+sections/symmetric-circuits--with anno.pdf
+sections/symmetric-circuits--with lots of anno.pdf
+sections/symmetry-and-support--lots of anno.pdf
+sections/symmetry-and-support--with anno.pdf
 
 
 
