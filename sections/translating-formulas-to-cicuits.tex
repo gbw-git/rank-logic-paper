@@ -2,8 +2,8 @@
 \begin{document}
 In this section we first introduce a number of useful polynomial-time computable
 functions which define transformations on circuits. In the second subsection we
-use these these functions to define a transformation of $\FPR$-formulas into
-equivalent families of transparent rank-circuits.
+use these functions to define a transformation that takes $\FPR$-formulas to
+equivalent families of transparent symmetric rank-circuits.
 
 \subsection{Algorithms for Circuits}
 In order to simplify the presentation of the translation between $P$-uniform
@@ -26,9 +26,8 @@ a single gate.
   \item $\Omega' = \Omega$,
   \item $\Sigma' = \restr{\Sigma}{G'}$,
   \item $\Lambda' = \Lambda$, and
-  \item For all $g \in G'$ and $\vec{a} \in Ind(g)$ if $L(g) (\vec{a}) \in H$
-    then $L'(g)(\vec{a}) = h_1$ and if $L(g)(\vec{a}) \notin H$ then
-    $L'(g)(\vec{a}) = L(g)(\vec{a})$.
+  \item For all $g \in G'$ and $x \in Ind(g)$ if $L(g) (x) \in H$ then $L'(g)(x)
+    = h_1$ and if $L(g)(x) \notin H$ then $L'(g)(x) = L(g)(x)$.
   \end{itemize}
 \end{definition}
 
@@ -36,7 +35,7 @@ It can be shown that $\op{merge}$ can be computed in time polynomial in the size
 of the input circuit. We note that the input and output circuits compute the
 same function. Moreover, if the input circuit is symmetric (resp. has unique
 labels, is transparent) then the output circuit will also be symmetric (resp.
-have unique labels, is transparent).
+have unique labels, transparent).
 
 We now define the function $\op{merge-all}$ which maps a circuit and a set of
 gates to a new circuit formed by applying $\op{merge}$ to the
@@ -54,7 +53,7 @@ syntactic-equivalence classes of the set of gates.
 We can compute $\op{merge-all}$ using the following algorithm. Let $(C, H)$ be a
 tuple in the domain of $\op{merge-all}$. We assume a reasonable encoding of the
 circuit, and note that any such encoding induces a linear order on the
-structure. Let $H_1, \ldots, H_p$ be the syntactic equivalence classes of $H$
+structure. Let $H_1, \ldots, H_p$ be the syntactic-equivalence classes of $H$
 linearly ordered such that for all $i, j \in [p]$ if $i \leq j$ the height of
 the gates in $H_i$ is less than or equal to the height of the gates in $H_j$.
 Let $C'$ be the result of successively executing the algorithm for $\op{merge}$
@@ -62,19 +61,19 @@ on each such equivalence class in order.
 
 It is worth noting that for an input tuple $(C, H)$, if follows from
 Lemma~\cite{lem:unique-labels-syntactic-equiv} that if $H$ has unique labels
-then the syntactic equivalence relation on $H$ can be computed in time
-polynomial in the size of $C$. Thus, if the set $H$ has unique labels, it can be
-shown that the operation $\op{merge-all}$ can be computed in time polynomial in
-the size of the input circuit.
+then the syntactic-equivalence relation on $H$ can be computed in time
+polynomial in the size of $C$. Thus, if each gate in $H$ has unique labels, it
+can be shown that $\op{merge-all}$ can be computed in time polynomial in the
+size of the input circuit.
 
 As in the case of $\op{merge}$, the function $\op{merge-all}$ preserves
 symmetry, unique labels and the ensures that the input and output circuits
 compute the same function. Let be a circuit $C$ a circuit and $H$ a set of gates
 in $C$ with unique labels. Then if $g$ is a gate in both $C$ and $C' :=
 \op{merge-all}(C, H)$, and all of the children of $g$ in $C$ are in $H$, then no
-two distinct children of $g$ in $C'$ are syntactically-equivalent. We note we
-have no guarantee that $g$ will have unique labels in $C'$ as $L'(g)$ may not be
-injective.
+two distinct children of $g$ in $C'$ are syntactically-equivalent. However, we
+have no guarantee that $g$ will have unique labels in $C'$ as we have no
+guarantee that $L'(g)$ is injective.
 
 The now define the function $\op{make-injective}$ that maps a circuit and a
 symmetric gate to an equivalent circuit containing all the same gates as the
@@ -95,10 +94,9 @@ input circuit but such that the specified gate now has injective labels.
     $\Sigma'(g)$ be a single-input $\AND$-gate.
   \item $\Lambda'= \Lambda$
   \item For each $g \in G'$ if $g \in G \setminus W(h, \cdot)$ then $L'(g) =
-    L(g)$. If $g \in W(h, \cdot)$ let $\{\vec{a}_1, \ldots, \vec{a}_k\} :=
-    L(g)^{-1}(h)$ and for each $\vec{a} \in \ind(g)$ if $L(g)(\vec{a}) \neq h$
-    then $L'(g)(\vec{a}) = L(g)(\vec{a})$ and if $\vec{a} = \vec{a_i} \in
-    L(g)^{-1}(h)$ then let $L'(g)(\vec{a}) = h_i$.
+    L(g)$. If $g \in W(h, \cdot)$ let $\{x_1, \ldots, x_k\} := L(g)^{-1}(h)$ and
+    for each $x \in \ind(g)$ if $L(g)(x) \neq h$ then $L'(g)(x) = L(g)(x)$ else
+    if $x = x_i \in L(g)^{-1}(h)$ then let $L'(g)(x) = h_i$.
   \end{itemizens}
 \end{definition}
 
@@ -153,7 +151,7 @@ formed by inserting the gates of the first circuit into the second circuit.
 
 It can be shown that $\op{insert}$ can be be computed in time polynomial in the
 size of the input circuits. Moreover, if the input circuits are symmetric then
-the output circuit will be symmetric.
+the output circuit is symmetric.
 
 We now define the function $\op{replace}$ that maps a circuit $C$ and a pair of
 gates $(g_1, g_2)$ in $C$ to a circuit $C'$ formed by replacing $g_1$ with $g_2$
@@ -172,9 +170,8 @@ in $C$.
     $\Omega'(\vec{a}) = g_2$ and otherwise $\Omega'(\vec{a}) = \Omega(\vec{a})$.
   \item $\Sigma' = \restr{\Sigma}{G'}$
   \item $\Lambda' = \restr{\Lambda}{G'}$
-  \item For each $g \in G'$ and each $\vec{a} \in \ind(g)$ if $L(g)(\vec{a}) =
-    g_1$ then $L'(g)(\vec{a}) = g_2$ and if not then $L'(g)(\vec{a}) =
-    L(g)(\vec{a})$.
+  \item For each $g \in G'$ and each $x \in \ind(g)$ if $L(g)(x) = g_1$ then
+    $L'(g)(x) = g_2$ and if not then $L'(g)(x) = L(g)(x)$.
   \end{itemize}
 \end{definition}
 
@@ -204,9 +201,8 @@ step to ensure that a circuit has unique labels.
   $\Lambda^{-1}(g_i) = \vec{a}_i$, where $\vec{a}_i$ is the $k$-tuple
   $(\vec{a}(i), \ldots, \vec{a}(i))$. The inputs of $\land_k$ are the constant
   gate $1$ and the gate $g_k$ such that $\Sigma(g) = R$ and $\Lambda^{-1}(g_k) =
-  \vec{a}_k$. For each gate $h \in G \setminus \{g\}$ and $\vec{b} \in \ind(h)$,
-  if $L(h)(\vec{b}) = g$ then $L'(h)(\vec{b}) = \land_0$, otherwise
-  $L'(h)(\vec{b}) = L(h)(\vec{b})$.
+  \vec{a}_k$. For each gate $h \in G \setminus \{g\}$ and $x \in \ind(h)$, if
+  $L(h)(x) = g$ then $L'(h)(x) = \land_0$, otherwise $L'(h)(x) = L(h)(x)$.
 \end{definition}
 
 It can be shown that $\op{tag}$ can be computed in time polynomial in the size
@@ -233,9 +229,8 @@ the combined size of its inputs, $\op{tag-all}$ can also be computed in time
 polynomial in the combined size of its inputs.
 
 We now define the function $\op{compose}$ that maps a circuit and a sequence of
-appropriate circuits and to a circuit formed by replacing the input gates of the
-designated circuit with the output gates of the circuits in the sequence of
-circuits.
+circuits and to a circuit formed by replacing the input gates of the designated
+circuit with the output gates of the circuits in the sequence.
 
 \begin{definition}
   The function $\op{compose}$ maps a $(\mathbb{B}, \tau)$-circuit $C := \langle
@@ -256,25 +251,27 @@ circuits.
   \Sigma_i', \Lambda_i', L_i' \rangle$ be the circuit formed from $D^{i-1}$ by
   replacing each gate in $g \in G^{i-1}_{R_i}$ with the gate
   $\Omega_{i}(\Lambda_{i-1}'(g))$ in $D^{i-1}$ (by repeated calls to the
-  $op{replace}$ function). Let $C' = {C^{t}}'$.
+  $\op{replace}$ function). Let $C' = {C^{t}}'$.
 \end{definition}
 
 It can be shown that $\op{compose}$ can be computed in time polynomial in the
-sum of the sizes of the input circuits. Moreover, if the input circuits are all
-symmetric then the output circuit will be symmetric. Also, for an input tuple
-$(C, \mathcal{C}, \tau_R)$, we have that if $C$ has symmetric gates and
-transparent, and all the circuits in $\mathcal{C}$ are transparent, then $C' :=
-\op{compose}(C, \mathcal{C}, \tau_R)$ is transparent. If $C$ does not have
-symmetric gates then, as the output gates of the circuits in $\mathcal{C}$ are
-no longer labelled as output gates in $C'$, it may be that some of these gates
-are syntactically-equivalent in $C'$, resulting in $C'$ not being transparent.
+sum of the sizes of the input circuits. We also note that the size of $C'$ is
+less than or equal to the sum of the sizes of the input circuits. Moreover, if
+the input circuits are all symmetric then the output circuit will be symmetric.
+Also, for an input tuple $(C, \mathcal{C}, \tau_R)$, we have that if $C$ has
+symmetric gates and transparent, and all the circuits in $\mathcal{C}$ are
+transparent, then $C' := \op{compose}(C, \mathcal{C}, \tau_R)$ is transparent.
+If $C$ contains a non-symmetric gates then, as the output gates of the circuits
+in $\mathcal{C}$ are no longer labelled as output gates in $C'$, it may be that
+some of these gates are syntactically-equivalent in $C'$, resulting in $C'$ not
+being transparent.
 
 In certain contexts we are interested composing gates such that if the input
 circuits are transparent (resp. have unique labels) then the output circuits
 will be transparent (resp. have unique labels). In this case, while composing
-the circuits we could apply the $\op{tag}$ function to the output gates of the
-circuits in the input sequence. We now define the function
-$\op{compose-and-tag}$ that implements this mapping.
+the circuits we apply the $\op{tag}$ function to the output gates of the
+circuits in the input sequence of circuits. We now define the function
+$\op{compose-and-tag}$ that implements this operation.
 
 \begin{definition}
   The function $\op{compose-and-tag}$ maps a $(\mathbb{B}, \tau)$-circuit $C :=
@@ -297,7 +294,8 @@ in the sun of the sizes of the input circuits. We also have that if the input
 circuits are symmetric then the output circuits are symmetric. Furthermore, if
 the input sequences of circuits and relations are both singletons, then if the
 input circuits are all transparent (resp. have unique labels) then the output
-circuit is transparent (resp. have unique labels).
+circuit is transparent (resp. have unique labels). We also note that the output
+circuit
 
 \subsection{Translating FPR to Symmetric Matrix Circuits}
 In this subsection we translate $\FPR$-formulas into families of transparent
@@ -380,11 +378,6 @@ equal to the query defined by $\theta (\vec{x})$.
   $T_n(\phi_1 (\vec{y}))$ and $T_n(\phi_2(\vec{y}))$ translate $\phi_1(\vec{y})$
   and $\phi_2(\vec{y})$ at $n$, respectively.
 
-  % We also note that this construction gives us that, if we exclude the cost of
-  % the recrive calls, then $n \mapsto T_n(\psi(\vec{y}))$ is computable in time
-  % polynomial in $n$. Notice, though, that this polynomial does depend on
-  % $\psi'(\vec{y})$, i.e. the form of $\psi (\vec{y})$.
-  
   The approach used in the conjunctive case can be summarised as follows. Given
   a sub-formula $\psi (\vec{y})$, we construct an auxiliary formula
   $\psi'(\vec{y})$ in which all the sub-formulas of $\psi(\vec{y})$ are replaced
@@ -460,731 +453,8 @@ equal to the query defined by $\theta (\vec{x})$.
   on the running time of the algorithm that depends only on $n$ and the
   structure of $\theta(\vec{x})$. As such, we have that $(T_n (\theta_n))_{n \in
     \nats}$ translates $\theta(\vec{x})$, and the result follows.
-  
-  % We first construct an auxiliary formula $\psi'(\vec{y}$ in which all the
-  % sub-formulas of $\psi(\vec{y})$ are replaced with a relation symbol. We then
-  % construct a circuit $C^{\psi'}$ translating $\psi'(\vec{y})$ at $n$ (either
-  % explicitly, as in the rank case, or using the translation defined by
-  % Anderson and Dawar~\cite{}). Finally, we compose the circuit $C^{\psi'}$
-  % with the recursively defined circuits translating the sub-formulas of
-  % $\psi(\vec{y})$ (when composing in the rank case case we add an additional
-  % gadget, but the computation cost of this function is similar).
-  
-  % The total computation cost of computing $T_n(\psi(\vec{y}))$ is then the
-  % cost of constructing $\psi'(\vec{y})$ + the cost of constructing
-  % $C^{\psi'}_n$ + the cost of the recursive calls + the cost of composition.
-  % We notice that, since there are only a finite number of cases, there are
-  % only a finite number of possible formulas $\psi'(\vec{y})$. Let
-  % $q_{\psi}(n)$ be a polynomial bounding time required to compute $n \mapsto
-  % C^{\psi'}_n$ for the case of $\psi(\vec{y})$. There are only a finite number
-  % of cases, so we can define $q_M(n)$ such that $q_M(n) \geq q_\psi(n)$ for
-  % all $n \in \nats$ and all cases $\psi(\vec{y})$. Let $q_c(x)$ be a
-  % polynomial larger than the polynomials bounding the run time of
-  % $\op{compose}$ and $\op{\compose-and-tag}$. Let $p(n)$ be the polynomial
-  % bounding witnessing the $P$-uniformity of $(\theta_n)_{n \in \nats}$. We
-  % then have that
-  % \begin{align*}
-  %   \time {T_n(\psi(\vec{y}))} := q_c(\vert C^{\psi'}_n \vert + \vert
-  %   %   T_n(\phi_1(\vec{y})) \vert + \vert (\phi_2(\vec{y}))) + \time {T_n
-  %   %   (\phi_1(\vec{y}))} + \time {T_n (\phi_2(\vec{y}} + q_M(n)
-  % \end{align*}
-
-  % For $i \in [2]$, it can be shown that
-  % \begin{align*}
-  %   \vert T_n(\phi_i) \vert  =  
-  % \end{align*}
-  % Let $p(n)$
-
-  % there exists a polynomial $q(n)$ such that $n \maps T_n (\psi(\vec{y}))$ is
-  % computable in time
-
-
-  % . Let $p(n)$ be the polynomial witnessing the $P$-uniformity of
-  % $(\theta_n)_{n
-  % \in \nats}$. We begin with the bases cases. We notice that in each case
-
-
-
-  
-
-  % We now show that $T_n$ can be computed in time polynomial in $n$, thus
-  % giving
-  % us that $n \mapsto T_n (\theta_n(\vec{x}))$ can be computed computed in time
-  % polynomial in $n$, hence proving the result.
-
-  % It is easy to see that for $\psi (\vec{y})$ a subformula of $\theta_n$, the
-  % number of recursive calls needed to define $T_n(\psi(\vec{y}))$ is bounded
-  % by
-  % the number of sub-formulas in $\theta_n(\vec{x})$, which in turn is bounded
-  % by
-  % the size of $\theta_n(\vec{x})$, and hence by $p(n)$, where $p$ is the
-  % polynomial witnessing the $P$-uniformity of $(\theta_n)_{n \in \nats}$.
-
-  % We note that, up to renaming of variables, there are a constant number of
-  % cases to consider (i.e. possible forms of $\psi (\vec{y})$) at each
-  % recursive
-  % call (this follows from the fact that $\width(\theta_n) \leq 4\width
-  % (\theta)$
-  % for all $n \in \nats$).
-
-  % A the polynomial is dependent on the form being considered. Since there are
-  % only a finite number of such forms, we can sum up these polynomial bounds
-  % and
-  % arrive at a polynomial bound
-
-  
-  % can appear as sub-formulas of $\theta_n$.
-
-  % It is easy to see that our definition of $T_n$ requires at most recursive
-  % steps
-
-
-  % We have now completed our definition of $T_n$. In each recursive step of our
-  % definition we used the translation of Anderson and Dawar~\ref{}
-  
-  % We note that $C^{\psi'}_n$ is a transparent symmetric circuit with the
-  % property
-
-  % It is easy to see that for all $n \in \nats$, computes the same query as
-  % defined by $\theta(\vec{x})$ for structures of size $n$. Moreover, since
-  % $C^{\psi'}_n$ and $C^{\phi}_n$ are symmetric, transparent, and the input
-  % sequences of relations and circuits are singletons, it follows that
-  % $C^{\theta}_n$ is a transparent symmetric rank-circuit. W have thus defined
-  % a
-  % mapping from $n \mapsto C^{\theta}_n$, that, and that mapping can be
-  % computed
-  % in time polynomial in $n$.
- 
-  % It remains only to note that any atomic formula of $\FPR[\tau]$ is trivially
-  % circuit-translatable. The result thus follows.
- 
-
-  % $p$ is a prime, $r$ is a natural number, and $\theta(\vec{x}) := \rank^{\leq
-  % r}_p \vec{z} \vec{y}. \phi(\vec{z}, \vec{y}, \vec{x})$. We define an
-  % algorithm that takes as input a natural number $n$ outputs the required
-  % circuit $C^{\theta}_n$.
-
-  % The approach used for resolving the conjunctive case can be thought of as
-  % having three steps. First, replacing each sub-formula in $\psi$ with a
-  % relation symbol, resulting in a formula $\psi'$ of $\FPC[\tau]$. Second,
-  % using
-  % the translation of Anderson and Dawar to define the corresponding
-  % transparent
-  % symmetric circuit $C^{\psi'}_n$. Third, recursively computing the circuits
-  % for
-  % the sub-formulas, and then composing the circuits in order to construct
-  % $T(\psi(\vec{y}))$.
-
-  % Notice that if the sub-formulas are circuit-translatable then
-
-  % (and the results of Anderson and Dawar) on $\theta'$ and the sub-formulas,
-  % producing appropriate families for $\theta'$ and each sub-formula of
-  % $\theta$.
-  % Third, for each $n \in \nats$ composing the circuit $C^{\theta'}_n$ with the
-  % circuits for each sub-formula, producing the the circuit $C^{\theta}_n$.
-  % Since
-  % this process can be executed in time polynomial in $n$, we conclude that
-  % $\theta$ is circuit-translatable.
-  
-  % This same approach can be used to handle many other cases. For
-  % circuit-translatable $\phi, \phi_1, \phi_2 \in \FPR[\tau]$, and $k \in
-  % \nats$,
-  % similar constructions can be used to prove that if $\theta(\vec{x}) \in
-  % \FPR[\tau]$ is of the form $\phi_1(\vec{x}) \lor \phi_2(\vec{x})$, $\neg
-  % \phi(\vec{x})$, $\forall y. \phi (\vec{x}, y)$, $\exists y. \phi (\vec{x},
-  % y)$
-  % or $C^k y. \phi(\vec{x}, y)$ then $\theta(\vec{x})$ is circuit-translatable.
-  
-
-  
-
-  % It follows that the number of sub-formulas of $\theta_n$
-
-  % It follows that in order to prove that $\theta(\vec{x})$ is
-  % circuit-translatable it is sufficient to prove that there exists a function
-  % that maps $\theta_n$ (for any $n \in \nats$) to $C^{\theta}_n$, a
-  % transparent
-  % symmetric rank-circuit that computes the same query as defined by
-  % $\theta_n(\vec{x})$ (and so $\theta(\vec{x})$) for structures of size $n$,
-  % and
-  % is computable in time polynomial in in both $n$ and the number of
-  % sub-formulas
-  % in $\theta_n$. This is sufficient as the number of sub-formulas in
-  % $\theta_n$
-  % is bounded by some polynomial in $n$, and so composing functions, we can
-  % compute the map that takes $n$ to $\theta_n$ to $C^{\theta}_n$ in time
-  % polynomial in $n$.
-  
-  % We define an algorithm for constructing $C^{\theta}_n$ given
-  % $\theta_n(\vec{x})$ by recursion on the structure of the input formula. The
-  % first note that if $\theta_n(\vec{x})$ an atomic formula then there is a
-  % trivial construction of $C^{\theta}_n$.
-
-  % We consider the conjunctive case. Suppose $\phi_1, \phi_2 \in \FPR[\tau]$
-  % are
-  % circuit-translatable and $\theta (\vec{x}) = \phi_1(\vec{x}) \land
-  % \phi_2(\vec{x})$. Let $R_{\phi_1}$ and $R_{\phi_2}$ be two $\vert \vec{x}
-  % \vert$-ary relation symbols not in $\tau$. Let $\theta' (\vec{x}) :=
-  % R_{\phi_1}(\vec{x}) \land R_{\phi_2}(\vec{x})$. Let $n \in \nats$. Since
-  % $\theta'(\vec{x})$ is a formula of $\FPC[\tau]$, we have from Anderson and
-  % Dawar~\cite{AndersonD17} that $\theta'(\vec{x})$ is circuit-translatable. We
-  % let $C^{\theta}_n := \op{compose}(C^{\theta'}, (C^{\phi_1}, C^{\phi_2}),
-  % (R_{\phi_1}, R_{\phi_2}))$.
-
-  % Since all internal gates in $C^{\theta'}$ are symmetric, and both
-  % $C^{\phi_1}$
-  % and $C^{\phi_2}$ are transparent, it follows that $C^{\theta}_n$ is
-  % transparent. Moreover, it is easy to see that the construction of
-  % $C^{\theta}_n$ can be carried implemented so as to run in time polynomial in
-  % $n$, and that $(C^{\theta}_n)_{n \in \nats}$ computes the same query defined
-  % by $\theta(\vec{x})$. It follows that $\theta(\vec{x})$ is
-  % circuit-translatable.
-
-  % The approach used for resolving the conjunctive case can be thought of as
-  % having three steps. First, replacing each sub-formula in $\theta$ with a
-  % relation symbol, resulting in a formula $\theta'$ of $\FPC$. Second, using
-  % the
-  % algorithms from the inductive hypothesis' (and the results of Anderson and
-  % Dawar) on $\theta'$ and the sub-formulas, producing appropriate families for
-  % $\theta'$ and each sub-formula of $\theta$. Third, for each $n \in \nats$
-  % composing the circuit $C^{\theta'}_n$ with the circuits for each
-  % sub-formula,
-  % producing the the circuit $C^{\theta}_n$. Since this process can be executed
-  % in time polynomial in $n$, we conclude that $\theta$ is
-  % circuit-translatable.
-  
-  % This same approach can be used to handle many other cases. For
-  % circuit-translatable $\phi, \phi_1, \phi_2 \in \FPR[\tau]$, and $k \in
-  % \nats$,
-  % similar constructions can be used to prove that if $\theta(\vec{x}) \in
-  % \FPR[\tau]$ is of the form $\phi_1(\vec{x}) \lor \phi_2(\vec{x})$, $\neg
-  % \phi(\vec{x})$, $\forall y. \phi (\vec{x}, y)$, $\exists y. \phi (\vec{x},
-  % y)$
-  % or $C^k y. \phi(\vec{x}, y)$ then $\theta(\vec{x})$ is circuit-translatable.
-
-  % Suppose $\phi(\vec{z}, \vec{y}, \vec{x}) \in \FPR[\tau]$ is
-  % circuit-translatable, $p$ is a prime, $r$ is a natural number, and
-  % $\theta(\vec{x}) := \rank^{\leq r}_p \vec{z} \vec{y}. \phi(\vec{z}, \vec{y},
-  % \vec{x})$. We define an algorithm that takes as input a natural number $n$
-  % outputs the required circuit $C^{\theta}_n$.
-
-  % From the inductive hypothesis we may efficiently compute $C^{\phi}_n =
-  % \langle
-  % G^{\phi}, \Omega^{\phi}, \Sigma^{\phi}, \Lambda^{\phi}, L^{\phi} \rangle$.
-  % Let
-  % $k:= \vert \vec{x} \vert$, $k_1 : = \vert \vec{z} \vert$ and $k_2 := \vert
-  % \vec{y} \vert$. Let $R_\phi$ be a $(k_1 + k_2 + k)$-ary relation symbol not
-  % in
-  % $\tau$.
-
-  % Let $\theta'(\vec{x}) = \rank^{\leq r}_r := \vec{z}, \vec{y}. R_{\phi}
-  % (\vec{z}, \vec{y}, \vec{x})$. We define the $(\mathbb{B}_{\rank}, \{
-  % R_{\phi}
-  % \})$-circuit $C^{\theta'}_n:= \langle G^{\theta'}, \Omega^{\theta'},
-  % \Sigma^{\theta'}, \Lambda^{\theta'}, L^{\theta'}\rangle$ as follows. Let
-  % $G_{\text{out}} := \{g_{\vec{c}} : \vec{c} \in [n]^k\}$ and $G_{\text{in}} :
-  % =
-  % \{ g_{\vec{a}, \vec{b}, \vec{c}} : \vec{a} \in [n]^{k_1}, \vec{b} \in
-  % [n]^{k_2}, \vec{c} \in [n]^{k}\}$.
-  
-  % \begin{itemize}
-  %   \setlength\itemsep{0mm}
-  % \item Let $G^{\theta'} = G_{\text{out}} \uplus G_{\text{in}}$,
-  % \item $\Omega^{\theta'}$ be an injection from $[n]^k$ to $G^{\theta'}$
-  %   defined
-  %   by $\Omega^{\theta'}(\vec{c}) = g_{\vec{c}}$ for all $\vec{c} \in [n]^k$,
-  % \item $\Sigma^{\theta'} (g) = \rank^r_p$ if $g \in G_{\text{out}}$ and
-  %   $\Sigma^{\theta'}(g) = R_\phi$ if $g \in G_{\text{in}}$,
-  % \item For each $(\vec{a}, \vec{b}, \vec{c}) \in [n]^{k_1 +k_2 + k}$ let
-  %   $\Lambda^{\theta'} (\vec{a}, \vec{b}, \vec{c}) := g_{\vec{a}, \vec{b},
-  %   \vec{c}}$, and
-  % \item For each gate $g_{\vec{c}} \in G_{\text{out}}$ let $L(g_{\vec{c}}):
-  %   [n]^{k_1} \times [n]^{k_2} \rightarrow G^{\theta'}$ be defined by
-  %   $L(g_{\vec{c}})(\vec{a}, \vec{b}) := g_{\vec{a}, \vec{b}, \vec{c}}$ for
-  %   each
-  %   $\vec{a} \in [n]^{k_1}$ and $\vec{b} \in [n]^{k_2}$.
-  % \end{itemize}
- 
-  % % It is easy to see that both $C^{\theta'}_n$ (and $C^{\phi}_n$) are
-  % % symmetric
-  % % rank-circuits with unique labels.
-
-
-  % % It is easy to see that every gate in $$
-
-  % % be the result of calling $\op{tag}$ on
-
-
-  % % Let $C^{\theta}_n := \op{make-injective-all}(\op{merge-all}(D_n, H))$.
-  % Let $R$ be a relation symbol in $\tau$. Let $C^{\theta}_n :=
-  % \op{compose-and-tag}(C^{\theta'}_n, (C^{\phi}_n), (R_\phi), R)$. It is easy
-  % to
-  % see that for all $n \in \nats$, $C^{\theta}_n$ computes the same query as
-  % defined by $\theta(\vec{x})$ for structures of size $n$. Moreover, since
-  % $C^{\theta'}_n$ and $C^{\phi}_n$ are symmetric, transparent, and the input
-  % sequences of relations and circuits are singletons, it follows that
-  % $C^{\theta}_n$ is a transparent symmetric rank-circuit. W have thus defined
-  % a
-  % mapping from $n \mapsto C^{\theta}_n$, that, and that mapping can be
-  % computed
-  % in time polynomial in $n$.
-
-  % It remains only to note that any atomic formula of $\FPR[\tau]$ is trivially
-  % circuit-translatable. The result thus follows.
-
 \end{proof}
+
 \bibliography{../references.bib}
 % \ifcsdef{mainfile}{}{\bibliography{../references.bib}}
 \end{document}
-
-
-% \begin{proof}
-%   We say a formula $\psi(\vec{x}) \in \FPR[tau]$ is
-%   \emph{circuit-translatable} if there is a $P$-uniform family of symmetric
-%   matrix-circuits with unique labels that compute the same query as
-%   $\psi(\vec{x})$. If a formula $\psi(\vec{x}) \in \FPR[tau]$ is
-%   matrix-circuit-translatable we let $(C^\psi_n)_{n \in \nats}$ denote the
-%   corresponding $P$-uniform family of symmetric matrix-circuits with unique
-%   labels.
-
-%   We prove that $\theta(\vec{x}) \in \FPR[\tau]$ is circuit-translatable by
-%   structural induction. That is, we first prove that if every sub-formula of
-%   $\theta(\vec{x})$ is circuit-translatable then $\theta(\vec{x})$ is
-%   circuit-translatable and, second, we note that every atomic formula in
-%   $\FPR[\tau]$ is circuit-translatable. We have already that formulas of
-%   $\FPC[\tau]$ are circuit translatable (Anderson and
-%   Dawar~\cite{AndersonD17}), and in fact we may assume, without a loss of
-%   generality, that this translation yields a family of rigid circuits.
-  
-%   %   It is sufficient to prove that if $\theta(\vec{x})$ has the property
-%   %   that
-%   %   all
-%   %   of its subformulas have are matrix-circuit-translatable then there is an
-%   %   algorithm that takes in a natural number $n$ and outputs a symmetric
-%   %   matrix-circuit $C^\theta_n$ with unique labels that is equivalent to
-%   %   $\theta(\vec{x})$ on structures of size $n$.
-  
-%   We first consider the case where $\theta(\vec{x})$ is a conjunction of
-%   matrix-circuit-translatable formulas. Suppose $\phi_1, \phi_2 \in
-%   \FPR[\tau]$ are matrix-circuit-translatable and $\theta (\vec{x}) =
-%   \phi_1(\vec{x}) \land \phi_2(\vec{x})$. Let $R_{\phi_1}$ and $R_{\phi_2}$ be
-%   two $\vert \vec{x} \vert$-ary relation symbols not in $\tau$. Let $\theta'
-%   (\vec{x}) := R_{\phi_1}(\vec{x}) \land R_{\phi_2}(\vec{x})$. Let $n \in
-%   \nats$. Since $\theta'(\vec{x})$ is a formula of $\FPC$, we may efficiently
-%   compute $C^{\theta'}_n$ using the construction in \cite{AndersonD17}. From
-%   the inductive hypothesis, for each $i \in \{1,2\}$ we may efficiently
-%   compute the circuit $C^{\phi_i}_n = \langle G_i, \Omega_i, \Sigma_i
-%   Lambda_i, L_i \rangle$. Let $R \in \tau$ and let $D^{\theta}_n :=
-%   \op{compose}(C^{\theta'}_n, (C^{\phi_1}_n, C^{\phi_2}_n), (R_1, R_2), R)$.
-%   Let $H$ consist of all non-output gates in $D^{\theta}_n$. From the
-%   inductive hypothesis all gates in $H$ have unique labels. Let $C^{\theta}_n
-%   := \op{make-injective-all}(\op{merge-all}(D^{\theta}_n, H))$.
-  
-%   Notice that $D^{\theta}_n$ computes the same relation as defined by
-%   $\theta(\vec{x})$ for structures of size $n$. Moreover, since the remaining
-%   two operations preserve the function computed, it follows $C^{\theta}_n$
-%   computes the same relation as defined by $\theta(\vec{x})$ for structures of
-%   size $n$. Furthermore, since $C^{\phi_1}_n$, $C^{\phi_2}_n$ and
-%   $C^{theta'}_n$ are symmetric so is $C^{\theta}_n$. Lastly, notice that all
-%   non-output gates in $D^{\theta}_n$ have unique labels. After the
-%   $\op{merge-all}$ and $\op{make-injective-all}$ operation the output gates
-%   have unique labels, and thus $C^{\theta}_n$ has unique labels. This
-%   construction takes in a natural number $n$ and produces the required circuit
-%   $C^{\theta}_n$. This construction can be computed by an algorithm in time
-%   polynomial in $n$. Thus $\theta(\vec{x})$ is matrix-circuit-translatable.
-
-%   %   We construct the circuit $C'_n = \langle G', \Omega', \Sigma',
-%   %   \Lambda', L' \rangle$ by `inserting' $C^{\phi_1}_n$ and $C^{\phi_2}_n$
-%   %   into
-%   %   $C^{\theta'}_n$. We now construct $C^{\theta}_n$ from $C'_n$ as follows:
-%   %   \begin{itemize}
-%   %   \item For each $i \in \{1,2\}$ and each relational gate $g$ in $C_n$
-%   %     such
-%   %     that $\Sigma'(g) = R_{\phi_i}$ `replace' $g$ with
-%   %     $\Omega_i(\Lambda_i(g))$,
-%   %   \item then, for each syntactic equivalence class $H \subseteq
-%   %     \range(\Omega_1) \uplus \range(Omega_2)$, `merge' $H$, and finally
-%   %   \item run `separate-labels' on the circuit.
-%   %   \end{itemize}
-
-%   %   We note that, since $C^{\phi_1}_n$, $C^{\phi_2}_n$ and $C^{\theta'}_n$
-%   %   have
-%   %   unique labels, the only gates that might not have unique labels in
-%   %   $C^{\theta}_n$ are those whose input gates include gates in the range of
-%   %   $\Omega_1$ or $\Omega_2$. However, all such gates are symmetric and
-%   %   steps
-%   %   (2)
-%   %   and (3) above guarantee that these gates have unique labels. Finally, we
-%   %   note
-%   %   that this algorithm can implemented such that the computation of
-%   %   $C^{\theta}_n$ from $n$ runs in time polynomial in $n$.
-
-%   The approach used above for resolving the conjunctive case can be thought of
-%   as having three steps. First, replacing each sub-formula with a relation
-%   symbol, resulting in a formula of $\FPC$. Second, using the algorithms from
-%   the inductive hypothesis' on sub-formulas, producing appropriate families of
-%   circuits computing each sub-formula, and the known circuit-translation for
-%   formulas of $\FPC$, in order to to produce an appropriate family of circuits
-%   computing the operation on these sub-formulas. Third, using the
-%   concatenation operation to combine these circuit families and two final
-%   operations in order to ensure the family has the required properties.
-  
-%   This same approach can be used for to handle many other cases. For
-%   matrix-circuit-translatable $\phi, \phi_1, \phi_2 \in \FPR[\tau]$ similar
-%   constructions can be used to prove that if $\theta(\vec{x}) \in FPR[\tau]$
-%   is equal to $\phi_1(\vec{x}) \lor \phi_2(\vec{x})$, $\neg \phi(\vec{x})$,
-%   $\forall y. \phi (\vec{x}, y)$ or $\exists y. \phi (\vec{x}, y)$ then
-%   $\theta(\vec{x})$ is matrix-circuit-translatable.
-
-%   Suppose $\theta(\vec{x}) = \lfp{V, \vec{y}}{\phi(\vec{x}, \vec{y},
-%   V)}(\vec{x})$ for some matrix-circuit-translatable formula $\phi(\vec{x},
-%   \vec{y}) \in FPR[\tau \uplus \{V\}]$ and $k$-ary relation symbol $V$. Let
-%   $n$ be a natural number. We construct $C^{\theta}_n$ as follows. We have
-%   that we may efficiently compute $C^{\phi}_n$. For each $i \in [n^k]$ we
-%   construct a circuit $C^i = \langle G^i, \Omega^i, \Sigma^i, \Lambda^i, L
-%   \rangle $ as follows. Let $C^0$ be a circuit consisting of exactly $n^k$
-%   gates, such that each gate is a constant $0$ gate and each gate is an output
-%   gate. Let $R$ be a relation symbol in $\tau$. For each $i > 0$ let $C^i :=
-%   \op{concatinate}(C^{\phi}_n, (C^{i-1}_n), (V), R)$ be $C^{\phi}_n$ but with
-%   all relational gates labelled by the symbol $V$ replaced with the constant
-%   $0$. Since $C^1$ and $C^\phi_n$ are symmetric and have unique labels, and
-%   the operation $\op{concatinate}$ preserves the properties of symmetric and
-%   unique labels, it follows by induction that for each $i \geq 1$, $C^i$ is a
-%   symmetric rank-circuit with unique labels. It follows that $C^{\theta}_n :=
-%   C^{n^k}$ is a symmetric rank-circuit and has unique labels. Moreover, since
-%   the least-fixed-point operator must converge in at most $n^k$ steps, this
-%   construction can be implemented so as to run in time polynomial in $n$. The
-%   construction also guarantees that $(C^{\theta}_n)_{n \in \nats}$ computes
-%   the same query as $\theta(\vec{x})$.
-
-%   The result in \cite{} establishes that for every formula $\theta(\vec{x})$
-%   containing number-terms there is a $P$-uniform family of formulas
-%   $(\theta_n(\vec{x}))_{n \in \nats}$ containing counting quantifiers and no
-%   number-terms, and such that for all $n \in \nats$, $\theta(\vec{x})$ and
-%   $\theta_n(\vec{x})$ are equivalent on structures of size $n$.
-  
-%   %   Suppose $\theta(\vec{x}) = \lfp{V, \vec{y}}{\phi(\vec{x}, \vec{y},
-%   %   V)}(\vec{x})$ for some matrix-circuit-translatable formula
-%   %   $\phi(\vec{x},
-%   %   \vec{y}) \in FPR[\tau \uplus \{V\}]$ and $\vert y \vert$-ary relation
-%   %   symbol
-%   %   $V$. Let $n$ be a natural number. We now construct $C^{\theta}_n$. We
-%   %   have
-%   %   that we may efficiently compute $C^{\phi}_n$. For each $i \in [n^k]$ we
-%   %   construct a circuit $C^i = \langle G^i, \Omega^i, \Sigma^i, \Lambda^i, L
-%   %   \rangle $ as follows. Let $C^1$ be $C^{\phi}_n$ but with all relational
-%   %   gates
-%   %   labelled by the symbol $V$ replaced with the constant $0$. For each
-%   %   $i>1$ we
-%   %   construct $C^{i}$ by `gluing' $C^{i-1}$ into $C^\phi_n$, producing
-%   %   $C^i$.
-%   %   Set
-%   %   $C^{\theta}_n := C^{n^k}$. Since $C^1$ and $C^\phi_n$ are symmetric and
-%   %   have
-%   %   unique labels, by induction for each $i > 1$ $C^i$ is symmetric and has
-%   %   unique
-%   %   labels. It follows that $C^{\theta}_n$ is symmetric and has unique
-%   %   labels.
-%   %   Moreover, since the least-fixed-point operator must converge in at most
-%   %   $n^k$
-%   %   steps, this algorithm runs in time polynomial in $n$ and the family
-%   %   $(C^{\theta}_n)_{n \in \nats}$ computes the same query as
-%   %   $\theta(\vec{x})$.
-
-%   %   The result in \cite{} establishes that for every formula
-%   %   $\theta(\vec{x})$
-%   %   containing number-terms there is a $P$-uniform family of formulas
-%   %   $(\theta_n(\vec{x}))_{n \in \nats}$ containing counting quantifiers and
-%   %   no
-%   %   number-terms, and such that for all $n \in \nats$, $\theta(\vec{x})$ and
-%   %   $\theta_n(\vec{x})$ are equivalent on structures of size $n$.
-
-%   %   gives for each $\theta (\vec{x}) \in FPC[\tau]$ a $P$-uniform family of
-%   %   formulas $(\theta_n)_{n \in \nats}$ such that $\theta_n(\vec{x})$ is in
-%   %   the
-%   %   extension of fixed-point logic with counting quantifiers and is
-%   %   equivalent
-%   %   to
-%   %   $\theta(\vec{x})$ on structures of size $n$. Similarly, it can be shown
-%   %   that
-%   %   for $\theta (\vec{x}) \in FPR[\tau]$ there exists an algorithm that
-%   %   takes as
-%   %   input a natural number $n$ and outputs a formula $\theta_n(\vec{x})$
-%   %   with
-%   %   counting quantifiers and no number terms which is equivalent to
-%   %   $\theta(\vec{x})$ for structures of size $n$ and does not contain any
-%   %   number
-%   %   terms. Moreover, this algorithm runs in time polynomial in $n$.
-
-%   Thus, in order to handle the number-term case, it is sufficient to show that
-%   if $\phi(\vec{x}) \in \FPR[\tau]$ is circuit-translatable then
-%   $\theta(\vec{x}) := C^{k}y. \phi(\vec{x}, y)$ is
-%   matrix-circuit-translatable. A similar construction as for the universal and
-%   existential quantifier gives the required algorithm.
-
-%   The result in \cite{} establishes that for every formula $\theta(\vec{x})
-%   \in \FPR[\tau]$ containing rank operators, there exists an algorithm that
-%   takes as input a natural number $n$ and outputs a formula
-%   $\theta_n(\vec{x})$ with rank quantifiers and no rank operators such that
-%   $\theta(\vec{x})$ and $\theta_n(\vec{x})$ are equivalent on structures of
-%   size $n$. It is thus sufficient to prove that, for
-%   matrix-circuit-translatable $\phi(\vec{z}, \vec{y}, \vec{x}) \in \FPR[\tau]$
-%   is, a prime $p$, and a natural number $r$, $\theta(\vec{x}) := \rank^{\leq
-%   r}_p \vec{z} \vec{y}. \phi(\vec{z}, \vec{y}, \vec{x})$ is
-%   circuit-translatable. We define an algorithm that takes as input a natural
-%   number $n$ outputs the required circuit $C^{\theta}_n$.
-
-%   From the inductive hypothesis we may efficiently compute $C^{\phi}_n =
-%   \langle G^{\phi}, \Omega^{\phi}, \Sigma^{\phi}, \Lambda^{\phi}, L^{\phi}
-%   \rangle$. Let $k:= \vert \vec{x} \vert$, $k_1 : = \vert \vec{z} \vert$ and
-%   $k_2 := \vert \vec{y} \vert$. Let $R_\phi$ be a $(k_1 + k_2 + k)$-ary
-%   relation symbol not in $\tau$. Let $\theta'(\vec{x}) = \rank^{\leq r}_r :=
-%   \vec{z}, \vec{y}. \phi (\vec{z}, \vec{y}, \vec{x})$. We now define a
-%   $(\mathbb{B}_{\rank}, \{ R_{\phi} \})$-circuit $C^{\theta'}_n:= \langle
-%   G^{\theta'}, \Omega^{\theta'}, \Sigma^{\theta'}, \Lambda^{\theta'},
-%   L^{\theta'}\rangle$ as follows. Let $G_1 := \{g_{\rank, \vec{c}} : \vec{c}
-%   \in [n]^k\}$ and $G_2 : = \{ g_{R_{\phi}, \vec{a}, \vec{b}, \vec{c}} :
-%   \vec{a} \in [n]^{k_1}, \vec{b} \in [n]^{k_2}, \vec{c} \in [n]^{k}\}$.
-  
-%   \begin{itemize}
-%     \setlength\itemsep{0mm}
-%   \item Let $G^{\theta'} := G_1 \uplus G_2$,
-%   \item $\Omega^{\theta'}$ be an injection from $[n]^k$ to $G'$ defined by
-%     $\Omega^{\theta'}(\vec{c}) = g_{\rank, \vec{c}}$,
-
-%   \item $\Sigma^{\theta'} (g) := rank^r_p$ if $g \in G_1$ and
-%     $\Sigma^{\theta'}(g) = R_\phi$ if $g \in G_2$,
-%   \item For each $(\vec{a}, \vec{b}, \vec{c}) \in [n]^{k_1 +k_2 + k}$ let
-%     $\Lambda^{\theta'} (\vec{a}, \vec{b}, \vec{c}) := g_{R_{\phi}, \vec{a},
-%     \vec{b}, \vec{c}}$, and
-
-%   \item For each gate $g_{\rank, \vec{a}} \in G_1$ let $L(g_{\rank, \vec{a}}):
-%     [n]^{k_1} \times [n]^{k_2} \rightarrow G^{\theta'}$ be defined by
-%     $L(g_{\rank, \vec{c}})(\vec{a}, \vec{b}) := g_{R_\phi, \vec{a}, \vec{b},
-%     \vec{c}}$ for each $\vec{a} \in [n]^{k_1}$ and $\vec{b} \in [n]^{k_2}$.
-%   \end{itemize}
- 
-%   It is easy to see that both $C^{\theta'}_n$ (and $C^{\phi}_n$) are symmetric
-%   rank-circuits with unique labels. Let $R$ be a relation symbol in $\tau$.
-%   Let $D^{\theta}_n := \op{compose}(C^{\theta'}_n, (C^{\phi}_n), (R_\phi),
-%   R)$. Let $H$ consist of all non-output gates in $D^{\theta}_n$. From the
-%   inductive hypothesis all gates in $H$ have unique labels. Let $C^{\theta}_n
-%   := \op{make-injective-all}(\op{merge-all}(D^{\theta}_n, H))$.
-
-%   Since $C^{\theta'}_n$ and $C^{\phi}_n$ are symmetric, have unique labels,
-%   and the input tuples of relations and circuits are singletons, it follows
-%   that $D^{\theta}_n$ is a symmetric rank-circuit with unique labels. It can
-%   be shown that the construction of $C^{\theta}_n$ from the natural number $n$
-%   can be implemented as an algorithm running in time polynomial in $n$. The
-%   construction ensures that the circuit family $(C^{\theta}_n)_{n \in \nats}$
-%   computes the same query as the one defined by $\theta(\vec{x})$.
- 
-%   It remains only to note that any atomic formula of $\FPR[\tau]$ is trivially
-%   matrix-circuit-translatable. The result thus follows.
-% \end{proof}
-  
-% \langle G', \Omega', \Sigma', \Lambda', L'\rangle$, where $R$ is a $(k_1 + k_2
-% +k)$-arity relation symbol. Let $G_1' := \{g_{\rank, \vec{c}} : \vec{c} \in
-% [n]^k\}$ and $G_2' : = \{ g_{R, \vec{a}, \vec{b}, \vec{c}} : \vec{a} \in
-% [n]^{k_1}, \vec{b} \in [n]^{k_2}, \vec{c} \in [n]^{k}\}$.
-
-% \begin{itemize}
-%   \setlength\itemsep{0mm}
-% \item Let $G' := G_1' \uplus G_2'$,
-% \item $\Omega'$ be an injection from $[n]^k$ to $G'$ defined by
-%   $\Omega'(\vec{c}) = g_{\rank, \vec{c}}$,
-
-% \item $\Sigma' (g) := rank^r_p$ if $g \in G_1'$ and $\Sigma'(g) = R$ if $g \in
-%   G_2'$,
-% \item For each $(\vec{a}, \vec{b}, \vec{c}) \in [n]^{k_1 +k_2 + k}$ let
-%   $\Lambda' (\vec{a}, \vec{b}, \vec{c}) := g_{R, \vec{a}, \vec{b}, \vec{c}}$,
-%   and
-
-% \item For each gate $g_{\rank, \vec{a}} \in G_1'$ let $L(g_{\rank, \vec{a}}):
-%   [n]^{k_1} \times [n]^{k_2} \rightarrow G'$ be defined by $L(g_{\rank,
-%   \vec{c}})(\vec{a}, \vec{b}) := g_{R, \vec{a}, \vec{b}, \vec{c}}$ for each
-%   $\vec{a} \in [n]^{k_1}$ and $\vec{b} \in [n]^{k_2}$.
-
-% \end{itemize}
-% Let $C^{\theta}_n$ be the result of `gluing' $C^{\phi}_n$ into $C'$.
-
-% It is easy to see that both $C'$ and $C^{\phi}_n$ are symmetric rank-circuits
-% with unique labels. Thus $C^{\theta}_n$ is a symmetric rank-circuit with
-% unique labels. The construction of $C'$, and hence $C^{\theta}_n$, can be
-% implemented so as to run in time polynomial in $n$. The construction ensures
-% that the circuit family $(C^{\theta}_n)_{n \in \nats}$ computes the same query
-% as the one defined by $\theta(\vec{x})$.
-
-% It remains only to note that any atomic formula of $\FPR[\tau]$ is trivially
-% circuit-translatable. The result thus follows.
-% \end{proof}
-
-% such that for any structure $\mathcal{A}$ of size $n$ and an assignment $$ to
-% the tuple of variables $\vec{x}$
-
-% is symmetric and has unique labels.
-
-% an equality between two numerical terms or an application of the
-% least-fixed-point operator,
-
-
-
-% it follows from Lemma \ref{}, that the syntactic equivalence relation on $G_1
-% \uplus G_2$ can be efficiently computed.
-
-% Note that the construction guarantees that $C^{\theta}_n$ is symmetric.
-% Moreover, since the only gates in $C^{\theta}_n$ are either output gates or
-% gates
-
-
-% Suppose $\theta(\vec{x})$ is of the form $\phi_1(\vec{x}) \land
-% \phi_2(\vec{x})$, $\phi_1(\vec{x})\lor \phi_2(\vec{x})$, $\neg \phi(\vec{x})$,
-% $\thr_k(y).\phi(\vec{x}, y)$, $\forall y. \phi (\vec{x}, y)$, $\exists y. \phi
-% (\vec{x}, y)$, an equality between two numerical terms or an application of
-% the least-fixed-point operator, and each of these sub-formulas is
-% $(\mathbb{B}, \tau)$-circuit-translatable} then $\theta(\vec{x})$ is
-% $(\mathbb{B}, \tau)$-circuit-translatable}. This follows from the following
-% construction. Let $n \in \nats$. We take derive the formula $\theta'(\vec{x})$
-% from $\theta(\vec{x})$ by replacing each sub-formula $\phi(\vec{z})$ with the
-% formula $R_\phi(\vec{z})$ (adding in some new relational symbol $R_\phi$). We
-% may then translate $\theta'(\vec{x})$ into a $P$-uniform family of symmetric
-% circuits with threshold and unique labels $(C^{\theta'}_n)_{n \in \nats}$. For
-% each $n$ we then replace the relational gates in $C^{\theta'}_n$ labelled by
-% $R_\phi$ with the circuit $C^{\phi}_n$ (that is, we add in the entire circuit
-% $C^\phi_n$ and replace each relational gate $g$ labelled by $R_\phi$ such that
-% $\vec{a}:= \Lambda(\vec{a})$ with with the output gates of $C^{\phi}_n$ such
-% that if $g$ is a relational gate computing $R_\phi(\vec{a})$ then $g$ is
-% replaced by the gate $\Omega^{-1}(\vec{a})$ in $C^{\phi}_n$). We call this new
-% circuit $C^\theta_n$. It is easy to see that this circuit is symmetric. To see
-% that it has unique labels, notice that we need only check
-
-% , if $L;$ $L'(g) := L(g)$ for all $g \in G' \cap G$ and for all $g \in H$
-% $L'(H) := L(g)$ if $g \in H$
-
-
-
-% \begin{lem}
-%   We say a
-% \end{lem}
-
-% We should like to argue that for any $\theta(\vec{x}) \in \FPR[\tau]$ if every
-% sub-formula of $\theta(\vec{x})$ is $(\mathbb_{\mat}, \tau)$-circuit
-% translatable then $\theta(\vec{x})$ is $(\mathbb_{\mat}, \tau)$-circuit
-% translatable. The existence of the desired translation then follows by
-% induction on the structure of the formula.
-
-% It is easy to see that if $\theta(\vec{x})$ is of the form $\phi_1(\vec{x})
-% \land \phi_2(\vec{x})$, $\phi_1(\vec{x})\lor \phi_2(\vec{x})$, $\neg
-% \phi(\vec{x})$, $\thr_k(y).\phi(\vec{x}, y)$, $\forall y. \phi (\vec{x}, y)$,
-% $\exists y. \phi (\vec{x}, y)$, an equality between two numerical terms or an
-% application of the least-fixed-point operator, and each of these sub-formulas
-% is $(\mathbb{B}, \tau)$-circuit-translatable} then $\theta(\vec{x})$ is
-% $(\mathbb{B}, \tau)$-circuit-translatable}. This follows from the following
-% construction. Let $n \in \nats$. We take derive the formula $\theta'(\vec{x})$
-% from $\theta(\vec{x})$ by replacing each sub-formula $\phi(\vec{z})$ with the
-% formula $R_\phi(\vec{z})$ (adding in some new relational symbol $R_\phi$). We
-% may then translate $\theta'(\vec{x})$ into a $P$-uniform family of symmetric
-% circuits with threshold and unique labels $(C^{\theta'}_n)_{n \in \nats}$. For
-% each $n$ we then replace the relational gates in $C^{\theta'}_n$ labelled by
-% $R_\phi$ with the circuit $C^{\phi}_n$ (that is, we add in the entire circuit
-% $C^\phi_n$ and replace each relational gate $g$ labelled by $R_\phi$ such that
-% $\vec{a}:= \Lambda(\vec{a})$ with with the output gates of $C^{\phi}_n$ such
-% that if $g$ is a relational gate computing $R_\phi(\vec{a})$ then $g$ is
-% replaced by the gate $\Omega^{-1}(\vec{a})$ in $C^{\phi}_n$). We call this new
-% circuit $C^\theta_n$. It is easy to see that this circuit is symmetric. To see
-% that it has unique labels, notice that we need only check
-
-
-% We solve this problem completely for one case and argue that the other cases
-% follow similarly. Suppose $\theta (\vec{x}) = \phi_1(\vec{x}) \land
-% \phi_2(\vec{x})$. We now describe an algorithm that takes in $n\in \nats$ and
-% outputs a formula $C^\theta_n$ with the required properties. We first
-% introduce two relation symbols $R_{\phi_1}$ and $R_{\phi_2}$ not in $\tau$ and
-% with arity $\vert\vec{x}\vert$. We define $\theta' (\vec{x}) =
-% R_{\phi_1}(\vec{x}) \land R_{\phi_2}(\vec{x})$ and compute the associated
-% symmetric threshold circuit with unique labels $C^{\theta'}_n$. Similarly, for
-% each $i\ \in \{1,2\}$ we may compute the symmetric $(\mathbb{B},
-% \tau)$-circuit with unique labels corresponding to $\phi_i$ that takes in
-% inputs of size $n$, $C^{\phi_i}_n = \langle G_i, \Omega_i, \Sigma_i Lambda_i,
-% L_i \rangle$ algorithms given by the inductive hypothesis. We then construct
-% $C^{\theta}_n$ by inserting into $C^{\theta'}_n$ the circuits $C^{\phi_1}_n$
-% and $C^{\phi_2}_n$ (that is, taking a disjoint union of the sets of gates and
-% the functions that define each circuit -- with the exception of $\Omega$ which
-% is specified by $C^{\theta'}_n$ alone). Then for all $i \in \{1,2\}$ and each
-% relational gate $g$ in $C^{\theta}_n$ such that $\Sigma(g) = R_{\phi_i}$ we
-% replace $g$ with $\Omega_i(\Lambda_i(g))$. Since $C^{\phi_1}_n$ and
-% $C^{\phi_2}_n$ have unique labels, it follows from Lemma \ref{} that we can
-% efficiently decide if any two gates $g_1, g_2 \in G_1 \uplus G_2$ are
-% syntactical equivalent. For each pair of gates $g_1, g_2$ in the range of
-% $\Omega_1 \uplus \Omega_2$ we check if $g_1 \equiv g_2$, and if so we merge
-% them.
-
-% The resultant circuit $C^{\theta}_n$ is clearly a symmetric $(\mathbb{B},
-% \tau)-circuit$-circuit. Moreover, it is easy to see that if all pairs of gates
-% in the range of $\Omega_1 \uplus Omega_2$ are not syntactical equivalent $g$
-% is a gate such that $h_1, h_2 \in H_g$ are syntactically equivalent then . it
-% has unique labels (as the only point where two input gates could be equivalent
-
-% we can from Lemma \ref{} that we can efficiently decide if two any two gates
-% from the union of these circuits are syntactical equivalent. If any of their
-% output gates are syntactically equivalent, merge these gates. This new circuit
-% has disjoint
-
-
-% we replace the relational gate $g$ in $C^{\theta'}_n$ such that $\Sigma(g) =
-% R_\phi$ and $\Lambda(g) = \vec{a}$ with the circuit $C^\phi_n$ $\vec{a}$, an
-% $\arty(R_\pi)$ each relational gate $R_\phi(\vec{a})$ in the circuit
-% $C^{\theta'}_n$
-
-
-% It remains to show that for any $k \in \nats$ and formula $\phi \in
-% \FPR[\tau]$ such that $\phi$ formula of the form $\theta (\vec{z}): = [rank
-% (\vec{x}, \vec {\nu} \leq \vec{t}, \vec{y}\vec{\mu} \leq \vec{s}, \pi \leq r).
-% \phi(\vec{x}, \vec{nu}, \vec{y}, \vec(mu), \vec{s}, \vec{z})] \leq k$ there is
-% an equivalent $P$-uniform family of symmetric rank-circuits with unique labels
-% $(C_n)_{n \in \nats}$ that compute the same query as $\theta$.
-
-
-% \begin{lem}
-%   Let $\tau$ be a relational vocabulary and let $\phi(\vec{x})$ be a formula
-%   of $\FPR[\tau]$. There is an algorithm that takes as input a natural number
-%   $n$ and outputs a formula $\phi_n$ such that $\phi_n$ contains no rank
-%   operators or counting terms and for any $\tau$-structure $\mathcal{A}$ of
-%   size $n$ and $\vert \vec{x} \vert$-tuple of elements $\vec{a}$ from the
-%   universe of $\mathcal{A}$, $\mathcal{A}\models \phi[\vec{a}]$ if, and only
-%   if, $\mathcal{A}\models \phi_n[\vec{a}]$. Moreover, this algorithm runs in
-%   time polynomial in $n$.
-% \end{lem}
-
-% \begin{thm}
-%   Let $\tau$ be a relational vocabulary and let $\phi$ be a formula of
-%   $\FPR[\tau]$. There is an algorithm that takes as input a natural number $n$
-%   and outputs a symmetric matrix-circuit $C_n$. This algorithm runs in time
-%   polynomial in $n$. Moreover, the query computed by the circuit family
-%   $(C_n)_{n \in \nats}$ and the query defined by the formula $\phi$ are equal.
-% \end{thm}
-% \begin{proof}
-%   We describe a transformation inductively on the structure of the formula.
-%   This procedure can then be implemented algorithmically using recursion.
-  
-%   If $\phi(\vec{a})$ is an atomic formula
-  
-% \end{proof}
-
-% We define this transformation by recursion on the structure of the formula and
-% note that and note that such a transformation can be implemented so as to run
-% in time polynomial in $n$.
-
-% Let $\phi$ be a formula
-
-
-
-
-% \begin{thm}
-%   Formulas of $\FPR$ can be translated into symmetric matrix-circuits
-% \end{thm}
-% \begin{proof}
-%   The idea here is to do exactly the same thing as for FPC formulas except
-%   when we arrive at a rank quantifier we `tag' each formula with
-% \end{proof}
-
