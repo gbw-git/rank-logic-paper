@@ -321,10 +321,10 @@ equal to the query defined by $\theta (\vec{x})$.
   $\psi (\vec{x})$ if $(C_n)_{n \in \nats}$ is $\PT$-uniform and for all $n \in
   \nats$, $C_n$ translates $\psi(\vec{x})$ for $n$.
 
-  We have from Anderson and Dawar~\cite{AndersonD17} that for every formula
-  $\phi(\vec{x}) \in \FPC[\tau]$ there is a $\PT$-uniform family of symmetric
-  circuits $(C^{\phi}_n)_{n \in \nats}$ with unique labels and symmetric gates
-  that translates $\phi(\vec{x})$.
+  % We have from Anderson and Dawar~\cite{AndersonD17} that for every formula
+  % $\phi(\vec{x}) \in \FPC[\tau]$ there is a $\PT$-uniform family of symmetric
+  % circuits $(C^{\phi}_n)_{n \in \nats}$ with unique labels and symmetric gates
+  % that translates $\phi(\vec{x})$.
   
   Let $\theta(\vec{x}) \in \FPR[\tau]$ and $t := \width (\theta)$. We begin by
   showing that there exists a $P$-uniform family of formulas
@@ -358,6 +358,9 @@ equal to the query defined by $\theta (\vec{x})$.
   where $C^{\psi}_n$ translates $\psi(\vec{y})$ at $n$. We then have that for
   all $n \in \nats$, $T_n(\theta_n(\vec{x}))$ translates $\theta_n$ (and hence
   $\theta$) at $n$.
+
+  
+  
 
   We first consider the base case. Suppose $\psi(\vec{y})$ is an atomic formula.
   Then $\psi(\vec{y}) \in \FPC[\tau]$, and so, using the translation defined by
@@ -408,7 +411,7 @@ equal to the query defined by $\theta (\vec{x})$.
   R_{\phi} (\vec{z}, \vec{w}, \vec{y})$. Let $G_{\text{out}} := \{g_{\vec{c}} :
   \vec{c} \in [n]^k\}$ and $G_{\text{in}} : = \{ g_{\vec{a}, \vec{b}, \vec{c}} :
   \vec{a} \in [n]^{k_1}, \vec{b} \in [n]^{k_2}, \vec{c} \in [n]^{k}\}$. Let
-  $C^{\psi'}_n:= \langle G^{\psi'}, \Omega^{psi'}, \Sigma^{\psi'},
+  $C^{\psi'}_n:= \langle G^{\psi'}, \Omega^{\psi'}, \Sigma^{\psi'},
   \Lambda^{\psi'}, L^{\psi'}\rangle$ be a $(\mathbb{B}_{\rank}, \{ R_{\phi}
   \})$-circuit such that
   \begin{itemizens}
