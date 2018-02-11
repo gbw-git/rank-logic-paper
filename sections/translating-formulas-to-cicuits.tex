@@ -378,88 +378,129 @@ running time of the algorithm constructing this circuit.
   the circuit extending $\sigma$. It follows that $C$ is symmetric, and so $C$
   translates $\theta(\vec{x})$ for $n$.
 
-  Suppose $\tau$ is not empty. Let $R \in \tau$. We now construct a $C$ that
-  translates $\theta(\vec{x})$ at $n$. We first pre-proccess the formula $\theta(\vec{x})$
+  Suppose $\tau$ is not empty. Let $R \in \tau$. We now construct a $C'$ that,
+  but for transparency, translates $\theta(\vec{x})$ at $n$.
 
-  Let $\op{no-op}(y) := (R(y, y) \land (\neg R(y, y)))$. Let $\vec{y} := (y_1,
-  \ldots, y_k)$ be a vector of variables and $\op{add-tag} (\vec{y}) :=
-  \op{no-op}(y_1) \land (\op{no-op}(y_2) \land ( \op{no-op}(y_2) \land ( \ldots
-  \land (\op{no-op}(y_k)) \ldots)))$. From $\theta (\vec{x})$ we construct a new
-  formula $\theta' (\vec{x})$ by replacing each sub-formula $\phi(\vec{y})$ of
-  the form $\rank^r_p \vec{w} \vec{z} . \psi$ by the sub-formula $\rank^r_p
-  \vec{w}\vec{z} . ((\forall u . u = u) \land \phi) \land \op{add-tag}(\vec{w}
-  \cup \vec{z})$.
+  % We first
+  % pre-proccess the formula $\theta(\vec{x})$
+
+  % Let $\op{no-op}(y) := (R(y, y) \land (\neg R(y, y)))$. Let $\vec{y} := (y_1,
+  % \ldots, y_k)$ be a vector of variables and $\op{add-tag} (\vec{y}) :=
+  % \op{no-op}(y_1) \land (\op{no-op}(y_2) \land ( \op{no-op}(y_2) \land (
+  % \ldots
+  % \land (\op{no-op}(y_k)) \ldots)))$. From $\theta (\vec{x})$ we construct a
+  % new
+  % formula $\theta' (\vec{x})$ by replacing each sub-formula $\phi(\vec{y})$ of
+  % the form $\rank^r_p \vec{w} \vec{z} . \psi$ by the sub-formula $\rank^r_p
+  % \vec{w}\vec{z} . ((\forall u . u = u) \land \phi) \land \op{add-tag}(\vec{w}
+  % \cup \vec{z})$.
 
   Fix $n \in \nats$. For each $\psi \in \cl{\theta'}$ let $G_\psi := \{g_{\psi,
-    \alpha} : \alpha \in [n]^{\free{\psi}} \}$. Let $G_c := \{g_0, g_1\}$. Let
-  $G := G_c \cup (\bigcup_{\psi \in \cl{\theta'}} G_{\psi})$. We define
-  $\Sigma$, $\Lambda$ and $L$ as follows. Let $\Sigma (g_1) = 1$ and $\Sigma
-  (g_0) = 0$. If $g_{\psi, \alpha} \in G \setminus G_c$.
+    \alpha} : \alpha \in [n]^{\free{\psi}} \}$. Let $G_{\text{sub}} :=
+  \bigcup_{\psi \in \cl{\theta}} G_{\psi}$ and $G_c := \{g_0, g_1\}$. Let $G' := G_c \cup
+    G_{\text{sub}}$. We define $\Sigma'$, $\Lambda'$ and $L'$ as follows. Let
+    $\Sigma' (g_1) = 1$ and $\Sigma' (g_0) = 0$. If $g_{\psi, \alpha} \in G'
+    \setminus G_c$.
 
-  \begin{itemizens}
-  \item If $\psi$ is of the form $T(\vec{y})$ for some $T \in \tau$, then
-    $\Sigma (g_{\psi, \alpha}) = T$ and $\Lambda_T (g_{\psi, \alpha}) = \alpha
-    \vec{y}$.
-  \item If $\psi$ is of the form $(y_1 = y_2)$, then $\Sigma (g_{\psi, \alpha})
-    = \land[1]$ and $L(g) : [1] \rightarrow G$ by $L(g)(1) = g_1$ if $\alpha
-    (y_1) = \alpha (y_2)$ and $L(g)(1) = g_0$ otherwise.
-  \item If $\psi$ is of the form $\rank^r_p \vec{w} \vec{z}. \phi$, let $a =
-    n^{\vert \vec{w}\vert}$ and $b = n^{\vert \vec{z}\vert}$, and $\Sigma
-    (g_{\psi, \alpha}) = \rank[a, b]$. Let $L(g) : [a] \times [b] \rightarrow G$
-    be defined by $L(g)(i,j) = g_{\phi, \beta}$, where $\beta : \vec{w} \cup
-    \vec{z} \cup \vec{y} \rightarrow [n]$ is such that $\alpha \subseteq \beta$
-    and such $\beta \vec{y}$ and $\beta \vec{z}$ are the $i$th and $j$th
-    elements of $[n]^{\vert \vec{w} \vert}$ and $[n]^{\vert \vec{z} \vert}$ in
-    the lexicographical ordering.
-  \item If $\psi$ is of the form $Q z . \phi(\vec{y}, z)$, for $Q \in \{\forall,
-    \exists\}$, then if $Q = \forall$ we have $\Sigma (g_{\psi, \alpha}) = \land
-    [n]$, otherwise $\Sigma (g_{\psi, \alpha}) = \lor [n]$. Let $L(g) : [n]
-    \rightarrow G$ be defined by $L(g)(i) = g_{\phi, \beta_i}$, where $\beta_i
-    \in [n]^{\vec{y} \cup \{z\}}$ and $\alpha \subseteq \beta_i$ and $\beta_i
-    (z) = i$.
-  \item If $\psi$ has free variables $\vec{y}$ and is of the form $\phi_1
-    (\vec{y}_1) \land \phi_2(\vec{y}_2)$, where $\vec{y_1}, \vec{y_2} \subseteq
-    \vec{y}$, then $\Sigma(g_{\psi, \alpha}) = \land[2]$ and $L(g) : [2]
-    \rightarrow G$ is defined by $L(g)(i) = g_{\phi_i, \beta_i}$ where $\beta_i
-    \in [n]^{\vec{y}_i}$ and $\beta_i \subseteq \alpha$ for $i \in [2]$. The
-    same approach is used in the disjunctive case.
-  \item if $\psi$ is of the form $\neg \phi$ then $\Sigma (g_{\psi, \alpha}) =
-    \neg$ and $L(g): [1] \rightarrow G$, where $L(g)(1) = g_{\phi, \alpha}$.
-  \end{itemizens}
+    \begin{itemizens}
+    \item If $\psi$ is of the form $T(\vec{y})$ for some $T \in \tau$, then
+      $\Sigma' (g_{\psi, \alpha}) = T$ and $\Lambda_T' (g_{\psi, \alpha}) =
+      \alpha \vec{y}$.
+    \item If $\psi$ is of the form $(y_1 = y_2)$, then $\Sigma' (g_{\psi,
+        \alpha}) = \land[1]$ and $L'(g) : [1] \rightarrow G$ by $L(g)(1) = g_1$
+      if $\alpha (y_1) = \alpha (y_2)$ and $L'(g)(1) = g_0$ otherwise.
+    \item If $\psi$ is of the form $\rank^r_p \vec{w} \vec{z}. \phi$, let $a =
+      n^{\vert \vec{w}\vert}$ and $b = n^{\vert \vec{z}\vert}$, and $\Sigma'
+      (g_{\psi, \alpha}) = \rank[a, b]$. Let $L'(g) : [a] \times [b] \rightarrow
+      G$ be defined by $L'(g)(i,j) = g_{\phi, \beta}$, where $\beta : \vec{w}
+      \cup \vec{z} \cup \vec{y} \rightarrow [n]$ is such that $\alpha \subseteq
+      \beta$ and such $\beta \vec{y}$ and $\beta \vec{z}$ are the $i$th and
+      $j$th elements of $[n]^{\vert \vec{w} \vert}$ and $[n]^{\vert \vec{z}
+        \vert}$ in the lexicographical ordering.
+    \item If $\psi$ is of the form $Q z . \phi(\vec{y}, z)$, for $Q \in
+      \{\forall, \exists\}$, then if $Q = \forall$ we have $\Sigma' (g_{\psi,
+        \alpha}) = \land [n]$, otherwise $\Sigma' (g_{\psi, \alpha}) = \lor
+      [n]$. Let $L'(g) : [n] \rightarrow G$ be defined by $L'(g)(i) = g_{\phi,
+        \beta_i}$, where $\beta_i \in [n]^{\vec{y} \cup \{z\}}$ and $\alpha
+      \subseteq \beta_i$ and $\beta_i (z) = i$.
+    \item If $\psi$ has free variables $\vec{y}$ and is of the form $\phi_1
+      (\vec{y}_1) \land \phi_2(\vec{y}_2)$, where $\vec{y_1}, \vec{y_2}
+      \subseteq \vec{y}$, then $\Sigma'(g_{\psi, \alpha}) = \land[2]$ and $L'(g)
+      : [2] \rightarrow G$ is defined by $L'(g)(i) = g_{\phi_i, \beta_i}$ where
+      $\beta_i \in [n]^{\vec{y}_i}$ and $\beta_i \subseteq \alpha$ for $i \in
+      [2]$. The same approach is used in the disjunctive case.
+    \item if $\psi$ is of the form $\neg \phi$ then $\Sigma' (g_{\psi, \alpha})
+      = \neg$ and $L'(g): [1] \rightarrow G$, where $L'(g)(1) = g_{\phi,
+        \alpha}$.
+    \end{itemizens}
 
-  We let $\Omega : [n]^k \rightarrow G$ be defined by $\Omega (\vec{a}) =
-  g_{\theta', \alpha}$, where $\alpha \vec{x} = \vec{a}$, for all $\vec{a} \in
-  [n]^k$. Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$. We notice
-  that $\vert C \vert \leq n^{\width(\theta')} \vert \cl{\theta} \vert$. It can
-  be shown that $C$ can be constructed in time bounded by a polynomial in the
-  size of $C$.
+    We let $\Omega' : [n]^k \rightarrow G$ be defined by $\Omega' (\vec{a}) =
+    g_{\theta, \alpha}$, where $\alpha \vec{x} = \vec{a}$, for all $\vec{a} \in
+    [n]^k$. Let $C' := \langle G', \Omega', \Sigma', \Lambda', L' \rangle$. We
+    notice that $\vert C' \vert \leq n^{\width(\theta)} \vert \cl{\theta}
+    \vert$. It can be shown that $C'$ can be constructed in time bounded by a
+    polynomial in the size of $C'$.
 
-  We now show that $C$ translates $\theta(\vec{x})$ for $n$. It is obvious that
-  $C$ has order $n$. Let $\sigma \in \sym_n$. Let $\pi_\sigma : G \rightarrow G$
-  be a defined such that $\pi (g) = g$ if $g \in G_c$ and $\pi_\sigma(g_{\psi,
-    \alpha}) = g_{\psi, \sigma \alpha}$ for all $\psi \in \cl{\theta}$ and
-  $\alpha \in n^{\free(\psi)}$. It is easy to see that $\pi_\sigma$ is an
-  automorphism of $C$ extending $\sigma$. It follows that $C$ is symmetric. Let
-  $g := g_{\psi, \alpha} \in G$ be a rank gate and let $h, h' \in H_g$. Suppose
-  $\psi (\vec{y}) := \rank^r_p \vec{w} \vec{z}. \phi$ and $h := g_{\phi, \beta}$
-  and $h' := g_{\phi, \beta'}$ are syntactically-equivalent. From the
-  construction of $\theta'$ we have that $\phi$ must be of a particular form.
-  Suppose $\phi = \eta \land \op{add-tag}(\vec{w} \cup \vec{z})$. Let $\gamma$
-  and $\gamma'$ be the restrictions of $\beta$ and $\beta'$ to $\vec{w} \cup
-  \vec{z}$, respectively, and let $\zeta(\vec{w}\cup\vec{z}) :=
-  \op{add-tag}(\vec{w} \cup \vec{z})$. The $\op{add-tag} (\vec{w} \cup \vec{z})$
+    It is obvious that $C'$ has order $n$. Let $\sigma \in \sym_n$. Let
+    $\pi_\sigma' : G' \rightarrow G'$ be a defined such that $\pi_{\sigma}' (g)
+    = g$ if $g \in G_c$ and $\pi_\sigma'(g_{\psi, \alpha}) = g_{\psi, \sigma
+      \alpha}$ for all $\psi \in \cl{\theta}$ and $\alpha \in n^{\free(\psi)}$.
+    It can be seen that $\pi_\sigma$ is an automorphism of $C'$ extending
+    $\sigma$. It follows that $C'$ is symmetric.
+
+    If $C'$ contains no rank gates then output $C := C'$. Suppose $C'$ contains
+    at least one rank-gate. Let $\psi \in \cl{\theta}$, and suppose $\psi
+    (\vec{y}) := \rank^r_p \vec{w} \vec{z}. \phi$. Let $T_{\psi} : G_{\psi}
+    \rightarrow [n]^{\vert \vec{w} \vert + \vert \vec{z} \vert}$ be defined by
+    $T_{\psi} (g_{\psi, \alpha}) = \alpha \vec{y}$ for all $g_{\psi, \alpha} \in
+    G_{\psi}$. Let $T$ be the union of all $T_{\psi}$ and $H$ the union of all
+    $G_{\psi}$ for all $\psi \in \cl{\theta}$ an application of the rank
+    operator. Let $C := \op{tag-all}(C', R, H, T)$. We note that $\op{tag-all}$
+    may be computed in time polynomial in the size of the input circuit.
+
+    Let $a \in [n]$ and let $\op{no-op} (a) := R(a, a) \lor (\neg (R(a, a))$.
+    For $\psi (\vec{y})$
+
+    Let $(b_1, \ldots, b_m) := \beta (\vec{w} \cup \vec{z})$. The $\op{tag-all}
+    function replaces each input $g_{\phi, \beta}$ of the rank gate $g_{\psi,
+      \alpha}$ with the circuit $g_{\phi, \beta} \land \op{no-op}(b_1) \land
+    (\op{no-op}(b_2) \land ( \op{no-op}(b_2) \land (\ldots \land
+    (\op{no-op}(b_m)) \ldots)))$. This construction does not effect the
+    evaluation of any rank gate in the cirucit and ensures that no two to
+    $g_{\psi,\alpha}$ in $C$ are syntactically-equivilent. 
 
 
-  The structure of this formula gives us that $h$ is syntactically-equivalent to
-  $h'$ if, and only if, $g_{\zeta , \beta'}$
+    $of the form $$R(a, a) \lor (\neg R(a, a))$ that encode the assignment to
+    $\vec{w}\cup \vec{z}$.
+
+    We have that $C$ is transparent, has order $n$, and $C$ and $C'$ decide the
+    same query. It remains to show that $C$ is still symmetric.
+
+    However, the $\op{tag-all}$ operation adds a tower of tautologies of the
+    form $R(a, \ldots, a) \lor (\neg R (a, \ldots, a))$
+
+
+    Let $g := g_{\psi, \alpha} \in G$ be a rank gate and let $h, h' \in H_g$.
+    Suppose $\psi (\vec{y}) := \rank^r_p \vec{w} \vec{z}. \phi$ and $h :=
+    g_{\phi, \beta}$ and $h' := g_{\phi, \beta'}$ are syntactically-equivalent.
+    From the construction of $\theta'$ we have that $\phi$ must be of a
+    particular form. Suppose $\phi = \eta \land \op{add-tag}(\vec{w} \cup
+    \vec{z})$. Let $\gamma$ and $\gamma'$ be the restrictions of $\beta$ and
+    $\beta'$ to $\vec{w} \cup \vec{z}$, respectively, and let
+    $\zeta(\vec{w}\cup\vec{z}) := \op{add-tag}(\vec{w} \cup \vec{z})$. The
+    $\op{add-tag} (\vec{w} \cup \vec{z})$
+
+
+    The structure of this formula gives us that $h$ is syntactically-equivalent
+    to $h'$ if, and only if, $g_{\zeta , \beta'}$
 
 
 
 
-  We also note that $C$ has order $n$.
+    We also note that $C$ has order $n$.
 
 
-\end{proof}
+  \end{proof}
 
 \begin{thm}
   For any relational vocabulary $\tau$ and each $\theta(\vec{x}) \in \FPR[\tau]$

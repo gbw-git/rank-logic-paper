@@ -46,15 +46,13 @@ or~\cite{grohe2017descriptive}.
 % \end{definition}
 
 \subsection{First Order and Fixed-Point Logic}
-Let $L$ be a logic and $\tau$ be a vocabulary, we let $L[\tau]$ denote the set
-of all $\tau$-formulas of $L$ (i.e. the set of all $L$-formulas with respect to
-$\tau$). Let $\FO[\tau]$ denote \emph{first-order logic} with respect to the
-vocabulary $\tau$. A formula in $\FO[\tau]$ is formed from atomic formulas, each
-formed using variables from some countable sequence of (first-order) variable
-symbols $(x, y, \ldots)$, the relation symbols in $\tau$, and the equality
-symbol $=$, and then closing the set of atomic formulas under the Boolean
-connectives, negation, and universal and existential quantification (i.e.
-$\land$, $\lor$, $\neg$, $\forall$, and $\exists$).
+Let $\FO[\tau]$ denote \emph{first-order logic} with respect to the vocabulary
+$\tau$. A formula in $\FO[\tau]$ is formed from atomic formulas, each formed
+using variables from some countable sequence of (first-order) variable symbols
+$(x, y, \ldots)$, the relation symbols in $\tau$, and the equality symbol $=$,
+and then closing the set of atomic formulas under the Boolean connectives,
+negation, and universal and existential quantification (i.e. $\land$, $\lor$,
+$\neg$, $\forall$, and $\exists$).
 
 Let $\FP[\tau]$ denote \emph{fixed-point logic} with respect to $\tau$. The
 logic $\FP$ is an extension of $\FO$ by an inflationary fixed-point operator. In
@@ -66,7 +64,7 @@ $\FO[\tau]$ and $\FP[\tau]$. For more detail on the syntax and semantics of
 these logics please see~\cite{grohe2017descriptive} and~\cite{GradelP15a}.
 
 Let $L$ be a logic and $\tau$ a vocabulary. For $\phi \in L[\tau]$ and a
-sequence of variables $\vec{x}$, we write $\phi(vec{x})$ if the free variables
+sequence of variables $\vec{x}$, we write $\phi(\vec{x})$ if the free variables
 in $\phi$ are among those in $\vec{x}$. Suppose $\vec{x} = (x_1, \ldots , x_k)$,
 and let $\mathcal{A}$ be a $\tau$-structure with universe $U$, and let $\vec{a}
 \in U^k$. We write $\mathcal{A} \models_L \phi[\vec{a}]$ if, and only if, $\phi$
@@ -79,41 +77,40 @@ Let $\FPC[\tau]$ denote \emph{fixed-point logic with counting} with respect to
 the vocabulary $\tau$. The logic $\FPC$ is an extension of $\FP$ that includes a
 counting operator that allows the logic to determine the size of a definable
 set, as well as other mechanisms for reasoning about quantities. We now briefly
-describe the structure of a formula of $\FPC[\tau]$. In order to facilitate
-counting we define terms which are assigned to natural numbers. Every
-first-order variable is assigned a type, and so each variable is either a
-\emph{vertex} or \emph{number} variable. Vertex variables are assigned to
-elements of the universe of the structure, and play a similar role to the
-variables that appear in formulas in $\FO[\tau]$ or $\FP[\tau]$. Number
-variables are assigned to elements of $\nats$. We usually use Latin letters
-(e.g. $x, y, z, \ldots$) to denote vertex variables and Greek letters (e.g.
-$\mu, \nu, \epsilon, \ldots$) to denote number variables. All atomic formulas in
-$\FP[\tau]$ are atomic formulas in $\FPC[\tau]$. We say that $t$ is a
-\emph{number term} if $t$ a number variable or if $t$ is an application of the
-\emph{counting operator}, i.e. $t = \#x. \phi(x)$, where $\phi \in \FPC[\tau]$
-and $x$ is a vertex variable free in $\phi$. If $t_1$ and $t_2$ are number terms
-then $t_1 \leq t_2$ and $t_1 = t_2$ are atomic formulas. The formulas of $\FPC$
-are then formed by closing the set of atomic formulas under the usual Boolean
-connectives, the first-order quantifiers (for vertex variables), and the
-inflationary fixed-point operator. The second-order variables, such as those
-that appear in an application of the fixed-point operator, are allowed to have
-mixed-type, i.e. we associate with a second-order variable $R$ a type $(k, l)
-\in \nats^2$ intended to mean that $R$ is assigned to a subset of $U^k \times
-\nats^l$.
+describe the structure of a formula of $\FPC[\tau]$. Every first-order variable
+is assigned a type, and so each variable is either a \emph{vertex} or
+\emph{number} variable. Vertex variables are assigned to elements of the
+universe of the structure, and play a similar role to the variables that appear
+in formulas in $\FO[\tau]$ or $\FP[\tau]$. Number variables are assigned to
+elements of $\nats$. We usually use Latin letters (e.g. $x, y, z, \ldots$) to
+denote vertex variables and Greek letters (e.g. $\mu, \nu, \epsilon, \ldots$) to
+denote number variables. All atomic formulas in $\FP[\tau]$ are atomic formulas
+in $\FPC[\tau]$. We say that $t$ is a \emph{number term} if $t$ a number
+variable or if $t$ is an application of the \emph{counting operator}, i.e. $t =
+\#x. \phi(x)$, where $\phi \in \FPC[\tau]$ and $x$ is a vertex variable free in
+$\phi$. If $t_1$ and $t_2$ are number terms then $t_1 \leq t_2$ and $t_1 = t_2$
+are atomic formulas. $\FPC[\tau]$ includes all formulas formed by closing the
+set of atomic formulas under the usual Boolean connectives, the first-order
+quantifiers (for vertex variables), and the inflationary fixed-point operator.
+The second-order variables, such as those that appear in an application of the
+fixed-point operator, are allowed to have mixed-type, i.e. we associate with a
+second-order variable $R$ a type $(k, l) \in \nats^2$ intended to mean that $R$
+is assigned to a subset of $U^k \times \nats^l$.
 
-In order to ensure that the data complexity of $\FPC$ is in polynomial time, we
-only allow bounded quantification when using number variables. In other words,
-if $Q \in \{\forall, \exists \}$, $\phi \in \FPC[\tau]$, $\mu$ is a number
-variable free in $\phi$, and $t$ is a number term, then $Q \mu \leq t . \phi$ is
-a formula of $\FPC[\tau]$. Similarly, if $\phi$ is a number term then $\# \mu
-\leq t .\phi$ is a number term in $\FPC[\tau]$.
+We also allow quantification over the number sort, but in order to ensure that
+the data complexity of $\FPC$ is in polynomial time we only allow bounded
+quantification. In other words, if $Q \in \{\forall, \exists \}$, $\phi \in
+\FPC[\tau]$, $\mu$ is a number variable free in $\phi$, and $t$ is a number
+term, then $Q \mu \leq t . \phi$ is a formula of $\FPC[\tau]$. Similarly, if
+$\phi$ is a number term then $\# \mu \leq t .\phi$ is a number term in
+$\FPC[\tau]$.
 
 If $\mathcal{A}$ is a $\tau$-structure with universe $U$, the counting term
 $\#x. \phi(x)$ evaluates to $\vert \{a \in U : \mathcal{A} \models \phi[a]\}
 \vert$ in $\mathcal{A}$, assuming a fixed assignment to the other free variables
 in $\phi$. The intended semantics for bounded quantification is that the
 variable may only be assigned to a value at most equal to the the evaluation of
-the number term bounding the variable. The semantics of the $=$ and $\leq$
+the number term bounding the variable. The semantics of the `$=$' and `$\leq$'
 symbols are defined for number terms in the obvious manner. For a more detailed
 description of the syntax and semantics of $\FPC$ please
 see~\cite{grohe2017descriptive} or the introduction of~\cite{GradelP15a}.
@@ -191,24 +188,22 @@ operators.
 
 We now briefly describe the structure of a formula in $\FPR[\tau]$. For more
 detail on the syntax and semantics of $\FPR$ please see~\cite{GradelP15a}
-and~\cite{Dawar09logicswith}. As in the case of $\FPC$, we suppose the
-first-order variable are assigned one of two types. We call the first type
-\emph{vertex variables} and the second \emph{number variables} variables. Vertex
-variables are assigned to elements of the universe and number variables are
-assigned to natural numbers. All atomic formulas in $\FP[\tau]$ are atomic
-formulas in $\FPC[\tau]$. We say that $t$ is a \emph{number term} if $t$ is a
-number variable or if $t$ is an application of the \emph{rank operator}, i.e. $t
-= [\rank (\vec{x}, \vec {\nu} \leq \vec{t}, \vec{y}\vec{\mu} \leq \vec{s}, \pi
-\leq \eta). \phi]$, where $\phi$ is a number term, $\vec{t}$ and $\vec{s}$ are
-tuples of number terms bounding the sequences of number variables $\vec{\mu}$
-and $\vec{\nu}$, and $\eta$ is a number term bounding the number variable $\pi$.
-If $t_1$ and $t_2$ are number terms then $t_1 \leq t_2$ and $t_1 = t_2$ are
-atomic formulas. The formulas of $\FPR$ are then formed by closing the set of
-atomic formulas under the usual Boolean connectives, the first-order
-quantifiers, and the inflationary fixed-point operator. As in the case of
-$\FPC$, the second-order variables may have mixed-type and we only allow bounded
-quantification for number variables. We note additionally that formulas can be
-treated as number terms that evaluate to zero or one.
+and~\cite{Dawar09logicswith}. As in the case of $\FPC$, each variable is either
+a number or vertex variable, with vertex variables being assigned to elements of
+the universe and number variables assigned to natural numbers. All atomic
+formulas in $\FP[\tau]$ are atomic formulas in $\FPR[\tau]$. We say that $t$ is
+a \emph{number term} if $t$ is a number variable or if $t$ is an application of
+the \emph{rank operator}, i.e. $t = [\rank (\vec{x}, \vec {\nu} \leq \vec{t},
+\vec{y}\vec{\mu} \leq \vec{s}, \pi \leq \eta). \phi]$, where $\phi$ is a number
+term, $\vec{t}$ and $\vec{s}$ are tuples of number terms bounding the sequences
+of number variables $\vec{\mu}$ and $\vec{\nu}$, and $\eta$ is a number term
+bounding the number variable $\pi$. If $t_1$ and $t_2$ are number terms then
+$t_1 \leq t_2$ and $t_1 = t_2$ are atomic formulas. The formulas of $\FPR$ are
+then formed by closing the set of atomic formulas under the usual Boolean
+connectives, the first-order quantifiers, and the fixed-point operator. As in
+the case of $\FPC$, the second-order variables may have mixed-type and we only
+allow bounded quantification for number variables. We note additionally that
+formulas may be treated as number terms that evaluate to zero or one.
 
 We now briefly explain the intended semantics of the rank operator. Let $\phi
 (\vec{x}, \vec {\nu}, \vec{y}\vec{\mu})$ be a number term, where $\vec{x}$ and
@@ -225,10 +220,11 @@ $\mathbb{N}^{\leq \vec{s}}$ be defined similarly. Let $I:= A^{\vert \vec{x}
 \times \mathbb{N}^{\leq \vec{s}}$. Let $M^{\mathcal{A}}_\phi : I \times J
 \rightarrow \mathbb{N}$ be defined by $M^{\mathcal{A}}_\phi (\vec{a}\vec{n},
 \vec{b}\vec{m}):= \phi^{\mathcal{A}}(\vec{a}\vec{n},\vec{b}\vec{m})$. For the
-structure $\mathcal{A}$ and assignment $\pi \mapsto p$, for $p \leq r^{A}$ prime,
-$[\rank (\vec{x}, \vec {\nu} \leq \vec{t}, \vec{y}\vec{\mu} \leq \vec{s}, \pi
-\leq r). \phi]$ evaluates to the rank of $M^{\mathcal{A}}_\phi$ mod $p$, where
-the matrix is understood to have entries in $\mathbb{F}_p$.
+structure $\mathcal{A}$ and assignment $\pi \mapsto p$, for $p \leq r^{A}$
+prime, $[\rank (\vec{x}, \vec {\nu} \leq \vec{t}, \vec{y}\vec{\mu} \leq \vec{s},
+\pi \leq r). \phi]$ evaluates to the rank of $M^{\mathcal{A}}_\phi$ mod $p$,
+where the entries in $M^{\mathcal{A}}$ are interpreted as elements of
+$\mathbb{F}_p$.
 
 We should note that there are two different of rank logics defined in the
 literature. The first, introduced by Dawar et al.~\cite{Dawar09logicswith},
@@ -249,62 +245,58 @@ application of the fixed-point operator.
 
 Let $\FPrk[\tau]$ denote \emph{fixed-point logic with rank quantifiers} with
 respect to the vocabulary $\tau$. This logic, first introduced by Dawar et
-al~\cite{Dawar09logicswith}, is an extension of fixed-point logic by \emph{rank
-  quantifiers}. For a prime $p$ and $r$ a natural number, a rank quantifier
-$\rank^r_p$ is defined such that $\rank^r_p\vec{x}\vec{y}. \phi$ is interpreted
-as $[\rank (\vec{x}, \vec{y}, \pi) . \phi] \leq t$, where $\pi$ is assigned to
-$p$ and $t$ evaluates to $r$. The arity of this quantifier is $\vert \vec{x}
-\vert + \vert \vert{y} \vert$. We thus have a rank quantifier for every prime
-$p$, natural number $r$ and arity $k$. Let $\mathcal{R}$ be the set of all such
-quantifiers. Let $\FPrk[\tau]$ be the closure of $\FP[\tau]$ under the
-quantifiers in $\mathcal{R}$.
+al~\cite{Dawar09logicswith}, is similar to $\FPR$, except that it extends $\FP$
+by \emph{rank quantifiers}, rather than a rank operator, that can decide if a
+definable matrix has a rank bounded by some constant. We define for each prime
+$p$, and natural number $r$, a rank quantifier $\rank^r_p$, such that
+$\rank^r_p\vec{x}\vec{y}. \phi$ is interpreted as $[\rank (\vec{x}, \vec{y},
+\pi) . \phi] \leq t_r$, where $\pi$ is assigned to $p$ and $t_r$ is a number
+term that evaluates to $r$. The arity of this quantifier is $\vert \vec{x} \vert
++ \vert \vec{y} \vert$. Let $\mathcal{R}$ be the set of all such quantifiers and
+$\FPrk[\tau]$ be the closure of $\FP[\tau]$ under $\mathcal{R}$.
 
 We may also define an extension of first-order logic with rank quantifiers. Let
 $\FOrk[\tau]$ denote \emph{first-order with rank quantifiers} with respect to
 the vocabulary $\tau$, and be the set of all formulas in $\FPR[\tau]$ that do
 not contain an application of the fixed-point operator.
 
-For more detail on the syntax and semantics of these logics with rank
-quantifiers please see~\cite{Dawar09logicswith}. It is easy to see that $\FPrk
-\leq \FPR$ and $\FOrk \leq FOR$. In fact, Dawar et al.~\cite{Dawar09logicswith}
-shows that these inclusions are strict. Moreover, we note that $[\rank(\vec{x},
-\vec{y}). (\vec{x} = \vec{y}, \pi \leq r) \land \phi(\vec{x})]$ evaluates, for a
-structure $\mathcal{A}$ and any assignment $\pi \mapsto p$, to the number of
-assignments to $\vec{x}$ for which $\phi$ holds (i.e.\ $\vert \{\vec{a} \in
-U^{\vert \vec{x} \vert} : \mathcal{A} \models \phi[\vec{a}]\} \vert$). It
-follows that $\FPC \leq \FPR$ and $\FOC \leq \FOR$. Dawar et
-al.\cite{Dawar09logicswith} show that these inclusions are strict.
+For more detail on the syntax and semantics of logics rank quantifiers please
+see~\cite{Dawar09logicswith}. It is easy to see that $\FPrk \leq \FPR$ and
+$\FOrk \leq \FOR$. Moreover, we note that $[\rank(\vec{x}, \vec{y}).
+(\vec{x} = \vec{y}, \pi \leq r) \land \phi(\vec{x})]$ evaluates, for a structure
+$\mathcal{A}$ and any assignment $\pi \mapsto p$, to the number of assignments
+to $\vec{x}$ for which $\phi$ holds (i.e.\ $\vert \{\vec{a} \in U^{\vert \vec{x}
+  \vert} : \mathcal{A} \models \phi[\vec{a}]\} \vert$). It follows that $\FPC
+\leq \FPR$ and $\FOC \leq \FOR$. Dawar et al.\cite{Dawar09logicswith} show that
+all of these inclusions are strict.
 
 \subsection{Group Theory}
 Let $X$ be a set, we write $\sym_X$ to denote the symmetric group on the set
-$X$. For $n \in \nats$ we write $\sym_n$ to abbreviate $\sym_{[n]}$. We assume
-the reader is familiar with the basic theory of group actions.
+$X$. For $n \in \nats$ we write $\sym_n$ for $\sym_{[n]}$.
 
 Let $G$ be a group and let $H \leq G$. Let $X$ be a set on which a group action
-of $G$ is defined. This group action defines a natural action on
-$\mathcal{P}(X)$ (and hence $\mathcal{P}(\ldots(\mathcal{P}(X)))$) defined by
-$\sigma \cdot S := \{\sigma x : x \in S\}$ for $\sigma \in G$, $S \subseteq X$.
-Let $S \subseteq X$. We call $\stab_G(S) = \{\sigma in G : \forall x \in S \,
-\sigma x = x\}$ the \emph{stabiliser} of $S$ with respect to $G$. We call
-$\setstab_G(S) = \stab_G(\{S\}) = \{\sigma \in G : \sigma S = S\}$ the
-\emph{set-wise stabiliser} of $S$ with respect to $G$. We call $\orb_G(S) :=
-\{\sigma S : \sigma \in G\}$ the \emph{orbit} of $S$ with respect to $G$. If $S$
-is a singleton we omit the set bracers, e.g.\ we write $\orb_G(x)$ for
+of $G$ is defined. This group action can be lifted to a group action on
+$\mathcal{P}(X)$ (and hence $\mathcal{P}(\ldots(\mathcal{P}(X))\ldots)$) defined
+by $\sigma \cdot S := \{\sigma x : x \in S\}$ for $\sigma \in G$, $S \subseteq
+X$. Let $S \subseteq X$. We let $\stab_G(S) := \{\sigma \in G : \forall x \in S
+\,, \sigma x = x\}$ be the \emph{stabiliser} of $S$ with respect to $G$. We let
+$\setstab_G(S) := \stab_G(\{S\}) = \{\sigma \in G : \sigma S = S\}$ be the
+\emph{set-wise stabiliser} of $S$ with respect to $G$. We let $\orb_G(S) :=
+\{\sigma S : \sigma \in G\}$ be the \emph{orbit} of $S$ with respect to $G$. If
+$S$ is a singleton we omit the set bracers, e.g.\ we write $\orb_G(x)$ for
 $\orb_G(\{x\})$. If $G = \sym_n$ for some $n \in \nats$ we replace the subscript
-with the number $n$, e.g.\ we write $\orb_n(x)$ for $\orb_{\sym_n}(x)$. If the
-group $G$ is obvious from context we omit the subscript, e.g.\ we write
-$\orb(x)$ for $\orb_G(x)$.
+with the number $n$, e.g.\ we write $\orb_n(x)$ for $\orb_{\sym_n}(x)$, and if
+the group $G$ is obvious from context we omit the subscript entirely.
 
 \subsection{Boolean Functions, Bases, and Circuits}
-A (finite) \emph{Boolean function} is a function of the form $f: \{0,1\}^X
-\rightarrow \{0,1\}$, for some finite index set $X$. We often take $X = [n]$,
-and think of $f$ as taking $n$-length strings as inputs. We call a Boolean
-function $f: \{0,1\}^X \rightarrow \{0,1\}$ \emph{symmetric} if for all $\sigma
-\in \sym_X$ and $\vec{a} \in \{0,1\}^X$, $f (\vec{a} \sigma) = f(\vec{a})$. It
-follows that a Boolean function is symmetric if, and only if, the output of the
-function is entirely determined by the number of ones in the input. We say a
-function $f : \{0,1\}^{*} \rightarrow \{0,1\}$ is \emph{symmetric} if its
-restriction to inputs of size $n$ is symmetric for all $n$.
+A \emph{Boolean function} is a function of the form $f: \{0,1\}^X \rightarrow
+\{0,1\}$, for some finite index set $X$. We call a Boolean function $f:
+\{0,1\}^X \rightarrow \{0,1\}$ \emph{symmetric} if for all $\sigma \in \sym_X$
+and $\vec{a} \in \{0,1\}^X$, $f (\vec{a} \sigma) = f(\vec{a})$. It follows that
+a Boolean function is symmetric if, and only if, the output of the function is
+entirely determined by the number of ones in the input. We say a function $f :
+\{0,1\}^{*} \rightarrow \{0,1\}$ is \emph{symmetric} if its restriction to
+inputs of size $n$ is symmetric for all $n$.
 
 A \emph{Boolean basis} (or \emph{basis}) is a set of Boolean functions. We
 always denote a basis by $\BB$. It is common in the literature to define a basis
@@ -322,20 +314,19 @@ Let $\BB$ be a basis. A \emph{Boolean circuit} $C$ defined over $\BB$ is a
 labelled directed acyclic graph (DAG) with designated input gates $x_1, \ldots,
 x_n$, each with in-degree $0$, internal gates labelled by elements of $\BB$, and
 a single internal gate with out-degree $0$ designated as the output gate. We say
-a circuit with $n$ input gates has \emph{order $n$}. Let $C$ be a Boolean
-circuit of order $n$ and let $\vec{a} := (a_1, \ldots, a_n) \in \{0,1\}^n$. The
-evaluation of $C$ for the input $\vec{a}$ is denoted by $C[\vec{a}]$ and is
-defined by induction on the structure of the circuit. We denote the evaluation
-of a gate $g$ in $C$ for the input $\vec{a}$ by $C[\vec{a}](g)$. If $g$ is an
-input gate, then $g = x_i$ and $C[\vec{a}](g) = a_i$. If $g$ is an internal gate
-then $g$ is labelled by a symbol denoting a Boolean operation, and
-$C[\vec{a}](g)$ is the result of applying that operation the string formed from
-the evaluations of those gates input to $g$. If $g$ is the output gate, let
-$C[\vec{a}] = C[\vec{a}](g)$.
+a circuit with $n$ input gates has \emph{order $n$}. The evaluation of circuit
+$C$ of order $n$ for the input $\vec{a} \in \{0,1\}^n$ is denoted by
+$C[\vec{a}]$ and computed by recursively evaluation the gates in the circuit. We
+denote the evaluation of a gate $g$ in $C$ for the input $\vec{a}$ by
+$C[\vec{a}](g)$. If $g$ is an input gate, then $g = x_i$ for some $i \in [n]$,
+and $C[\vec{a}](g) = a_i$. If $g$ is an internal gate then $g$ is labelled by a
+symbol denoting a Boolean operation, and $C[\vec{a}](g)$ is the result of
+applying that operation the string formed from the evaluations of those gates
+input to $g$. If $g$ is the output gate, let $C[\vec{a}] = C[\vec{a}](g)$.
 
-The \emph{size} of a circuit $C$, denoted by $\vert C \vert$ is the number of
-gates in the circuit. The \emph{depth} of a gate is the longest path from an
-input gate to that gate, and the \emph{depth} if the circuit is the depth of the
+The \emph{size} of a circuit $C$, denoted by $\vert C \vert$, is the number of
+gates in the circuit. The \emph{depth} of a gate $g$ is the longest path from an
+input gate to $g$, and the \emph{depth} if the circuit is the depth of the
 output gate. The \emph{width} of a circuit is the maximum size of a set of gates
 with the same depth.
 
@@ -354,30 +345,32 @@ $(C_n)_{n \in \nats}$ \emph{decides} a language $L : \{0,1\}^{*} \rightarrow
 \end{definition}
 
 \subsection{Circuits for Structures}
-Anderson and Dawar~\cite{AndersonD17} define a circuit that takes as input an
-encoding of a finite relational structure. Let $\tau$ be a vocabulary, $\BB$ be
-a basis of symmetric functions and $q, n \in \nats$. A \emph{circuit for
-  structures} (or \emph{circuit}) $C$ is a DAG with a designated set of input
-gates each labelled by a relation symbol $R \in \tau$ and a tuple $\vec{a} \in
-[n]^{\arty(R)}$, internal gates each labelled by an element of $\BB$, and a
-designated set of output gates, each labelled by a unique element of $[n]^q$.
+A \emph{circuit for structures} (or just \emph{circuit}), defined by Anderson
+and Dawar~\cite{AndersonD17}, takes as input an encoding of a $\tau$-structure
+and outputs a set of tuples from that structure. More formally, for a vocabulary
+$\tau$, a basis $\BB$ of symmetric functions, and $q, n \in \nats$, a
+\emph{circuit for structures} is a DAG with (i) a designated set of input gates,
+each labelled by a relation symbol $R \in \tau$ and a tuple $\vec{a} \in
+[n]^{\arty(R)}$, (ii) a set of internal gates, each labelled by an element of
+$\BB$, and (iii) a designated set of output gates, each labelled by a unique
+element of $[n]^q$.
 
-Let $\mathcal{A}$ be a $\tau$-structure of size $n$ and fix a bijection $\gamma$
-from the universe of $\mathcal{A}$ to $[n]$. This bijection defines an encoding
-of $\mathcal{A}$ as a $\tau$-structure with universe $[n]$. This encoding
-defines an assignment to the input gates of the circuit, assigning the gate
-labelled by the relation symbol $R$ and tuple $\vec{a})$ to one if, and only if,
-$\vec{a}$ is an element of the interpretation of $R$ in the encoding of
-$\mathcal{A}$. The circuit may then be recursively evaluated, with the
-evaluation of the output gates taken as the output of the circuit. We note that
-an evaluation of the output gates (and hence the output of the circuit) is an
-element of $\{0,1\}^{[n]^q}$. The circuit then associates with every
-$\tau$-structure and bijection $\gamma$ a set of $q$-tuples in $\mathcal{A}$.
+Let $\mathcal{A}$ be a $\tau$-structure of size $n$ and $\gamma$ be a bijection
+from the universe of $\mathcal{A}$ to $[n]$. The bijection $\gamma$ defines an
+encoding of $\mathcal{A}$ as a $\tau$-structure with universe $[n]$. The input
+gate labelled by the relation symbol $R$ and tuple $\vec{a}$ is assigned to one
+if, and only if, $\vec{a}$ is an element of the interpretation of $R$ in the
+encoding of $\mathcal{A}$. The circuit may then be recursively evaluated, and
+the evaluation of the output gates is taken as the output of the circuit. Since
+each output gate is labelled by an element of $[n]^q$, the output of the circuit
+is an element of $\{0,1\}^{[n]^q}$. In other words, a circuit maps a
+$\tau$-structure $\mathcal{A}$ and bijection $\gamma$ to a set of $q$-tuples in
+$\mathcal{A}$.
 
 A circuit is called \emph{invariant} if its output does not depend on the choice
-of $\gamma$. In this case the circuit defines a $q$-ary query of
+of $\gamma$. In this case the circuit defines a $q$-ary query on
 $\tau$-structures. If $C$ is an invariant circuit with $q = 0$, and the circuit
-has a single output gate and decides a property of $\tau$-structures. A circuit
+has a single output gate, then $C$ decides a property of $\tau$-structures. A circuit
 is called \emph{symmetric} if every permutation on the universe $[n]$, each of
 which induces a permutation on the input gates, extends to an automorphism of
 the circuit. A symmetric circuit is necessarily invariant.
