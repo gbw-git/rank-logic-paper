@@ -1,8 +1,33 @@
 \ProvidesPackage{mymacros}[2017/02/23 v1.0 My own macro]
 
+% USEFUL MACROS
+\newcommand{\logic}[1]{\text{\upshape #1}\xspace} 
+\newcommand{\bd}[1]{\mathbf{#1}} % for bolding symbols
+\newcommand{\mathsc}[1]{{\normalfont\textsc{#1}}}
+
+% BASIC MATHS
 \newcommand{\reals}{\mathbb{R}} \newcommand{\nats}{\mathbb{N}}
 \newcommand{\ff}{\mathbb{F}}
-\newcommand{\logic}[1]{\text{\upshape #1}\xspace} 
+\newcommand{\RR}{\mathbb{R}} % for Real numbers
+\newcommand{\ZZ}{\mathbb{Z}} % for Integers
+\newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+\newcommand{\kernal}{\text{\textbf{ker}}} 
+\newcommand{\dom}{\text{\textbf{Dom}}}
+\newcommand{\img}{\text{\textbf{Img}}} 
+
+% GROUP THEORY
+\newcommand{\alt}{\text{\textbf{Alt}}}
+\newcommand{\sym}{\text{\textbf{Sym}}}
+
+% COMPLEXITY THEORY
+\newcommand{\PT}{\ensuremath{\mathrm{P}}\xspace}
+\newcommand{\NP}{\ensuremath{\mathrm{NP}}\xspace}
+\newcommand{\arty}{\ensuremath{\mathrm{arty}}}
+
+% LOGIC
+\newcommand{\width}{\ensuremath{\mathrm{width}}\xspace}
+\newcommand{\cl}[1]{\mathrm{cl}(#1)}
+\newcommand{\free}[1]{\mathrm{free}(#1)}
 \newcommand{\FPC}{\logic{FPC}}
 \newcommand{\FO}{\logic{FO}} 
 \newcommand{\FP}{\logic{FP}}
@@ -10,16 +35,26 @@
 \newcommand{\FOC}{\logic{FOC}}
 \newcommand{\FOrk}{\logic{FO+rk}}
 \newcommand{\FPrk}{\logic{FP+rk}}
-\newcommand{\FPR}{\logic{FPR}} 
+\newcommand{\FPR}{\logic{FPR}}
+
+% LOGIC OPERATORS
+\newcommand{\AND}{\logic{AND}}
+\newcommand{\OR}{\logic{OR}}
+\newcommand{\NOT}{\logic{NOT}}
+\newcommand{\MAJ}{\logic{MAJ}}
+\newcommand{\NAND}{\logic{NAND}}
+\newcommand{\lfp}[2]{[\text{\textbf{lfp}}_{#1} \, #2 ]} 
+\newcommand{\ifp}{\text{\textbf{ifp}}} 
+\newcommand{\nand}{\text{\textbf{nand}}} 
+% BASES
+\newcommand{\BB}{\mathbb{B}}
+\newcommand{\BS}{\BB_{\text{std}}}
+\newcommand{\RB}{\BB_{\rank}}
+\newcommand{\MB}{\BB_{\text{mat}}}
+\newcommand{\SB}{\BB_{\sym}}
+\newcommand{\BM}{\BB_{\maj}}
+
 %\newcommand{\CPTC}{\logic{$\tilde{\text{C$PT(Card)}}
-\newcommand{\ind}{\logic{ind}}
-\newcommand{\ord}{\logic{ord}}
-\newcommand{\PT}{\ensuremath{\mathrm{P}}\xspace}
-\newcommand{\NP}{\ensuremath{\mathrm{NP}}\xspace}
-\newcommand{\arty}{\ensuremath{\mathrm{arty}}}
-\newcommand{\bd}[1]{\mathbf{#1}} % for bolding symbols
-\newcommand{\RR}{\mathbb{R}} % for Real numbers
-\newcommand{\ZZ}{\mathbb{Z}} % for Integers
 
 \newcommand{\col}[1]{\begin{matrix} #1 \end{matrix} \right]}
 \newcommand{\comb}[2]{\binom{#1^2 + #2^2}{#1+#2}}
@@ -29,13 +64,6 @@
 \newcommand{\sortstab}{\text{\textbf{SortStab}}}
 \newcommand{\inv}{\text{\textbf{inv}}} 
 \newcommand{\aut}{\text{\textbf{Aut}}}
-\newcommand{\kernal}{\text{\textbf{ker}}} 
-\newcommand{\alt}{\text{\textbf{Alt}}}
-\newcommand{\sym}{\text{\textbf{Sym}}}
-
-\newcommand{\width}{\ensuremath{\mathrm{width}}\xspace}
-
-%\newcommand{\widthsv}{\text{width}}
 
 \newcommand{\std}{\text{\textbf{std}}}
 \newcommand{\rank}{\text{\textbf{rk}}} 
@@ -43,8 +71,6 @@
 \newcommand{\SP}{\text{\textbf{SP}}} 
 \newcommand{\SPs}{\text{\textbf{SPs}}}
 \newcommand{\maj}{\text{\textbf{maj}}} 
-\newcommand{\dom}{\text{\textbf{Dom}}}
-\newcommand{\img}{\text{\textbf{Img}}} 
 \newcommand{\child}{\text{child}}
 \newcommand{\countgate}{\text{count}} 
 \newcommand{\agree}{\text{AGREE}}
@@ -61,18 +87,10 @@
 \newcommand{\types}{\text{types}} 
 \newcommand{\spstab}[1]{\stab (\consp (#1))}
 \newcommand{\FA}[1]{\textsc{#1}}
-\newcommand{\nand}{\text{\textbf{nand}}} 
-\newcommand{\ifp}{\text{\textbf{ifp}}} 
 \newcommand{\Alpha}{A} 
 \newcommand{\sortsym}{\text{\textbf{SortSym}}}
 \newcommand{\matsym}{\text{\textbf{MatSym}}}
-\newcommand{\AND}{\logic{AND}}
-\newcommand{\OR}{\logic{OR}}
-\newcommand{\NOT}{\logic{NOT}}
-\newcommand{\MAJ}{\logic{MAJ}}
-\newcommand{\NAND}{\logic{NAND}}
 %\newcommand{\lfp}{\mathbb{lfp}}
-\newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
 %\newcommand{\ind}{\logic{ind}}
 %\newcommand{\ord}{\logic{ord}}
 \newcommand\restr[2]{{% we make the whole thing an ordinary symbol
@@ -82,16 +100,8 @@
   \right|_{#2} % this is the delimiter
 }}
 
-\newcommand{\mathsc}[1]{{\normalfont\textsc{#1}}}
-\newcommand{\lfp}[2]{[\text{\textbf{lfp}}_{#1} \, #2 ]} 
 \newcommand{\op}[1]{\mathsc{#1}}
 
-\newcommand{\BB}{\mathbb{B}}
-\newcommand{\BS}{\BB_{\text{std}}}
-\newcommand{\RB}{\BB_{\rank}}
-\newcommand{\MB}{\BB_{\text{mat}}}
-\newcommand{\SB}{\BB_{\sym}}
-\newcommand{\BM}{\BB_{\maj}}
 \newcommand{\range}{\text{range}}
 \newcommand{\depth}{\text{depth}}
 
@@ -99,3 +109,6 @@
 \newcommand{\universe}[1]{\text{unv}(#1)}
 \newcommand{\vocab}[1]{\text{voc}(#1)}
 \newcommand{\str}[1]{\text{str}(#1)}
+\newcommand{\ind}{\logic{ind}}
+\newcommand{\ord}{\logic{ord}}
+
