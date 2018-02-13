@@ -303,44 +303,32 @@ circuit
 \end{definition}
 
 \subsection{Translating FPR to Symmetric Matrix Circuits}
-In this subsection we translate $\FPR$-formulas into families of transparent
-rank-circuits. In particular, we now show that for $\theta(\vec{x}) \in
-\FPR[\tau]$ there exists a $P$-uniform family of symmetric rank-circuits
-$(C_n)_{n \in \nats}$ such that the query computed by $(C_n)_{n \in \nats}$ is
-equal to the query defined by $\theta (\vec{x})$.
+% In this subsection we translate $\FPR$-formulas into families of transparent
+% rank-circuits. In particular, we now show that for $\theta(\vec{x}) \in
+% \FPR[\tau]$ there exists a $P$-uniform family of symmetric rank-circuits
+% $(C_n)_{n \in \nats}$ such that the query computed by $(C_n)_{n \in \nats}$ is
+% equal to the query defined by $\theta (\vec{x})$.
 
 We say that a circuit $C$ \emph{translates} a formula $\psi(\vec{x})$ for $n \in
 \nats$ if $C$ is a transparent symmetric rank-circuit of order $n$, $C$ is
-defined over the same vocabulary as $\psi (\vec{x})$, and $C$ computes the query
-defined by $\psi(\vec{x})$ on structures of size $n$. We say a family of
-circuits $(C_n)_{n \in \nats}$ \emph{translates} a formula $\psi (\vec{x})$ if
-$(C_n)_{n \in \nats}$ is $\PT$-uniform and for all $n \in \nats$, $C_n$
-translates $\psi(\vec{x})$ for $n$.
-
-\begin{definition}
-	Let $\alpha : X \rightarrow Y$ and $\beta : W \rightarrow Z$. We say that $f$
-  is \emph{compatible} with $g$, and we write $f \sim g$, if for all $a \in X
-  \cap W$, $f(a) = g(a)$ and for all $a \in X \setminus W$ and $b \in W
-  \setminus X$, $f(a) \neq g(b)$.
-\end{definition}
+defined over the same vocabulary as $\psi$, and $C$ computes the query defined
+by $\psi(\vec{x})$ on structures of size $n$. We say a family of circuits
+$(C_n)_{n \in \nats}$ \emph{translates} a formula $\psi (\vec{x})$ if $(C_n)_{n
+  \in \nats}$ is $\PT$-uniform and for all $n \in \nats$, $C_n$ translates
+$\psi(\vec{x})$ for $n$.
 
 We now prove that for every $\FOrk$-formula $\theta(\vec{x})$ and $n \in \nats$
-there exists a circuit $C$ that translates $\theta(\vec{x})$ for $n$. The gates
-of $C$ are of the form $g_{\psi, \alpha}$, where $\psi(\vec{y})$, a sub-formula
-of $\theta(\vec{x})$, and $\alpha$ is an assignment to the free variables of
-$\psi$. We then wire up the gates such that $g_{\psi, \alpha}$ is associated
-with an appropriate function from the basis, and the children of $g_{\psi,
-  \alpha} $ are those gates $g_{\phi, \beta}$, where $\phi$ is an immediate
-sub-formula of $\psi$ and $\beta$ is an assignment to the free variables in
-$\phi$ that agrees with the assignment $\alpha$. The resultant circuit is
-symmetric and has the property that $g_{\psi, \alpha}$ evaluates to one for a
-given input structure if, and only if, $\psi$ holds for that structure given the
-assignment $\alpha$. However, as stated this construction does not result in a
-transparent circuit. In order to ensure that $C$ is also transparent we first
-alter $\theta$ by appending to each application of the rank operator a gadget
-that ensures that no two children of a rank gate are syntactically-equivalent.
-We now formally define this construction and, moreover, provide a bound on the
-running time of the algorithm constructing this circuit.
+there exists a circuit $C$ that translates $\theta(\vec{x})$ for $n$. We
+construct $C$ by including for each sub-formula $\psi \in \cl{\theta}$ and
+assignment $\alpha \in [n]^{\free{\psi}}$ a gate $g_{\psi[\alpha]}$. The
+children of $g_{\psi[\alpha]}$ are the gates of the form $g_{\phi[\beta]}$,
+where $\phi$ is an immediate sub-formula of $\psi$ and $\beta$ is an assignment
+to the free variables of $\psi$ that is compatible with the assignment $\alpha$.
+The gate $g_{\psi[\alpha]}$ for an input structure over the universe $[n]$
+evaluates to one if, and only if, $\psi$ holds for the input structure with the
+assignment $\alpha$. We now construct the translation of $\theta$ for $n$, and
+prove that the construction can be completed in a time bound that depends on $n$
+and certain properties of the formula $\theta$.
 
 \begin{lem}
   There is an algorithm that takes in a $\FOrk$-formula $\theta(\vec{x})$ and $n
@@ -348,38 +336,76 @@ running time of the algorithm constructing this circuit.
   for $n$. Moreover, there is a polynomial in $p$ such that for an input
   $(\theta(\vec{x}), n)$ the algorithm terminates in at most
   $p(n^{\width(\theta)}\vert \cl{\theta} \vert)$ many steps.
+  \label{lem:translating-FOrk}
 \end{lem}
 \begin{proof}
   Let $\tau$ be the vocabulary of $\theta(\vec{x})$. Let $k := \width(\theta)$.
-  Suppose $\tau$ is empty. In this case we can evaluate $\theta$ for each
-  assignment $\vec{a}$ in a number of steps polynomial in $n^k \vert \cl{\theta}
-  \vert$. Let $f : [n]^k \rightarrow \{0,1\}$ be defined such that $f (\vec{a})
-  = 1$ if, and only if, $[n] \models \theta[\vec{a}]$. Let $C = \langle G,
-  \Sigma, \Omega, \Lambda, L \rangle$, where
+  Suppose $\tau$ is empty. Since the vocabulary of $\tau$ is empty, all of the
+  atomic formula in $\theta(\vec{x})$ are of the form $y_1 = y_2$, where $y_1$
+  and $y_2$ are variables. It can be shown that, for an assignment $\vec{a}$ to
+  $\vec{x}$, we can evaluate $[n] \models \theta[\vec{a}]$ in time polynomial in
+  $n^{k} \vert \cl{\theta} \vert$. Let $f : [n]^k \rightarrow \{0,1\}$ be
+  defined such that $f (\vec{a}) = 1$ if, and only if, $[n] \models
+  \theta[\vec{a}]$. Let $C := \langle G, \Sigma, \Omega, \Lambda, L \rangle$,
+  where
   \begin{itemizens}
   \item $G = \{g_0, g_1\} \cup \{g_{\vec{a}} : \vec{a} \in [n]^{k}\}$,
   \item $\Sigma (g_0) = 0$, $\Sigma (g_1) = 1$ and $\Sigma (g_{\vec{a}}) =
     \land[1]$,
   \item $\Omega : [n]^k \rightarrow G$ is defined by $\Omega(\vec{a}) =
     g_{\vec{a}}$ for all $\vec{a} \in [n]^k$,
-  \item $\Lambda = \emptyset$,
+  \item $\Lambda = \emptyset$, and
   \item for $\vec{a} \in [n]^k$, $L(g_{\vec{a}}) : [1] \rightarrow G$ is defined
     by $L(g_{\vec{a}})(1) = g_{f(\vec{a})}$.
   \end{itemizens}
   
   Since $C$ has symmetric gates, $C$ is transparent. Notice that, since
   $\theta(\vec{x})$ defines a query on structures over the empty vocabulary, we
-  have for all $\sigma \in \sym_n$, $f(\sigma \vec{a}) = f(\vec{a})$ for all
-  $\vec{a} \in [n]^k$. For $\sigma \in \sym_n$, let $\pi_\sigma : G \rightarrow
-  G$ be a bijection that fixes the constant gates and such that $\pi_{\sigma}
-  (g_{\vec{a}}) = g_{\sigma \vec{a}}$ for all $\vec{a} \in [n]^k$. Then
+  have for all $\vec{a} \in [n]^k$, $\sigma \in \sym_n$, $f(\sigma \vec{a}) =
+  f(\vec{a})$. For $\sigma \in \sym_n$, let $\pi_\sigma : G \rightarrow G$ be a
+  bijection that fixes the constant gates and such that $\pi_{\sigma}
+  g_{\vec{a}} = g_{\sigma \vec{a}}$ for all $\vec{a} \in [n]^k$. Then
   $\pi_\sigma \Omega (\vec{a}) = \pi_\sigma g_{\vec{a}} = g_{\sigma \vec{a}} =
   \Omega (\sigma \vec{a})$. It follows that $\pi_\sigma$ is an automorphism of
-  the circuit extending $\sigma$. It follows that $C$ is symmetric, and so $C$
+  the circuit extending $\sigma$, and $C$ is symmetric. We thus have that $C$
   translates $\theta(\vec{x})$ for $n$.
 
-  Suppose $\tau$ is not empty. Let $R \in \tau$. We now construct a $C'$ that,
-  but for transparency, translates $\theta(\vec{x})$ at $n$.
+  Suppose $\tau$ is not empty. Let $R \in \tau$. We first define two helper
+  formulas. For a variable $y$ let $\op{no-op}(y) := (R(y, y) \land (\neg R(y,
+  y)))$. For a sequence of variables $\vec{y} = (y_1, \ldots, y_m)$ let
+  $\op{tag} (\vec{y}) := \op{no-op}(y_1) \land (\op{no-op}(y_2) \land (
+  \op{no-op}(y_2) \land ( \ldots \land (\op{no-op}(y_m)) \ldots)))$. Let
+  $\lambda (\vec{x})$ be constructed from $\theta(\vec{x})$ by replacing each
+  sub-formula $\psi(\vec{y})$ of the form $\rank^r_p \vec{w} \vec{z} . \phi$
+  with the formula $\rank^r_p \vec{w}\vec{z} . ((\forall u . u = u) \land \phi)
+  \land \op{tag}(\vec{w} \cup \vec{z})$. Since the sub-formulas added are
+  tautologies, the matrix defined at this point remains unchanged, and so
+  $\lambda (\vec{x})$ and $\theta (\vec{x})$ are equivalent. The idea is that
+  $\op{tag}$ adds a tower of conjunctions of tautologies each referencing
+  exactly one variable from $\vec{w} \cup \vec{z}$, and so encoding the order of
+  the sequence of variables $\vec{w} \cup \vec{z}$ in the syntax of the formula.
+  When we define a circuit from this formula, each input to the rank gate will
+  be `tagged' with a unique assignment to $\vec{w} \cup \vec{z}$, preventing two
+  inputs from being syntactically-equivalent, and so ensuring the circuit is
+  transparent.
+
+  % We also relabel the bound variables in $\lambda(\vec{x})$ such that there
+  % are
+  % no two sub-formulas $\psi$ and $\psi'$ such that $\psi$ and $\psi'$ are
+  % equal
+  % up to a renaming of those variables that are bound in $\psi$ or $\psi'$.
+
+  % Let $\psi (\vec{y}) \in \FOrk$ and $\alpha \in [n]^{\vec{y}}$. Let
+  % $\psi[\alpha]$ be the result of substituting $\vec{y}$ for $\alpha(y)$ in
+  % $\psi(\vec{y})$. If $\psi$ is of the form $y_1 = y_2$. Then $\psi [\alpha] =
+  % 1$ if $\alpha(y_1) = \alpha (y_2)$ and $\psi[\alpha] = 0$ otherwise.
+
+
+  We note that $\lambda(\vec{x})$ has the same width as $\theta(\vec{x})$, and
+  that the number of sub-formulas in $\lambda(\vec{x})$ is at most $\vert
+  \cl{\theta} \vert (5 + 4\width(\theta))$. We now construct a circuit $C$ and
+  show that $C$ translates $\lambda(\vec{x})$ (and hence $\theta(\vec{x})$) at
+  $n$.
 
   % We first
   % pre-proccess the formula $\theta(\vec{x})$
@@ -395,135 +421,348 @@ running time of the algorithm constructing this circuit.
   % \vec{w}\vec{z} . ((\forall u . u = u) \land \phi) \land \op{add-tag}(\vec{w}
   % \cup \vec{z})$.
 
-  Fix $n \in \nats$. For each $\psi \in \cl{\theta'}$ let $G_\psi := \{g_{\psi,
-    \alpha} : \alpha \in [n]^{\free{\psi}} \}$. Let $G_{\text{sub}} :=
-  \bigcup_{\psi \in \cl{\theta}} G_{\psi}$ and $G_c := \{g_0, g_1\}$. Let $G' := G_c \cup
-    G_{\text{sub}}$. We define $\Sigma'$, $\Lambda'$ and $L'$ as follows. Let
-    $\Sigma' (g_1) = 1$ and $\Sigma' (g_0) = 0$. If $g_{\psi, \alpha} \in G'
-    \setminus G_c$.
+  Let $\vec{y}$ be a sequence of variables. We abuse notation and write $\alpha
+  :\vec{y} \rightarrow A$ to indicate that $\alpha$ maps the variables in the
+  sequence $\vec{y}$ to elements of the set $A$.
 
-    \begin{itemizens}
-    \item If $\psi$ is of the form $T(\vec{y})$ for some $T \in \tau$, then
-      $\Sigma' (g_{\psi, \alpha}) = T$ and $\Lambda_T' (g_{\psi, \alpha}) =
-      \alpha \vec{y}$.
-    \item If $\psi$ is of the form $(y_1 = y_2)$, then $\Sigma' (g_{\psi,
-        \alpha}) = \land[1]$ and $L'(g) : [1] \rightarrow G$ by $L(g)(1) = g_1$
-      if $\alpha (y_1) = \alpha (y_2)$ and $L'(g)(1) = g_0$ otherwise.
-    \item If $\psi$ is of the form $\rank^r_p \vec{w} \vec{z}. \phi$, let $a =
-      n^{\vert \vec{w}\vert}$ and $b = n^{\vert \vec{z}\vert}$, and $\Sigma'
-      (g_{\psi, \alpha}) = \rank[a, b]$. Let $L'(g) : [a] \times [b] \rightarrow
-      G$ be defined by $L'(g)(i,j) = g_{\phi, \beta}$, where $\beta : \vec{w}
-      \cup \vec{z} \cup \vec{y} \rightarrow [n]$ is such that $\alpha \subseteq
-      \beta$ and such $\beta \vec{y}$ and $\beta \vec{z}$ are the $i$th and
-      $j$th elements of $[n]^{\vert \vec{w} \vert}$ and $[n]^{\vert \vec{z}
-        \vert}$ in the lexicographical ordering.
-    \item If $\psi$ is of the form $Q z . \phi(\vec{y}, z)$, for $Q \in
-      \{\forall, \exists\}$, then if $Q = \forall$ we have $\Sigma' (g_{\psi,
-        \alpha}) = \land [n]$, otherwise $\Sigma' (g_{\psi, \alpha}) = \lor
-      [n]$. Let $L'(g) : [n] \rightarrow G$ be defined by $L'(g)(i) = g_{\phi,
-        \beta_i}$, where $\beta_i \in [n]^{\vec{y} \cup \{z\}}$ and $\alpha
-      \subseteq \beta_i$ and $\beta_i (z) = i$.
-    \item If $\psi$ has free variables $\vec{y}$ and is of the form $\phi_1
-      (\vec{y}_1) \land \phi_2(\vec{y}_2)$, where $\vec{y_1}, \vec{y_2}
-      \subseteq \vec{y}$, then $\Sigma'(g_{\psi, \alpha}) = \land[2]$ and $L'(g)
-      : [2] \rightarrow G$ is defined by $L'(g)(i) = g_{\phi_i, \beta_i}$ where
-      $\beta_i \in [n]^{\vec{y}_i}$ and $\beta_i \subseteq \alpha$ for $i \in
-      [2]$. The same approach is used in the disjunctive case.
-    \item if $\psi$ is of the form $\neg \phi$ then $\Sigma' (g_{\psi, \alpha})
-      = \neg$ and $L'(g): [1] \rightarrow G$, where $L'(g)(1) = g_{\phi,
-        \alpha}$.
-    \end{itemizens}
+  Fix $n \in \nats$. Let $\psi \in \FOrk$ and $\alpha \in [n]^{\free {\psi}}$.
+  We let $\psi[\alpha]$ be the result of substituting each occurrence of the
+  free variable $y \in \free{\psi}$ in $\psi$ with $\alpha(y)$. If $\psi$ is of
+  the form $y_1 = y_2$. Then $\psi [\alpha] = 1$ if $\alpha(y_1) = \alpha (y_2)$
+  and $\psi[\alpha] = 0$ otherwise. We call $\psi[\alpha]$ a \emph{ground
+    formula}. For each $\psi \in \cl{\theta}$ let $G_\psi := \{g_{\phi[\alpha]}
+  : \alpha \in [n]^{\free{\psi}} \}$. Let $G := \bigcup_{\psi \in \cl{\lambda}}
+  G_{\psi}$. We define $\Sigma$, $\Lambda$ and $L$ as follows. Let $\Sigma (g_1)
+  = 1$ and $\Sigma (g_0) = 0$. Let $g := g_{\psi[\alpha]} \in G$.
+  
+  \begin{itemizens}
+  \item If $\psi[\alpha] = T(\vec{a})$ for some $T \in \tau$ and $\vec{a} \in
+    \arty(T)$, then $\Sigma (g) = T$ and $\Lambda_T (g) = \vec{a}$.
+  \item If $\psi[\alpha]$ is $0$ or $1$, then $\Sigma (g) = \psi[\alpha]$.
+  \item If $\psi$ is of the form $\rank^r_p \vec{w} \vec{z}. \phi$, let $A =
+    [n]^{\vert \vec{w}\vert}$ and $B = [n]^{\vert \vec{z}\vert}$, and $\Sigma
+    (g_{\psi, \alpha}) = \rank[A, B]$. Let $L(g) : A \times B \rightarrow G$ be
+    defined by $L(g)(\vec{a},\vec{b}) = g_{\phi[\beta]}$, where $\beta \in
+    [n]^{\free{\phi}}$, and where $\alpha$, and the assignments
+    $\alpha^{\vec{w}}_{\vec{a}}$ and $\alpha^{\vec{z}}_{\vec{b}}$, are
+    compatible with $\beta$.
+  \item If $\psi$ is of the form $Q z . \phi(\vec{y}, z)$, for $Q \in \{\forall,
+    \exists\}$, then if $Q = \forall$ we have $\Sigma (g) = \land [n]$,
+    otherwise $\Sigma (g) = \lor [n]$. Let $L(g) : [n] \rightarrow G$ be defined
+    for $i \in [n]$ by $L(g)(i) = g_{\phi[\beta_i]}$, where $\beta_i \in
+    [n]^{\free{\psi}}$, and where both $\alpha$ and $\alpha^{z}_{i}$ are
+    compatible with $\beta_i$.
+  \item If $\psi$ is of the form $\phi_1 \land \phi_2$, then $\Sigma(g) =
+    \land[2]$ and $L(g) : [2] \rightarrow G$ is defined for $i \in [2]$ by
+    $L(g)(i) = g_{\phi_i[\beta_i]}$, where $\beta_i \in [n]^{\free{\psi}}$ and
+    $\beta_i$ is compatible with $\alpha$. The same approach is used in the
+    disjunctive case.
+  \item if $\psi$ is of the form $\neg \phi$ then $\Sigma (g) = \neg$ and $L(g):
+    [1] \rightarrow G$, where $L(g)(1) = g_{\phi[\alpha]}$.
+  \end{itemizens}
 
-    We let $\Omega' : [n]^k \rightarrow G$ be defined by $\Omega' (\vec{a}) =
-    g_{\theta, \alpha}$, where $\alpha \vec{x} = \vec{a}$, for all $\vec{a} \in
-    [n]^k$. Let $C' := \langle G', \Omega', \Sigma', \Lambda', L' \rangle$. We
-    notice that $\vert C' \vert \leq n^{\width(\theta)} \vert \cl{\theta}
-    \vert$. It can be shown that $C'$ can be constructed in time bounded by a
-    polynomial in the size of $C'$.
+  We let $\Omega : [n]^k \rightarrow G$ be defined by $\Omega (\vec{a}) =
+  g_{\lambda [\alpha]}$, where $\alpha := \alpha^{\vec{x}}_{\vec{a}}$, for all
+  $\vec{a} \in [n]^k$. Suppose $\Omega (\vec{a}) = g_c$, where $ c \in {0,1}$.
+  Then $\lambda$ (and $\theta$) is of the form $(y_1 = y_2)$. But then the
+  vocabulary of $\theta$ is empty, contradicting our assumption. Suppose $\Omega
+  (\vec{a}) = \Omega(\vec{b})$ for $\vec{a}, \vec{b} \in [n]^k$. Then
+  $g_{\lambda[\alpha^{\vec{x}}_{\vec{a}}]} =
+  g_{\lambda[\alpha^{\vec{x}}_{\vec{b}}]}$, and so $\alpha^{\vec{x}}_{\vec{a}} =
+  \alpha^{\vec{x}}_{\vec{b}}$, and $\vec{a} = \vec{b}$. It follows that $\Omega$
+  is injective. Let $T \in \tau$, and let $g_{\psi[\alpha]}, g_{\phi[\beta]} \in
+  G$ be such that $\Lambda_T (g_{\psi[\alpha]}) = \Lambda_T (g_{\phi[\beta]})$.
+  Then $\psi[\alpha] = \Lambda_T (g_{\psi[\alpha]}) = \Lambda_T
+  (g_{\phi[\beta]}) = \phi[\beta]$, and so $g_{\psi[\alpha]} = g_{\phi[\beta]}$.
+  It follows that $\Lambda_T$ is injective. We thus have that $C := \langle G,
+  \Omega, \Sigma, \Lambda, L \rangle$ is a circuit of order $n$.
 
-    It is obvious that $C'$ has order $n$. Let $\sigma \in \sym_n$. Let
-    $\pi_\sigma' : G' \rightarrow G'$ be a defined such that $\pi_{\sigma}' (g)
-    = g$ if $g \in G_c$ and $\pi_\sigma'(g_{\psi, \alpha}) = g_{\psi, \sigma
-      \alpha}$ for all $\psi \in \cl{\theta}$ and $\alpha \in n^{\free(\psi)}$.
-    It can be seen that $\pi_\sigma$ is an automorphism of $C'$ extending
-    $\sigma$. It follows that $C'$ is symmetric.
+\begin{claim}
+  The circuit $C$ is symmetric.
+\end{claim}
+\begin{proof}
+  Let $\pi_\sigma : G \rightarrow G$ be a function that fixes constant gates for
+  such that for all non-constant gates $g_{\psi[\alpha]} \in G$, $\pi_{\sigma}
+  g_{\psi [\alpha]} = g_{\psi[\sigma \alpha]}$. It is easy to see that
+  $\pi_\sigma$ is a bijection. We now show that $\pi_{\sigma}$ is an
+  automorphism of the circuit extending $\sigma$. Let $g_{\psi[\alpha]} := g \in
+  G$. Since the formula is unchanged by $\pi_\sigma$, we have $\Sigma(g) =
+  \Sigma (\pi_{\sigma} g)$. Suppose $g$ is an input gate. If $g$ is a constant
+  gate then $\pi_\sigma g = g$. If $g$ is a relational gate, then $\psi$ is of
+  the form $T(\vec{y})$ for some relation symbol $T$ and $\Lambda_T
+  (g_{\psi[\alpha]}) = \alpha \vec{y}$, and $\Lambda (\pi_{\sigma}
+  g_{\psi[\alpha]}) = \Lambda g_{\psi[\sigma \alpha]} = \sigma \alpha \vec{y} =
+  \sigma \Lambda_T (g_{\psi[\alpha]})$. Suppose $g$ is an internal gate. From
+  the construction of the circuit we have that if $g_{\phi[\beta]} \in H_g$ then
+  $\phi$ must be an immediate sub-formula of $\psi$ and so $g_{\phi[\sigma
+    \beta]}$ is a child of $g_{\psi[\sigma \alpha]} = \pi_{\sigma} g$. It
+  follows that $H_{\pi_\sigma g} = \pi_\sigma H_g$. If $g$ is a symmetric gate,
+  this is sufficient to conclude that $\pi_{\sigma} L(g)$ is
+  isomorphism-equivalent to $L(\pi_{\sigma} g)$. If $g$ not a symmetric gate
+  then it is a rank gate, and so $\psi$ is of the form $\rank^r_p \vec{w}
+  \vec{z} \phi$. Let $\vec{a} \in A$ and $\vec{b} \in B$, and note that
+  $\pi_\sigma L(g) (\vec{a}, \vec{b}) = \pi_{\sigma} g_{\phi[\beta]}$, where
+  $\beta \in [n]^{\free {\phi}}$ is compatible with $\alpha$,
+  $\alpha^{\vec{w}}_{\vec{a}}$ and $\alpha^{\vec{z}}_{\vec{b}}$. It follows that
+  $\sigma \beta$ is compatible with $\sigma \alpha$, $\sigma
+  \alpha^{\vec{w}}_{\vec{a}} = \alpha^{\vec{w}}_{\sigma \vec{a}}$ and
+  $\alpha^{\vec{z}}_{\vec{b}} = \alpha^{\vec{z}}_{\sigma \vec{b}}$. We thus have
+  that $L(\pi_{\sigma} g)(\sigma \vec{a}, \sigma \vec{b}) = g_{\phi[\sigma
+    \beta]} = \pi_{\sigma} g_{\phi[\beta]} = \pi_{\sigma} L(g)(\vec{a},
+  \vec{b})$. Suppose $g$ is an output gate, and let $\vec{a} \in [n]^k$ and
+  $\alpha := \alpha^{\vec{x}}_{\vec{a}}$. We have that $\pi_{\sigma} \Omega
+  (\vec{a}) = \pi_\sigma g_{\lambda[\alpha]} = g_{\lambda[\sigma \alpha]} =
+  \Omega (\sigma \alpha \vec{x}) = \Omega (\sigma \vec{a})$. This concludes the
+  proof of the claim.
+\end{proof}
+  
+Let $\mathcal{A}$ be a $\tau$-structure with universe $U$ of size $n$ and let
+$\gamma \in [n]^{\underline{U}}$. It can be shown that for all $\psi \in
+\cl{\lambda}$ and $\alpha \in U^{\free{\psi}}$, $\mathcal{A} \models
+\psi[\alpha]$ if, and only if, $C[\gamma \mathcal{A}](g_{\psi[\gamma\alpha]}) =
+1$. It follows that $\vec{a} \in U^k$ is an element of $Q(\theta(\vec{x}))$ if,
+and only if, $\mathcal{A} \models \lambda[\alpha^{\vec{x}}_{\vec{a}}]$ if, and
+only if, $C[\gamma \mathcal{A}](g_{\lambda[\alpha^{\vec{x}}_{\gamma \vec{a}}]})
+= 1$. Since $g_{\lambda [\alpha^{\vec{x}}_{\gamma \vec{a}}]} = \Omega (\gamma
+\vec{a})$, we have that $C$ computes the query defined by $\theta(\vec{x})$ on
+structures of size $n$.
 
-    If $C'$ contains no rank gates then output $C := C'$. Suppose $C'$ contains
-    at least one rank-gate. Let $\psi \in \cl{\theta}$, and suppose $\psi
-    (\vec{y}) := \rank^r_p \vec{w} \vec{z}. \phi$. Let $T_{\psi} : G_{\psi}
-    \rightarrow [n]^{\vert \vec{w} \vert + \vert \vec{z} \vert}$ be defined by
-    $T_{\psi} (g_{\psi, \alpha}) = \alpha \vec{y}$ for all $g_{\psi, \alpha} \in
-    G_{\psi}$. Let $T$ be the union of all $T_{\psi}$ and $H$ the union of all
-    $G_{\psi}$ for all $\psi \in \cl{\theta}$ an application of the rank
-    operator. Let $C := \op{tag-all}(C', R, H, T)$. We note that $\op{tag-all}$
-    may be computed in time polynomial in the size of the input circuit.
+\begin{claim}
+  The circuit $C$ is transparent.
+\end{claim}
+\begin{proof}
+  If $C$ has symmetric gates then $C$ is transparent. Suppose $C$ contains a
+  non-symmetric gate. Let $g_{\phi[\alpha]}:= g \in G$ be a rank gate and
+  suppose $\psi$ is of the form $\rank^r_p \vec{w} \vec{z}. \zeta$, where $\zeta
+  = \zeta_1 \land \zeta_2$ and where, $\zeta_1 = ((\forall u. u = u) \land
+  \phi)$, and $\zeta_2 = \land (\op{tag}(\vec{w} \cup \vec{z}))$. Let $\beta_1 ,
+  \beta_2 \in [n]^{\free{\zeta}}$ both compatible with $\alpha$, and let $h_1 =
+  g_{\zeta[\beta_1]}$ and $h_2 = g_{\zeta[\beta_2]}$. For $i \in [2]$ we have
+  that $H_{h_i} = \{g_{\zeta_1[\beta_i]}, g_{\zeta_2[\beta_i]}\}$. Since
+  $\zeta_1$ contains a sub-formula of the form $(u = u)$, while $\zeta_2$
+  contains no sub-formula with equality, we have that a child of a child of
+  $g_{\zeta_1[\beta_1]}$ is a constant gate while none of the children of the
+  children of $g_{\zeta_2[\beta_2]}$ are constant gates, and thus $g_{\zeta_1
+    [\beta_1]} \not\equiv g_{\zeta_2[\beta_2]}$. It follows that $h_1 \equiv
+  h_2$ if, and only if, both $g_{\zeta_1 [\beta_1]} \equiv g_{\zeta_1
+    [\beta_2]}$ and $g_{\zeta_2[\beta_1]} \equiv g_{\zeta_2[\beta_2]}$.
+  Moreover, the fact that $\zeta_2$ contains an ordered sequence of conjunctions
+  of tautologies, with each tautology referencing a different variable,
+  guarantees that $g_{\zeta_2[\beta_1]} \equiv g_{\zeta_2[\beta_2]}$ if, and
+  only if, $\beta_1$ and $\beta_2$ agree on $\free{\zeta_2}$. But we already
+  have that $\beta_1$ and $\beta_2$ are compatible with $\alpha$, and so agree
+  on $\free{\zeta_1}$. It follows that $g_{\zeta_2[\beta_1]} \equiv
+  g_{\zeta_2[\beta_2]}$ if, and only if, $\beta_1 = \beta_2$. This allows us to
+  conclude that $g_{\zeta[\beta_1]} \equiv g_{\zeta[\beta_2]}$ if, and only if,
+  $\beta_1 = \beta_2$ if, and only if, $g_{\zeta[\beta_1]} =
+  g_{\zeta[\beta_2]}$. It follows that $L(g)$ is injective, and no two $h_1, h_2
+  \in H_g$ are syntactically-equivalent. We conclude that $g$ has unique labels,
+  and so $C$ is transparent.
+\end{proof}
 
-    Let $a \in [n]$ and let $\op{no-op} (a) := R(a, a) \lor (\neg (R(a, a))$.
-    For $\psi (\vec{y})$
-
-    Let $(b_1, \ldots, b_m) := \beta (\vec{w} \cup \vec{z})$. The $\op{tag-all}
-    function replaces each input $g_{\phi, \beta}$ of the rank gate $g_{\psi,
-      \alpha}$ with the circuit $g_{\phi, \beta} \land \op{no-op}(b_1) \land
-    (\op{no-op}(b_2) \land ( \op{no-op}(b_2) \land (\ldots \land
-    (\op{no-op}(b_m)) \ldots)))$. This construction does not effect the
-    evaluation of any rank gate in the cirucit and ensures that no two to
-    $g_{\psi,\alpha}$ in $C$ are syntactically-equivilent. 
-
-
-    $of the form $$R(a, a) \lor (\neg R(a, a))$ that encode the assignment to
-    $\vec{w}\cup \vec{z}$.
-
-    We have that $C$ is transparent, has order $n$, and $C$ and $C'$ decide the
-    same query. It remains to show that $C$ is still symmetric.
-
-    However, the $\op{tag-all}$ operation adds a tower of tautologies of the
-    form $R(a, \ldots, a) \lor (\neg R (a, \ldots, a))$
-
-
-    Let $g := g_{\psi, \alpha} \in G$ be a rank gate and let $h, h' \in H_g$.
-    Suppose $\psi (\vec{y}) := \rank^r_p \vec{w} \vec{z}. \phi$ and $h :=
-    g_{\phi, \beta}$ and $h' := g_{\phi, \beta'}$ are syntactically-equivalent.
-    From the construction of $\theta'$ we have that $\phi$ must be of a
-    particular form. Suppose $\phi = \eta \land \op{add-tag}(\vec{w} \cup
-    \vec{z})$. Let $\gamma$ and $\gamma'$ be the restrictions of $\beta$ and
-    $\beta'$ to $\vec{w} \cup \vec{z}$, respectively, and let
-    $\zeta(\vec{w}\cup\vec{z}) := \op{add-tag}(\vec{w} \cup \vec{z})$. The
-    $\op{add-tag} (\vec{w} \cup \vec{z})$
+We notice that $\vert C \vert \leq n^{\width(\lambda)} \vert \cl{\lambda} \vert
+\leq n^{\width(\theta)} \vert \cl{\theta} \vert (5 + \width(\theta))$. It is not
+hard to see that $C$ (and $\lambda(\vec{x})$) can be constructed in a number of
+steps bounded by a polynomial in the size of $C$. This completes the proof of
+the result.
 
 
-    The structure of this formula gives us that $h$ is syntactically-equivalent
-    to $h'$ if, and only if, $g_{\zeta , \beta'}$
+% = C[\gamma \mathcal{A}](\Omega(\gamma \vec{a}))$
+
+% Since $h_{}$Since $\pi_\sigma$ is a bijection, we have that $f$ is a
+% bijection. Moreover, we have that $\pi L(g) (a) = L(g) $
+
+% We also have that $\mathcal{A} \models \psi[\gamma \alpha]$ if, and only if,
+% $T^{\mathcal{A}} (\gamma \alpha \vec{y})$ if, and only if, $C[\gamma
+% \mathcal{A}](g) = 1$
+
+% Suppose $g$ is an internal gate, and we have both the results are true for all
+% gates that come before $g$ in the topological ordering of the circuit. Suppose
+% $\psi$ is an application of is an application of a logical connective ($land$
+% or $\lor$) or negation ($\neg$). We then have that $g$ is a symmetric gate,
+% and $f : H_{g} \rightarrow H_{\pi_\sigma g}$ defined by $f(h) = \pi_\sigma h$
+% is a bijection.
+
+  
+% $\pi_\sigma g_{\psi[\alpha]} = \Lambda_T ()$, for some formula $\psi$
+% containing the relation symbol $T$ and assignment $\alpha$, where $\alpha$
+% assigns the free variables in $\psi$ to $\vec{a}$. Then $\pi_\sigma g =
+% \Lambda^{-1}_T (\sigma \Lambda_T (g)) = g_{\psi[\sigma \alpha]}$. Suppose $g$
+% is an internal gate. If $g = g_{psi[\alpha]}$ is an application of a logical
+% connective ( $land$ or $\lor$) or negation ($\neg$) then $\pi_{\sigma}g =
+% g_{\psi[\sigma \alpha]}$. If $g$
+
+% It can be shown by induction on the structure of the circuit that all
+% $g_{\psi[\alpha]} \in G$
+
+% We should note that $C'$ is not, in general, a circuit. This is because it has
+% (potentially) more than three constant gates, and perhaps more than one
+% relational gate for each assignment and relation symbol. Let $C$ be formed
+% from $C'$ by identifying all gates $g$ and $g'$ such that (i) $g$ and $g'$ are
+% constant gates and $\Sigma' (g) = \Sigma'(g')$, or (ii) $g$ and $g'$ are
+% relational gates, $T := \Sigma' (g) = \Sigma' (g') $, and $\Lambda_T' (g) =
+% \Lambda_T'(g')$. We now have $C := \langle G, \Omega, \Sigma, \Lambda, L
+% \rangle$. If the domain of $\Omega'$ includes a constant gate, then
+% $\theta(\vec{x}) = \Lambda (\vec{x}) = (x_1 = x_2)$
+
+  
+
+% Notice that, formally, $C'$ is not a circuit, in that it contains too many
+% relational gates.
+
+% We now show that $C$ translates $\theta(\vec{x})$ at $n$. It is obvious that
+% $C$ has order $n$. For $\sigma \in \sym_n$ let $\pi_\sigma : G \rightarrow G$
+% be a defined such that $\pi_{\sigma} (g) = g$ if $g \in G_c$ and
+% $\pi_\sigma(g_{\psi, \alpha}) = g_{\psi, \sigma \alpha}$ for all $\psi \in
+% \cl{\lambda}$ and $\alpha \in n^{\free{\psi}}$. It can be shown that
+% $\pi_\sigma$ is an automorphism of $C$ extending $\sigma$. It follows that $C$
+% is symmetric.
+
+
+% Let $\mathcal{A}$ be a $\tau$-structure with a universe $U$ of size $n$ and
+% let $\gamma U^{\underline{[n]}}$. Let $\psi (\vec{y}) \in \cl{\lambda}$ and
+% let $\alpha \in [n]^{\vec{y}}$. It can be shown by induction on the structure
+% of the circuit that for all $\psi (\vec{y})$ and $\alpha \in [n]^{\vec{y}}$,
+% $C[\gamma \mathcal{A}](g_{\psi, \alpha}) = 1$ if, and only if, $\mathcal{A}
+% \models \psi [\gamma (\alpha \vec{y})]$. It follows that
 
 
 
 
-    We also note that $C$ has order $n$.
+% Let $\vec{a} \in [n]^k$, and $\alpha \in [n]^{\vec{x}}$ be defined such that
+% $\alpha (x_i) = a_i$ for all $i \in [k]$. Then $C[\Omega]$
+  
+
+% It is obvious that $C$ has order $n$. Let $\sigma \in \sym_n$. Let $\pi_\sigma
+% : G \rightarrow G$ be a defined such that $\pi_{\sigma} (g) = g$ if $g \in
+% G_c$ and $\pi_\sigma(g_{\psi, \alpha}) = g_{\psi, \sigma \alpha}$ for all
+% $\psi \in \cl{\lambda}$ and $\alpha \in n^{\free{\psi}}$. It can be shown that
+% $\pi_\sigma$ is an automorphism of $C$ extending $\sigma$. It follows that $C$
+% is symmetric.
+
+% Moreover, let $\alpha \in [n]^{\free{\theta}}$ be an assignment that maps the
+% sequence of variables $\vec{x}$ to the tuple $\vec{a} \in [n]^k$. It follows
+% that $\Omega (\vec{a}) = g_{\lambda, \alpha}$ evaluates to $1$ If $C$ does not
+% contain a rank gate then it is transparent. Suppose $C$ does contain a rank
+% gate. Let $g := g_{\psi, \alpha} \in G$ be a rank gate and suppose $\psi
+% (\vec{y}) := \rank^r_p \vec{w} \vec{z}. \zeta$, where $\zeta = \zeta_1 \land
+% \zeta_2$ and $\zeta_1 = ((\forall u. u = u) \land \phi)$ and $\zeta_2 = \land
+% (\op{tag}(\vec{w} \cup \vec{z}))$. Suppose $h_1, h_2 \in H_g$ are
+% syntactically-equivalent. It follows that there exist assignments $\beta_1,
+% \beta_2 \in [n]^{\vec{w} \cup \vec{z} \cup {y}}$ such that $\alpha \subseteq
+% \beta_1$ and $\alpha \subseteq \beta_2$ and $h_1 = g_{\zeta, \beta_1}$ and
+% $h_2 = g_{\zeta, \beta_2}$. Then $H_{h_i} = \{g_{\zeta_1, \beta_i},
+% g_{\zeta_2, \beta_i}\}$ for $i \in [2]$. Note that a child of a child of
+% $g_{\zeta_1, \beta_1}$ is a constant gate while none of the children of the
+% children of $g_{\zeta_2, \beta_2}$ are constant gates, and thus $g_{\zeta_1,
+% \beta_1} \not\equiv g_{\zeta_2, \beta_2}$ are not syntactically-equivalent. It
+% follows that $h_1 \equiv h_2$ if, and only if, both $g_{\zeta_1, \beta_1}
+% \equiv g_{\zeta_1, \beta_2}$ and $g_{\zeta_2, \beta_1} \equiv g_{\zeta_2,
+% \beta_2}$. However, the construction of $\zeta_2$ (and the fact that $\beta_1$
+% and $\beta_2$ agree on the variables in $\vec{y}$) guarantees that
+% $g_{\zeta_2, \beta_1} \equiv g_{\zeta_2, \beta_2}$ if, and only if, $\beta_1 =
+% \beta_2$ are equal. It follows that $h_1 = g_{\zeta, \beta_1} = g_{\zeta,
+% \beta_2} = h_2$. The construction of the circuit guarantees that $g$ has
+% injective labels. It follows that $g$ has unique labels, and the circuit $C$
+% is transparent.
 
 
-  \end{proof}
+% and $h := g_{\phi, \beta}$ and $h' := g_{\phi, \beta'}$ are
+% syntactically-equivalent. From the construction of $\theta'$ we have that
+% $\phi$ must be of a particular form. Suppose $\phi = \eta \land
+% \op{add-tag}(\vec{w} \cup \vec{z})$. Let $\gamma$ and $\gamma'$ be the
+% restrictions of $\beta$ and $\beta'$ to $\vec{w} \cup \vec{z}$, respectively,
+% and let $\zeta(\vec{w}\cup\vec{z}) := \op{add-tag}(\vec{w} \cup \vec{z})$. The
+% $\op{add-tag} (\vec{w} \cup \vec{z})$
+
+
+  
+
+% We notice that $\vert C \vert \leq n^{\width(\lambda)} \vert \cl{\lambda}
+% \vert \leq n^{\width(\theta)} \vert \cl{theta} \vert (5 + \width(\theta))$. It
+% can be shown that $C$ (and $\lambda(\vec{x})$ can be constructed in a number
+% of steps bounded by a polynomial in the size of $C$.
+
+
+
+  
+
+  
+
+% If $C'$ contains no rank gates then output $C := C'$. Suppose $C'$ contains at
+% least one rank-gate. We note add to $C'$ a gadget that ensures that no two
+% input gates to a rank gate can be syntactically-equivalent. Let $\psi \in
+% \cl{\theta}$, and suppose $\psi (\vec{y}) = \rank^r_p \vec{w} \vec{z}. \phi$.
+% We may think of the assignments to the variables $\vec{w}$ and $\vec{z}$ as
+% being the row and column indexes of the matrix. We
+
+% Then for $\alpha \in [n]^{\free (\psi)}$, $H_{g_{\psi, \alpha}}$ consists of
+% gates of the form $g_{\phi, \beta}$, where $\beta \in [n]^{\vec{w} \cup
+% \vec{z} \cup \vec{y}}$ and $\alpha subseteq \beta$.
+
+% Let $T_{\psi, \alpha} : H_{g_{\psi, \alpha}} \rightarrow [n]^{\vert \vec{w}
+% \vert + \vert \vec{z} \vert}$ be defined by $T_{\psi, \alpha} (g_{\phi,
+% \beta}) = \beta (\vec{z} \cup \vec{w})$ for all $g_{\phi, \beta} \in H_g$.
+% What $T_{\psi, \alpha}$ does is assign to each child of $g_{\psi, \alpha}$ an
+% ordered sequence formed Let $T$ be the union of all $T_{\psi}$ and $H$ the
+% union of all $G_{\psi}$ for all $\psi \in \cl{\theta}$ an application of the
+% rank operator. Let $C := \op{tag-all}(C', R, H, T)$. We note that
+% $\op{tag-all}$ may be computed in time polynomial in the size of the input
+% circuit.
+
+% Let $a \in [n]$ and let $\op{no-op} (a) := R(a, a) \lor (\neg (R(a, a))$. For
+% $\psi (\vec{y})$
+
+% % Let $(b_1, \ldots, b_m) := \beta (\vec{w} \cup \vec{z})$. The $\op{tag-all}
+% % function replaces each input $g_{\phi, \beta}$ of the rank gate $g_{\psi,
+% % \alpha}$ with the circuit $g_{\phi, \beta} \land \op{no-op}(b_1) \land
+% % (\op{no-op}(b_2) \land ( \op{no-op}(b_2) \land (\ldots \land
+% % (\op{no-op}(b_m))
+% % \ldots)))$. This construction does not effect the evaluation of any rank
+% % gate
+% % in the cirucit and ensures that no two to $g_{\psi,\alpha}$ in $C$ are
+% % syntactically-equivilent.
+
+
+% $of the form $$R(a, a) \lor (\neg R(a, a))$ that encode the assignment to
+% $\vec{w}\cup \vec{z}$.
+
+% We have that $C$ is transparent, has order $n$, and $C$ and $C'$ decide the
+% same query. It remains to show that $C$ is still symmetric.
+
+% However, the $\op{tag-all}$ operation adds a tower of tautologies of the form
+% $R(a, \ldots, a) \lor (\neg R (a, \ldots, a))$
+
+
+% Let $g := g_{\psi, \alpha} \in G$ be a rank gate and let $h, h' \in H_g$.
+% Suppose $\psi (\vec{y}) := \rank^r_p \vec{w} \vec{z}. \phi$ and $h := g_{\phi,
+% \beta}$ and $h' := g_{\phi, \beta'}$ are syntactically-equivalent. From the
+% construction of $\theta'$ we have that $\phi$ must be of a particular form.
+% Suppose $\phi = \eta \land \op{add-tag}(\vec{w} \cup \vec{z})$. Let $\gamma$
+% and $\gamma'$ be the restrictions of $\beta$ and $\beta'$ to $\vec{w} \cup
+% \vec{z}$, respectively, and let $\zeta(\vec{w}\cup\vec{z}) :=
+% \op{add-tag}(\vec{w} \cup \vec{z})$. The $\op{add-tag} (\vec{w} \cup \vec{z})$
+
+
+% The structure of this formula gives us that $h$ is syntactically-equivalent to
+% $h'$ if, and only if, $g_{\zeta , \beta'}$
+
+
+
+
+% We also note that $C$ has order $n$.
+\end{proof}
+
+We now use Lemma~\cite{lem:translating-FOrk} to prove that for every $\FPR$
+formula there is a corresponding $\PT$-uniform family of transparent symmetric
+rank-circuits that decides the same query.
 
 \begin{thm}
-  For any relational vocabulary $\tau$ and each $\theta(\vec{x}) \in \FPR[\tau]$
-  there is a map $n \mapsto C_n$, where $C_n$ is a transparent symmetric
-  rank-circuit, and is computable in time polynomial in $n$. The family of
-  circuits $(C_n)_{n \in \nats}$ defined by this mapping computes the same query
-  as the one defined by $\theta(\vec{x})$.
+  For each $\FPR$-formula $\theta(\vec{x})$ there exists a family of circuits
+  $(C_n)_{n \in \nats}$ that translates $\theta(\vec{x})$.
   \label{thm:translating-formulas-to-circuits}
 \end{thm}
-
 \begin{proof}
-  We say that a circuit $C$ \emph{translates} a formula $\psi(\vec{x})$ for $n
-  \in \nats$ if $C$ is a transparent symmetric rank-circuit of order $n$ and $C$
-  computes the query defined by $\psi(\vec{x})$ on structures of size $n$. We
-  say a family of circuits $(C_n)_{n \in \nats}$ \emph{translates} a formula
-  $\psi (\vec{x})$ if $(C_n)_{n \in \nats}$ is $\PT$-uniform and for all $n \in
-  \nats$, $C_n$ translates $\psi(\vec{x})$ for $n$.
-
-  % We have from Anderson and Dawar~\cite{AndersonD17} that for every formula
-  % $\phi(\vec{x}) \in \FPC[\tau]$ there is a $\PT$-uniform family of symmetric
-  % circuits $(C^{\phi}_n)_{n \in \nats}$ with unique labels and symmetric gates
-  % that translates $\phi(\vec{x})$.
-  
   Let $\theta(\vec{x}) \in \FPR[\tau]$ and $t := \width (\theta)$. We begin by
   showing that there exists a $P$-uniform family of formulas
   $(\theta(\vec{x}))_{n \in \nats}$ such that for each $n \in \nats$, we have
@@ -549,135 +788,194 @@ running time of the algorithm constructing this circuit.
   structures of size $n$.
 
   We thus derive the required $\PT$-uniform family $(\theta_n(\vec{x}))_{n \in
-    \nats}$ by applying the first translation and then the second. Let $x$ be a
-  variable and $R \in \tau$. Let $\op{no-op}(x) := R(x, x) \land (\neg R(x,
-  x))$. Let $\vec{x} := (x_1, \ldots, x_k)$ and $\op{add-tag} (\vec{x}) :=
-  \op{no-op}(x_1) \land (\op{no-op}(x_2) \land ( \ldots \land (\op{no-op}(x_k))
-  \ldots)$. For each $\theta_n (\vec{x})$ we construct a new formula $\theta_n'
-  (\vec{x})$ by replacing each sub-formula $\phi(\vec{y})$ of
-  $\theta_n(\vec{x})$ of the form $\rank^r_p \vec{w} \vec{z} . \psi$ by
-  $\rank^r_p \vec{w}\vec{z} . (\psi \land \op{add-tag}(\vec{w} \cup \vec{z}))$.
-  It is easy to see that we can construct $\theta_n'$ from $\theta_n$ in time
-  polynomial in $\theta_n$. Moreover, $\theta_n'$ and $\theta_n$ are equivalent
-  and have the same width.
+    \nats}$ by applying the first translation and then the second. We have from
+  Lemma~\ref{} that there exists an algorithm that takes as input $n$ and
+  $\theta_n$, runs in time polynomial in $n^{\width(\theta_n)} \vert
+  \cl{\theta_n} \vert$, and outputs a circuit $C_n = T(\theta_n, n)$ that
+  translates $\theta_n$ for $n$. We note that $\width{\theta_n} \leq 4t$ and
+  $\cl{\theta_n}$ must be bounded by a polynomial in $n$ (since $\theta_n$ is a
+  member of a $P$-uniform family of circuits). It follows that the function $n
+  \mapsto C_n$ is computable in time polynomial in $n$, and so $(C_n)_{n \in
+    \nats}$ translates $\theta(\vec{x})$.
+\end{proof}
+
+
+% \begin{proof}
+%   We say that a circuit $C$ \emph{translates} a formula $\psi(\vec{x})$ for $n
+%   \in \nats$ if $C$ is a transparent symmetric rank-circuit of order $n$ and
+%   $C$ computes the query defined by $\psi(\vec{x})$ on structures of size $n$.
+%   We say a family of circuits $(C_n)_{n \in \nats}$ \emph{translates} a
+%   formula $\psi (\vec{x})$ if $(C_n)_{n \in \nats}$ is $\PT$-uniform and for
+%   all $n \in \nats$, $C_n$ translates $\psi(\vec{x})$ for $n$.
+
+%   %   We have from Anderson and Dawar~\cite{AndersonD17} that for every
+%   %   formula
+%   %   $\phi(\vec{x}) \in \FPC[\tau]$ there is a $\PT$-uniform family of
+%   %   symmetric
+%   %   circuits $(C^{\phi}_n)_{n \in \nats}$ with unique labels and symmetric
+%   %   gates
+%   %   that translates $\phi(\vec{x})$.
+  
+%   Let $\theta(\vec{x}) \in \FPR[\tau]$ and $t := \width (\theta)$. We begin by
+%   showing that there exists a $P$-uniform family of formulas
+%   $(\theta(\vec{x}))_{n \in \nats}$ such that for each $n \in \nats$, we have
+%   $\theta_n(\vec{x}) \in \FOrk[\tau]$, $\width(\theta_n) \leq 4 t$, and
+%   $\theta_n(\vec{x})$ is equivalent to $\theta(\vec{x})$ on structures of size
+%   $n$. This result follows from two observations.
+
+%   First, using the translation in~\cite{Dawar09logicswith}, we have that for
+%   any $\phi(\vec{x}) \in \FPR[\tau]$ of the form $\lfp{V,
+%   \vec{y}}{\psi(\vec{x}, \vec{y}, V)}(\vec{x})$ , there is a mapping $n
+%   \mapsto \phi_n$, computable in time polynomial in both $n$ and the size of
+%   $\phi(\vec{x})$ such that for all $n \in \nats$, we have $\phi_n(\vec{x})
+%   \in \FOR[\tau]$, $\width (\phi_n) \leq 2 \cdot \width (\phi)$, and
+%   $\phi_n(\vec{x})$ and $\phi(\vec{x})$ are equivalent on structures of size
+%   $n$.
+
+%   Second, using the translation in~\cite{libkin2004elements}, we have that if
+%   $\phi (\vec{x}) \in \FOR[\tau]$ is of the form $\rank (\vec{y}\vec{\mu} \leq
+%   \vec{t}, \vec{z}\vec{\nu} \leq \vec{s}, \pi \leq r) . \psi
+%   (\vec{y}\vec{\mu}, \vec{z} \vec{\nu})$, then there is a mapping $n \mapsto
+%   \phi_n$ computable in time polynomial in both $n$ and the size of
+%   $\phi(\vec{x})$ such that for all $n \in \nats$, $\phi_n(\vec{x}) \in
+%   \FOrk[\tau]$, $\width(\phi_n) \leq 2 \cdot \width(\phi)$, and
+%   $\phi_n(\vec{x})$ and $\phi(\vec{x})$ are equivalent on structures of size
+%   $n$.
+
+%   We thus derive the required $\PT$-uniform family $(\theta_n(\vec{x}))_{n \in
+%   \nats}$ by applying the first translation and then the second. Let $x$ be a
+%   variable and $R \in \tau$. Let $\op{no-op}(x) := R(x, x) \land (\neg R(x,
+%   x))$. Let $\vec{x} := (x_1, \ldots, x_k)$ and $\op{add-tag} (\vec{x}) :=
+%   \op{no-op}(x_1) \land (\op{no-op}(x_2) \land ( \ldots \land
+%   (\op{no-op}(x_k)) \ldots)$. For each $\theta_n (\vec{x})$ we construct a new
+%   formula $\theta_n' (\vec{x})$ by replacing each sub-formula $\phi(\vec{y})$
+%   of $\theta_n(\vec{x})$ of the form $\rank^r_p \vec{w} \vec{z} . \psi$ by
+%   $\rank^r_p \vec{w}\vec{z} . (\psi \land \op{add-tag}(\vec{w} \cup
+%   \vec{z}))$. It is easy to see that we can construct $\theta_n'$ from
+%   $\theta_n$ in time polynomial in $\theta_n$. Moreover, $\theta_n'$ and
+%   $\theta_n$ are equivalent and have the same width.
 
   
 
   
-  Fix $n \in \nats$. We now construct a circuit $C_n$ that translates
-  $\theta_n'$ (and hence $\theta_n$ and $\theta$) at $n$. For each $\psi \in
-  \cl{\theta_n}$ let $G_\psi := \{g_{\psi, \alpha} : \alpha \in
-  [n]^{\free{\psi}} \}$. Let $G := \bigcup_{\psi \in \cl{\theta_n}} G_{\psi}$.
-  Let $g_{\psi, \alpha} \in G$. We define $\Sigma$, $\Lambda$ and $L$ as
-  follows.
-  \begin{itemizens}
-  \item If $\psi (\vec{y}) = R(\vec{y})$, for some $R \in \tau$, then $\Sigma
-    (g_{\psi, \alpha}) = R$ and $\Lambda_R (g_{\psi, \alpha}) = \alpha
-    \vec{y})$.
-  \item If $\psi (y_1, y_2) = (y_1 = y_2)$, then if $\alpha (y_1) = \alpha
-    (y_2)$, $\Sigma (g_{\psi, \alpha}) = 1$, else $\Sigma (g_{\psi, \alpha}) =
-    0$.
-  \item if $\psi (\vec{y}) = \rank^r_p \vec{w} \vec{z}. \phi$, then $\Sigma ()$
-  \end{itemizens}
+%   Fix $n \in \nats$. We now construct a circuit $C_n$ that translates
+%   $\theta_n'$ (and hence $\theta_n$ and $\theta$) at $n$. For each $\psi \in
+%   \cl{\theta_n}$ let $G_\psi := \{g_{\psi, \alpha} : \alpha \in
+%   [n]^{\free{\psi}} \}$. Let $G := \bigcup_{\psi \in \cl{\theta_n}} G_{\psi}$.
+%   Let $g_{\psi, \alpha} \in G$. We define $\Sigma$, $\Lambda$ and $L$ as
+%   follows.
+%   \begin{itemizens}
+%   \item If $\psi (\vec{y}) = R(\vec{y})$, for some $R \in \tau$, then $\Sigma
+%     (g_{\psi, \alpha}) = R$ and $\Lambda_R (g_{\psi, \alpha}) = \alpha
+%     \vec{y})$.
+%   \item If $\psi (y_1, y_2) = (y_1 = y_2)$, then if $\alpha (y_1) = \alpha
+%     (y_2)$, $\Sigma (g_{\psi, \alpha}) = 1$, else $\Sigma (g_{\psi, \alpha}) =
+%     0$.
+%   \item if $\psi (\vec{y}) = \rank^r_p \vec{w} \vec{z}. \phi$, then $\Sigma
+%     ()$
+%   \end{itemizens}
 
  
   
 
-  We first consider the base case. Suppose $\psi(\vec{y})$ is an atomic formula.
-  Then $\psi(\vec{y}) \in \FPC[\tau]$, and so, using the translation defined by
-  Anderson and Dawar~\cite{AndersonD17}, there exists a family of circuits
-  $(C^{\psi}_n)_{n \in \nats}$ that translates $\psi(\vec{y})$. Let
-  $T_n(\psi(\vec{y})) := C^{\psi}_n$.
+%   We first consider the base case. Suppose $\psi(\vec{y})$ is an atomic
+%   formula. Then $\psi(\vec{y}) \in \FPC[\tau]$, and so, using the translation
+%   defined by Anderson and Dawar~\cite{AndersonD17}, there exists a family of
+%   circuits $(C^{\psi}_n)_{n \in \nats}$ that translates $\psi(\vec{y})$. Let
+%   $T_n(\psi(\vec{y})) := C^{\psi}_n$.
 
-  We now consider the conjunctive case. Suppose $\psi(\vec{y})$ is a sub-formula
-  of $\theta_n(\vec{x})$ such that $\psi (\vec{y}) = \phi_1(\vec{y}) \land
-  \phi_2(\vec{y})$. Let $R_{\phi_1}$ and $R_{\phi_2}$ be two $\vert \vec{y}
-  \vert$-ary relation symbols not in $\tau$ and let $\psi' (\vec{y}) :=
-  R_{\phi_1}(\vec{y}) \land R_{\phi_2}(\vec{y})$. Then $\psi'(\vec{y}) \in
-  \FPC[\tau]$ and so, using the translation defined by Anderson and Dawar, there
-  exists a circuit family $(C^{\psi'}_n)_{n \in \nats}$ that translates
-  $\psi'(\vec{y})$. Let $T_n(\psi (\vec{y})) := \op{compose}(C^{\psi'}_n, (
-  T_n(\phi_1(\vec{y})), T_n(\phi_2(\vec{y}))), (R_{\phi_1}, R_{\phi_2}))$. We
-  note that $T_n(\psi(\vec{y}))$ translates $\psi (\vec{y})$ at $n$ if
-  $T_n(\phi_1 (\vec{y}))$ and $T_n(\phi_2(\vec{y}))$ translate $\phi_1(\vec{y})$
-  and $\phi_2(\vec{y})$ at $n$, respectively.
+%   We now consider the conjunctive case. Suppose $\psi(\vec{y})$ is a
+%   sub-formula of $\theta_n(\vec{x})$ such that $\psi (\vec{y}) =
+%   \phi_1(\vec{y}) \land \phi_2(\vec{y})$. Let $R_{\phi_1}$ and $R_{\phi_2}$ be
+%   two $\vert \vec{y} \vert$-ary relation symbols not in $\tau$ and let $\psi'
+%   (\vec{y}) := R_{\phi_1}(\vec{y}) \land R_{\phi_2}(\vec{y})$. Then
+%   $\psi'(\vec{y}) \in \FPC[\tau]$ and so, using the translation defined by
+%   Anderson and Dawar, there exists a circuit family $(C^{\psi'}_n)_{n \in
+%   \nats}$ that translates $\psi'(\vec{y})$. Let $T_n(\psi (\vec{y})) :=
+%   \op{compose}(C^{\psi'}_n, ( T_n(\phi_1(\vec{y})), T_n(\phi_2(\vec{y}))),
+%   (R_{\phi_1}, R_{\phi_2}))$. We note that $T_n(\psi(\vec{y}))$ translates
+%   $\psi (\vec{y})$ at $n$ if $T_n(\phi_1 (\vec{y}))$ and
+%   $T_n(\phi_2(\vec{y}))$ translate $\phi_1(\vec{y})$ and $\phi_2(\vec{y})$ at
+%   $n$, respectively.
 
-  The approach used in the conjunctive case can be summarised as follows. Given
-  a sub-formula $\psi (\vec{y})$, we construct an auxiliary formula
-  $\psi'(\vec{y})$ in which all the sub-formulas of $\psi(\vec{y})$ are replaced
-  with relation symbols. We then construct a circuit $C^{\psi'}$ that translates
-  $\psi'(\vec{y})$ at $n$ using the translation defined by Anderson and Dawar.
-  Finally, we recursively construct circuits that translate the sub-formulas of
-  $\psi(\vec{y})$, and compose these circuits with $C^{\psi'}$.
+%   The approach used in the conjunctive case can be summarised as follows.
+%   Given a sub-formula $\psi (\vec{y})$, we construct an auxiliary formula
+%   $\psi'(\vec{y})$ in which all the sub-formulas of $\psi(\vec{y})$ are
+%   replaced with relation symbols. We then construct a circuit $C^{\psi'}$ that
+%   translates $\psi'(\vec{y})$ at $n$ using the translation defined by Anderson
+%   and Dawar. Finally, we recursively construct circuits that translate the
+%   sub-formulas of $\psi(\vec{y})$, and compose these circuits with
+%   $C^{\psi'}$.
   
-  This approach can be used in order to handle every case with the exception of
-  rank. In other words, we can use a similar approach to define
-  $T_n(\psi(\vec{y}))$ where $\psi(\vec{y})$ is a sub-formula of
-  $\theta_n(\vec{x})$ of the form $\phi_1(\vec{y}) \lor \phi_2(\vec{y})$, $\neg
-  \phi(\vec{y})$, $\forall z. \phi (\vec{y}, z)$, or $\exists z. \phi (\vec{y},
-  z)$.
+%   This approach can be used in order to handle every case with the exception
+%   of rank. In other words, we can use a similar approach to define
+%   $T_n(\psi(\vec{y}))$ where $\psi(\vec{y})$ is a sub-formula of
+%   $\theta_n(\vec{x})$ of the form $\phi_1(\vec{y}) \lor \phi_2(\vec{y})$,
+%   $\neg \phi(\vec{y})$, $\forall z. \phi (\vec{y}, z)$, or $\exists z. \phi
+%   (\vec{y}, z)$.
 
-  We now handle the rank case. The approach is quite similar, except in this
-  case we cannot use the translation defined by Anderson and Dawar in order to
-  translate the auxiliary formula, and so must define this translation
-  explicitly. Moreover, rather than just composing the circuits, we also add a
-  small gadget in order to ensure the resultant circuit is transparent.
+%   We now handle the rank case. The approach is quite similar, except in this
+%   case we cannot use the translation defined by Anderson and Dawar in order to
+%   translate the auxiliary formula, and so must define this translation
+%   explicitly. Moreover, rather than just composing the circuits, we also add a
+%   small gadget in order to ensure the resultant circuit is transparent.
   
-  Suppose $\psi(\vec{z}, \vec{w}, \vec{y})$ is a sub-formula of
-  $\theta_n(\vec{x})$ such that $\psi (\vec{y}) = \rank^{\leq r}_p \vec{z},
-  \vec{w} .\phi(\vec{z}, \vec{w}, \vec{y})$, for some $p, r \in \nats$ and $p$
-  prime. Let $k:= \vert \vec{y} \vert$, $k_1 : = \vert \vec{z} \vert$ and $k_2
-  := \vert \vec{w} \vert$. Let $R_\phi$ be a $(k_1 + k_2 + k)$-ary relation
-  symbol not in $\tau$. Let $\psi'(\vec{y}) := \rank^{\leq r}_p\vec{z}, \vec{w}.
-  R_{\phi} (\vec{z}, \vec{w}, \vec{y})$. Let $G_{\text{out}} := \{g_{\vec{c}} :
-  \vec{c} \in [n]^k\}$ and $G_{\text{in}} : = \{ g_{\vec{a}, \vec{b}, \vec{c}} :
-  \vec{a} \in [n]^{k_1}, \vec{b} \in [n]^{k_2}, \vec{c} \in [n]^{k}\}$. Let
-  $C^{\psi'}_n:= \langle G^{\psi'}, \Omega^{\psi'}, \Sigma^{\psi'},
-  \Lambda^{\psi'}, L^{\psi'}\rangle$ be a $(\mathbb{B}_{\rank}, \{ R_{\phi}
-  \})$-circuit such that
-  \begin{itemizens}
-  \item $G^{\psi'} = G_{\text{out}} \cup G_{\text{in}}$,
-  \item $\Omega^{\psi'}$ be an injection from $[n]^k$ to $G^{\psi'}$ defined by
-    $\Omega^{\psi'}(\vec{c}) = g_{\vec{c}}$ for all $\vec{c} \in [n]^k$,
-  \item $\Sigma^{\psi'} (g) = \rank^r_p$ if $g \in G_{\text{out}}$ and
-    $\Sigma^{\psi'}(g) = R_\phi$ if $g \in G_{\text{in}}$,
-  \item for each $(\vec{a}, \vec{b}, \vec{c}) \in [n]^{k_1 +k_2 + k}$,
-    $\Lambda^{\psi'} (\vec{a}, \vec{b}, \vec{c}) = g_{\vec{a}, \vec{b},
-      \vec{c}}$, and
-  \item for each gate $g_{\vec{c}} \in G_{\text{out}}$, $L(g_{\vec{c}}):
-    [n]^{k_1} \times [n]^{k_2} \rightarrow G^{\psi'}$ is defined by
-    $L(g_{\vec{c}})(\vec{a}, \vec{b}) := g_{\vec{a}, \vec{b}, \vec{c}}$ for each
-    $\vec{a} \in [n]^{k_1}$ and $\vec{b} \in [n]^{k_2}$.
-  \end{itemizens}
+%   Suppose $\psi(\vec{z}, \vec{w}, \vec{y})$ is a sub-formula of
+%   $\theta_n(\vec{x})$ such that $\psi (\vec{y}) = \rank^{\leq r}_p \vec{z},
+%   \vec{w} .\phi(\vec{z}, \vec{w}, \vec{y})$, for some $p, r \in \nats$ and $p$
+%   prime. Let $k:= \vert \vec{y} \vert$, $k_1 : = \vert \vec{z} \vert$ and $k_2
+%   := \vert \vec{w} \vert$. Let $R_\phi$ be a $(k_1 + k_2 + k)$-ary relation
+%   symbol not in $\tau$. Let $\psi'(\vec{y}) := \rank^{\leq r}_p\vec{z},
+%   \vec{w}. R_{\phi} (\vec{z}, \vec{w}, \vec{y})$. Let $G_{\text{out}} :=
+%   \{g_{\vec{c}} : \vec{c} \in [n]^k\}$ and $G_{\text{in}} : = \{ g_{\vec{a},
+%   \vec{b}, \vec{c}} : \vec{a} \in [n]^{k_1}, \vec{b} \in [n]^{k_2}, \vec{c}
+%   \in [n]^{k}\}$. Let $C^{\psi'}_n:= \langle G^{\psi'}, \Omega^{\psi'},
+%   \Sigma^{\psi'}, \Lambda^{\psi'}, L^{\psi'}\rangle$ be a
+%   $(\mathbb{B}_{\rank}, \{ R_{\phi} \})$-circuit such that
+%   \begin{itemizens}
+%   \item $G^{\psi'} = G_{\text{out}} \cup G_{\text{in}}$,
+%   \item $\Omega^{\psi'}$ be an injection from $[n]^k$ to $G^{\psi'}$ defined
+%     by $\Omega^{\psi'}(\vec{c}) = g_{\vec{c}}$ for all $\vec{c} \in [n]^k$,
+%   \item $\Sigma^{\psi'} (g) = \rank^r_p$ if $g \in G_{\text{out}}$ and
+%     $\Sigma^{\psi'}(g) = R_\phi$ if $g \in G_{\text{in}}$,
+%   \item for each $(\vec{a}, \vec{b}, \vec{c}) \in [n]^{k_1 +k_2 + k}$,
+%     $\Lambda^{\psi'} (\vec{a}, \vec{b}, \vec{c}) = g_{\vec{a}, \vec{b},
+%     \vec{c}}$, and
+%   \item for each gate $g_{\vec{c}} \in G_{\text{out}}$, $L(g_{\vec{c}}):
+%     [n]^{k_1} \times [n]^{k_2} \rightarrow G^{\psi'}$ is defined by
+%     $L(g_{\vec{c}})(\vec{a}, \vec{b}) := g_{\vec{a}, \vec{b}, \vec{c}}$ for
+%     each $\vec{a} \in [n]^{k_1}$ and $\vec{b} \in [n]^{k_2}$.
+%   \end{itemizens}
 
-  We note that $C^{\psi'}_n$ translates $\psi (\vec{y})$ at $n$. Let $R$ be a
-  relation symbol in $\tau$. Let
-  \begin{align*} T_n(\psi(\vec{y})) := \op{compose-and-tag}(C^{\psi'}_n,
-    (T_n(\phi(\vec{z}, \vec{w}, \vec{y}))), (R_\phi), R).
-  \end{align*}
+%   We note that $C^{\psi'}_n$ translates $\psi (\vec{y})$ at $n$. Let $R$ be a
+%   relation symbol in $\tau$. Let
+%   \begin{align*} T_n(\psi(\vec{y})) := \op{compose-and-tag}(C^{\psi'}_n,
+%     (T_n(\phi(\vec{z}, \vec{w}, \vec{y}))), (R_\phi), R).
+%   \end{align*}
 
-  We recall that $\op{compose-and-tag}$ combines circuits in a similar way to
-  $\op{compose}$ except that it also adds a set of gadgets to the circuit
-  ensuring that no two child gates of an output gate are
-  syntactically-equivalent. We thus have that $T_n(\psi (\vec{y}))$ is
-  transparent if $T_n(\phi (\vec{z}, \vec{w},\vec{y}))$ is transparent, and
-  $T_n(\psi(\vec{y}))$ translates $\psi (\vec{y})$ at $n$ if $T_n(\phi (\vec{z},
-  \vec{w},\vec{y}))$ translates $\phi(\vec{z}, \vec{w}, \vec{y})$ at $n$.
+%   We recall that $\op{compose-and-tag}$ combines circuits in a similar way to
+%   $\op{compose}$ except that it also adds a set of gadgets to the circuit
+%   ensuring that no two child gates of an output gate are
+%   syntactically-equivalent. We thus have that $T_n(\psi (\vec{y}))$ is
+%   transparent if $T_n(\phi (\vec{z}, \vec{w},\vec{y}))$ is transparent, and
+%   $T_n(\psi(\vec{y}))$ translates $\psi (\vec{y})$ at $n$ if $T_n(\phi
+%   (\vec{z}, \vec{w},\vec{y}))$ translates $\phi(\vec{z}, \vec{w}, \vec{y})$ at
+%   $n$.
 
-  We have completed our definition of $T_n$ and shown, by induction on the
-  structure of $\theta_n(\vec{x})$, that for each $\psi (\vec{y})$ a sub-formula
-  of $\theta_n(\vec{x})$, $T_n(\psi(\vec{y}))$ translates $\psi(\vec{y})$ at
-  $n$.
+%   We have completed our definition of $T_n$ and shown, by induction on the
+%   structure of $\theta_n(\vec{x})$, that for each $\psi (\vec{y})$ a
+%   sub-formula of $\theta_n(\vec{x})$, $T_n(\psi(\vec{y}))$ translates
+%   $\psi(\vec{y})$ at $n$.
 
-  The above definition can be used to define a recursive algorithm computing the
-  function $n \mapsto T_n (\theta_n(\vec{x}))$. We note that, since
-  $\width(\theta_n) \leq 4 t$ for all $n \in \nats$, there are only a finite
-  number of cases that need to be considered at each recursive step in this
-  algorithm. This fact can be used to show that there exists a polynomial bound
-  on the running time of the algorithm that depends only on $n$ and the
-  structure of $\theta(\vec{x})$. As such, we have that $(T_n (\theta_n))_{n \in
-    \nats}$ translates $\theta(\vec{x})$, and the result follows.
-\end{proof}
+%   The above definition can be used to define a recursive algorithm computing
+%   the function $n \mapsto T_n (\theta_n(\vec{x}))$. We note that, since
+%   $\width(\theta_n) \leq 4 t$ for all $n \in \nats$, there are only a finite
+%   number of cases that need to be considered at each recursive step in this
+%   algorithm. This fact can be used to show that there exists a polynomial
+%   bound on the running time of the algorithm that depends only on $n$ and the
+%   structure of $\theta(\vec{x})$. As such, we have that $(T_n (\theta_n))_{n
+%   \in \nats}$ translates $\theta(\vec{x})$, and the result follows.
+% \end{proof}
 
 \bibliography{../references.bib}
 % \ifcsdef{mainfile}{}{\bibliography{../references.bib}}

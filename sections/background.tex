@@ -66,11 +66,16 @@ these logics please see~\cite{grohe2017descriptive} and~\cite{GradelP15a}.
 Let $L$ be a logic and $\tau$ a vocabulary. For $\phi \in L[\tau]$ and a
 sequence of variables $\vec{x}$, we write $\phi(\vec{x})$ if the free variables
 in $\phi$ are among those in $\vec{x}$. Suppose $\vec{x} = (x_1, \ldots , x_k)$,
-and let $\mathcal{A}$ be a $\tau$-structure with universe $U$, and let $\vec{a}
-\in U^k$. We write $\mathcal{A} \models_L \phi[\vec{a}]$ if, and only if, $\phi$
-is true in $\mathcal{A}$ with respect to $L$ where for all $i \in [k]$ each
-variable $x_i$ is assigned to $a_i$. If the logic is obvious from context we
-omit the subscript and just write $\mathcal{A} \models \phi[\vec{a}]$.
+and let $\mathcal{A}$ be a $\tau$-structure with universe $U$. We call a
+function $\alpha : {x_1, \ldots, x_k} \rightarrow U$ an \emph{assignment}. If
+$\vec{a}\in U^k$, we write $\alpha^{\vec{x}}_{\vec{a}}$ to denote the assignment
+that maps the variable $x_i$ to $a_i$ for $i \in [k]$. We say that two
+assignments $\alpha$ and $\beta$ are \emph{compatible} if $\alpha$ and $\beta$
+agree on the intersection of their domain. We write $\mathcal{A} \models_L
+\phi[\alpha]$ if, and only if, $\phi$ is true in $\mathcal{A}$ with respect to
+$L$ where for all $i \in [k]$ each variable $x_i$ is assigned to $\alpha(x_i)$.
+If the logic is obvious from context we omit the subscript and just write
+$\mathcal{A} \models \phi[\vec{a}]$.
 
 \subsection{Fixed-Point with Counting}
 Let $\FPC[\tau]$ denote \emph{fixed-point logic with counting} with respect to
