@@ -313,7 +313,7 @@ Structured functions give us a general framework for indexing the input sequence
 to a Boolean function and associating with that function an appropriate symmetry
 condition, or notion of equivalence. Let $F$ be a $(\tau, D)$-structured
 function. We say $F$ is \emph{$G$-invariant} if it is constant on $G$-equivalent
-input vectors, i.e. for all $G$-equivalent $f, g \in \{0,1\}^{X}$, $F(f) =
+input vectors, i.e.\ for all $G$-equivalent $f, g \in \{0,1\}^{X}$, $F(f) =
 F(g)$. We say $F$ is \emph{isomorphism-invariant} if it is $\aut(\tau,
 D)$-invariant. Note that a structured function with vocabulary $\tau$ is
 isomorphism-invariant if, and only if, it decides a property of
@@ -342,9 +342,11 @@ single binary relation, i.e. a directed graph. In contrast, the graph-invariant
 function discussed at the beginning of this subsection indexes the input string
 using two element subsets of the universe, rather pairs of elements, an encoding
 that naturally enforces the symmetry and irreflexivity properties the edge
-relation. We should note, however, that symmetry and irreflexivity are
-properties of directed-graph, and as such can be decided by an
-isomorphism-invariant structured function over the graph vocabulary.
+relation.
+
+% We should note, however, that symmetry and irreflexivity are
+% properties of directed-graph, and as such can be decided by an
+% isomorphism-invariant structured function over the graph vocabulary.
 
 % , and any input sequence encodes a sub-relation of that complete relation. As
 % such, the function This is because in the event that $\tau := {E}$ (where $E$
@@ -519,7 +521,8 @@ $\ind(\Sigma(g))$. We define the relation $W \subseteq G^2$ by $W(h,g)$ if, and
 only if, $h \in \img(L(g))$. For each $g \in G$ we let $W(\cdot, g) := \{h \in G
 : W(h,g)\}$ and $W(g, \cdot) := \{h \in G : W(g,h)\}$. We call the elements of
 $W(\cdot, g)$ the \emph{children} of $g$ and the elements of $W(g, \cdot)$ the
-\emph{parents} of $g$. We also abbreviate $W(g, \cdot)$ by $H_g$.
+\emph{parents} of $g$. We also abbreviate $W(g, \cdot)$ by $H_g$. We write $W_T$
+for the transitive closure of $W$.
 
 We let the vocabulary and universe of $g$ be the vocabulary and universe of
 $\Sigma(g)$, respectively, and denote the vocabulary of $g$ by $\vocab{g}$ and
@@ -572,10 +575,11 @@ is given as follows
   $\Sigma(g)$,
 \item if $g$ is a relational gate then $g$ evaluates to true iff $\gamma
   \mathcal{A} \models \Sigma(g)(\Lambda (g))$, and
-\item if $g$ is an internal gate such that $\Sigma (g)$ let $L^{\gamma}_g:
-  \ind(g) \rightarrow \{0,1\}$ be defined by $L^{\gamma}_g(x) = C[\gamma
-  \mathcal{A}](L(g)(x))$, for all $x \in \ind(g)$. Then $g$ evaluates to true
-  if, and only if, $\Sigma(g) (L^{\gamma}_g) = 1$.
+\item if $g$ is an internal gate such that $\Sigma (g)$ let $L^{\gamma
+    \mathcal{A}}(g): \ind(g) \rightarrow \{0,1\}$ be defined by
+  $L^{\gamma\mathcal{A}}(g)(x) = C[\gamma \mathcal{A}](L(g)(x))$, for all $x \in
+  \ind(g)$. Then $g$ evaluates to true if, and only if, $\Sigma(g)
+  (L^{\gamma}_g) = 1$.
 \end{enumerate}
 We say that $C$ defines the $q$-ary query $Q \subseteq U^q$ under $\gamma$ where
 $\vec{a} \in Q$ if, and only if, $C[\gamma \mathcal{A}](\Omega (\gamma \vec{a}))
@@ -616,7 +620,7 @@ paper.
   gate $g$ in $C$ a unique pair $(\vec{a}, R)$, where $R := \Sigma (g)$ is a
   relational symbol in $\tau$ and $\vec{a} := \Lambda_R(g)$ is an an element of
   $R^{[n]}$. Thus we can think of the function $F_C$ computed by the circuit as
-  having it's input string indexed by the elements of $\ind(\rho, [n])$, and so
+  having its input string indexed by the elements of $\ind(\rho, [n])$, and so
   think of $F_C$ as a $(\rho, [n])$-structured function.
 
   % The value of $F_C (f)$, for some element $f \in
@@ -799,16 +803,15 @@ polynomial-time decidable, would be non-trivial.
 In order to proceed we will restrict ourselves to circuits with certain
 constraints on how those gates computing non-symmetric functions can be wired
 into the circuit. We call these circuits \emph{transparent} circuits. We show in
-Sections~\ref{sec:transparency-and-unique-extensions} and~\ref{} that
-transparency is sufficient to allow for the polynomial-time decidability of many
-important circuit properties, while still keeping the circuit model powerful
-enough for us to establish a translation from formulas to families of circuits.
+Sections~\ref{sec:transparency-and-unique-extensions} that transparency is
+sufficient to allow for the polynomial-time decidability of many important
+circuit properties, while still keeping the circuit model powerful enough for us
+to establish a translation from formulas to families of circuits.
 
 Before we can formally define \emph{transparency} we need to define the
 \emph{syntactic-equivalence} relation on the gates of a circuit. The intuition
 is that two gates in a circuit are syntactically-equivalent if the circuits
 underneath them are `hereditary similar'.
-
 % In order to prove this result, Anderson and Dawar introduce the notion of a
 % \emph{rigid} circuit, proving that symmetric circuits may be
 
@@ -835,15 +838,15 @@ underneath them are `hereditary similar'.
 % isomorphism-equivalent up to syntactic equivalence. We define this notion (for
 % an arbitrary equivalence relation) below.
 
-\begin{definition}
-  Let $\tau$ be a many-sorted vocabulary and $D$ and $D'$ be $\tau$-sorted sets.
-  Let $X$ be a set and $\sim$ be an equivalence relation defined on $X$. Let $Y,
-  Z \subset X$. We say two functions $f : \ind(\tau,D) \rightarrow X$ and $g :
-  \ind(\tau, D') \rightarrow Y$ are \emph{isomorphism-equivalent up to $\sim$}
-  if there exists an isomorphism $\pi : \str{\tau, D} \rightarrow \str{\tau,
-    D'}$ such that $f (\vec{x}_R) \sim g (\pi \vec{x}_R)$ for all $\vec{x}_R \in
-  \ind(\tau, D)$ .
-\end{definition}
+% \begin{definition}
+%   Let $\tau$ be a many-sorted vocabulary and $D$ and $D'$ be $\tau$-sorted
+%   sets. Let $X$ be a set and $\sim$ be an equivalence relation defined on $X$.
+%   Let $Y, Z \subset X$. We say two functions $f : \ind(\tau,D) \rightarrow X$
+%   and $g : \ind(\tau, D') \rightarrow Y$ are \emph{isomorphism-equivalent up
+%   to $\sim$} if there exists an isomorphism $\pi : \str{\tau, D} \rightarrow
+%   \str{\tau, D'}$ such that $f (\vec{x}_R) \sim g (\pi \vec{x}_R)$ for all
+%   $\vec{x}_R \in \ind(\tau, D)$ .
+% \end{definition}
 
 % \begin{definition}
 %   Let $C := \langle G, W, \Omega, \Sigma, \Lambda, L \rangle$ be a
@@ -867,9 +870,9 @@ underneath them are `hereditary similar'.
   gates, then $g \equiv h$ if, and only if, both $g$ and $h$ are constant gates
   or both are relational gates and $\Lambda(g) = \Lambda (h)$. Suppose $g$ and
   $h$ are internal gates and and suppose we have defined the
-  syntactic-equivalence relation for all gates of height less than the height of
-  either $g$ or $h$. Then $g \equiv h$ if, and only if, $L(g)$ and $L(h)$ are
-  isomorphism equivalent up to $\equiv$.
+  syntactic-equivalence relation for all gates of depth less than the depth of
+  either $g$ or $h$. Then $g \equiv h$ if, and only if, $L(g) /_\equiv$ and
+  $L(h) /_\equiv$ are isomorphism equivalent.
 \end{definition}
 
 \begin{remark}
@@ -877,27 +880,61 @@ underneath them are `hereditary similar'.
   it's very easy to prove.
 \end{remark}
 
-We could think of any gate $g$ in the circuit as computing a function that maps
-a given assignment to the input gates to the evaluation of the circuit at $g$
-for the given assignment. While we would like to be able to identify gates that
-compute the same function in this sense, it is not hard to show that deciding
-this property is $\NP$-hard. The syntactic-equivalence relation is an
-easier-to-compute refinement of this relation, instead identifying pairs of
-gates if the circuits underneath them are hereditary similar.
+For a circuit $C$ of order $n$ and a gate $g$ we map think of $g$ as computing
+the function that maps an input structure $\mathcal{A}$ and a bijection $\gamma$
+from the universe of $\mathcal{A}$ to $[n]$ to the evaluation $C[\gamma
+\mathcal{A}(g)$. While we would like to be able to identify gates that compute
+the same function in this sense, it is not hard to show that deciding this
+equivalence relation for a given circuit is $\NP$-hard. We now show that if two
+gates are syntactically-equivalent then the functions computed at these two
+gates must be equal. We show later that the syntactic-equivalence relation is
+polynomial-time decidable for the class of circuits of interest to us in this
+paper.
 
-We could also define a similar equivalence relation using the automorphisms of a
-circuit. In this case we identify a pair of gates $(h, h')$ in a circuit $C$ of
-order $n$ if, and only if, there exists $\sigma \in \sym_n$, $\pi, \pi' \in
-\aut(C)$ both extending $\sigma$, and $g$ a gate in $C$, such that $h = \pi (g)$
-and $h' = \pi' (g)$. We now show this relation is a refinement of
-syntactic-equivalence.
+\begin{lem}
+  Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\BB,
+  \rho)$-circuit of order $n$. Let $\mathcal{A}$ be a $\rho$-structure of size
+  $n$ and let $\gamma$ be a bijection from the universe of $\mathcal{A}$ to
+  $[n]$. For all $g, g' \in G$ if $g \equiv g'$ then $C[\gamma \mathcal{A}](g) =
+  C[\gamma \mathcal{A}](g')$.
+  \label{lem:syntactic-equivalence-equal-function}
+\end{lem}
+\begin{proof}
+  We prove the result by induction on depth. Suppose $g$ and $g'$ have depth $0$
+  and $g \equiv g'$. Then they are both input gates and so $g = g'$. The result
+  for depth $0$ then follows trivially. Suppose $g$ and $g'$ are internal gates,
+  and suppose for all $h, h' \in G$ of depth less than $g$ or $g'$ we have that
+  if $h \equiv h'$ then $C[\gamma \mathcal{A}](h) = C[\gamma \mathcal{A}](h')$.
+  Suppose $g \equiv g'$. Then exists $\lambda \in \aut(g)$ such that $L(g) (x)
+  \equiv L(g') (\lambda x)$ for all $x \in \ind(g)$. It follows from the
+  inductive hypothesis that $L^{\gamma \mathcal{A}}(g)(x) = C[\gamma
+  \mathcal{A}](L(g)(x)) = C[\gamma \mathcal{A}](L(g')(\lambda x)) = (L^{\gamma
+    \mathcal{A}}(g) \lambda) (x)$ for all $x \in \ind(g)$. Since $\Sigma(g)$
+  (and so $\Sigma(g')$) is a structured function, it follows that $C[\gamma
+  \mathcal{A}](g) = \Sigma(g)(L^{\gamma \mathcal{A}} (g)) = \Sigma(g')
+  (L^{\gamma \mathcal{A}})(g') \lambda) = \Sigma(g') (L^{\gamma
+    \mathcal{A}}(g')) = C[\gamma \mathcal{A}](g')$. The result follows.
+\end{proof}
 
-\begin{remark}
-  It's interesting to note that if $C$ has unique extensions then this relation
-  collapses to equality, syntactic-equivalence does not. Note to self: should I
-  mention this? Also, the following result is equivalent to checking for just
-  $\pi $
-\end{remark}
+The syntactic-equivalence relation identifies gates that have `equivalent'
+circuits underneath them. A similar intuition is captured by identifying gates
+that are mapped to one another by automorphisms of the circuit that extend the
+trivial permutation. We now show that if two automorphisms extend the same
+permutation then the two images of each gate must be syntactically-equivalent.
+
+
+% Stated slightly differently, we identify the gates $h$ and $h'$ in a circuit
+% $C$ of order $n$ if, and only if, there exists $\sigma \in \sym_n$, $\pi, \pi'
+% \in \aut(C)$ both extending $\sigma$, and $g$ a gate in $C$, such that $h =
+% \pi (g)$ and $h' = \pi' (g)$. We now show this relation is a refinement of
+% syntactic-equivalence.
+
+% \begin{remark}
+%   It's interesting to note that if $C$ has unique extensions then this
+%   relation collapses to equality, syntactic-equivalence does not. Note to
+%   self: should I mention this? Also, the following result is equivalent to
+%   checking for just $\pi $
+% \end{remark}
 
 \begin{lem}
   Let $C$ be a circuit of order $n$, $\sigma \in \sym_n$ and $\pi, \pi' \in
@@ -912,12 +949,11 @@ syntactic-equivalence.
   (\Omega^{-1}(g)) = \Omega (\sigma \Omega^{-1}(g)) = \pi' \Omega
   (\Omega^{-1})$, or none of $g$, $\pi(g)$ or $\pi' (g)$ are output gates.
   
-  We now prove the result by induction on height. Suppose $g$ is a gate of
-  height $0$. Then $g$ is either a relational or constant gate. In either case
-  $\pi (g) = \pi' (g)$, and so $\pi(g)$ and $\pi'(g)$ are
-  syntactically-equivalent.
+  We now prove the result by induction on depth. Suppose $g$ is a gate of depth
+  $0$. Then $g$ is either a relational or constant gate. In either case $\pi (g)
+  = \pi' (g)$, and so $\pi(g)$ and $\pi'(g)$ are syntactically-equivalent.
 
-  Suppose $g$ is an internal gate and suppose that for every gate $h$ of height
+  Suppose $g$ is an internal gate and suppose that for every gate $h$ of depth
   less than $g$, $\pi (h)$ is syntactically-equivalent to $\pi'(h)$. We have
   that there exists $\lambda, \lambda' \in \aut(g)$ such that $\pi
   L(g)(\vec{a}_R) = L(\pi g) (\lambda \vec{a}_R)$ and $\pi' L(g)(\vec{a}_R) =
@@ -948,18 +984,30 @@ syntactic-equivalence.
   % follows.
 \end{proof}
 
-We now define the \emph{unique labels} and \emph{transparency} conditions on
-circuits.
+It follows from Lemma~\ref{lem:permutation-extending-syntactic-equivalence} that
+the syntactic-equivalence relation of a circuit $C$ constrains the automorphism
+group of $C$, and so the orbits and stabiliser groups of the gates in $C$. We
+say that a circuit $C$ is \emph{syntactically simple} if $C$ has trivial
+syntactic-equivalence classes, i.e. for all gates $g$ and $h$ in $C$ if $g
+\equiv h$ then $g = h$. An immediate corollary of
+Lemma~\ref{lem:permutation-extending-syntactic-equivalence} is that if a circuit
+is syntactically simple then it has unique extensions. We now define a few
+properties of circuits in terms of the structure of their syntactic-equivalence
+classes.
 
 \begin{definition}
   Let $C$ be a circuit and $g$ be a gate in $C$. We say $g$ has \emph{injective
-    labels} if $L(g)$ is an injection. We say $g$ has \emph{unique labels} if
-  $g$ has injective labels and no two gates in $\img(L(g))$ are
-  syntactically-equivalent. We say $C$ has \emph{injective labels} (resp.
-  \emph{unique labels}) if every gate in $C$ has injective labels (resp. unique
-  labels). We say $C$ is \emph{transparent} if every gate $g$ in $C$ such that
-  $\Sigma(g)$ is not a symmetric function has unique labels.
+    labels} if $L(g)$ is an injection. We say $g$ has \emph{unique children} if
+  no two gates in $H_g$ are syntactically-equivalent. We say $g$ has
+  \emph{unique labels} if $g$ has injective labels and unique children. We say
+  $C$ has \emph{injective labels} (resp. \emph{unique labels}) if every gate in
+  $C$ has injective labels (resp. unique labels). We say $C$ is
+  \emph{transparent} if every gate $g$ in $C$ such that $\Sigma(g)$ is not a
+  symmetric function has unique labels.
 \end{definition}
+
+It is worth noting that if a circuit has injective labels and is syntactically
+simple then then it has unique labels. The converse is, in general, false.
 
 There is a small technical point that needs some discussion before we continue.
 The definition of a circuit allows for the inclusion of a gate such that there
@@ -1005,8 +1053,8 @@ We note that the construction of $C'$ from $C$ in
 Lemma~\ref{lem:redundant-gates} can be implemented so as to run in time
 polynomial in the size of $C$. As such, for the remainder of this paper we
 assume, unless stated otherwise, every circuit has no redundant gates. With this
-assumption in mind we now show that every circuit with unique labels has unique
-extensions.
+assumption in mind we now show that every circuit with unique children (and so
+unique labels) has unique extensions.
 
 % \begin{lem}
 %   Let $C$ be a circuit and suppose there is an automorphism $\pi \in \aut(C)$
@@ -1031,12 +1079,12 @@ extensions.
 
 \begin{prop}
   Let $C := \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be a $(\mathbb{B},
-  \rho)$-circuit of order $n$. If $C$ has unique labels then $C$ has unique
+  \rho)$-circuit of order $n$. If $C$ has unique children then $C$ has unique
   extensions.
-  \label{prop:unique-labels-unique-extensions}
+  \label{prop:unique-children-unique-extensions}
 \end{prop}
 \begin{proof}
-  Suppose $C$ has unique labels. Let $\pi_{\sigma}, \pi_{\sigma}' \in \aut(C)$
+  Suppose $C$ has unique children. Let $\pi_{\sigma}, \pi_{\sigma}' \in \aut(C)$
   be automorphisms extending $\sigma \in \sym_n$. We now prove that $\pi_\sigma
   = \pi_{\sigma}'$. Let $\pi := \pi_{\sigma}'\pi^{-1}_\sigma$. We have that
   $\pi$ is an automorphism of the circuit and that $\pi$ extends
@@ -1052,9 +1100,9 @@ extensions.
   and let $h \in H_g$. Since $\pi (g) = g$ we have that $\pi H_{g} = H_g$, and
   so $\pi (h) \in H_g$. We have from
   Lemma~\ref{lem:permutation-extending-syntactic-equivalence} that $h$ is
-  syntactically-equivalent to $\pi (h)$ and, since $g$ has unique labels, $h$ is
-  the only gate in $H_g$ syntactically-equivalent to $h$. It follows that $\pi
-  (h) = h$.
+  syntactically-equivalent to $\pi (h)$ and, since $g$ has unique children, $h$
+  is the only gate in $H_g$ syntactically-equivalent to $h$. It follows that
+  $\pi (h) = h$.
   
   Let $W_t$ be the transitive closure of the relation $W$ on $C$. The inductive
   argument gives us that for all $h \in G$ if there exists an output gate $g$
@@ -1063,12 +1111,29 @@ extensions.
   (g, \Omega(\vec{a}))\}$, and the result follows.
 \end{proof}
 
-We show in Proposition~\ref{prop:transparent-unique} that a transparent circuit
-can be converted into an equivalent circuit with unique labels in time
-polynomial in the size of the circuit. Since we are
-working with $P$-uniform families of transparent circuits, this fact allows us
-to assume, without a loss of generality, that transparent circuits have unique
-labels (and so unique extensions).
+It follows from Proposition~\ref{prop:unique-children-unique-extensions} that if
+$C$ is of order $n$ then for each $\sigma \in \sym_n$ there exists at most one
+$\pi_\sigma \in \aut(C)$ extending $\sigma$. However, if $g$ is a gate in $C$
+and $\pi_{\sigma} g = g'$ there may no `canonical' $\lambda \in \aut(g)$
+witnessing the isomorphism-equivalence, i.e.\ such that $\pi L(g) = L(g')
+\lambda$. It is this lack of a `canonical' choice that allows us to prove in
+Section~\ref{sec:transparency-and-unique-extensions} that a great many important
+circuit properties (e.g. the orbit of a gate, symmetry of a circuit, etc.) for
+circuits with unique gates are at least as hard as the graph-isomorphism problem
+to decide.
+
+In contrast, it is easy to see that if $C$ has unique labels, and $g$ and $g'$
+are gates in the circuit, then $L(g)$ and $L(g')$ are isomorphism-equivalent if,
+and only if, $\lambda := L(g')^{-1}L(g)$ is in $\aut(g)$. We show in
+Section~\ref{sec:transparency-and-unique-extensions} all of the circuit
+properties of interest in this paper are polynomial-time decidable for circuits
+with unique labels. Moreover, we show in
+Proposition~\ref{prop:transparent-unique} that a transparent circuit can be
+converted into an equivalent circuit with unique labels in time polynomial in
+the size of the circuit. Since we are working with $P$-uniform families of
+transparent circuits, this fact allows us to assume, without a loss of
+generality, that transparent circuits have unique labels (and, from
+\ref{prop:unique-children-unique-extensions} so unique extensions).
 
 % \begin{definition}
 %   We say that a circuit $C_n$ is \emph{rigid} if every equivalence class of

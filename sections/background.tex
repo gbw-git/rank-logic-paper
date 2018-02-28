@@ -56,12 +56,13 @@ $\neg$, $\forall$, and $\exists$).
 
 Let $\FP[\tau]$ denote \emph{fixed-point logic} with respect to $\tau$. The
 logic $\FP$ is an extension of $\FO$ by an inflationary fixed-point operator. In
-other words, $\FP[\tau]$ includes all formulas in $\FO[\tau]$, along with all
-formulas of the form $[\ifp_{V, \vec{x}}. \phi]$, where $V$ is a relation symbol
-not in $\tau$, $\phi \in \FO[\tau \cup \{V\}]$, and $\vec{x}$ is a sequence of
-variables of length $\arty(V)$. We assume the standard syntax and semantics for
-$\FO[\tau]$ and $\FP[\tau]$. For more detail on the syntax and semantics of
-these logics please see~\cite{grohe2017descriptive} and~\cite{GradelP15a}.
+other words, $\FP[\tau]$ includes all formulas in $\FO[\tau]$, and is closed
+under applications of the fixed-pint operator, i.e. if $\phi \in \FP[\tau]$, $V$
+is a second-order variable, and $\vec{x}$ is a tuple of variables of length
+$\arty(V)$, then $[\ifp_{V, \vec{x}}. \phi] \in FP[\tau]$. We assume the
+standard syntax and semantics for $\FO[\tau]$ and $\FP[\tau]$. For more detail
+on the syntax and semantics of these logics please
+see~\cite{grohe2017descriptive} and~\cite{GradelP15a}.
 
 Let $L$ be a logic and $\tau$ a vocabulary. For $\phi \in L[\tau]$ and a
 sequence of variables $\vec{x}$, we write $\phi(\vec{x})$ if the free variables
@@ -74,33 +75,35 @@ assignments $\alpha$ and $\beta$ are \emph{compatible} if $\alpha$ and $\beta$
 agree on the intersection of their domain. We write $\mathcal{A} \models_L
 \phi[\alpha]$ if, and only if, $\phi$ is true in $\mathcal{A}$ with respect to
 $L$ where for all $i \in [k]$ each variable $x_i$ is assigned to $\alpha(x_i)$.
-If the logic is obvious from context we omit the subscript and just write
-$\mathcal{A} \models \phi[\vec{a}]$.
+If the sequence of variables $\vec{x}$ that we are assigning to $\vec{a}$ is
+obvious from context we write $\mathcal{A} \models_L \phi[\vec{a}]$ instead. If
+the logic is obvious from context we omit the subscript and just write
+$\mathcal{A} \models \phi[\alpha]$.
 
 \subsection{Fixed-Point with Counting}
 Let $\FPC[\tau]$ denote \emph{fixed-point logic with counting} with respect to
 the vocabulary $\tau$. The logic $\FPC$ is an extension of $\FP$ that includes a
-counting operator that allows the logic to determine the size of a definable
-set, as well as other mechanisms for reasoning about quantities. We now briefly
-describe the structure of a formula of $\FPC[\tau]$. Every first-order variable
-is assigned a type, and so each variable is either a \emph{vertex} or
-\emph{number} variable. Vertex variables are assigned to elements of the
-universe of the structure, and play a similar role to the variables that appear
-in formulas in $\FO[\tau]$ or $\FP[\tau]$. Number variables are assigned to
-elements of $\nats$. We usually use Latin letters (e.g. $x, y, z, \ldots$) to
-denote vertex variables and Greek letters (e.g. $\mu, \nu, \epsilon, \ldots$) to
-denote number variables. All atomic formulas in $\FP[\tau]$ are atomic formulas
-in $\FPC[\tau]$. We say that $t$ is a \emph{number term} if $t$ a number
-variable or if $t$ is an application of the \emph{counting operator}, i.e. $t =
-\#x. \phi(x)$, where $\phi \in \FPC[\tau]$ and $x$ is a vertex variable free in
-$\phi$. If $t_1$ and $t_2$ are number terms then $t_1 \leq t_2$ and $t_1 = t_2$
-are atomic formulas. $\FPC[\tau]$ includes all formulas formed by closing the
-set of atomic formulas under the usual Boolean connectives, the first-order
-quantifiers (for vertex variables), and the inflationary fixed-point operator.
-The second-order variables, such as those that appear in an application of the
-fixed-point operator, are allowed to have mixed-type, i.e. we associate with a
-second-order variable $R$ a type $(k, l) \in \nats^2$ intended to mean that $R$
-is assigned to a subset of $U^k \times \nats^l$.
+counting operator that allows us to define the size of a definable set, as well
+as other mechanisms for reasoning about quantities. We now briefly describe the
+structure of a formula of $\FPC[\tau]$. Every first-order variable is assigned a
+type, and so each variable is either a \emph{vertex} or \emph{number} variable.
+Vertex variables are assigned to elements of the universe of the structure, and
+play a similar role to the variables that appear in formulas in $\FO[\tau]$ or
+$\FP[\tau]$. Number variables are assigned to elements of $\nats$. We usually
+use Latin letters (e.g. $x, y, z, \ldots$) to denote vertex variables and Greek
+letters (e.g. $\mu, \nu, \epsilon, \ldots$) to denote number variables. All
+atomic formulas in $\FP[\tau]$ are atomic formulas in $\FPC[\tau]$. We say that
+$t$ is a \emph{number term} if $t$ is a number variable or if $t$ is an application
+of the \emph{counting operator}, i.e. $t = \#x. \phi(x)$, where $\phi \in
+\FPC[\tau]$ and $x$ is a vertex variable free in $\phi$. If $t_1$ and $t_2$ are
+number terms then $t_1 \leq t_2$ and $t_1 = t_2$ are atomic formulas.
+$\FPC[\tau]$ includes all formulas formed by closing the set of atomic formulas
+under the usual Boolean connectives, the first-order quantifiers (for vertex
+variables), and the inflationary fixed-point operator. The second-order
+variables, such as those that appear in an application of the fixed-point
+operator, are allowed to have mixed-type, i.e. we associate with a second-order
+variable $R$ a type $(k, l) \in \nats^2$ intended to mean that $R$ is assigned
+to a subset of $U^k \times \nats^l$.
 
 We also allow quantification over the number sort, but in order to ensure that
 the data complexity of $\FPC$ is in polynomial time we only allow bounded
@@ -113,12 +116,13 @@ $\FPC[\tau]$.
 If $\mathcal{A}$ is a $\tau$-structure with universe $U$, the counting term
 $\#x. \phi(x)$ evaluates to $\vert \{a \in U : \mathcal{A} \models \phi[a]\}
 \vert$ in $\mathcal{A}$, assuming a fixed assignment to the other free variables
-in $\phi$. The intended semantics for bounded quantification is that the
-variable may only be assigned to a value at most equal to the the evaluation of
-the number term bounding the variable. The semantics of the `$=$' and `$\leq$'
-symbols are defined for number terms in the obvious manner. For a more detailed
-description of the syntax and semantics of $\FPC$ please
-see~\cite{grohe2017descriptive} or the introduction of~\cite{GradelP15a}.
+in $\phi$. The intended semantics for bounded quantification is as for ordinary
+quantification but with the additional restriction that the assignment to the
+number variable be bounded by the evaluation of the bounding number term. The
+semantics of the `$=$' and `$\leq$' symbols are defined for number terms in the
+obvious manner. For a more detailed description of the syntax and semantics of
+$\FPC$ please see~\cite{grohe2017descriptive} or the introduction
+of~\cite{GradelP15a}.
 
 It is possible to define the usual arithmetic operations on number terms using
 the constructs thus far introduced. We do not show how to explicitly define
@@ -126,8 +130,8 @@ these operations in $\FPC$, but we do make use of them in this paper. Please
 see~\cite{grohe2017descriptive} for the explicit constructions.
 
 Let $\FOC[\tau]$ denote \emph{first-order logic with counting} with respect to
-the vocabulary $\tau$, and be the set of all formulas in $\FPC[\tau]$ that do
-not contain the an application of the fixed-point operator.
+the vocabulary $\tau$, and let $\FOC[\tau]$ be set of all formulas in
+$\FPC[\tau]$ that do not contain an application of the fixed-point operator.
 
 
 % We also recall the definition of \emph{fixed-point logic with counting}
@@ -185,7 +189,7 @@ not contain the an application of the fixed-point operator.
 \subsection{Rank Logic}
 Let $\FPR[\tau]$ denote \emph{fixed-point logic with rank} (or just \emph{rank
   logic}) with respect to the vocabulary $\tau$. The logic $\FPR$ is an
-extension of $\FP$ to include an operator that decides the rank of a definable
+extension of $\FP$ to include an operator that denotes the rank of a definable
 matrix over a finite field, as well as other mechanisms for reasoning about
 quantity. In this way we can think of the structure of a formula of $\FPR$ as
 being similar to that of $\FPC$, with rank operators replacing counting
@@ -194,10 +198,10 @@ operators.
 We now briefly describe the structure of a formula in $\FPR[\tau]$. For more
 detail on the syntax and semantics of $\FPR$ please see~\cite{GradelP15a}
 and~\cite{Dawar09logicswith}. As in the case of $\FPC$, each variable is either
-a number or vertex variable, with vertex variables being assigned to elements of
-the universe and number variables assigned to natural numbers. All atomic
-formulas in $\FP[\tau]$ are atomic formulas in $\FPR[\tau]$. We say that $t$ is
-a \emph{number term} if $t$ is a number variable or if $t$ is an application of
+a number or vertex variable, with vertex variables assigned to elements of the
+universe and number variables assigned to natural numbers. All atomic formulas
+in $\FP[\tau]$ are atomic formulas in $\FPR[\tau]$. We say that $t$ is a
+\emph{number term} if $t$ is a number variable or if $t$ is an application of
 the \emph{rank operator}, i.e. $t = [\rank (\vec{x}, \vec {\nu} \leq \vec{t},
 \vec{y}\vec{\mu} \leq \vec{s}, \pi \leq \eta). \phi]$, where $\phi$ is a number
 term, $\vec{t}$ and $\vec{s}$ are tuples of number terms bounding the sequences
@@ -211,48 +215,50 @@ allow bounded quantification for number variables. We note additionally that
 formulas may be treated as number terms that evaluate to zero or one.
 
 We now briefly explain the intended semantics of the rank operator. Let $\phi
-(\vec{x}, \vec {\nu}, \vec{y}\vec{\mu})$ be a number term, where $\vec{x}$ and
+(\vec{x} \vec {\nu}, \vec{y}\vec{\mu})$ be a number term, where $\vec{x}$ and
 $\vec{y}$ are tuples of vertex variables, $\vec{\nu}$ and $\vec{\mu}$ are tuples
-of number variables. Let and $\vec{s}$ and $\vec{t}$ be tuples of number terms
-that bound the ranges of $\vec{\nu}$ and $\vec{\mu}$, respectively. Let $\pi$ be
-a number variable and $r$ be a number term bounding the range of $\pi$. Let
+of number variables. Let $\vec{s}$ and $\vec{t}$ be tuples of number terms such
+that $\vert \vec{s} \vert = \vert \vec{\nu} \vert$ $\vert \vec{t}\vert = \vert
+\vec{mu} \vert$. Let $\pi$ be a number variable and $r$ be a number term. Let
 $\mathcal{A}$ be a structure with universe $A$, and suppose we have a given
-assignment to the all of the free variables appearing in $r$ and in the terms in
+assignment to the those free variables appearing in $r$ or in the terms in
 $\vec{t}$ and $\vec{s}$. Let $\mathbb{N}^{\leq\vec{t}} := \{\vec{n} \in
-\mathbb{N}^{\vert \vec{v} \vert}: n_i \leq t^{\mathcal{A}}_i\}$, and let
+\mathbb{N}^{\vert \vec{\nu} \vert}: n_i \leq t^{\mathcal{A}}_i\}$, and let
 $\mathbb{N}^{\leq \vec{s}}$ be defined similarly. Let $I:= A^{\vert \vec{x}
   \vert} \times \mathbb{N}^{\leq \vec{t}}$ and $J := A^{\vert \vec{y} \vert}
 \times \mathbb{N}^{\leq \vec{s}}$. Let $M^{\mathcal{A}}_\phi : I \times J
 \rightarrow \mathbb{N}$ be defined by $M^{\mathcal{A}}_\phi (\vec{a}\vec{n},
 \vec{b}\vec{m}):= \phi^{\mathcal{A}}(\vec{a}\vec{n},\vec{b}\vec{m})$. For the
-structure $\mathcal{A}$ and assignment $\pi \mapsto p$, for $p \leq r^{A}$
-prime, $[\rank (\vec{x}, \vec {\nu} \leq \vec{t}, \vec{y}\vec{\mu} \leq \vec{s},
-\pi \leq r). \phi]$ evaluates to the rank of $M^{\mathcal{A}}_\phi$ mod $p$,
-where the entries in $M^{\mathcal{A}}$ are interpreted as elements of
-$\mathbb{F}_p$.
+structure $\mathcal{A}$ and assignment $\pi \mapsto p$, where $p \leq
+r^{\mathcal{A}}$, if $p$ is prime then the rank term $[\rank (\vec{x}, \vec
+{\nu} \leq \vec{t}, \vec{y}\vec{\mu} \leq \vec{s}, \pi \leq r). \phi]$ is the
+rank of $M^{\mathcal{A}}_\phi$ mod $p$, where the entries in $M^{\mathcal{A}}$
+are interpreted as elements of $\mathbb{F}_p$. If $p$ is not prime then the rank
+term evaluates to zero.
 
-We should note that there are two different of rank logics defined in the
-literature. The first, introduced by Dawar et al.~\cite{Dawar09logicswith},
-differs from the one defined above in that it does not take the characteristic
-of the field as a parameter, instead including a different operator for every
-prime field over which compute rank. It was shown by Grad{\"e}l and
-Pakusa~\cite{GradelP15a} that this rank logic does not capture $\PT$. Grad{\"e}l
-and Pakusa introduced the rank logic we have presented above and showed that
-this logic, with the uniform rank operator, is strictly more expressive then the
-rank logic introduced by Dawar et al. For this reason when we refer to rank
-logic we are always referring to the rank logic introduced by Grad{\"e}l and
+We should note that there are two distinct rank logics defined in the
+literature. The first was introduced by Dawar et al.~\cite{Dawar09logicswith},
+and differs from the rank logic defined above in that it includes a sequence of
+rank operator, rather than a single uniform operator, one for each prime $p$
+expressing the rank over the field $\ff_p$. It was shown by Grad{\"e}l and
+Pakusa~\cite{GradelP15a} that this non-uniform rank logic does not capture
+$\PT$. After proving this result, Grad{\"e}l and Pakusa introduced the rank
+logic with a uniform rank operator that we have presented above, and showed that
+this rank logic is strictly more expressive then the rank logic introduced by
+Dawar et al. This uniform rank logic remains a candidate for capturing
+polynomial-time. For this reason when we refer to rank logic in this paper we
+are always referring to the rank logic introduced by Grad{\"e}l and
 Pakusa~\cite{GradelP15a}.
 
 We may also define an extension of first order logic by rank operators. Let
 $\FOR[\tau]$ denote \emph{first-order with rank} with respect to the vocabulary
-$\tau$, and be the set of formulas in $\FPR[\tau]$ that do not contain an
-application of the fixed-point operator.
+$\tau$, and let $\FOR[\tau]$ be the set of formulas in $\FPR[\tau]$ that do not
+contain an application of the fixed-point operator.
 
 Let $\FPrk[\tau]$ denote \emph{fixed-point logic with rank quantifiers} with
 respect to the vocabulary $\tau$. This logic, first introduced by Dawar et
 al~\cite{Dawar09logicswith}, is similar to $\FPR$, except that it extends $\FP$
-by \emph{rank quantifiers}, rather than a rank operator, that can decide if a
-definable matrix has a rank bounded by some constant. We define for each prime
+by a set of \emph{rank quantifiers}, rather than a rank operator. We define for each prime
 $p$, and natural number $r$, a rank quantifier $\rank^r_p$, such that
 $\rank^r_p\vec{x}\vec{y}. \phi$ is interpreted as $[\rank (\vec{x}, \vec{y},
 \pi) . \phi] \leq t_r$, where $\pi$ is assigned to $p$ and $t_r$ is a number
@@ -262,13 +268,13 @@ $\FPrk[\tau]$ be the closure of $\FP[\tau]$ under $\mathcal{R}$.
 
 We may also define an extension of first-order logic with rank quantifiers. Let
 $\FOrk[\tau]$ denote \emph{first-order with rank quantifiers} with respect to
-the vocabulary $\tau$, and be the set of all formulas in $\FPR[\tau]$ that do
-not contain an application of the fixed-point operator.
+the vocabulary $\tau$, and let $\FOrk[\tau]$ be the set of all formulas in
+$\FPR[\tau]$ that do not contain an application of the fixed-point operator.
 
-For more detail on the syntax and semantics of logics rank quantifiers please
+For more detail on the syntax and semantics of logics with rank quantifiers please
 see~\cite{Dawar09logicswith}. It is easy to see that $\FPrk \leq \FPR$ and
-$\FOrk \leq \FOR$. Moreover, we note that $[\rank(\vec{x}, \vec{y}).
-(\vec{x} = \vec{y}, \pi \leq r) \land \phi(\vec{x})]$ evaluates, for a structure
+$\FOrk \leq \FOR$. Moreover, we note that $[\rank(\vec{x}, \vec{y}). (\vec{x} =
+\vec{y}, \pi \leq r) \land \phi(\vec{x})]$ evaluates, for a structure
 $\mathcal{A}$ and any assignment $\pi \mapsto p$, to the number of assignments
 to $\vec{x}$ for which $\phi$ holds (i.e.\ $\vert \{\vec{a} \in U^{\vert \vec{x}
   \vert} : \mathcal{A} \models \phi[\vec{a}]\} \vert$). It follows that $\FPC
@@ -310,9 +316,9 @@ using a finite sequence of functions $f_1, \ldots , f_k:\{0,1\}^* \rightarrow
 of all Boolean functions $f^n_i : \{0,1\}^n \rightarrow \{0,1\}$ where $n \in
 \nats$, $i \in [k]$, and $f^n_i$ is the restriction of $f_i$ to strings of
 length $n$. We have $\AND, \OR, \NAND, \MAJ : \{0,1\}^* \rightarrow \{0,1\}$,
-where $\AND, \OR, \NAND$ are the usual (unbounded fan-in) logical operators, amd
+where $\AND, \OR, \NAND$ are the usual (unbounded fan-in) logical operators, and
 $\MAJ$ is the majority function. We write $\BS := \{\AND, \OR, \NOT\}$ to denote
-the \emph{standard basis} and $\BS := \BS \cup \{\MAJ\}$ to denote the
+the \emph{standard basis} and $\BM := \BS \cup \{\MAJ\}$ to denote the
 \emph{majority basis}.
 
 Let $\BB$ be a basis. A \emph{Boolean circuit} $C$ defined over $\BB$ is a
@@ -321,12 +327,12 @@ x_n$, each with in-degree $0$, internal gates labelled by elements of $\BB$, and
 a single internal gate with out-degree $0$ designated as the output gate. We say
 a circuit with $n$ input gates has \emph{order $n$}. The evaluation of circuit
 $C$ of order $n$ for the input $\vec{a} \in \{0,1\}^n$ is denoted by
-$C[\vec{a}]$ and computed by recursively evaluation the gates in the circuit. We
+$C[\vec{a}]$ and computed by recursively evaluating the gates in the circuit. We
 denote the evaluation of a gate $g$ in $C$ for the input $\vec{a}$ by
 $C[\vec{a}](g)$. If $g$ is an input gate, then $g = x_i$ for some $i \in [n]$,
 and $C[\vec{a}](g) = a_i$. If $g$ is an internal gate then $g$ is labelled by a
 symbol denoting a Boolean operation, and $C[\vec{a}](g)$ is the result of
-applying that operation the string formed from the evaluations of those gates
+applying that operation to the string formed from the evaluations of those gates
 input to $g$. If $g$ is the output gate, let $C[\vec{a}] = C[\vec{a}](g)$.
 
 The \emph{size} of a circuit $C$, denoted by $\vert C \vert$, is the number of
@@ -385,8 +391,28 @@ Anderson and Dawar use families of symmetric circuits to characterise $\FPC$.
 \begin{thm}[Anderson and Dawar~\cite{AndersonD17}]
   For a relational vocabulary $\tau$, a property of finite $\tau$-structures is
   decided by a P-uniform family of symmetric circuits defined over the basis
-  $\BS$ if, and only if, it is expressible in $\FPC[\tau]$.
+  $\BM$ if, and only if, it is expressible in $\FPC[\tau]$.
 \end{thm}
+
+\subsection{Equivalence Relations}
+Let $\sim$ be an equivalence relation on the set $X$. For $x \in X$ we write
+$[x]_\sim$ to denote the equivalence class of $x$ with respect to $\sim$. We
+omit the subscript if the equivalence relation is obvious from context. We write
+$X/_{\sim}$ to denote the set of equivalence classes of $X$. Let $A = \Pi_{i \in
+  I} A_i$ and let $J \subseteq I$ be such that for $i \in J$, $A_i \subseteq X$.
+Let $\sim_A$ be an equivalence relation on $A$ defined such that $\vec{a} \sim_A
+\vec{b}$ if, and only if, $\vec{a}(i) = \vec{b}(i)$ for all $i \in J$. We call
+$\sim_A$ the \emph{extension} of $\sim$ to $A$. We often abuse notation and
+write $\sim$ for the extension of the equivalence relation $\sim$. We notice
+that $(\Pi_{i \in I} A_i) /_{\sim} = \Pi_{i \in I} (A_i /_\sim)$.
+
+Let $Y$ and $Z$ be sets and let $f : Y \rightarrow Z$ be a function. We say $f$
+is \emph{invariant} under $\sim$ if for all $a, b \in Y$ if $a \sim_Y b$ then
+$f(a) \sim_Z f(b)$. If $f$ is an invariant under $\sim$ then $f /_{\sim}$ is a
+function mapping $Y /_{\sim_Y} $ to $ Z /_{\sim_Z}$ such that $f /_{\sim} ([a]) =
+[f(a)]$ for all $a \in Y$. We call $f_{\sim}$ the \emph{quotient} of $f$ with
+respect to $\sim$.
+
 
 % \subsection{Basic Notation}
 

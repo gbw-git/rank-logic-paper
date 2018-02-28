@@ -9,8 +9,8 @@
 % with matrix-symmetric gates, not just for rank gates.    
 
 \subsection{Supports and Supporting Partitions}
-In this subsection we formally define a support and the related notion of a
-supporting partition.
+We reproduce the definitions of a support and supporting partition
+from Anderson and Dawar~\ref{AndersonD17} below.
 
 \begin{definition}
   Let $G \leq \sym_n$ and let $S \subseteq [n]$. Then $S$ is a \emph{support}
@@ -190,10 +190,9 @@ We are often interested in defining a group action of some stabiliser group on
 some part of the circuit. In this case we make use of supports relative to some
 $G \lneq \sym_n$, where $G$ is the stabiliser group of some object or set of
 objects. In this case we make use of the following abbreviations in order to
-avoid complex subscripts. Let $X$ be a set on which a group action of $G \leq
-\sym_n$ is defined and let $x \in X$. Let $S$ be a set of elements of a domain
-on which a group action of $\sym_n$ is defined. We let $\SP_S(x)$ and
-$\consp_S(x)$ abbreviate $\SP_{\stab(S)}(x)$ and $\consp_{\stab(S)}(x)$,
+avoid complex subscripts. Let $X_1$ and $X_2$ be sets on which a group action of
+$\sym_n$ is defined, and let $x \in X_1$ and $S \subseteq X_2$. Let $\SP_S(x)$
+and $\consp_S(x)$ abbreviate $\SP_{\stab(S)}(x)$ and $\consp_{\stab(S)}(x)$,
 respectively. Similarly, we let $\orb_S(x)$ and $\stab_S(x)$ abbreviate
 $\orb_{\stab(S)}(x)$ and $\stab_{\stab(S)}(x)$, respectively. In the event that
 $S$ is a singleton we omit the set bracers in the subscript.
@@ -203,6 +202,13 @@ $S$ is a singleton we omit the set bracers in the subscript.
 % the universe of a gate. It is in this case that we make use of supports
 % relative to some subgroup of $\sym_n$. For a concrete use of supports relative
 % to a subgroup see Subsection~\ref{}.
+
+\begin{remark}
+  G: You have asked if the following result could be removed. We use it in the
+  proof of Lemma~\ref{lem:support-mapping}. But I think that's the only place.
+  Do you mean it would be better to just delete it and proof the result as
+  needed in the proof of Lemma~\ref{lem:support-mapping}.
+\end{remark}
 
 \begin{lem}
   \label{lem:stab-conjugation}
@@ -398,7 +404,7 @@ automorphism and prove these two results.
 
 \begin{definition}
   Let $\tau$ be a relational vocabulary and $D$ be $\tau$-sorted set. Let $X :=
-  \ind(\tau, D)$, $\sigma \in \sym_X$ and $\vec{a}_R, \vec{B}_{R'} \in X$. We
+  \ind(\tau, D)$, $\sigma \in \sym_X$ and $\vec{a}_R, \vec{b}_{R'} \in X$. We
   say that $\sigma$ \emph{acts like a partial automorphism} on $(\vec{a}_R,
   \vec{b}_{R'})$ if (i) $\sigma \vec{a}_R$ has tag $R$ and $\sigma \vec{b}_{R'}$
   has tag $R'$ and (ii) for all $i \in [\arty(R)]$ and $j \in [\arty(R')]$,
@@ -441,8 +447,9 @@ We now define an analogous notion for pairs of gates in a circuit.
 %   if, for all $h, h' \in H_g$, $(h, h')$ is compatible with $\sigma$.
 %   \label{lem:isostab-compatible}
 % \end{lem}
-We now show that a permutation acts like an automorphism if, and only if, it
-acts like a partial automorphism on every pair of elements in the domain.
+We now show that a permutation acts like an element of $\aut(\tau,D)$ if, and
+only if, it acts like a partial automorphism on every pair of elements in the
+domain.
 
 \begin{lem}
   Let $\tau$ be a relational vocabulary and $D$ be $\tau$-sorted set. Let $X :=
@@ -471,19 +478,21 @@ acts like a partial automorphism on every pair of elements in the domain.
   definition of $\pi$ is independent of the particular choice of $\vec{a}_R$ and
   for all $a \in D$, $a$ and $\pi (a)$ must be of the same sort.
   
-  Suppose $\pi(a) = \pi(b)$. Suppose $a$ appears in $\vec{a}_R \in X$ and $b$
-  appears in $\vec{b}_{R'} \in X$, then $(\sigma \vec{a}_R) (\vec{a}^{-1}(a)) =
-  \pi (a) = \pi(b) = (\sigma \vec{b}_{R'})(\vec{b}^{-1}(b))$. From the
-  hypothesis $\sigma$ acts like a partial automorphism on $(\vec{a}_R,
-  \vec{b}_{R'})$, and so $a = \vec{a}_R(\vec{a}^{-1}_R(a)) =
-  \vec{b}_{R'}(\vec{b}^{-1}_{R'}(b)) = b$. It follows $\pi$ is an injection.
-  
-  Let $c \in D$. Suppose $c$ appears in $\vec{a}_R \in X$ and let $i \in
-  [\arty(R)]$ be such that $\vec{a}_R(i) = c$. Since the action of $\sigma$ is a
-  permutation, there exists $\vec{b}_R \in X$ such that $\sigma \vec{b}_R =
-  \vec{a}_R$. It follows that $\pi (\vec{b}_R(i)) = (\sigma \vec{b}_R)
-  (\vec{b}^{-1}_R(\vec{b}_R(i))) = \vec{a}_R(i) = c$. Thus $\pi$ surjective, and
-  so bijective, and $\pi \in \aut(\tau, D)$.
+  % Suppose $\pi(a) = \pi(b)$. Suppose $a$ appears in $\vec{a}_R \in X$ and $b$
+  % appears in $\vec{b}_{R'} \in X$, then $(\sigma \vec{a}_R) (\vec{a}^{-1}(a))
+  % =
+  % \pi (a) = \pi(b) = (\sigma \vec{b}_{R'})(\vec{b}^{-1}(b))$. From the
+  % hypothesis $\sigma$ acts like a partial automorphism on $(\vec{a}_R,
+  % \vec{b}_{R'})$, and so $a = \vec{a}_R(\vec{a}^{-1}_R(a)) =
+  % \vec{b}_{R'}(\vec{b}^{-1}_{R'}(b)) = b$. It follows $\pi$ is an injection.
+  Since $\sigma$ acts like a partial automorphism on each pair $(\vec{a}_R,
+  \vec{b}_{R'})$ it is easy to see that $\pi$ is an injection. Let $c \in D$.
+  Suppose $c$ appears in $\vec{a}_R \in X$ and let $i \in [\arty(R)]$ be such
+  that $\vec{a}_R(i) = c$. Since the action of $\sigma$ is a permutation, there
+  exists $\vec{b}_R \in X$ such that $\sigma \vec{b}_R = \vec{a}_R$. It follows
+  that $\pi (\vec{b}_R(i)) = (\sigma \vec{b}_R) (\vec{b}^{-1}_R(\vec{b}_R(i))) =
+  \vec{a}_R(i) = c$. Thus $\pi$ surjective, and so bijective, and $\pi \in
+  \aut(\tau, D)$.
 
   Clearly $\pi \vec{a}_R = \sigma \vec{a}_R$ for all $\vec{a}_R \in X$, and the
   result follows.
