@@ -793,20 +793,20 @@ to be rigid (and hence have unique extensions) without a loss of generality.
 Anderson and Dawar's argument makes use of the fact that many important circuit
 properties are polynomial-time decidable for circuits defined over symmetric
 bases. While we should like to construct an analogous argument, we show in
-Section~\ref{sec:transparency-and-unique-extension} that for circuits that
-include gates computing non-symmetric functions most of these important circuit
-properties are at least as hard to decide as the graph-isomorphism problem. As
-such, constructing an analogous translation, as well as establishing the
-numerous other needed results whose proofs rely on certain properties being
-polynomial-time decidable, would be non-trivial.
+Section~\ref{sec:transparent} that for circuits that include gates computing
+non-symmetric functions most of these important circuit properties are at least
+as hard to decide as the graph-isomorphism problem. As such, constructing an
+analogous translation, as well as establishing the numerous other needed results
+whose proofs rely on certain properties being polynomial-time decidable, would
+be non-trivial.
 
 In order to proceed we will restrict ourselves to circuits with certain
 constraints on how those gates computing non-symmetric functions can be wired
 into the circuit. We call these circuits \emph{transparent} circuits. We show in
-Sections~\ref{sec:transparency-and-unique-extensions} that transparency is
-sufficient to allow for the polynomial-time decidability of many important
-circuit properties, while still keeping the circuit model powerful enough for us
-to establish a translation from formulas to families of circuits.
+Sections~\ref{sec:transparent} that transparency is sufficient to allow for the
+polynomial-time decidability of many important circuit properties, while still
+keeping the circuit model powerful enough for us to establish a translation from
+formulas to families of circuits.
 
 Before we can formally define \emph{transparency} we need to define the
 \emph{syntactic-equivalence} relation on the gates of a circuit. The intuition
@@ -1050,8 +1050,8 @@ the following Lemma.
 \end{lem}
 
 We note that the construction of $C'$ from $C$ in
-Lemma~\ref{lem:redundant-gates} can be implemented so as to run in time
-polynomial in the size of $C$. As such, for the remainder of this paper we
+Lemma~\ref{lem:redundant-gates} can be implemented by an algorithm that runs in
+time polynomial in the size of $C$. As such, for the remainder of this paper we
 assume, unless stated otherwise, every circuit has no redundant gates. With this
 assumption in mind we now show that every circuit with unique children (and so
 unique labels) has unique extensions.
@@ -1113,27 +1113,31 @@ unique labels) has unique extensions.
 
 It follows from Proposition~\ref{prop:unique-children-unique-extensions} that if
 $C$ is of order $n$ then for each $\sigma \in \sym_n$ there exists at most one
-$\pi_\sigma \in \aut(C)$ extending $\sigma$. However, if $g$ is a gate in $C$
-and $\pi_{\sigma} g = g'$ there may no `canonical' $\lambda \in \aut(g)$
-witnessing the isomorphism-equivalence, i.e.\ such that $\pi L(g) = L(g')
-\lambda$. It is this lack of a `canonical' choice that allows us to prove in
-Section~\ref{sec:transparency-and-unique-extensions} that a great many important
-circuit properties (e.g. the orbit of a gate, symmetry of a circuit, etc.) for
-circuits with unique gates are at least as hard as the graph-isomorphism problem
-to decide.
+$\pi_\sigma \in \aut(C)$ extending $\sigma$. This means that if $C$ is symmetric
+for each $\sigma \in \sym_n$ there is always a canonical automorphism
+$\pi_\sigma$ extending $\sigma$. However, for a gate $g$ in $C$ there may no
+canonical $\lambda \in \aut(g)$ witnessing the validity of the mapping from $g$
+to $\pi_\sigma g$, i.e.\ such that $\pi L(g) = L(g') \lambda$. We prove in
+Section~\ref{sec:transparent} that in fact, for the class of circuits with
+unique children, deciding if there is an isomorphism-equivalence between two
+gates is as hard as the graph-isomorphism problem. It follows that a great many
+important circuit properties (e.g. the orbit of a gate, symmetry of a circuit,
+etc.) for circuits with unique gates are at the very least not obviously
+polynomial-time decidable.
 
 In contrast, it is easy to see that if $C$ has unique labels, and $g$ and $g'$
-are gates in the circuit, then $L(g)$ and $L(g')$ are isomorphism-equivalent if,
-and only if, $\lambda := L(g')^{-1}L(g)$ is in $\aut(g)$. We show in
-Section~\ref{sec:transparency-and-unique-extensions} all of the circuit
-properties of interest in this paper are polynomial-time decidable for circuits
-with unique labels. Moreover, we show in
-Proposition~\ref{prop:transparent-unique} that a transparent circuit can be
-converted into an equivalent circuit with unique labels in time polynomial in
-the size of the circuit. Since we are working with $P$-uniform families of
-transparent circuits, this fact allows us to assume, without a loss of
-generality, that transparent circuits have unique labels (and, from
-\ref{prop:unique-children-unique-extensions} so unique extensions).
+are gates in the circuit $C$, then $L(g)$ and $L(g')$ are isomorphism-equivalent
+if, and only if, $\lambda := L(g')^{-1}L(g)$ is in $\aut(g)$. In this case,
+rather than having to decide the isomorphism problem we simply need to check if a given
+candidate is in fact a valid isomorphism. We prove in
+Section~\ref{sec:transparent} that all of the circuit properties of interest in
+this paper are polynomial-time decidable for circuits with unique labels.
+Moreover, we show in Lemma~\ref{lem:transparent-unique} that a
+transparent circuit can be converted into an equivalent circuit with unique
+labels in time polynomial in the size of the circuit. Since we are working with
+$P$-uniform families of transparent circuits, this fact allows us to assume,
+without a loss of generality, that transparent circuits have unique labels (and,
+from \ref{prop:unique-children-unique-extensions} so unique extensions).
 
 % \begin{definition}
 %   We say that a circuit $C_n$ is \emph{rigid} if every equivalence class of
@@ -1356,7 +1360,7 @@ assume this encoding below.
 \begin{proof}
   From $C_n$ we construct $C_n'$ as follows. For each gate $g \in C_n$ labelled
   by a member of $\mathbb{B}$ we have a symmetric circuit $C_g$ from
-  Proposition~\ref{prop:function-maj} that computes the same function as $g$.
+  Proposition~\ref{prop:fuctions-maj} that computes the same function as $g$.
   Then let $C_n'$ be as $C_n$ but with each gate $g \in C_n$ replaced by $C_g$.
   It is easy to see that $C_n'$ is symmetric. We also have that each gate $g$
   must have at most $\vert C_n \vert$ inputs, and so the size of $C_g$ is
@@ -1369,7 +1373,7 @@ symmetric functions we can construct another symmetric circuit family computing
 the same function over the majority basis without a blowup in size. Moreover, we
 also have that if the first family was uniform the second family will be as
 well. As such, we cannot extend the power of the $P$-uniform symmetric circuits
-families studied by Anderson and Dawar \cite{AndersonD17} by simply considering
+families studied by Anderson and Dawar~\cite{AndersonD17} by simply considering
 alternative bases of symmetric functions, thus motivating the generalisation
 developed in the previous subsection to non-symmetric functions.
 \end{document}

@@ -46,7 +46,8 @@ polynomial time for transparent circuits.
   Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a transparent
   $(\mathbb{B}, \rho)$-circuit of order $n$. We define the syntactic-equivalence
   relation on $G$ by induction on the depth of a gate We note that this
-  definition by induction can be implemented as a construction using a dynamic program.
+  definition by induction can be implemented as a construction using a dynamic
+  program.
   
   Suppose $g$ and $h$ are gates in $C$ such that $\Sigma (g) = \Sigma(h)$ and
   either both $g$ and $h$ are output gates and $\Omega^{-1}(g) = \Omega^{-1}(h)$
@@ -54,8 +55,8 @@ polynomial time for transparent circuits.
   \equiv h$ if, and only if, both $g$ and $h$ are constant gates or both are
   relational gates and $\Lambda(g) = \Lambda (h)$. Let $g$ and $h$ be internal
   gates and suppose we have defined the syntactic-equivalence relation for all
-  gates of depth less than the depth of either $g$ or $h$. Then $g \equiv h$
-  if, and only if, $L(g)$ and $L(h)$ are isomorphism equivalent up to $\equiv$.
+  gates of depth less than the depth of either $g$ or $h$. Then $g \equiv h$ if,
+  and only if, $L(g)$ and $L(h)$ are isomorphism equivalent up to $\equiv$.
 
   The above algorithm can be implemented by a dynamic program with the number of
   iterations bounded by the number of pairs of gates in $C$, i.e. $\vert C
@@ -140,13 +141,14 @@ circuit has trivial syntactic-equivalence classes, and hence unique extensions.
   gate and suppose for all $h$ of depth less than $g$ we have that
   $C_\equiv[\gamma \mathcal{A}]([h]) = C[\gamma \mathcal{A}](h)$. We have that
   there exists $g' \in [g]$ such that $L_\equiv ([g]) = L(g') /_\equiv$ and
-  $\Sigma_\equiv([g]) = \Sigma (g) = \Sigma (g')$. We have from Lemma~\ref{} and
-  the inductive hypothesis that there exists $\lambda \in \aut(g)$ such that
-  $L_\equiv ([g]) = L(g') = L(g) \lambda$. It follows from the fact that
-  $\Sigma(g)$ is a structured function that $C_\equiv[\gamma \mathcal{A}]([g]) =
-  \Sigma_\equiv ([g])(L^{\gamma \mathcal{A}}_\equiv([g])) = \Sigma (g')
-  (L^{\gamma \mathcal{A}}(g')) = \Sigma (g)(L^{\gamma \mathcal{A}}(g) \lambda) =
-  \Sigma (g) (L^{\gamma \mathcal{A}}(g)) = C[\gamma \mathcal{A}](g)$.
+  $\Sigma_\equiv([g]) = \Sigma (g) = \Sigma (g')$. We have from
+  Lemma~\ref{lem:syntactic-equivalence-equal-function} and the inductive
+  hypothesis that there exists $\lambda \in \aut(g)$ such that $L_\equiv ([g]) =
+  L(g') = L(g) \lambda$. It follows from the fact that $\Sigma(g)$ is a
+  structured function that $C_\equiv[\gamma \mathcal{A}]([g]) = \Sigma_\equiv
+  ([g])(L^{\gamma \mathcal{A}}_\equiv([g])) = \Sigma (g') (L^{\gamma
+    \mathcal{A}}(g')) = \Sigma (g)(L^{\gamma \mathcal{A}}(g) \lambda) = \Sigma
+  (g) (L^{\gamma \mathcal{A}}(g)) = C[\gamma \mathcal{A}](g)$.
   
   We now show that each syntactic-equivalence class in $C_\equiv$ is a
   singleton. Suppose $[g], [h] \in G_\equiv$ and suppose $[g] \equiv [h]$. If
@@ -267,7 +269,7 @@ obvious way then yields the desired quotient circuit.
 
 We now show that transparent circuits can be transformed in polynomial time into
 equivalent circuit with unique labels, and hence unique extensions (see
-Lemma~\ref{}), and that this transformation preserves important properties of
+Proposition~\ref{prop:unique-children-unique-extensions}), and that this transformation preserves important properties of
 the circuit.
 
 \begin{lem}
@@ -861,7 +863,7 @@ the circuit.
 
 We now show that it is possible to compute the action of $\sym_n$ on the gates
 of a circuit of order $n$ with unique labels in polynomial time. Recall that
-from Proposition~\ref{prop:transparent-unique} we may, without a loss of
+from Lemma~\ref{lem:transparent-unique} we may, without a loss of
 generality, restrict our attention from transparent circuits to circuits with
 unique labels. The proof technique used here is similar to the one used by
 Anderson and Dawar~\cite{AndersonD17}.
@@ -888,7 +890,8 @@ Anderson and Dawar~\cite{AndersonD17}.
   automorphism exists. If both $h$ and $h'$ are not output gates then set $\pi
   (h) = h'$. If both are output gates then check if $\sigma \Omega^{-1}(h) =
   \Omega^{-1}(h')$. If equality holds set $\pi(h) = h'$, otherwise halt and
-  output that no automorphism exists. We have from Lemma~\ref{} that there is at
+  output that no automorphism exists. We have from
+  Proposition~\ref{prop:unique-children-unique-extensions} that there is at
   most one gate $h'$ that meets the above criteria, and so $\pi(h)$ is well
   defined.
 
@@ -1069,7 +1072,7 @@ the action of a permutation on a rigid circuit, and the orbits and coarsest
 supporting partitions of gates in a rigid circuits. We have shown that
 transparent circuits can be translated into equivalent circuits with unique
 labels in polynomial time, and that circuits with unique labels have unique
-extensions (see Proposition~\ref{}). Moreover, we have similarly shown that, for
+extensions (see Proposition~\ref{prop:unique-children-unique-extensions}). Moreover, we have similarly shown that, for
 transparent circuits, the action of a permutation, as well as the coarsest
 supporting partition and orbit of a gate (or element of the universe of a gate),
 can be computed in polynomial-time. Since all circuits with symmetric gates are
@@ -1372,7 +1375,7 @@ ostensibly simpler class of circuits.
   the $0$-ary function $\land_{\text{out}}$. For each $\vec{c} \in
   [n]^{\arty(R)}$ let $\Lambda_R(\vec{c}) = g_{R, \vec{c}}$. Define $\Sigma$ as
   follows. For each $g \in G$,
-  \begin{itemize}
+  \begin{itemizens}
     \setlength\itemsep{0mm}
   \item if $g = \land_{\text{out}}$ then $\Sigma(g) = \land[2]$,
   \item if $g \in G_\rank$ then $\Sigma(g) = \rank^r_p [a,b]$,
@@ -1380,9 +1383,9 @@ ostensibly simpler class of circuits.
   \item if $g = \land[n^k]$, $\Sigma (g) = \land[n^k]$ and if $g = g_{\lor}$
     then $\Sigma(g) = \lor[n^k]$, and
   \item if $g \in G_R$ then $\Sigma(g) = R$.
-  \end{itemize}
+  \end{itemizens}
   Define $L$ as follows. For each $g \in G$,
-  \begin{itemize}
+  \begin{itemizens}
     \setlength\itemsep{0mm}
   \item if $g = \land_{\text{out}}$ then for each $i \in [2]$, $L(g)(i) :=
     g^i_{\rank}$,
@@ -1393,7 +1396,7 @@ ostensibly simpler class of circuits.
   \item if $g = g_\land$ or $g = g_\lor$ then for all $p \in [n^k]$ we have that
     $L(g)(p)$ equals $\Lambda^{-1}(\vec{c}_p)$, where $\vec{c}_p$ is the $p$th
     element of $[n]^k$ in the lexicographical ordering on $[n]^k$.
-  \end{itemize}
+  \end{itemizens}
 
   We note that for $i \in [2]$, the child of $L(g^i_{\rank})(p,q)$ equals
   $g_\land$ if, and only if, $(p,q)$ is an edge in in $B_i$ and the child of
@@ -1477,7 +1480,7 @@ graph-isomorphism problem if we restrict ourselves to either the class of
 circuits in which non-symmetric gates have injective labels
 (Proposition~\ref{prop:syntactic-graph-iso}) or the class of circuits in which
 each non-symmetric gate has unique children
-(Lemma~\ref{lem:syntactic-equivalence-equivalence-unique-gates-hard}).
+(Lemma~\ref{lem:syntactic-equivalence-unique-gates-hard}).
 
 We now present a reduction from the problem of computing the
 syntactic-equivalence relation to the problem of deciding if a given gate in a
@@ -1726,7 +1729,7 @@ and~\ref{lem:syntactically-equivilent-unique-extensions}, that a number of basic
 circuit properties are at least as hard for general circuits as the
 graph-isomorphism problem. In contrast, all of these properties are known to be
 polynomial-time decidable for transparent circuits (as follows from
-Lemmas~\ref{lem:unique-labels-syntactic-equiv}
+Lemmas~\ref{lem:transparent-syntactic-equiv}
 and~\ref{lem:computing-support-orbit-gate}).
 
 The hardness results for the problems of computing syntactic-equivalence

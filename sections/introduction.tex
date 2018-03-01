@@ -42,31 +42,27 @@ symmetry requirement interacts in surprising ways with such rank
 gates.  It requires a new framework for defining classes of such
 circuits, which yields remarkable new insights. 
 
-It is important to clarify at the outset what is meant by symmetric
-circuits.  Indeed, there are different senses in which the word
-\emph{symmetry} is used in the context of circuits (and also in this
-paper).  We say that a Boolean function $f:\{0,1\}^n \ra \{0,1\}$ is
-symmetric if the value of the function on a string $s$ is determined
-by the number of $1$s in $s$.  In other words, $f$ is invariant under
-\emph{all} permutations of its input.  In contrast, when we consider
-the input to a Boolean function to be the adjacency matrix of an
-$n$-vertex graph, for example, and
-$f : \{0,1\}^{n \choose 2} \ra \{0,1\}$ decides a graph property, then
-$f$ is invariant under all permutations of its input induced by
-permutations of the $n$ vertices of the graph.  We call such a
-function \emph{graph-invariant}.  More generally, for a relational
-vocabulary $\tau$ and a standard encoding of $n$-element
-$\tau$-structures as strings over $\{0,1\}$, we can say that function
-taking such strings as input is $\tau$-invariant if it is invariant
-under permutations induced by the $n$ elements.
-A circuit $C$ computing such an invariant function is said to be \emph{symmetric} if every
-permutation of the $n$ elements extends to an automorphism of $C$.  It
-is families of symmetric circuits in this sense that characterize
-$\FPC$ in~\cite{AndersonD17}.  The restriction to symmetric circuits
-arises naturally in the study of logics and has appeared previously
-under the names of generic circuits in the work
-of~\cite{DENENBERG1986216} and explicitly order-invariant circuits in
-the work of Otto~\cite{Otto1997}.  
+It is important to clarify at the outset what is meant by symmetric circuits.
+Indeed, there are different senses in which the word \emph{symmetry} is used in
+the context of circuits (and also in this paper). We say that a Boolean function
+$f:\{0,1\}^n \ra \{0,1\}$ is symmetric if the value of the function on a string
+$s$ is determined by the number of $1$s in $s$. In other words, $f$ is invariant
+under \emph{all} permutations of its input. In contrast, when we consider the
+input to a Boolean function to be the adjacency matrix of an $n$-vertex graph,
+for example, and $f : \{0,1\}^{n \choose 2} \ra \{0,1\}$ decides a graph
+property, then $f$ is invariant under all permutations of its input induced by
+permutations of the $n$ vertices of the graph. We call such a function
+\emph{graph-invariant}. More generally, for a relational vocabulary $\tau$ and a
+standard encoding of $n$-element $\tau$-structures as strings over $\{0,1\}$, we
+can say that function taking such strings as input is $\tau$-invariant if it is
+invariant under permutations induced by the $n$ elements. A circuit $C$
+computing such an invariant function is said to be \emph{symmetric} if every
+permutation of the $n$ elements extends to an automorphism of $C$. It is
+families of symmetric circuits in this sense that characterize $\FPC$
+in~\cite{AndersonD17}. The restriction to symmetric circuits arises naturally in
+the study of logics and has appeared previously under the names of generic
+circuits in the work of~\cite{DENENBERG1986216} and explicitly order-invariant
+circuits in the work of Otto~\cite{Otto1997}.
 
 The main result of~\cite{AndersonD17} says that the properties of
 $\tau$-structures definable in $\FPC$ are exactly those that can be
@@ -133,6 +129,11 @@ details are presented in Section~\ref{sec:formulas-to-circuits}.
 Finally, with all the tools in place, the translation of such
 $\PT$-uniform families of circuits into formulas of $\FPR$ given in Section~\ref{sec:circuits-to-formulas} completes
 the characterization.
+
+\begin{remark}
+G: Should we also talk about the fact that the work done in
+Section~\ref{sec:circuits-to-formulas} is also novel?
+\end{remark}
 
 \end{document}
 

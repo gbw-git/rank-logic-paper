@@ -402,7 +402,7 @@ of this observation in the next subsection.
 % rightarrow \{0,1\}$ be the function defined by $M_{~} ((i, [\vec{x}]) (j,
 % [\vec{y}])) = M(((i, \vec{x}), (j, \vec{y})))$. Lemma
 % \ref{lem:matrix-quot-well-defined} gives us that this function is
-% well-defined.
+% well-define.
 
 % It remains to show that $M_{~} \sim L^{\gamma}$ for some $\gamma: U
 % \rightarrow [n]$.
@@ -413,7 +413,7 @@ and take $G$ to be $\spstab{g}$ or $\sym_n$, depending on the context. Let $f
 \in U^{\underline{\consp(x)}}$ and $\gamma \in [n]^{\underline{U}}$, then we let
 $\Pi^{\gamma}_{f}$ denote any permutation in $\spstab{g}$ such that
 $\Pi^{\gamma}_f (a) = \gamma (f(a))$ for all $a \in \consp(x)$. Note that from
-Lemma~\ref{lem:support-determine-actionn}, $\Pi^{\gamma}_f(x)$ is well-defined
+Lemma~\ref{lem:support-determine-action}, $\Pi^{\gamma}_f(x)$ is well-defined
 independently of the particular choice of permutation.
 
 We also note that, for a fixed gate $h \in H_g$, the mapping $\vec{z} \mapsto
@@ -1241,7 +1241,7 @@ when interpreted in $\mathcal{A}$.
 We note that the Immerman-Vardi theorem~\cite{Immerman198686, Vardi:1982} gives
 us that a polynomial-time algorithm can be converted into an equivalent
 $\FP(\leq)$ interpretation. As such, from the $P$-uniformity of $\mathcal{C}$
-and Lemma~\ref{prop:transparent-unique}, there is a $\FP(\leq)$ interpretation
+and Lemma~\ref{lem:transparent-unique}, there is a $\FP(\leq)$ interpretation
 $\Phi'$ that defines a symmetric rank-circuit with unique labels equivalent to
 $C_n$ when interpreted in $\langle [n], \leq \rangle$. We abuse notation and
 refer to this equivalent circuit as $C_n$.
@@ -1417,8 +1417,7 @@ Lemma~\ref{lem:permutation-row-column} defined from the pairs $(i,
 It is possible to define a polynomial-time algorithm that takes in a gate $g$
 and $j, j' \in \universe{g}$ and $\vec{c}$, a $2k$-tuple with values in $[n]$,
 constructs a permutation $\sigma \in \spstab{g}$ such that $\sigma
-(\vec{\consp}(j)) := \vec{c}$ and checks, using Corollary
-\ref{cor:compute-automorphisms-labels}, if $\sigma j = j'$.
+(\vec{\consp}(j)) := \vec{c}$ and checks, using Lemma~\ref{lem:compute-automorphisms-labels}, if $\sigma j = j'$.
 
 It follows from the Immerman-Vardi theorem that there is an $\FPC$ formula
 $\FA{map}(\mu, \delta_1, \delta_2, \vec{z})$ (where $\vec{z}$ is a $2k$-tuple)
