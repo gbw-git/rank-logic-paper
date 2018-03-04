@@ -119,16 +119,16 @@ and only if, there is a wire between an element of each equivalence class.
 We now show that taking the quotient of a circuit preserves important
 properties, including the function computed by the circuit, whether the circuit
 is symmetric, and has unique unique labels. We also show that the quotient of a
-circuit has trivial syntactic-equivalence classes, and hence unique extensions.
+circuit is reduced, and hence has unique extensions.
 
 \begin{lem}
   Let $C := \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be a $(\BB,
   \rho)$-circuit of order $n$ and $C_{\equiv} = \langle G_\equiv ,
   \Omega_\equiv, \Sigma_\equiv , \Lambda_\equiv, L_\equiv \rangle$ be a quotient
-  of $C$. Then $C$ and $C_{\equiv}$ compute the same function and each
-  syntacitic-equivalence class in $C_\equiv$ is a singleton. Moreover, if $C$ is
-  symmetric then $C_{\equiv}$ is symmetric, and for all $g \in G$, $g$ has
-  unique labels in $C$ if, and only if, $[g]$ has unique labels in $C_{\equiv}$.
+  of $C$. Then $C_\equiv$ is reduced and $C$ and $C_{\equiv}$ compute the same
+  function. Moreover, if $C$ is symmetric then $C_{\equiv}$ is symmetric, and
+  for all $g \in G$, $g$ has unique labels in $C$ if, and only if, $[g]$ has
+  unique labels in $C_{\equiv}$.
   \label{lem:quotient-circuits-preserve}
 \end{lem}
 \begin{proof}
@@ -150,15 +150,15 @@ circuit has trivial syntactic-equivalence classes, and hence unique extensions.
     \mathcal{A}}(g')) = \Sigma (g)(L^{\gamma \mathcal{A}}(g) \lambda) = \Sigma
   (g) (L^{\gamma \mathcal{A}}(g)) = C[\gamma \mathcal{A}](g)$.
   
-  We now show that each syntactic-equivalence class in $C_\equiv$ is a
-  singleton. Suppose $[g], [h] \in G_\equiv$ and suppose $[g] \equiv [h]$. If
-  $[g]$ and $[h]$ are both input or output gates then $[g] = [h]$. Suppose $[g]$
-  and $[h]$ are internal gates that are not output gates. Then $\Sigma (g) =
-  \Sigma_\equiv ([g]) = \Sigma_\equiv([h]) = \Sigma(h)$. There exists $g', h'
-  \in G$ such that $g' \equiv g$ and $h' \equiv h$, and $L_\equiv ([g]) = L(g')
-  /_\equiv$ and $L_\equiv ([h]) = L(h') /_\equiv$. It follows from $[g] \equiv
-  [h]$ that $L(g') /_\equiv$ is isomorphism-equivalent to $L(h') /_\equiv$. It
-  follows that $g' \equiv h'$, and so $[g] = [h]$.
+  We now show that $C_\equiv$ is reduced. Suppose $[g], [h] \in G_\equiv$ and
+  suppose $[g] \equiv [h]$. If $[g]$ and $[h]$ are both input or output gates
+  then $[g] = [h]$. Suppose $[g]$ and $[h]$ are internal gates that are not
+  output gates. Then $\Sigma (g) = \Sigma_\equiv ([g]) = \Sigma_\equiv([h]) =
+  \Sigma(h)$. There exists $g', h' \in G$ such that $g' \equiv g$ and $h' \equiv
+  h$, and $L_\equiv ([g]) = L(g') /_\equiv$ and $L_\equiv ([h]) = L(h')
+  /_\equiv$. It follows from $[g] \equiv [h]$ that $L(g') /_\equiv$ is
+  isomorphism-equivalent to $L(h') /_\equiv$. It follows that $g' \equiv h'$,
+  and so $[g] = [h]$.
 
   We now show that if $C$ is symmetric then $C_\equiv$ is symmetric. Suppose $C$
   is symmetric. Let $\sigma \in \sym_n$. Then there exists $\pi \in \aut(C)$
@@ -269,8 +269,8 @@ obvious way then yields the desired quotient circuit.
 
 We now show that transparent circuits can be transformed in polynomial time into
 equivalent circuit with unique labels, and hence unique extensions (see
-Proposition~\ref{prop:unique-children-unique-extensions}), and that this transformation preserves important properties of
-the circuit.
+Proposition~\ref{prop:unique-children-unique-extensions}), and that this
+transformation preserves important properties of the circuit.
 
 \begin{lem}
   Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a transparent
@@ -305,13 +305,13 @@ the circuit.
   We now define the circuit $C_1$ formally. Let $C_1 := \langle G_1, \Omega_1,
   \Sigma_1 , \Lambda_1, L_1 \rangle$ be defined as follows. Let $G_1 = G_0
   \uplus \{ g_\lor\}$. Let $\Omega_1 = \Omega_0$ and $\Lambda_1 = \Lambda_0$.
-  Let $g \in G_1$. If $g = g_\lor$ then $\Sigma_1 (g) = \lor[2]$, $L_1(g)(1) =
-  g_0$, and $L_1(g)(2) = g_1$. If $g \in G_0$, $\Sigma(g) = \lor[2]$ and $H_g =
-  \{g_0, g_1\}$ then $\Sigma_1 (g) = \lor[3]$, $L_1(g)(1) = L_0(g)(1)$,
+  Let $g \in G_1$. If $g = g_\lor$ then $\Sigma_1 (g) = \OR[2]$, $L_1(g)(1) =
+  g_0$, and $L_1(g)(2) = g_1$. If $g \in G_0$, $\Sigma(g) = \OR[2]$ and $H_g =
+  \{g_0, g_1\}$ then $\Sigma_1 (g) = \OR[3]$, $L_1(g)(1) = L_0(g)(1)$,
   $L_1(g)(2) = L_0(g)(2)$, and $L_1(g)(3) = g_\lor$. If $g \in G_0$ and $g =
-  \land[k]$ for some $k \in \nats$ then $\Sigma_1(g) = \land[k+1]$ and
-  $L_1(g)(i) = L_0(g)(i)$ for all $i \in [k]$ and $L_1(g)(k+1) = g_\lor$.
-  Otherwise let $\Sigma_1(g) = \Sigma_0(g)$ and $L_1(g) = L_0(g)$.
+  \AND[k]$ for some $k \in \nats$ then $\Sigma_1(g) = \AND[k+1]$ and $L_1(g)(i)
+  = L_0(g)(i)$ for all $i \in [k]$ and $L_1(g)(k+1) = g_\lor$. Otherwise let
+  $\Sigma_1(g) = \Sigma_0(g)$ and $L_1(g) = L_0(g)$.
 
   More informally, we define $C_1$ from $C_0$ by adding in an $\OR$-gate
   $g_\lor$ that always evaluates to one, and then adding a wire from that gate
@@ -357,14 +357,14 @@ the circuit.
   $\pi_1 (g_\lor) = g_\lor$. It is easy to see that $\pi_1$ is an automorphism
   of $C_1$ extending $\sigma$. It follows that $C_1$ is symmetric.
 
-  We have from Lemma~\ref{lem:quotient-circuits-preserve} that $C_0$ has trivial
-  syntactic-equivalence classes. Since $g_\lor$ is the only two input $\OR$-gate
-  with exactly the two constant gates as children, it follows that $g_\lor$ is
-  contained in a singleton syntactic-equivalence class. It can be shown by
-  induction that if $g, g' \in G_0$ are syntactically equivalent in $C_1$ then
-  they must be syntactically-equivalent in $C_0$. It follows that if $g$ and
-  $g'$ are syntactically-equivalent in $C_1$ then $g = g'$. We thus have that
-  $C_1$ has trivial syntactic-equivalence classes.
+  We have from Lemma~\ref{lem:quotient-circuits-preserve} that $C_0$ is reduced.
+  Since $g_\lor$ is the only two input $\OR$-gate with exactly the two constant
+  gates as children, it follows that $g_\lor$ is contained in a singleton
+  syntactic-equivalence class. It can be shown by induction that if $g, g' \in
+  G_0$ are syntactically equivalent in $C_1$ then they must be
+  syntactically-equivalent in $C_0$. It follows that if $g$ and $g'$ are
+  syntactically-equivalent in $C_1$ then $g = g'$. We thus have that $C_1$ is
+  reduced.
 
   Let $C' := \{G', \Omega', \Sigma' \Lambda' L'\}$ be defined as follows. For
   each $h \in G_1$ let $c^h_g := \vert L_1(g)^{-1}(h) \vert$ if $h \in H_g$ and
@@ -373,7 +373,7 @@ the circuit.
   \{g^{h}_{1}, ldots, g^h_{c_h-1}\}$ otherwise let $G_h := \emptyset$. Let
   $G_{\land} := \biguplus_{h \in G_1} G_h$ and $G' = G_{\land} \uplus G_1$. Let
   $\Omega' = \Omega_1$ and $\Lambda' = \Lambda_1$. For $g \in G'$ if $g \in G_1$
-  let $\Sigma'(g) = \Sigma_1(g)$ and otherwise let $\Sigma'(g) = \land[1]$. For
+  let $\Sigma'(g) = \Sigma_1(g)$ and otherwise let $\Sigma'(g) = \AND[1]$. For
   each $g \in G_1$ and $h \in H_g$ let $\{x^{h,g}_0, x^{h,g}_1 ,\ldots,
   x^{h,g}_{c^h_g - 1}\} := L_1(g)^{-1}(h)$ be a fixed ordering of the set
   $L_1(g)^{-1}(h)$. Let $g \in G'$. If $g \in G_1$ and $x \in \ind(g)$ then
@@ -390,7 +390,7 @@ the circuit.
   syntactic-equivalence in $C'$.
   
   \begin{claim}
-    $C'$ has trivial syntactic-equivalence classes.
+    $C'$ is reduced
   \end{claim}
   \begin{proof}
     We prove this result by induction on depth. Let $g \in G'$. If $g$ has depth
@@ -402,8 +402,8 @@ the circuit.
     depth. Moreover, from the inductive hypothesis, we have that there exists
     $\lambda \in \aut(g)$ such that for all $x \in \ind(g)$, $L'(g) (x) =
     L'(g')(x)$. It follows that $H_{g}' = H_{g'}'$. Moreover, from the inductive
-    hypothesis the children of $g$ and $g'$ must be contained in singleton
-    syntactic-equivalence classes, and so , since $C'$ has injective labels, it
+    hypothesis the children of $g$ and $g'$ must be contained in a singleton
+    syntactic-equivalence classes, and so, since $C'$ has injective labels, it
     follows that $g$ and $g'$ have unique labels in $C'$.
 
     % Suppose $g = g_\lor$. Then $H_g = H_g' = \{g_0, g_1\} = H_{g'}'$ and
@@ -414,7 +414,7 @@ the circuit.
     
     Suppose $g \in G_{\land}$. Then there exists $h \in G_1$ and $i \in [c^h -
     1]$ such that $g = g^h_i$. Suppose $g' \in G_1$. Then $\Sigma'(g) =
-    \land[1]$. But, from the construction of $C_1$, there are no single-input
+    \AND[1]$. But, from the construction of $C_1$, there are no single-input
     $\AND$-gates in $G_1$. It follows $\Sigma'(g') \neq \Sigma'(g)$ and so $g'
     \not\equiv' g$, a contradiction, and so we must have $g' \in G_{\land}$. If
     $i = 1$ then $\{ h \} = H_g' = H_{g'}'$. Since the only gate in $G_\land$
@@ -423,9 +423,9 @@ the circuit.
     only gate in $G_\land$ that has $g^h_{i-1}$ as a child gate, we have $g =
     g^h_i = g'$. It follows that if $g \in G_\land$ then $g = g'$.
 
-    Suppose $g \in G_1$. We have already shown that if $g' \in G_\land G_1$ then
-    $g \not\equiv' g'$, a contradiction, and so we must have $g' \in G_1$. Since
-    $g \equiv' g'$ there exists $\lambda \in \aut(g)$ such that for all $x \in
+    Suppose $g \in G_1$. We have already shown that if $g' \in G_\land$ then $g
+    \not\equiv' g'$, a contradiction, and so we must have $g' \in G_1$. Since $g
+    \equiv' g'$ there exists $\lambda \in \aut(g)$ such that for all $x \in
     \ind(g)$, $L'(g)(\lambda x) = L'(g')(x)$. From the construction, we have
     that for all $x \in \ind(g)$ and $h \in G_1$, $L'(g)(x) \in \{h, g^h_1 ,
     \ldots, g^h_{c^h_g -1}\}$ if, and only if, $L_1(g)(x) = h$. Suppose $g$ is
@@ -472,8 +472,8 @@ the circuit.
     % gates it follows that $\lambda' \in \aut(g)$...
   \end{proof}
   
-  Since $C'$ has injective labels and trivial syntactic-equivalence classes it
-  follows $C'$ has unique labels.
+  Since $C'$ has injective labels and is reduced it follows $C'$ has unique
+  labels.
 
   We have already shown that if $C$ is symmetric then $C_1$ is symmetric. We now
   show that if $C_1$ is symmetric then $C'$ is symmetric. Suppose $C_1$ is
@@ -863,17 +863,17 @@ the circuit.
 
 We now show that it is possible to compute the action of $\sym_n$ on the gates
 of a circuit of order $n$ with unique labels in polynomial time. Recall that
-from Lemma~\ref{lem:transparent-unique} we may, without a loss of
-generality, restrict our attention from transparent circuits to circuits with
-unique labels. The proof technique used here is similar to the one used by
-Anderson and Dawar~\cite{AndersonD17}.
+from Lemma~\ref{lem:transparent-unique} we may, without a loss of generality,
+restrict our attention from transparent circuits to circuits with unique labels.
+The proof technique used here is similar to the one used by Anderson and
+Dawar~\cite{AndersonD17}.
 
 \begin{lem}
-  There is an algorithm takes as input a $(\mathbb{B}, \rho)$-circuit $C$ of
-  order $n$ with unique labels and $\sigma \in \sym_n$ and outputs for each gate
-  $g$ its image under the unique automorphism extending $\sigma$ (if it exists).
-  This algorithm runs in time polynomial in the combined size of the input
-  circuit and the encoding of the permutation.
+  There is an algorithm takes as input a $(\BB, \rho)$-circuit $C$ of order $n$
+  with unique labels and $\sigma \in \sym_n$ and outputs for each gate $g$ its
+  image under the unique automorphism extending $\sigma$ (if it exists). This
+  algorithm runs in time polynomial in the combined size of the input circuit
+  and the encoding of the permutation.
   \label{lem:compute-automorphisms}
 \end{lem}
 \begin{proof}
@@ -891,9 +891,8 @@ Anderson and Dawar~\cite{AndersonD17}.
   (h) = h'$. If both are output gates then check if $\sigma \Omega^{-1}(h) =
   \Omega^{-1}(h')$. If equality holds set $\pi(h) = h'$, otherwise halt and
   output that no automorphism exists. We have from
-  Proposition~\ref{prop:unique-children-unique-extensions} that there is at
-  most one gate $h'$ that meets the above criteria, and so $\pi(h)$ is well
-  defined.
+  Proposition~\ref{prop:unique-children-unique-extensions} that there is at most
+  one gate $h'$ that meets the above criteria, and so $\pi(h)$ is well defined.
 
   Let $h$ be an internal gate in the circuit and assume we have defined $\pi
   (g)$ for every gate $g$ of depth less than $h$. Let $h'$ be a gate in the
@@ -1072,11 +1071,12 @@ the action of a permutation on a rigid circuit, and the orbits and coarsest
 supporting partitions of gates in a rigid circuits. We have shown that
 transparent circuits can be translated into equivalent circuits with unique
 labels in polynomial time, and that circuits with unique labels have unique
-extensions (see Proposition~\ref{prop:unique-children-unique-extensions}). Moreover, we have similarly shown that, for
-transparent circuits, the action of a permutation, as well as the coarsest
-supporting partition and orbit of a gate (or element of the universe of a gate),
-can be computed in polynomial-time. Since all circuits with symmetric gates are
-transparent, this is direct generalisation of the results of Anderson an Dawar.
+extensions (see Proposition~\ref{prop:unique-children-unique-extensions}).
+Moreover, we have similarly shown that, for transparent circuits, the action of
+a permutation, as well as the coarsest supporting partition and orbit of a gate
+(or element of the universe of a gate), can be computed in polynomial-time.
+Since all circuits with symmetric gates are transparent, this is direct
+generalisation of the results of Anderson an Dawar.
 
 \subsection{The Necessity of Transparency}
 % The reader will notice that while we have included a specific requirement that
@@ -1340,8 +1340,8 @@ at least as hard as the graph-isomorphism problem.
 We now present a reduction from the graph-isomorphism problem to the problem of
 deciding if two gates in a circuit are syntactically-equivalent. In fact, we
 prove a stronger result, presenting a reduction from the graph-isomorphism
-problem to the problem of computing the syntactic-equivalence relation over an
-ostensibly simpler class of circuits.
+problem to the problem of computing the syntactic-equivalence relation over a
+more constrained class of circuits.
 
 \begin{prop}
   Let $\rho$ be any non-empty relational vocabulary and let $n, r, p \in \nats$,
@@ -1349,7 +1349,7 @@ ostensibly simpler class of circuits.
   graph-isomorphism problem to the problem of deciding if a given pair of gates
   in a given symmetric rank-circuit for structures of size $n$ that (i) has
   injective labels, (ii) contains no constant gates, and (iii) contains at most
-  two rank gates with bound $r$ and prime $p$, are syntactically equivalent.
+  two rank gates with bound $r$ and prime $p$, are syntactically-equivalent.
   \label{prop:syntactic-graph-iso}
 \end{prop}
 \begin{proof}
@@ -1372,22 +1372,21 @@ ostensibly simpler class of circuits.
   [b] \}$. Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a
   $(\{\rank^{1}_2\}, \rho)$-circuit of order $n$ defined as follows. Let $G =
   G_R \cup G_{\text{mid}} \cup G_{\rank} \cup G_{\text{nodes}}$ and $\Omega$ be
-  the $0$-ary function $\land_{\text{out}}$. For each $\vec{c} \in
+  the $0$-ary function $g_{\text{out}}$. For each $\vec{c} \in
   [n]^{\arty(R)}$ let $\Lambda_R(\vec{c}) = g_{R, \vec{c}}$. Define $\Sigma$ as
   follows. For each $g \in G$,
-  \begin{itemizens}
-    \setlength\itemsep{0mm}
-  \item if $g = \land_{\text{out}}$ then $\Sigma(g) = \land[2]$,
-  \item if $g \in G_\rank$ then $\Sigma(g) = \rank^r_p [a,b]$,
-  \item if $g \in G_{\text{nodes}}$ then $\Sigma(g) = \land[1]$,
-  \item if $g = \land[n^k]$, $\Sigma (g) = \land[n^k]$ and if $g = g_{\lor}$
-    then $\Sigma(g) = \lor[n^k]$, and
+  \begin{myitemize}
+  \item if $g = g_{\text{out}}$ then $\Sigma(g) = \AND[2]$,
+  \item if $g \in G_\rank$ then $\Sigma(g) = \RANK^r_p [a,b]$,
+  \item if $g \in G_{\text{nodes}}$ then $\Sigma(g) = \AND[1]$,
+  \item if $g = \AND[n^k]$, $\Sigma (g) = \AND[n^k]$ and if $g = g_{\lor}$
+    then $\Sigma(g) = \OR[n^k]$, and
   \item if $g \in G_R$ then $\Sigma(g) = R$.
-  \end{itemizens}
+  \end{myitemize}
   Define $L$ as follows. For each $g \in G$,
-  \begin{itemizens}
+  \begin{myitemize}
     \setlength\itemsep{0mm}
-  \item if $g = \land_{\text{out}}$ then for each $i \in [2]$, $L(g)(i) :=
+  \item if $g = g_{\text{out}}$ then for each $i \in [2]$, $L(g)(i) :=
     g^i_{\rank}$,
   \item if $g \in G_\rank$ and $g = g^i_{\rank}$ then for all $(p,q) \in
     \ind(g)$, $L(g)(p,q) = g_{i, (p,q)}$,
@@ -1396,7 +1395,7 @@ ostensibly simpler class of circuits.
   \item if $g = g_\land$ or $g = g_\lor$ then for all $p \in [n^k]$ we have that
     $L(g)(p)$ equals $\Lambda^{-1}(\vec{c}_p)$, where $\vec{c}_p$ is the $p$th
     element of $[n]^k$ in the lexicographical ordering on $[n]^k$.
-  \end{itemizens}
+  \end{myitemize}
 
   We note that for $i \in [2]$, the child of $L(g^i_{\rank})(p,q)$ equals
   $g_\land$ if, and only if, $(p,q)$ is an edge in in $B_i$ and the child of
@@ -1563,13 +1562,14 @@ extensions.
 We now show that there is a reduction from the graph-isomorphism problem to the
 problem of deciding if a given circuit is symmetric. In fact, we prove a
 stronger result, showing that this reduction holds even if we restrict ourselves
-to the class of circuits with trivial syntactic-equivalence classes and in
-which, all but two gates in the circuit have unique labels.
+to the class of reduced circuits in which all but two gates in the circuit have
+injective labels. In other words, the class of circuits that have unique
+children and \emph{almost} have unique labels but for two gates.
 
 \begin{prop}
   The graph-isomorphism problem is polynomial-time reducible to the problem of
-  deciding if a circuit with trivial syntactic-equivalence classes and in which
-  all but two gates in the circuit have unique labels is symmetric.
+  deciding if a reduced circuit in which all but two gates in the circuit have
+  unique labels is symmetric.
   \label{prop:graph-iso-symmetric}
 \end{prop}
 \begin{proof}
@@ -1591,15 +1591,15 @@ which, all but two gates in the circuit have unique labels.
   and $\Omega$ be the $0$-ary function $g_{\text{out}}$. Let $\Lambda(1) :=
   g^1_{R}$ and $\Lambda(2) := g^2_{R}$. Define $\Sigma$ as follows. For each $g
   \in G$,
-  \begin{itemizens}
-  \item if $g$ equals $\land_{\text{out}}$ then $\Sigma(g) = \land[2]$,
-  \item if $g \in G_\rank$ let $\Sigma(g) = \rank^r_p [a,b]$,
+  \begin{myitemize}
+  \item if $g$ equals $\land_{\text{out}}$ then $\Sigma(g) = \AND[2]$,
+  \item if $g \in G_\rank$ let $\Sigma(g) = \RANK^r_p [a,b]$,
   \item if $g \in G_{\text{mid}}$ and $g = g^i_s$ for $ \in [2]$ and symbol $s$
     then $\Sigma(g) = s[1]$, and
   \item if $g \in G_R$ then $\Sigma(g) = R$.
-  \end{itemizens}
+  \end{myitemize}
   Define $L$ as follows. For each $g \in G$,
-  \begin{itemizens}
+  \begin{myitemize}
   \item if $g = g_{\text{out}}$ then for each $i \in [2]$, $L(g)(i) :=
     g^i_{\rank}$,
   \item if $g \in G_\rank$ and $g = g^i_{\rank}$ for some $i \in [2]$ then for
@@ -1607,7 +1607,7 @@ which, all but two gates in the circuit have unique labels.
     $L(g)(p,q) = g^i_\lor$ otherwise, and
   \item if $g = g^i_\land$ or $g = g^i_{\lor}$ for some $i \in [2]$, then
     $L(g)(1) = \Lambda^{-1}(i)$.
-  \end{itemizens}
+  \end{myitemize}
 
 
   We note that for $i \in [2]$, $L(g^i_{\rank})(p,q)= g^i_\land$ if, and only
@@ -1691,16 +1691,15 @@ which, all but two gates in the circuit have unique labels.
 
 Note that, in Proposition~\ref{prop:graph-iso-symmetric} we again have a
 hardness result for deciding a basic circuit property even if we restrict
-ourselves to circuits with trivial syntactic-equivalence classes (and so ones
-where each gate has unique children). It is possible to alter this reduction,
-using a construction analogous to the one used in the proof of
-Proposition~\ref{prop:syntactic-graph-iso}, to prove that deciding symmetry is
-also hard for circuits with injective labels. In contrast, we have from
-Proposition~\ref{lem:computing-support-orbit-index} that we can decide symmetry
-for transparent circuits (i.e. circuits where every non-symmetric gate has
-unique children and injective labels) in polynomial-time. These observations
-again suggest both the robustness of this hardness result, and the importance of
-the transparency condition.
+ourselves to reduced circuits (and so ones where each gate has unique children).
+It is possible to alter this reduction, using a construction analogous to the
+one used in the proof of Proposition~\ref{prop:syntactic-graph-iso}, to prove
+that deciding symmetry is also hard for circuits with injective labels. In
+contrast, we have from Proposition~\ref{lem:computing-support-orbit-index} that
+we can decide symmetry for transparent circuits (i.e. circuits where every
+non-symmetric gate has unique children and injective labels) in polynomial-time.
+These observations again suggest both the robustness of this hardness result,
+and the importance of the transparency condition.
 
 We now show that computing the orbit of a gate for a general circuit is as hard
 as the graph isomorphism problem. We make use of the ability to compute the
@@ -1777,9 +1776,9 @@ definition.
   \rho)$-circuit. We first check that, for each non-symmetric gate $g \in G$,
   $L(g)$ is an injection. If not, we return that $C$ is not transparent.
 
-  For each $p \in \nats$ let $G^p \subseteq G$ be the set of all
-  gates of depth $p$ and let $G^{\leq p} = \bigcup_{0 \leq i \leq p}G^i$. Note
-  that each $g \in G^1$, $g$ has unique labels. Thus, from
+  For each $p \in \nats$ let $G^p \subseteq G$ be the set of all gates of depth
+  $p$ and let $G^{\leq p} = \bigcup_{0 \leq i \leq p}G^i$. Note that each $g \in
+  G^1$, $g$ has unique labels. Thus, from
   Lemma~\ref{lem:transparent-syntactic-equiv}, we can compute the syntactic
   equivalence relation between gates in $G^{\leq 1}$ efficiently. We construct a
   loop as follows. Let $p$ be initialised to $1$. We have that every
@@ -1848,9 +1847,9 @@ graph-isomorphism problem.
   \{ g_{\lor}, g_{\land} \}$, $G_{\rank} := \{ g^1_{\rank}, g^2_{\rank} \}$ and
   $G = G_R \cup G_1 \cup G_1 \cup G_{\rank} \cup \{ g_{\text{out}} \}$. Let
   $\Omega = g_{\text{out}}$ an $\Lambda_R (g_R) = 1$. Let $\Sigma (g_R) = R$,
-  $\Sigma (g_\lor) = \lor[1]$, $\Sigma (g_\land) = \land[1]$, $\Sigma
-  (g_{\text{out}}) = \land[2]$ and for all $g \in G_{\rank}$, $\Sigma (g) =
-  \land[a,b]$. Let $L(g_\lor)(1) L(g_\land)(1) = g_R$, for all $i \in [2]$,
+  $\Sigma (g_\lor) = \OR[1]$, $\Sigma (g_\land) = \AND[1]$, $\Sigma
+  (g_{\text{out}}) = \AND[2]$ and for all $g \in G_{\rank}$, $\Sigma (g) =
+  \AND[a,b]$. Let $L(g_\lor)(1) L(g_\land)(1) = g_R$, for all $i \in [2]$,
   $L(g_{\text{out}})(i) = g^i_{\rank}$ and for all $(u, v) \in \ind(g)$,
   $L(g^i_{\rank})(u,v) = g_{\land}$ if $(u, v) \in E_i$ and $L(g^i_{\rank} (u,v)
   = g_{\lor}$ otherwise.

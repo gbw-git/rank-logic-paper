@@ -352,16 +352,16 @@ width of $\theta$ and number of sub-formulas of $\theta$.
   \{0,1\}$ be defined such that $f (\vec{a}) = 1$ if, and only if, $[n] \models
   \theta[\alpha^{\vec{x}}_{\vec{a}}]$. Let $C := \langle G, \Sigma, \Omega,
   \Lambda, L \rangle$, where
-  \begin{itemizens}
+  \begin{myitemize}
   \item $G = \{g_0, g_1\} \cup \{g_{\vec{a}} : \vec{a} \in [n]^{k}\}$,
   \item $\Sigma (g_0) = 0$, $\Sigma (g_1) = 1$ and $\Sigma (g_{\vec{a}}) =
-    \land[1]$ for all $\vec{a} \in [n]^k$,
+    \AND[1]$ for all $\vec{a} \in [n]^k$,
   \item $\Omega : [n]^k \rightarrow G$ is defined by $\Omega(\vec{a}) =
     g_{\vec{a}}$ for all $\vec{a} \in [n]^k$,
   \item $\Lambda = \emptyset$, and
   \item for $\vec{a} \in [n]^k$, $L(g_{\vec{a}}) : [1] \rightarrow G$ is defined
     by $L(g_{\vec{a}})(1) = g_{f(\vec{a})}$.
-  \end{itemizens}
+  \end{myitemize}
   
   Since $C$ has symmetric gates, $C$ is transparent. Notice that, since
   $\theta(\vec{x})$ defines a query on structures over the empty vocabulary, we
@@ -445,7 +445,7 @@ width of $\theta$ and number of sub-formulas of $\theta$.
   $L$ as follows. Let $\Sigma (g_1) = 1$ and $\Sigma (g_0) = 0$. Let $g :=
   g_{\psi[\alpha]} \in G$.
   
-  \begin{itemizens}
+  \begin{myitemize}
   \item If $\psi[\alpha] = T(\vec{a})$ for some $T \in \tau$ and $\vec{a} \in
     \arty(T)$, then $\Sigma (g) = T$ and $\Lambda_T (g) = \vec{a}$.
   \item If $\psi[\alpha]$ is $0$ or $1$, then $\Sigma (g) = \psi[\alpha]$.
@@ -457,19 +457,19 @@ width of $\theta$ and number of sub-formulas of $\theta$.
     $\alpha^{\vec{w}}_{\vec{a}}$ and $\alpha^{\vec{z}}_{\vec{b}}$, are
     compatible with $\beta$.
   \item If $\psi$ is of the form $Q z . \phi(\vec{y}, z)$, for $Q \in \{\forall,
-    \exists\}$, then if $Q = \forall$ we have $\Sigma (g) = \land [n]$,
-    otherwise $\Sigma (g) = \lor [n]$. Let $L(g) : [n] \rightarrow G$ be defined
+    \exists\}$, then if $Q = \forall$ we have $\Sigma (g) = \AND[n]$,
+    otherwise $\Sigma (g) = \OR[n]$. Let $L(g) : [n] \rightarrow G$ be defined
     for $i \in [n]$ by $L(g)(i) = g_{\phi[\beta_i]}$, where $\beta_i \in
     [n]^{\free{\psi}}$, and where both $\alpha$ and $\alpha^{z}_{i}$ are
     compatible with $\beta_i$.
   \item If $\psi$ is of the form $\phi_1 \land \phi_2$, then $\Sigma(g) =
-    \land[2]$ and $L(g) : [2] \rightarrow G$ is defined for $i \in [2]$ by
+    \AND[2]$ and $L(g) : [2] \rightarrow G$ is defined for $i \in [2]$ by
     $L(g)(i) = g_{\phi_i[\beta_i]}$, where $\beta_i \in [n]^{\free{\psi}}$ and
     $\beta_i$ is compatible with $\alpha$. The same approach is used in the
     disjunctive case.
   \item if $\psi$ is of the form $\neg \phi$ then $\Sigma (g) = \neg$ and $L(g):
     [1] \rightarrow G$ is defined by $L(g)(1) = g_{\phi[\alpha]}$.
-  \end{itemizens}
+  \end{myitemize}
 
   Let $\Omega : [n]^k \rightarrow G$ be defined by $\Omega (\vec{a}) =
   g_{\lambda [\alpha]}$, where $\alpha := \alpha^{\vec{x}}_{\vec{a}}$, for all

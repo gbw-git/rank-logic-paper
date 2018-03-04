@@ -9,8 +9,8 @@
 % with matrix-symmetric gates, not just for rank gates.    
 
 \subsection{Supports and Supporting Partitions}
-We reproduce the definitions of a support and supporting partition
-from Anderson and Dawar~\cite{AndersonD17} below.
+We reproduce the definitions of a support and supporting partition from Anderson
+and Dawar~\cite{AndersonD17} below.
 
 \begin{definition}
   Let $G \leq \sym_n$ and let $S \subseteq [n]$. Then $S$ is a \emph{support}
@@ -54,9 +54,9 @@ Proposition~\ref{prop:combining-supporting-patitions}.
 \end{prop}
 
 Anderson and Dawar, using Proposition~\ref{prop:combining-supporting-patitions},
-show that every group $G \leq \sym_n$ has a unique coarsest supporting partition.
-We call this partition the \emph{canonical supporting partition}, and denote it
-by $\SP (G)$. We now define the notion of a \emph{canonical support}.
+show that every group $G \leq \sym_n$ has a unique coarsest supporting
+partition. We call this partition the \emph{canonical supporting partition}, and
+denote it by $\SP (G)$. We now define the notion of a \emph{canonical support}.
 
 \begin{definition}
   Let $G \leq \sym_n$. Let $\| \SP(G) \| = \min \{\vert [n] \setminus P \vert :
@@ -142,7 +142,8 @@ unique largest part in the partition.
   % \SP(H)$ and $P_K \in \SP(K)$ such that $P_G P_H \cap P_K$
 \end{proof}
 
-We state the following two results proved by Anderson and Dawar~\cite{AndersonD17}.
+We state the following two results proved by Anderson and
+Dawar~\cite{AndersonD17}.
 
 \begin{lem}
   \label{lem:SP-conjugation}
@@ -646,13 +647,12 @@ g$. We now define these terms formally and prove the result.
 
   We say that two distinct pairs $(\sigma_1, h_1, h_1'), (\sigma_2, h_2, h_2')
   \in \sym_n\times H^2_g$ are \emph{mutually independent} if
-  \begin{itemize}
-    \setlength\itemsep{0mm}
+  \begin{myitemize}
   \item $\sigma_2 h_1 = h_1$,
   \item $\sigma_2 \sigma_1 h_1 = \sigma_1 h_1$,
   \item $\sigma_2 h_1' = h_1'$, and
   \item $\sigma_2 \sigma_1 h_1' = \sigma h_1'$.
-  \end{itemize}
+  \end{myitemize}
   We say that a set $S \subseteq \sym_n \times H^2$ is \emph{useful} (at $g$) if
   each pair in it is useful. We say that $S$ is \emph{independent} (at $g$) if
   every two distinct elements of $S$ are mutually independent.
@@ -1001,15 +1001,14 @@ make use of the abbreviations introduced in Section~\ref{subsec:group-actions-on
   Let $(C_n)_{n \in \nats}$ be a polynomial-size family of symmetric circuits
   with unique labels. There exists $n_0, k \in \nats$ such that for all $n >
   n_0$, $g$ a gate $C_n$ and $a \in \universe{g}$
-  \begin{itemize}
-    \setlength\itemsep{0mm}
+  \begin{myitemize}
   \item $\stab_n(g)$, $\stab_{\consp(g)}(a)$ and $\stab_{g}(a)$ have small
     supports,
   \item if $h \in H_g$ and $a$ appears in $L(g)^{-1}(h)$ then $\consp_g(a)
     \subseteq \consp_{\consp(g)}(a) \subseteq \consp(g) \cup \consp(h)$, and
   \item $\vert \consp(g) \leq k$ and $\vert \consp_g(a) \vert \leq \vert
     \consp_{\consp(g)}(a) \vert \leq 2k$.
-  \end{itemize}
+  \end{myitemize}
   % $g$ a gate in $C_n$ and $a \in \universe{g}$, we have that $\stab_g(a)$,
   % $\stab_{\consp(g)}(a)$ and $\stab_n (g)$ have small supports, $\consp_g(a)
   % \subseteq \consp_{\consp(g)}(a) \subseteq \consp(g) \cup \consp(h)$, where

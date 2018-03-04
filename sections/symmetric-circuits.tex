@@ -36,13 +36,14 @@ to the basis does not allow us to extend the power of $\PT$-uniform symmetric
 circuits beyond that of $\FPC$.
 
 
+
 As our aim is a circuit characterisation of $\FPR$, whose expressive power is
 strictly greater than that of $\FPC$, we need to consider gates corresponding to
 non-symmetric Boolean functions. In particular, we consider \emph{rank} gates
 whose inputs are a matrix and whose result is invariant under row and column
 permutations. To lead up to this, we first develop a general framework of
 structured Boolean functions. These are functions whose inputs naturally encode
-$\rho$-structures and where the output is invariant under the natural symmetries
+$\tau$-structures and where the output is invariant under the natural symmetries
 of such structures. The\emph{matrix-invariant} functions are a natural
 partiruclar case. We therefore define symmetric circuits in a general form where
 gates can be labelled by \emph{isomorphism-invariant} structured functions.
@@ -52,6 +53,10 @@ Dawar~\cite{AndersonD17} in this more general setting. A difficulty we face is
 that the proof methods in that paper heavily rely on the assumption that the
 Boolean functions computed by individual gates are symmetric functions. We
 address this difficulty in the next section.
+
+\begin{drem}
+  G: In fact, this difficulty is present throughout the paper.
+\end{drem}
 
 % Boolean circuits have long acted as an alternative model from which to study
 % algorithmic complexity. A circuit is evaluated for some input binary sequence
@@ -187,19 +192,21 @@ the \emph{index} of $F$, and denote it by $\ind(F)$. We are often interested in
 classes of functions characterised by certain symmetry conditions. Perhaps the
 simplest example is the class of symmetric functions, i.e.\ those functions
 invariant under the action of the symmetric group on their index. However, in
-many cases this symmetry condition may be too strong, or otherwise
-inappropriate. For example, suppose $X$ consists of all two element subsets of
-some set $V$. We may think of $X$ as containing all potential edges in a graph,
-and the input sequence $ \vec{x} \in \{0,1\}^X$ as encoding a graph. In this
-case we might require instead that $F$ be invariant under the action of $\sym_V$
-on $\vec{x}$. This condition guarantees that $F$ determines a graph property,
-and we call such a function \emph{graph-invariant}. Another example of interest,
-especially in this paper, is the case where $X := A \times B$, where $A$ and $B$
-are non-empty sets, and we think of $\vec{x} \in \{0,1\}^X$ as encoding an
-(unordered) matrix. It is natural then to consider the case where $F$ is
-invariant under the action of $\sym_A \times \sym_B$, and we say such a function
-is \emph{matrix-invariant}. In this subsection we develop a general framework
-for dealing with functions that take in structures.
+many contexts this symmetry condition is inappropriate. For example, suppose $X$
+consists of all the two element subsets of some set $V$. So $X$ contains all the
+potential edges of a graph with vertex set $V$ and the string $ \vec{x} \in
+\{0,1\}^X$ encodes a graph. In this context, it is more natural to require
+instead that $F$ be invariant under the action of $\sym_V$ on $\vec{x}$. This
+condition guarantees that $F$ is constant on isomorphism classes of graphs with
+vertex set $V$, in other words $F$ determines a graph property $F$. We call such
+a function \emph{graph-invariant}. Another example of interest, especially in
+this paper, is the case where $X := A \times B$, where $A$ and $B$ are non-empty
+sets, and we think of $\vec{x} \in \{0,1\}^X$ as encoding an (unordered) matrix.
+It is natural then to consider the case where $F$ is invariant under the action
+of $\sym_A \times \sym_B$, and we say such a function is
+\emph{matrix-invariant}. In this subsection we develop a general framework for
+dealing with Boolean functions that take in strings that encode
+$\tau$-structures.
 
 % AD - rewrote the paragraph to reduce the use of subscripts and superscripts.
 Let $\tau := (R, S, \nu)$ be a many-sorted vocabulary. Let $D := \biguplus_{s
@@ -244,8 +251,8 @@ identify $\aut(\tau, D)$ with the subgroup of $\sym_X$ that acts equivalently on
 $X$.
 
 We can extend the action of $G$ on $X$ to a right group action on the set of
-functions of the form $f: X \rightarrow H$, for any set $H$, defined by $(f \cdot
-\sigma)(x) := f(\sigma x)$ for all $x \in X$, $\sigma \in G$.
+functions of the form $f: X \rightarrow H$, for any set $H$, defined by $(f
+\cdot \sigma)(x) := f(\sigma x)$ for all $x \in X$, $\sigma \in G$.
 
 
 % and let $\sortsym_D := \prod_{s \in S} \sym_{D_{s}}$. We call the elements of
@@ -344,9 +351,9 @@ using two element subsets of the universe, rather pairs of elements, an encoding
 that naturally enforces the symmetry and irreflexivity properties the edge
 relation.
 
-% We should note, however, that symmetry and irreflexivity are
-% properties of directed-graph, and as such can be decided by an
-% isomorphism-invariant structured function over the graph vocabulary.
+% We should note, however, that symmetry and irreflexivity are properties of
+% directed-graph, and as such can be decided by an isomorphism-invariant
+% structured function over the graph vocabulary.
 
 % , and any input sequence encodes a sub-relation of that complete relation. As
 % such, the function This is because in the event that $\tau := {E}$ (where $E$
@@ -420,11 +427,30 @@ least one element of $\ind(\tau, D)$.
 % necessarily symmetric. As such, the circuit must include for each gate $g$ an
 % index on its children corresponding to the index of the function labelling
 % $g$.
-In this section we extend the circuit definitions of Anderson and Dawar
-\cite{AndersonD17}, introducing a circuit for structures that incorporates an
-indexing for each gate in accordance with the Boolean function labelling that
-gate. This allows us to define (and evaluate) circuits with gates labelled by
-non-symmetric functions.
+We now generalise the circuit model of Anderson and Dawar~\cite{AndersonD17} so
+as to allow for circuits to be defined over bases that potentially include
+non-symmetric (structured) functions. In this model each gate $g$ is not only
+associated with an element of the basis, as in the conventional case, but also
+with a labelling function. This labelling function maps the input gates of $g$
+to an appropriate set of labels (i.e. the index of the structured function
+associated with $g$). In concord with this generalisation, we also update the
+circuit-related notions discussed by Anderson and Dawar~\cite{AndersonD17},
+e.g.\ circuit automorphisms, symmetry, etc. Moreover, we briefly discuss some of
+the important complications introduced by our generalisation, and introduce some
+of the important tools we will use in later sections to address these
+complications.
+
+% in those gates input to each each gate in a circuit is assosiated with both an
+% element of the basis \emph{and} a function that labels the input and and the
+% circuit also includes a labelling function for each gateThe important addition
+% of this generalisation is the inclusion of a labelling function $L$ that
+% associates with each gate
+
+% extend the assosiated notion a basis of structured functions. The important to
+% be labelled by introducing a circuit for structures that incorporates an
+% indexing for each gate in accordance with the Boolean function labelling that
+% gate. This allows us to define (and evaluate) circuits with gates labelled by
+% non-symmetric functions.
 
 % Having developed the notion of a function that accepts input structured in
 % accordance with some vocabulary, we now develop a circuit model which
@@ -438,14 +464,6 @@ non-symmetric functions.
 % $\mathbb{F}_2$. or a thresholded rank function, for example the rank of the
 % matrix over $\mathbb{F}_p$ being larger then $r$, for some particular $(p, r)
 % \in \mathbb{N}$.
-
-
-We now define a \emph{$(\mathbb{B}, \rho)$-circuit}. This is a circuit that
-computes a function on structures in the relational vocabulary $\rho$ and where
-the gates are labelled by elements of the basis $\mathbb{B}$ consisting of
-structured functions. Note that, in the interests of keeping our definitions
-from getting excessively complicated, we do not consider circuits computing
-functions over multi-sorted vocabularies.
 
 \begin{definition}[Circuits on Structures]
   Let $\mathbb{B}$ be a basis and $\rho$ be a relational vocabulary, we define a
@@ -561,16 +579,16 @@ the universe by $\universe{g}$. We also let $\aut(g) := \aut(\vocab{g},
 % \begin{proof}
 % \end{proof}
 
-Let $\rho$ be a relational vocabulary, $\mathcal{A}$ a $\rho$-structure over an
-$n$-element universe $U$ and $\gamma \in [n]^{\underline{U}}$. Let $\gamma
-\mathcal{A}$ be the structure on universe $[n]$ formed by mapping $U$ in
-accordance with $\gamma$. The evaluation of a $(\mathbb{B}, \rho)$-circuit $C$
-of order $n$ computing a $q$-ary query $Q$ proceeds by recursively evaluating
-the gates in the circuit. The evaluation of the gate $g$ for the bijection
-$\gamma$ and input $\mathcal{A}$ is denoted by $C[\gamma \mathcal{A}](g)$, and
-is given as follows
-\begin{enumerate}
-  \setlength\itemsep{0mm}
+Let $\rho$ be a relational vocabulary, $\mathcal{A}$ be a $\rho$-structure with
+universe $U$ of size $n$, and $\gamma \in [n]^{\underline{U}}$. Let $\gamma
+\mathcal{A}$ be the structure with universe $[n]$ formed by mapping the elements
+of $U$ in accordance with $\gamma$. The evaluation of a $(\mathbb{B},
+\rho)$-circuit $C$ of order $n$ computing a $q$-ary query $Q$ proceeds by
+recursively evaluating the gates in the circuit. The evaluation of the gate $g$
+for the bijection $\gamma$ and input structure $\mathcal{A}$ is denoted by
+$C[\gamma \mathcal{A}](g)$, and is given as follows
+
+\begin{myenum}
 \item If $g$ is a constant gate then it evaluates to the bit given by
   $\Sigma(g)$,
 \item if $g$ is a relational gate then $g$ evaluates to true iff $\gamma
@@ -580,7 +598,7 @@ is given as follows
   $L^{\gamma\mathcal{A}}(g)(x) = C[\gamma \mathcal{A}](L(g)(x))$, for all $x \in
   \ind(g)$. Then $g$ evaluates to true if, and only if, $\Sigma(g)
   (L^{\gamma}_g) = 1$.
-\end{enumerate}
+\end{myenum}
 We say that $C$ defines the $q$-ary query $Q \subseteq U^q$ under $\gamma$ where
 $\vec{a} \in Q$ if, and only if, $C[\gamma \mathcal{A}](\Omega (\gamma \vec{a}))
 = 1$.
@@ -589,7 +607,12 @@ $\vec{a} \in Q$ if, and only if, $C[\gamma \mathcal{A}](\Omega (\gamma \vec{a}))
 % introduced by Anderson and Dawar \cite{AndersonD17}. We introduce it for the
 % sake of comparison.
 
-The following circuit condition is from Anderson and Dawar \cite{AndersonD17}.
+We notice that in general the output of a circuit $C$ may depend on the
+particular encoding of $\mathcal{A}$ as a structure with universe $[n]$, i.e.\
+on the chosen bijection $\gamma$. It is natural to consider circuits whose
+outputs do do not depend on this choice of encoding. Anderson and
+Dawar~\cite{AndersonD17} call such a circuit \emph{invariant}. We have
+reproduced their definition below.
 
 \begin{definition}[Invariant Circuit]
   Let $C$ be a $(\mathbb{B}, \rho)$-circuit of order $n$, computing some $q$-ary
@@ -599,14 +622,10 @@ The following circuit condition is from Anderson and Dawar \cite{AndersonD17}.
   \vec{a})) = C[\gamma_2 \mathcal{A}](\Omega (\gamma_2 \vec{a}))$.
 \end{definition}
 
-It follows that the circuit $C$ of order $n$ is invariant if, and only if, the
-evaluation of the circuit for any input $n$-element structure $\mathcal{A}$ does
-not depend on the bijection $\gamma$. In general, the evaluation of a circuit
-depends on the presentation of the structure (i.e.\ the bijection $\gamma$). If
-a family of $(\mathcal{B}, \rho)$-circuits $\mathcal{C}$ is invariant it follows
-that the query computed is a $q$-query on $\rho$-structures. Thus if $q = 0$
-then $\mathcal{C}$ computes a property of $\rho$-structures. The following lemma
-allows us to recast this notion in terms of the language developed in this
+If a family of $(\mathcal{B}, \rho)$-circuits $\mathcal{C}$ is invariant it
+follows that the query computed is a $q$-query on $\rho$-structures. Thus if $q
+= 0$ then $\mathcal{C}$ computes a property of $\rho$-structures. The following
+lemma allows us to recast this notion in terms of the language developed in this
 paper.
 
 \begin{lem}
@@ -723,15 +742,18 @@ paper.
 % paper, we are instead interested in circuits with broader symmetry properties.
 % We first define the notion of automorphism for circuits.
 
-We now define the notion of an automorphism of circuit.
+We now define an automorphism of a circuit, generalising the definition
+introduced by Anderson and Dawar. The definition is similar, but adds the
+requirement that if a gate $g$ is mapped to $g'$, then children of $g$ must be
+mapped to the children of $g'$ via some appropriate isomorphism of the structure
+associated with $g$.
 
 \begin{definition}[Automorphism]
   let $C = \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be a
   $(\mathbb{B},\tau)$-circuit of order $n$ computing a $q$-ary, and where
   $\mathbb{B}$ is a basis of isomorphism-invariant structured functions. Let
   $\sigma \in \sym_n$ and $\pi: G \rightarrow G$ be a bijection such that
-  \begin{itemize}
-    \setlength\itemsep{0mm}
+  \begin{myitemize}
   \item for all output tuples $x \in [n]^q$, $\pi \Omega (x) = \Omega (\sigma
     x)$,
   \item for all gates $g \in G$, $\Sigma (g) = \Sigma (\pi g)$,
@@ -740,14 +762,14 @@ We now define the notion of an automorphism of circuit.
   \item For each pair of gates $g, h \in G$ $W(h,g)$ if and only if $W(\pi h,
     \pi g)$ and for each internal gate $g$ we have that $L(\pi g)$ and $ \pi
     \cdot L(g)$ are isomorphism-equivalent.
-  \end{itemize}
+  \end{myitemize}
   We call $\pi$ an \emph{automorphism} of $C$, and we say that $\sigma$
   \emph{extends to an automorphism} $\pi$. The group of automorphisms of $C$ is
   called $\aut (C)$.
 \end{definition}
 
-We are particularly interested in circuits that have the property that every
-permutation in $\sym_n$ extends to an automorphism of the circuit.
+We are particularly interested in circuits that have the property that
+\emph{every} permutation in $\sym_n$ extends to an automorphism of the circuit.
 
 \begin{definition}[Symmetry]
   A circuit $C$ on structures of size $n$ is called \emph{symmetric} if every
@@ -755,21 +777,20 @@ permutation in $\sym_n$ extends to an automorphism of the circuit.
 \end{definition}
 
 It follows that for any symmetric circuit $C$ of order $n$ there is a
-homomorphism $h$ that maps $\sym_n$ to $\aut(C)$ that takes $\sigma \in \sym_n$
-to an automorphism that extends it. Suppose $C$ contains no relational gates of
-non-zero arity. In that case $C$ computes a constant function. As such, in this
-paper we always assume a circuit contains at least one relational gate with
-non-zero arity. There there exists a relational gate in $C$ with some element of
-$[n]$ appearing in the tuple labelling that gate. By symmetry it follows that
-all elements of $[n]$ appear in tuples labelling relational gates in $C$. Thus
-no two distinct elements of $\sym_n$ agree on all input gates, and so the
-homomorphism $h$ is injective.
+homomorphism $h$ that maps $\sym_n$ to $\aut(C)$ such that if $\sigma \in
+\sym_n$ then $h(\sigma)$ is an an automorphism extending $\sigma$. Suppose $C$
+does not contain a relational gate labelled by a relation symbol with non-zero
+arity. In that case $C$ computes a constant function. As such, in this paper we
+always assume a circuit contains at least one relational gate with non-zero
+arity. As such by assumption there exists a relational gate in $C$ such that
+some element of $[n]$ appears in the tuple labelling that gate. By symmetry it
+follows that every elements of $[n]$ appears in a tuple labelling a relational
+gate in $C$. It follows that no two distinct elements of $\sym_n$ agree on all
+input gates, and so the homomorphism $h$ is injective.
 
 If this homomorphism is also surjective then we have that each element of
-$\sigma$ extends uniquely to an automorphism of the circuit. Since many of the
-technical tools developed in this paper require that circuits have this
-property, we restrict our attention to classes of circuits that have
-\emph{unique extensions}.
+$\sigma$ extends uniquely to an automorphism of the circuit. In this case we say
+that a circuit has \emph{unique extensions}.
 
 \begin{definition}
   We say that a circuit $C$ has \emph{unique extensions} if for every $\sigma
@@ -777,41 +798,52 @@ property, we restrict our attention to classes of circuits that have
   $\pi_{\sigma}$ extends $\sigma$.
 \end{definition}
 
-Anderson and Dawar~\cite{AndersonD17} introduce the notion of a \emph{rigid}
-circuit, and show that, for circuits defined over a basis of symmetric functions
-there is a polynomial-time algorithm that takes as input a symmetric circuit and
-outputs an equivalent rigid symmetric circuit. They also show that rigid
-circuits have unique extensions, allowing them to conclude that $P$-uniform
-families of symmetric circuits over bases of symmetric functions may be assumed
-to be rigid (and hence have unique extensions) without a loss of generality.
+It is worth noting that many of the important technical tools needed in this
+paper are only applicable if the circuit under consideration has unique
+extensions. In order to handle this technicality Anderson and
+Dawar~\cite{AndersonD17} introduce the notion of a \emph{rigid} circuit and show
+that, for circuits defined over a basis of symmetric functions there is a
+polynomial-time algorithm that takes as input a symmetric circuit and outputs an
+equivalent rigid symmetric circuit. They also show that a great many properties
+of rigid circuits can be decided in polynomial time, a necessary step in their
+argument, and, importantly, that that rigid circuits have unique extensions.
+This allows them to restrict their attention to $P$-uniform families of
+symmetric circuits (over bases of symmetric functions) \emph{with unique
+  extensions}, without a loss of generality.
 
-% It turns out that establishing an exactly analogous argument for general
-% circuits is a non-trivial problem.
-
-% In this paper we establish an approximately analogous argument
-
-Anderson and Dawar's argument makes use of the fact that many important circuit
-properties are polynomial-time decidable for circuits defined over symmetric
-bases. While we should like to construct an analogous argument, we show in
+In order to make use of these technical tools, as well ensure the
+polynomial-time decidability of many important circuit properties, we should
+like to be able to construct a normal form analogous to rigidity and present a
+polynomial time algorithm that transforms a circuit into an equivalent circuit
+of this form. It is at this point that we arrive at the first complication
+introduced by our generalisation. Anderson and Dawar's polynomial-time
+translation makes indispensable of the polynomial-time decidability of many
+important circuit properties for circuits defined over symmetric bases. However,
+for the more general circuits discussed here, it is not known if even the most
+basic circuit properties are polynomial-time decidable. Indeed, we show in
 Section~\ref{sec:transparent} that for circuits that include gates computing
-non-symmetric functions most of these important circuit properties are at least
-as hard to decide as the graph-isomorphism problem. As such, constructing an
-analogous translation, as well as establishing the numerous other needed results
-whose proofs rely on certain properties being polynomial-time decidable, would
-be non-trivial.
+non-symmetric functions all of the relevant circuit properties of interest are
+at least as hard to decide as the graph-isomorphism problem. As such,
+constructing an analogous argument, as well as establishing the numerous other
+crucial results whose proofs rely on the polynomial-time decidability of various
+circuit properties, would be beyond the scope of this paper.
 
-In order to proceed we will restrict ourselves to circuits with certain
-constraints on how those gates computing non-symmetric functions can be wired
-into the circuit. We call these circuits \emph{transparent} circuits. We show in
-Sections~\ref{sec:transparent} that transparency is sufficient to allow for the
-polynomial-time decidability of many important circuit properties, while still
-keeping the circuit model powerful enough for us to establish a translation from
-formulas to families of circuits.
+In order to proceed we explicitly restrict our attention to a particular class
+of circuits characterised by a restriction on the children of gates labelled by
+non-symmetric functions. We say such circuits are \emph{transparent}. We show in
+Section~\ref{sec:transparent} that all of the circuit properties of interest are
+polynomial-time decidabile for transparent circuits, and we use these results to
+define a polynomial-time transformation from transparent circuits to equivalent
+circuits with unique extensions. Importantly, while the class of transparency
+condition is a constraint sufficient to enable our analysis, we show in
+Section~\ref{sec:formulas-to-circuits}, that the class of transparent circuits
+is still rich enough to capture $\FPR$.
 
 Before we can formally define \emph{transparency} we need to define the
 \emph{syntactic-equivalence} relation on the gates of a circuit. The intuition
 is that two gates in a circuit are syntactically-equivalent if the circuits
-underneath them are `hereditary similar'.
+underneath them are `hereditary equivalent', i.e.\ the two circuits underneath
+these gates are really just copies of one another.
 % In order to prove this result, Anderson and Dawar introduce the notion of a
 % \emph{rigid} circuit, proving that symmetric circuits may be
 
@@ -872,13 +904,13 @@ underneath them are `hereditary similar'.
   $h$ are internal gates and and suppose we have defined the
   syntactic-equivalence relation for all gates of depth less than the depth of
   either $g$ or $h$. Then $g \equiv h$ if, and only if, $L(g) /_\equiv$ and
-  $L(h) /_\equiv$ are isomorphism equivalent.
+  $L(h) /_\equiv$ are isomorphism-equivalent.
 \end{definition}
 
-\begin{remark}
+\begin{drem}
   Should I prove these are actually equivalence relations? I use that fact, but
   it's very easy to prove.
-\end{remark}
+\end{drem}
 
 For a circuit $C$ of order $n$ and a gate $g$ we map think of $g$ as computing
 the function that maps an input structure $\mathcal{A}$ and a bijection $\gamma$
@@ -889,7 +921,8 @@ equivalence relation for a given circuit is $\NP$-hard. We now show that if two
 gates are syntactically-equivalent then the functions computed at these two
 gates must be equal. We show later that the syntactic-equivalence relation is
 polynomial-time decidable for the class of circuits of interest to us in this
-paper.
+paper. In this sense we shall treat syntactic-equivalence as a tractable
+refinement of the $\NP$-complete relation.
 
 \begin{lem}
   Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\BB,
@@ -987,13 +1020,13 @@ permutation then the two images of each gate must be syntactically-equivalent.
 It follows from Lemma~\ref{lem:permutation-extending-syntactic-equivalence} that
 the syntactic-equivalence relation of a circuit $C$ constrains the automorphism
 group of $C$, and so the orbits and stabiliser groups of the gates in $C$. We
-say that a circuit $C$ is \emph{syntactically simple} if $C$ has trivial
+say that a circuit $C$ is \emph{reduced} if $C$ has trivial
 syntactic-equivalence classes, i.e. for all gates $g$ and $h$ in $C$ if $g
 \equiv h$ then $g = h$. An immediate corollary of
-Lemma~\ref{lem:permutation-extending-syntactic-equivalence} is that if a circuit
-is syntactically simple then it has unique extensions. We now define a few
-properties of circuits in terms of the structure of their syntactic-equivalence
-classes.
+Lemma~\ref{lem:permutation-extending-syntactic-equivalence}, and en example of
+this intuitive understanding of the result, is that if a circuit is reduced then
+it has unique extensions. We now define \emph{transparency} and other properties
+of circuits in terms of the structure of their syntactic-equivalence classes.
 
 \begin{definition}
   Let $C$ be a circuit and $g$ be a gate in $C$. We say $g$ has \emph{injective
@@ -1006,8 +1039,8 @@ classes.
   symmetric function has unique labels.
 \end{definition}
 
-It is worth noting that if a circuit has injective labels and is syntactically
-simple then then it has unique labels. The converse is, in general, false.
+It is worth noting that if a circuit has injective labels and is reduced then
+then it has unique labels. The converse is, in general, false.
 
 There is a small technical point that needs some discussion before we continue.
 The definition of a circuit allows for the inclusion of a gate such that there
@@ -1076,7 +1109,6 @@ unique labels) has unique extensions.
 %   follows.
 % \end{proof}
 
-
 \begin{prop}
   Let $C := \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be a $(\mathbb{B},
   \rho)$-circuit of order $n$. If $C$ has unique children then $C$ has unique
@@ -1111,33 +1143,44 @@ unique labels) has unique extensions.
   (g, \Omega(\vec{a}))\}$, and the result follows.
 \end{proof}
 
-It follows from Proposition~\ref{prop:unique-children-unique-extensions} that if
-$C$ is of order $n$ then for each $\sigma \in \sym_n$ there exists at most one
-$\pi_\sigma \in \aut(C)$ extending $\sigma$. This means that if $C$ is symmetric
-for each $\sigma \in \sym_n$ there is always a canonical automorphism
-$\pi_\sigma$ extending $\sigma$. However, for a gate $g$ in $C$ there may no
-canonical $\lambda \in \aut(g)$ witnessing the validity of the mapping from $g$
-to $\pi_\sigma g$, i.e.\ such that $\pi L(g) = L(g') \lambda$. We prove in
-Section~\ref{sec:transparent} that in fact, for the class of circuits with
-unique children, deciding if there is an isomorphism-equivalence between two
-gates is as hard as the graph-isomorphism problem. It follows that a great many
-important circuit properties (e.g. the orbit of a gate, symmetry of a circuit,
-etc.) for circuits with unique gates are at the very least not obviously
-polynomial-time decidable.
+We have from Proposition~\ref{prop:unique-children-unique-extensions} that
+circuits with unique gates have unique extensions, but, in order to prove many
+of the results we will need later, we not only need that each automorphism is
+uniquely defined by the permutation it extends, but also that the isomorphisms
+that witness the isomorphism-equivalences, and so witness the validity of the
+automorphism, are also uniquely defined (or, at least very least, well
+constrained) by the permutation $\sigma$. Without a sufficient constraint on the
+choice of isomorphism, testing if two gates have isomorphism-equivalent
+labellings (a requirement for computing the automorphism extending a
+permutation) requires solving some version of the isomorphism problem for
+$\tau$-structures, where $\tau$ is the vocabulary of the gates in question.
+Indeed, we prove in Section~\ref{sec:transparent}, that for the class of
+circuits with unique children deciding if there is an isomorphism-equivalence
+between two gates is as hard as the graph-isomorphism problem. It follows that a
+great many important circuit properties (e.g. the orbit of a gate, symmetry of a
+circuit, etc.) for circuits with unique gates are at the very least not
+obviously polynomial-time decidable. As such, circuits with unique children,
+although satisfying the requirement of having unique extensions, are
+insufficient for our purposes.
 
-In contrast, it is easy to see that if $C$ has unique labels, and $g$ and $g'$
-are gates in the circuit $C$, then $L(g)$ and $L(g')$ are isomorphism-equivalent
-if, and only if, $\lambda := L(g')^{-1}L(g)$ is in $\aut(g)$. In this case,
-rather than having to decide the isomorphism problem we simply need to check if a given
-candidate is in fact a valid isomorphism. We prove in
+\begin{drem}
+  G: I think the above paragraph may be getting a bit too far into the weeds.
+\end{drem}
+
+In order to ensure a canonical choice of isomorphism we instead consider
+circuits with unique labels. It is easy to see that if $C$ has unique labels
+then $L(g)$ and $L(g')$ are isomorphism-equivalent if, and only if, $\lambda :=
+L(g')^{-1}L(g)$ is an isomorphism. In this case, rather than having to decide
+the isomorphism problem, we can decide isomorphism-equivalences by checking if a
+given candidate function is a valid isomorphism. We prove in
 Section~\ref{sec:transparent} that all of the circuit properties of interest in
 this paper are polynomial-time decidable for circuits with unique labels.
-Moreover, we show in Lemma~\ref{lem:transparent-unique} that a
-transparent circuit can be converted into an equivalent circuit with unique
-labels in time polynomial in the size of the circuit. Since we are working with
-$P$-uniform families of transparent circuits, this fact allows us to assume,
-without a loss of generality, that transparent circuits have unique labels (and,
-from \ref{prop:unique-children-unique-extensions} so unique extensions).
+Moreover, we show in Lemma~\ref{lem:transparent-unique} that a transparent
+circuit can be transformed into an equivalent circuit with unique labels in time
+polynomial in the size of the circuit. Since we are working with $P$-uniform
+families of transparent circuits, this fact allows us to assume, without a loss
+of generality, that transparent circuits have unique labels and so , from
+\ref{prop:unique-children-unique-extensions}, unique extensions).
 
 % \begin{definition}
 %   We say that a circuit $C_n$ is \emph{rigid} if every equivalence class of
@@ -1169,42 +1212,59 @@ from \ref{prop:unique-children-unique-extensions} so unique extensions).
 
 % Let $\MB$ be the set of all structured functions that are symmetric or
 % matrix-invariant.
+We now discuss a few Boolean basis of interest in this paper and state the main
+result. In most cases (e.g.\ \cite{}) a Boolean basis is taken to be a finite
+sequence of symmetric Boolean functions. A binary encoding of a circuit defined
+over such a basis is given by assigning to each element of the basis a unique
+symbol, and then encoding the circuit in the obvious manner. Since there are
+only a finite number of basis elements, it follows that if each basis element
+can be computed in polynomial time then the mapping that takes a symbol $s$ and
+a string $\vec{x}$ to the value of the function denoted by $s$ for input
+$\vec{x}$ can be decided in polynomial-time. We call this function the
+\emph{gate evaluation function}, and note that its polynomial-time decidability
+is required for proving the polynomial-time evaluation of the circuit. However,
+in order to allow for the inclusion of structured (possibly non-symmetric)
+functions in the basis, we have instead defined a basis to be a (possibly
+infinite) set of finite Boolean functions. In this case the gate evaluation
+function may not even be decidable, let alone polynomial-time decidable.
 
-In many contexts, circuits are defined over a basis of symbols, usually the
-standard logical symbols $\land, \neg, \lor$, and perhaps $\maj$ (for majority).
-When evaluating a circuit, a gate labelled by a particular symbol is evaluated
-using a Boolean function appropriate to the particular symbol. We have instead
-defined a basis to be a set of Boolean functions. However, when reasoning about
-circuits or dealing with them as inputs to algorithms we often want to identify
-a function in the basis with a particular symbol. We now formally define a few
-natural bases used in this paper, assigning to each function in these bases an
-appropriate symbol.
+\begin{definition}
+  Let $\BB$ be a basis. Let $S$ be a set of symbols and let $F : \BB \rightarrow
+  S$ be a bijection. We say $\BB$ is \emph{effective} if the function $E$ that
+  maps a symbol $s$ and an input $x \in \dom(F(s))$ to the value
+  $(F^{-1}(s))(x)$ is decidable. We say $\BB$ is \emph{$\PT$-effective} if $E$
+  is polynomial-time decidable.
+\end{definition}
 
-Let $a \in \nats$, let $\land[a] : \{0,1\}^{[a]} \rightarrow \{0,1\}$ be the
-structured function computing the $\AND$ operation on $a$ inputs. Let $\lor[a] :
-\{0,1\}^{[a]} \rightarrow \{0,1\}$ be the structured function computing the
-$\OR$ operation on $a$ inputs. Let $\maj [a] : \{0,1\}^{[a]} \rightarrow
-\{0,1\}$ be the structured function computing the the majority function on $a$
-inputs. We abuse notation and let $\neg : \{0,1\} \rightarrow \{0,1\}$ also
-denote the structured function computing negation on a single input. In each
-case we use the name of the function above as a symbol denoting that function.
+It is easy to see that if $\BB$ is a $\PT$-effective basis then we can evaluate
+a circuit over $\BB$ in time polynomial in the size of the circuit.
 
-Let the \emph{standard basis} $\BS$ be the basis containing $\neg$ and all
-functions $\land[a]$ and $\lor[a]$ for every $a \in \nats$. Let the
-\emph{majority basis }$\BM := \BS \cup \{\maj[a] : a \in \nats\}$. We say a
-basis $\BB$ is \emph{symmetric} if every function in $\mathbb{B}$ is a symmetric
-Boolean function.
+Let $n \in \nats$, we have that $\AND[n] : \{0,1\}^{[n]} \rightarrow \{0,1\}$ is
+the restriction (as a structured function) of the $\AND$ function to inputs of
+size $n$. Similarly, we have that $\OR[n]$, $\NAND[n]$ and $\MAJ[n]$ are the
+restrictions of these respective functions to strings of length $n$. We let
+$\NOT: \{0,1\} \ra \{0,1\}$ be the not function, and we often identify $\NOT$
+with $\NAND[1]$. In each case we use the name of the function as the symbol
+denoting that function.
 
-Let $a, b, r, p \in \nats$, with $p$ prime. Let $\rank^r_p[a,b] : \{0,1\}^{[a]
-  \times [b]} \rightarrow \{0,1\}$ be a matrix-invariant structured with
-universe $[a] \uplus [b]$, such that $\rank^r_p[a,b](M) = 1$ if, and only if,
-the matrix $M \in \{0,1\}^{[a] \times [b]}$ has rank at most $r$ when its
-entries are understood as elements of the finite field $\mathbb{F}_p$. We again
-identify the function $\rank^{r}_p[a,b]$ with the symbol $\rank^{r}_p[a,b]$.
+As such, the standard basis $\BS$ consists of the functions $\NAND[n]$,
+$\AND[n]$, and $\OR[n]$ for every $n \in \nats$, and the majority basis is $\BM
+:= \BS \cup \{\MAJ[n] : n \in \nats\}$. We often use $\NAND[1]$ and $\NOT$
+interchangeably. We say a basis $\BB$ is \emph{symmetric} if every function in
+$\BB$ is a symmetric Boolean function.
 
-Let the \emph{rank basis} $\RB := \BM \cup \{\rank^{r}_p[a,b] : a, b, r, p \in
-\nats, \text{ $p$ prime}\}$. We say a basis $\BB$ is \emph{matrix-symmetric} if
-every function in $\BB$ is symmetric or matrix-symmetric.
+Let $a, b, r, p \in \nats$, with $p$ prime. Let $\RANK^r_p[a,b] : \{0,1\}^{[a]
+  \times [b]} \rightarrow \{0,1\}$ be a matrix-invariant structured function
+with universe $[a] \uplus [b]$, such that $\RANK^r_p[a,b](M) = 1$ if, and only
+if, the matrix $M \in \{0,1\}^{[a] \times [b]}$ has rank at most $r$ over $\ff_p$
+when the entries of $M$ are interpreted as elements of $\mathbb{F}_p$. We
+identify the function $\RANK^{r}_p[a,b]$ with the symbol $\RANK^{r}_p[a,b]$.
+
+Let $\RANK = \{\RANK^{r}_p[a,b] : a, b, r, p \in \nats, \text{ $p$ prime}\}$ and
+let the \emph{rank basis} be $\RB := \BM \cup \RANK$. We say a basis $\BB$ is
+\emph{matrix-symmetric} if every function in $\BB$ is symmetric or
+matrix-symmetric. It is easy to see that the standard basis, the majority basis,
+and the rank basis are all $\PT$-effective.
 
 % Let $C_n$ be a $(\mathbb{B}, \tau)$-circuit and let $g$ be a gate in $C_n$. We
 % say $g$ is an \emph{\AND-gate} if $g$ is an internal gate labelled a function
@@ -1212,16 +1272,18 @@ every function in $\BB$ is symmetric or matrix-symmetric.
 
 Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
 \rho)$-circuit of order $n$ and let $g \in G$. We say a gate $g \in G$ is a
-\emph{symmetric gate} if $\Sigma(g)$ is a symmetric function. We say a gate $g
-\in G$ is a \emph{matrix-symmetric gate} if $\Sigma(g)$ is a matrix-symmetric
-structured function. We say that $g$ is an \emph{$\AND$-gate} if $\Sigma(g) :=
-\land [a]$ for some $a \in \nats$. Similarly we define \emph{$\OR$-gates},
-\emph{$\NOT$-gates}, \emph{$\MAJ$-gates} and \emph{$\rank$-gates}.
+\emph{symmetric gate} if $\Sigma(g)$ is a symmetric function, and otherwise we
+say $g$ is a \emph{non-symmetric gate} We say a gate $g \in G$ is a
+\emph{matrix-symmetric gate} if $\Sigma(g)$ is a matrix-symmetric structured
+function. We say that $g$ is an \emph{$\AND$-gate} if $\Sigma(g) := \AND[a]$ for
+some $a \in \nats$. Similarly we define an \emph{$\OR$-gates},
+\emph{$\NAND$-gate} \emph{$\NOT$-gates}, \emph{$\MAJ$-gates}, and
+\emph{$\RANK$-gates}.
 
 We say $C$ is a \emph{circuit with symmetric gates} if every gate in $C$ is
 symmetric. We say $C$ is a \emph{matrix-circuit} if every gate in $C$ is
 matrix-symmetric or symmetric. We say $C$ is a \emph{rank-circuit} if $C$ is a
-matrix-circuit and every non-symmetric gate is a $\rank$-gate.
+matrix-circuit and every non-symmetric gate is a $\RANK$-gate.
 
 % \begin{definition}
 %   Let $C_n = \langle G, \Omega, \Simga, \Lambda, L \rangle$ be a $(\mathbb{B},
@@ -1274,11 +1336,11 @@ We are now ready to state the main theorem of this paper.
 In this section we show that any family of symmetric circuits over an arbitrary
 basis of symmetric functions can be transformed in polynomial time into a family
 of symmetric circuits that decide the same language but are defined over the
-basis $\mathbb{B}_\maj$. In other words, it makes no difference to the
-expressive power of such circuits whether we include \emph{all} symmetric
-functions in the basis or just $\mathbb{B}_\maj$. It follows that in order to
-construct $P$-uniform families of symmetric circuits that define queires not in
-$\FPC$, we need to consider bases with non-symmetric functions.
+basis $\BM$. In other words, it makes no difference to the expressive power of
+such circuits whether we include \emph{all} symmetric functions in the basis or
+just $\BM$. It follows that in order to construct $P$-uniform families of
+symmetric circuits that define queires not in $\FPC$, we need to consider bases
+with non-symmetric functions.
 
 % Recall from Anderson and Dawar \cite{AndersonD17} we have that
 % $\mathbb{B}_{\std} = \{ \neg , \wedge , \lor \}$ and $\mathbb{B}_\maj = \{
@@ -1296,8 +1358,8 @@ assume this encoding below.
   \label{prop:fuctions-maj}
   There is a deterministic algorithm that outputs for each symmetric function
   $F: \{0,1\}^n \rightarrow \{0,1\}$ (encoded as a binary $n$-tuple as above) a
-  symmetric circuit $C$ defined over the basis $\mathbb{B}_\maj$ that computes
-  $F$. Moreover, this function is computable in time polynomial in $n$ and the
+  symmetric circuit $C$ defined over the basis $\BM$ that computes $F$.
+  Moreover, this function is computable in time polynomial in $n$ and the
   circuit $C$ has depth at most $5$, width at most $2n+2$ and size at most $5n +
   3$.
 \end{prop}
@@ -1306,18 +1368,18 @@ assume this encoding below.
   We have $c_{F}$ from the input. We now define $C$. We define the set of gates
   and wires of $C$ layer by layer as follows. The first layer consists of just
   the $n$ input gates labelled by the variables $x_1, \ldots , x_n$. The second
-  layer consists of two `majority' gates for each $a \in c_{F}$, which we denote
-  by $\maj_a$ and $\maj^{\neg}_a$. For each $a \in c_{F}$ there is one wire from
+  layer consists of two $\MAJ$ gates for each $a \in c_{F}$, which we denote by
+  $\maj_a$ and $\maj^{\neg}_a$. For each $a \in c_{F}$ there is one wire from
   each of $x_1, \ldots , x_n$ to $\maj_a$ and $\maj^{\neg}_a$. For all $a \geq
   \frac{n}{2}$, there are $2a - n$ wires from $0$ to $\maj_a$ and $2a - n + 2$
   wires from $0$ to $\maj^{\neg}_a$. For all $a < \frac{n}{2}$ there are $n -
   2a$ wires from $1$ to $\maj_a$ and $n - 2a - 2$ wires from $1$ to
-  $maj^{\neg}_a$. The third layer consists of one `not' gate for each $a \in
+  $maj^{\neg}_a$. The third layer consists of one $\NOT$ gate for each $a \in
   c_{F}$, which we denote by $\neg_a$. For each $a \in c_{F}$ there is a wire
-  from $\maj^\neg_a$ to $\neg_a$. The fourth layer consists of one `and' gate
+  from $\maj^\neg_a$ to $\neg_a$. The fourth layer consists of one $\AND$ gate
   for each $a \in c_{F}$, which we denote by $\countgate_a$. For each $a \in
   c_{F}$ there is a wire from each of $\maj_a$ and $\neg_a$ to $\countgate_a$.
-  The fifth layer consists of just a single `or' gate, designated as the output
+  The fifth layer consists of just a single $\OR$ gate, designated as the output
   gate, and for each $a \in c_{F}$ there is a wire from $\countgate_a$ to the
   output gate.
 
@@ -1336,9 +1398,19 @@ assume this encoding below.
   only if, the number of 1's in $\vec{x}$ equals $a$. Thus we have that $C$
   evaluates to 1 if, and only if, there exists $a \in c_{F}$ such that the
   number of $1$'s in $\vec{x}$ equals $a$ if, and only if, $F (\vec{x}) = 1$.
-  Moreover, it is easy to see that $C$ is symmetric and the algorithm defined
-  runs in time polynomial in $n$.
+  Let $\sigma \in \sym_n$. We define the automorphism $\pi$ extending $\sigma$
+  as follows. If $x_i$ is an input gate then let $\pi x_i := x_{\sigma i}$. We
+  note that for each of the majority gate $g$ in the second layer there is
+  exactly one wire from each input gate to $g$. We note additionally that every
+  other gate in the circuit is connected to the (non-constant) input gates only
+  through a gate in the second layer. As such, if $g$ is an internal gate we let
+  $\pi g := g$, and note that $\pi$ is an automorphism extending $\sigma$. It
+  follows that $C$ is symmetric. It is easy to see that the construction of the
+  circuit $C$ can be implemented by an algorithm running in time polynomial in
+  $n$.
+  
   % AD - perhaps include a brief argument for why C is symmetric?
+  % G - I've added a discussion of this
 
   Furthermore, notice that the first layer contains $n$ gates and the second
   layer contains at most $2 \vert c_{F} \vert \leq 2n$ gates. The third and
@@ -1348,18 +1420,17 @@ assume this encoding below.
 \end{proof}
 
 \begin{thm}
-  Let $\mathbb{B}$ be a basis of symmetric functions and let $(C_n)_{n \in
-    \mathbb{N}}$ be a family of symmetric circuits defined over the basis
-  $\mathbb{B}$. Then there exists a family of symmetric circuits $(C_n')_{n \in
-    \mathbb{N}}$ defined over $\mathbb{B}_\maj$ that decides the same language.
-  Moreover, the map $C_n \mapsto C_n'$ is polynomial-time computable and for
-  each $n \in \nats$, $\vert C_n' \vert \leq (5 \cdot \vert C_n \vert + 3) \cdot
-  \vert C_n \vert$.
-\end{thm}
+  Let $\BB$ be a basis of symmetric functions and let $(C_n)_{n \in \nats}$ be a
+  family of symmetric circuits defined over the basis $\BB$. Then there exists a
+  family of symmetric circuits $(C_n')_{n \in \nats}$ defined over $\BM$ that
+    decides the same language. Moreover, the map $C_n \mapsto C_n'$ is
+    polynomial-time computable and for each $n \in \nats$, $\vert C_n' \vert
+    \leq (5 \cdot \vert C_n \vert + 3) \cdot \vert C_n \vert$.
+  \end{thm}
 
 \begin{proof}
   From $C_n$ we construct $C_n'$ as follows. For each gate $g \in C_n$ labelled
-  by a member of $\mathbb{B}$ we have a symmetric circuit $C_g$ from
+  by a member of $\BB$ we have a symmetric circuit $C_g$ from
   Proposition~\ref{prop:fuctions-maj} that computes the same function as $g$.
   Then let $C_n'$ be as $C_n$ but with each gate $g \in C_n$ replaced by $C_g$.
   It is easy to see that $C_n'$ is symmetric. We also have that each gate $g$
@@ -1372,9 +1443,10 @@ This result gives us that for any family of circuits over an arbitrary basis of
 symmetric functions we can construct another symmetric circuit family computing
 the same function over the majority basis without a blowup in size. Moreover, we
 also have that if the first family was uniform the second family will be as
-well. As such, we cannot extend the power of the $P$-uniform symmetric circuits
-families studied by Anderson and Dawar~\cite{AndersonD17} by simply considering
-alternative bases of symmetric functions, thus motivating the generalisation
-developed in the previous subsection to non-symmetric functions.
+well. As such, we cannot extend the power of the $\PT$-uniform symmetric
+circuits families studied by Anderson and Dawar~\cite{AndersonD17} by simply
+considering alternative bases of symmetric functions, thus motivating the
+generalisation developed in the previous subsection to circuits over bases
+including non-symmetric functions.
 \end{document}
 
