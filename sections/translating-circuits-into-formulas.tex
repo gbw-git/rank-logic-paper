@@ -23,8 +23,8 @@ the formula.
 \subsection {Evaluating Circuits}
 In this subsection we let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ denote a
 fixed family of polynomial-size symmetric $(\RB,\rho)$-circuits with unique
-labels that compute a $q$-ary query. We let $n_0$ and $k$ be the constants in
-the statement of Lemma~\ref{lem:row-column-supports}, and fix an $n > n_0$ and a
+labels that compute a $q$-ary query. Let $n_0$ and $k$ be the constants in the
+statement of Lemma~\ref{lem:row-column-supports}, and fix an $n > n_0$ and a
 $\rho$-structure $\mathcal{A}$ with universe $U$ of size $n$. Let $C_n = \langle
 G, \Omega, \Sigma, \Lambda, L \rangle$.
 
@@ -75,13 +75,14 @@ h \in H_g \}$. In the next subsection we show that there is a formula $\theta
 \in \FPR$ implementing this recursive definition. We then use $\theta$, and the
 fixed-point operator, to define an $\FPR$-formula $Q$ that evaluates the output
 gates of the appropriate-size circuit for a given input structure, and hence
-defines the query computed by the circuit family $(C_n)_{n \in \nats}$. In fact,
-the process we use to define $\EV_g$ differs depending on the type of the gate,
-i.e. depending on $\Sigma(g)$, and we define a different $\FPR$-formula in each
-case. We then use a disjunction over cases in order to define $\theta$. We note
-that Anderson and Dawar~\cite{AndersonD17} have already defined formulas of
-$\FPC$, and hence $\FPR$, that define $\EV_g$ if $g$ is a symmetric gate. As
-such, we suppose need only consider the case where $g$ is a rank gate.
+defines the query computed by the family $(C_n)_{n \in \nats}$. In fact, the
+recursive definition of $\EV_g$ is handled differently depending on if $g$ is a
+constant, relational, $\AND$, $\NAND$, $\OR$, or $\RANK$ gate, and so we define
+a different $\FPR$-formula in each case. We then use a disjunction over cases in
+order to define $\theta$. We note that Anderson and Dawar~\cite{AndersonD17}
+have already defined formulas of $\FPC$, and hence $\FPR$, that handle every
+case except where $g$ is a rank gate. As such, we need only consider the case
+where $g$ is a rank gate.
 
 For the remainder of the section we fix a rank gate $g$ in $C_n$. For $\gamma
 \in [n]^{\underline{U}}$ we let $L^{\gamma} = L^{\gamma \mathcal{A}}(g)$. We let
@@ -205,22 +206,19 @@ all $a \in \img(f)$.
 We now show that for any $\eta \in U^{\underline{\consp(g)}}$, there is a matrix
 $M$ such that for any $\gamma \in [n]^{\underline{U}}$ with $\gamma^{-1} \sim
 \eta$, the rank of $M$ is equal to the rank of $L^{\gamma}$. This allows us to
-decide the membership of $\eta$ in $\EV_g$, where $g$ is a $\rank^r_p$ gate, by
-defining $M$ for $\eta$, computing the rank of $M$ over the field of
-characteristic $p$, and then checking if this result is less than or equal to
-the threshold value $r$. We will show in the next subsection that the
-construction of $M$, and hence the construction of $\EV_g$, can be implemented
+decide the membership of $\eta$ in $\EV_g$ where $g$ is a rank gate, i.e.
+$\Sigma(g) = \RANK^r_p$, by defining $M$ for $\eta$, computing the rank of $M$
+over the field of characteristic $p$, and then checking if this result is less
+than or equal to the threshold value $r$. We will show in the next subsection
+that the construction of $M$, and hence the construction of $\EV_g$, can be done
 in $\FPR$.
 
 For the remainder of the subsection we fix $\eta \in U^{\underline{\consp(g)}}$.
 For a gate $h \in H_g$, let $A_h := \{\vec{x} \in U^{\underline{\consp(h)}} :
 \eta \sim \vec{x}\}$ be the set of assignments to the support of $h$ that are
-compatible with $\eta$. We should also like to consider similar sets of
-assignments to the supports of elements in the universe of $g$. Let $X$ be a set
-on which the left group action of $\sym_n$ is defined and let $s \in X$. We let
-$A_s := \{\vec{x} \in U^{\underline{\consp(s)}} : \eta \sim \vec{x}\}$. We will
-be interested in the case where $X$ is the set indexing the rows or columns
-(i.e. $A$ or $B$).
+compatible with $\eta$. We should also like to consider sets of assignments to
+the supports of elements in the universe of $g$. For each $s \in \universe{g}$
+let $A_s := \{\vec{x} \in U^{\underline{\consp(s)}} : \eta \sim \vec{x}\}$.
 
 We now define the matrix $M$. We begin by defining the index sets for $M$. Let
 $R^{\min} := \{\min (\orb(\row(h))) : h \in H_g\}$ and $C^{\min} := \{ \min
@@ -401,8 +399,7 @@ of this observation in the next subsection.
 % \in A_j/{\sim_j}\}$. Let the matrix $M_{~} : I /{\sim} \times J / {\sim}
 % rightarrow \{0,1\}$ be the function defined by $M_{~} ((i, [\vec{x}]) (j,
 % [\vec{y}])) = M(((i, \vec{x}), (j, \vec{y})))$. Lemma
-% \ref{lem:matrix-quot-well-defined} gives us that this function is
-% well-define.
+% \ref{lem:matrix-quot-well-defined} gives us that this function is well-define.
 
 % It remains to show that $M_{~} \sim L^{\gamma}$ for some $\gamma: U
 % \rightarrow [n]$.
@@ -479,15 +476,15 @@ orbit of $h$. Lemma~\ref{lem:translate-EV-circuits} formalises this observation.
 \end{proof}
 
 Let $\gamma \in [n]^{\underline{U}}$ such that $\eta \sim \gamma^{_1}$. Let
-  $\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
-  defined by $\alpha^{\gamma} (i, \vec{x}) := \Pi^{\gamma}_{\vec{x}}(i)$ and
-  $\beta^{\gamma} (j, \vec{y}) := \Pi^{\gamma}_{\vec{y}}(j)$, respectively. We
-  now prove a number of technical lemmas that will ultimately allow us to to
-  prove that the matrix $M$ quotiented by some appropriate equivalence relation
-  is isomorphism-equivalent to $L^{\gamma}$. We will use $\alpha^{\gamma}$ and
-  $\beta^{\gamma}$ to construct the function that witnesses this
-  isomorphism-equivalence. We first show that $\alpha^{\gamma}$ and
-  $\beta^{\gamma}$ are surjective.
+$\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
+defined by $\alpha^{\gamma} (i, \vec{x}) := \Pi^{\gamma}_{\vec{x}}(i)$ and
+$\beta^{\gamma} (j, \vec{y}) := \Pi^{\gamma}_{\vec{y}}(j)$, respectively. We now
+prove a number of technical lemmas that will ultimately allow us to to prove
+that the matrix $M$ quotiented by some appropriate equivalence relation is
+isomorphism-equivalent to $L^{\gamma}$. We will use $\alpha^{\gamma}$ and
+$\beta^{\gamma}$ to construct the function that witnesses this
+isomorphism-equivalence. We first show that $\alpha^{\gamma}$ and
+$\beta^{\gamma}$ are surjective.
 
 \begin{lem} 
 	For any bijection $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim
@@ -1238,17 +1235,29 @@ $\rho$-structure $\mathcal{A}$ over a universe $U$, with $\vert U \vert = n$,
 the $q$-ary query defined by $C_n$ for the input $\mathcal{A}$ is defined by $Q$
 when interpreted in $\mathcal{A}$.
 
-We note that the Immerman-Vardi theorem~\cite{Immerman198686, Vardi:1982} gives
-us that a polynomial-time algorithm can be converted into an equivalent
-$\FP(\leq)$ interpretation. As such, from the $P$-uniformity of $\mathcal{C}$
-and Lemma~\ref{lem:transparent-unique}, there is a $\FP(\leq)$ interpretation
-$\Phi'$ that defines a symmetric rank-circuit with unique labels equivalent to
-$C_n$ when interpreted in $\langle [n], \leq \rangle$. We abuse notation and
-refer to this equivalent circuit as $C_n$.
+The Immerman-Vardi theorem~\cite{Immerman198686, Vardi:1982} gives us that a
+polynomial-time algorithm can be converted into an equivalent $\FP[\leq]$
+interpretation. It is easy to see that any $t$-width $\FP[\tau]$-interpretation $\Phi'$
+can be translated into an equivalent sequence of $\FPC[\tau]$-formulas $\Phi$.
 
-It is easy to see that we can define $\Phi$ in $\FPC$ from $\Phi'$ such that
-$\Phi$ defines $C_n$ using a sequence of number-terms rather than formulas of
-$\FP(\leq)$. To see this, let $t$ be the width of $\Phi'$. Then the domain of
+\begin{lemma}
+  Let $\Phi = \langle \phi_1, \ldots , \phi_p \rangle$ be a $t$-width
+  $\FP[\leq]$-interpretation. There exists a sequence of formulas $\Phi' =
+  \langle \phi_1' , \ldots, \phi_p' \rangle$ such that 
+  \end{lemma}
+Moreover, 
+
+from the $P$-uniformity of $\mathcal{C}$ and
+Lemma~\ref{lem:transparent-unique} that there is a $\FP(\leq)$ interpretation
+$\Phi'$ that, when interpreted in $\langle [n], \leq \rangle$, defines a
+symmetric rank-circuit with unique labels equivalent to $C_n$. We abuse notation
+and also refer to this equivalent circuit as $C_n$. Let $t$ be the width of this
+interpretation. It is easy to see that
+
+We should like to define this interpretation `within' the number universe of
+$\FPC$. It is easy to see that we can define $\Phi$ in $\FPC$ from $\Phi'$ such
+that $\Phi$ defines $C_n$ using a sequence of $\FPC$-formulas rather than formulas
+of $\FP(\leq)$. To see this, let $t$ be the width of $\Phi'$. Then the domain of
 $\Phi'$ is a subset of $[n]^t$. Let $\phi_f$ be an number-term that defines a
 bijection from $[n^t]$ to $[n]^t$ for each $n$. Then for each $\phi'
 (\vec{\nu}_1, \ldots, \vec{\nu}_{p}) \in \Phi$, where $\vec{\nu}_i$ is an
@@ -1263,11 +1272,11 @@ sequence of formulas $\phi$ defined from $\phi'$ in $\Phi'$.
 
 We thus have an interpretation $\Phi := (\phi_G, \phi_\Omega, (\phi_s)_{ s \in
   \RB \cup \rho \cup \{0,1\}}, (\phi_{\Lambda_R})_{R \in \rho}, \phi_L)$ in
-$\FPC$ defining the circuit $C_n$ when interpreted in $\mathcal{A}$. The
-formulas in this interpretation are defined as follows.
+$\FPC$ defining the circuit $C_n$ when interpreted in $\mathcal{A}$. Each of
+these formulas are number terms that The formulas in this interpretation are
+defined as follows.
 
-\begin{itemize}
-	\setlength\itemsep{0mm}
+\begin{myitemize}
 \item The number term $\phi_G(\mu)$, when interpreted in $\mathcal{A}$, defines
   a subset of $[n^t]$, which we identify with $G$ (the set of gates in the
   circuit), and hence write $G \subseteq [n^t]$.
@@ -1286,7 +1295,7 @@ formulas in this interpretation are defined as follows.
 \item The number term $\phi_L(\mu, \nu, \delta, \epsilon)$ is defined such that
   $\mathcal{A} \models \phi_L[g,h,i,j]$ if, and only if, $g$ and $h$ are gates
   and $L(g)(i,j) = h$.
-\end{itemize}
+\end{myitemize}
 % The Immerman-Vardi Therorem can be used to show that there exist number terms
 % $\FA{row}(\mu, \delta)$ and $\FA{col} (\mu, \delta)$ such that $\mathcal{A}
 % \models \FA{row}[g, i]$ (resp. $\mathcal{A} \models \FA {col} [g, j]$) if, and
@@ -1300,9 +1309,10 @@ exists a formula $\FA{rank-type}(\mu, \kappa , \pi)$ such that $\mathcal{A}
 characteristic $p$ and threshold $r$. We note that the bound on the domain is
 definable as a closed number term $\FA{m} := (x\# (x = x))*t$.
 
-We have from the support theorem that there are constants $n_0$ and $k$ such
-that for all $n \geq n_0$ the support of each gate has size at most $k$. Note
-that for each $n \leq n_0$, $C_n$ can be evaluated by an $\FPC$ formula that
+Let $n_0$ and $k$ be the constants in the statement of
+Lemma~\ref{lem:row-column-supports}, Let $n_0$ and $k$ be the constants. Then
+for all $n \geq n_0$ the support of each gate has size at most $k$. Note that
+for each $n \leq n_0$, $C_n$ can be evaluated by an $\FPC$ formula that
 quantifies over all of the possible bijections from the universe of
 $\mathcal{A}$ to $[n]$ (since there are at most constantly many such
 bijections). As such we suppose $n > n_0$ in the rest of this subsection.
@@ -1329,24 +1339,42 @@ $[n]$, and hence $s$, is an ordered set, we let $\vec{s}$ denote the $\vert s
 denote a $\vert s \vert$-tuple formed by applying $f$ to $s$ in order (i.e.
 $\vec{f} := f \circ \vec{s}$).
 
-We seek to define a relation $V \subseteq [n^t] \times U^k$ by $V(g, \vec{a})$
-if, and only if, $\vec{a} \in \overline {\EV}_g$. Our aim is to define a set of
-formulas $\theta_s (\mu, \vec{x})$, where $s \in \mathbb{B} \cup \tau \cup
-\{0,1\}$, which evaluate the gate indexed by $\mu$ for the assignment to its
-support given by $\vec{x}$ if it is a gate labelled by the symbol $s$. Each of
-these formulas are written in terms of $V$, the relation variable we are
-inductively defining.
+We seek to define the relation $V \subseteq [n^t] \times U^k$ such that $V(g,
+\vec{a})$ if, and only if, $\vec{a} \in \overline {\EV}_g$ in $\FPR$ using the
+least fixed point operator. In order to do so we first define a formula
+$\theta(\mu, \vec{x})$ which holds that the gate denoted by $\mu$ evaluates for
+the assignment denoted by $\vec{x}$ to its support. Importantly, $\theta$ is
+defined in terms of a relation symbol, which we also call $V$, which is meant to
+denote a relation that
 
-We now define a formula $\theta(\mu, \vec{x})$ that evaluates the gate denoted
-by $\mu$ given the assignment $\vec{x}$. For each symbol $s \in \mathbb{B}$, we
-define a separate $\theta_s$ and then define $\theta(\mu, \vec{x})$ using a
-disjunction over these symbols. We will define the $\FPR$ formula $\theta_\rank
-(\mu, \vec{x})$. The formulas for the other symbols have formulas have already
-been defined by Anderson and Dawar~\cite{AndersonD17}, and so this will suffice.
-We first define a formula $\psi_M$ that defines the matrix $M$ from the previous
-subsection. We then use the rank operator to compute the rank of the given
-matrix. In order to define $\psi_M$ and $\theta_\rank$ succinctly we first
-define a number of useful $\FPC$ formulas.
+if the relation symbol is assigned to using a relation symbol, which is
+assigned, when applying the least fixed point operator, to the value of $V$ for
+all gates of will be assigned to a relation symbol corresponding to the
+restriction of $V$ to the children of
+
+$evaluations of all the children of $\mu$ for any assignment to their supports.
+terms of a relation symbol
+
+gives the value of $V$ for the input gates gates to $\mu$. using a relation
+symbol that will be assigned to $V$ We first define a formula $\theta(\mu,
+\vec{x})$ that evaluates the gate denoted by $\mu$ given an assignment denoted
+by $\vec{x}$. We will define $\theta(\mu, \vec{x})$ by disjunction over cases.
+Let $S = \{\AND, \OR, \NAND, \MAJ, \RANK\}$ be a set of symbols. For each S \cup
+\tau \cup \{0,1\}$ we define $\theta_s (\mu, \vec{x})$each of which evaluates
+the denoted gate and evaluation in the case that the gate is of type $s$. for
+the assignment to its support denoted by $\vec{x}$ when the denoted gate is
+labelled by a symbol associated with $s$. Each of these formulas are written in
+terms of $V$, the relation variable we are inductively defining.
+
+Let $S = \{\AND, \OR, \NAND, \MAJ, \RANK\}$ be a set of symbols. For each symbol
+$s \in \mathbb{B}$, we define a separate $\theta_s$ and then define $\theta(\mu,
+\vec{x})$ using a disjunction over these symbols. We will define the $\FPR$
+formula $\theta_\rank (\mu, \vec{x})$. The formulas for the other symbols have
+formulas have already been defined by Anderson and Dawar~\cite{AndersonD17}, and
+so this will suffice. We first define a formula $\psi_M$ that defines the matrix
+$M$ from the previous subsection. We then use the rank operator to compute the
+rank of the given matrix. In order to define $\psi_M$ and $\theta_\rank$
+succinctly we first define a number of useful $\FPC$ formulas.
 
 We define the closed number term $\FA{s} := x\# (x = x)$, denoting the size of
 the structure. We define two formulas that define the set of elements of the
@@ -1417,7 +1445,8 @@ Lemma~\ref{lem:permutation-row-column} defined from the pairs $(i,
 It is possible to define a polynomial-time algorithm that takes in a gate $g$
 and $j, j' \in \universe{g}$ and $\vec{c}$, a $2k$-tuple with values in $[n]$,
 constructs a permutation $\sigma \in \spstab{g}$ such that $\sigma
-(\vec{\consp}(j)) := \vec{c}$ and checks, using Lemma~\ref{lem:compute-automorphisms-labels}, if $\sigma j = j'$.
+(\vec{\consp}(j)) := \vec{c}$ and checks, using
+Lemma~\ref{lem:compute-automorphisms-labels}, if $\sigma j = j'$.
 
 It follows from the Immerman-Vardi theorem that there is an $\FPC$ formula
 $\FA{map}(\mu, \delta_1, \delta_2, \vec{z})$ (where $\vec{z}$ is a $2k$-tuple)
@@ -1528,15 +1557,16 @@ We now define the formula that evaluates a rank gate $g$. Let
 				
 As mentioned above we have the formulas $\theta_0$, $\theta_1$, $\theta_\land$,
 $\theta_\lor$, $\theta_\nand$, $\theta_\maj$ and $(\theta_R)_{R \in \tau}$ from
-Anderson and Dawar \cite{AndersonD17}. The relation $V$ is then given as a fixed
-point by the following formula. Let
+Anderson and Dawar~\cite{AndersonD17}. Let $S = \{\land, \lor, \nand, \maj,
+\rank\}$ be a set of symbols. The relation $V$ is then given as a fixed point by
+the following formula. Let
 
 \begin{align*}
-	\theta (\mu, \vec{x}) := [\ifp_{V,\nu \vec{y}} \bigvee_{s \in \mathbb{B}' \uplus \tau \uplus \{0,1\}} (\phi_s(\mu) \land \theta_s (\nu, \vec{y} ] (\mu, \vec{x}).
+	\theta (\mu, \vec{x}) := [\ifp_{V,\nu \vec{y}} \bigvee_{s \in  S \uplus \tau \uplus \{0,1\}} (\phi_s(\mu) \land \theta_s (\nu, \vec{y} ] (\mu, \vec{x}).
 \end{align*}
 
 The following $\FPR$ formula defines the $q$-ary query computed by the circuit
-family $\mathcal{C}$ \cite{AndersonD17}. Let
+family $\mathcal{C}$~\cite{AndersonD17}. Let
 				
 \begin{align*}
 	Q (z_1, \ldots z_q) := & \exists \vec{x} \exists \mu, \nu_1 , \ldots  \nu_q \eta_1 , \ldots , \nu_k \leq \FA{m} [\theta (\mu, \vec{x}) \land \phi_\Omega (\nu_1, \ldots \nu_q, \mu) \land \\
