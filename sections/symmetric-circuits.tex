@@ -1212,59 +1212,59 @@ of generality, that transparent circuits have unique labels and so , from
 
 % Let $\MB$ be the set of all structured functions that are symmetric or
 % matrix-invariant.
-We now discuss a few Boolean basis of interest in this paper and state the main
-result. In most cases (e.g.\ \cite{}) a Boolean basis is taken to be a finite
-sequence of symmetric Boolean functions. A binary encoding of a circuit defined
-over such a basis is given by assigning to each element of the basis a unique
-symbol, and then encoding the circuit in the obvious manner. Since there are
-only a finite number of basis elements, it follows that if each basis element
-can be computed in polynomial time then the mapping that takes a symbol $s$ and
-a string $\vec{x}$ to the value of the function denoted by $s$ for input
-$\vec{x}$ can be decided in polynomial-time. We call this function the
-\emph{gate evaluation function}, and note that its polynomial-time decidability
-is required for proving the polynomial-time evaluation of the circuit. However,
-in order to allow for the inclusion of structured (possibly non-symmetric)
-functions in the basis, we have instead defined a basis to be a (possibly
-infinite) set of finite Boolean functions. In this case the gate evaluation
-function may not even be decidable, let alone polynomial-time decidable.
+
+Before we state the main result of this paper we need to discuss the Boolean
+bases of interest in this paper and introduce some useful terminology. In most
+other contexts a basis is taken to be a finite sequence of symmetric Boolean
+functions, and a binary encoding of a circuit may is given by assigning to each
+element of the basis a unique symbol, and then encoding the circuit as a
+labelled DAG. Moreover, since there are only a finite number of basis elements,
+it follows that if each function in the basis can be computed in polynomial time
+then the mapping that takes a symbol $s$ and a string $\vec{x}$ to the value of
+the function denoted by $s$ for input $\vec{x}$ can also be decided in
+polynomial-time. We call this function the \emph{gate evaluation function}. It
+is easy to see that the gate evaluation function is polynomial-time computable
+if, and only if, the a given circuit can be evaluated in polynomial-time. It is
+here our that our definition of a basis introduces a complication. In order to
+allow for the inclusion of structured (possibly non-symmetric) functions in the
+basis, we have instead defined a basis to be a (possibly infinite) set of finite
+Boolean functions. In this case the gate evaluation function may not even be
+decidable, let alone polynomial-time decidable.
 
 \begin{definition}
   Let $\BB$ be a basis. Let $S$ be a set of symbols and let $F : \BB \rightarrow
-  S$ be a bijection. We say $\BB$ is \emph{effective} if the function $E$ that
-  maps a symbol $s$ and an input $x \in \dom(F(s))$ to the value
-  $(F^{-1}(s))(x)$ is decidable. We say $\BB$ is \emph{$\PT$-effective} if $E$
-  is polynomial-time decidable.
+  S$. We say $\BB$ is \emph{effective} if the function $E$ that maps a symbol
+  $s$ and an input $x \in \dom(F(s))$ to the value $(F^{-1}(s))(x)$ is
+  decidable. We say $\BB$ is \emph{$\PT$-effective} if $E$ is polynomial-time
+  decidable.
 \end{definition}
 
 It is easy to see that if $\BB$ is a $\PT$-effective basis then we can evaluate
 a circuit over $\BB$ in time polynomial in the size of the circuit.
 
-Let $n \in \nats$, we have that $\AND[n] : \{0,1\}^{[n]} \rightarrow \{0,1\}$ is
-the restriction (as a structured function) of the $\AND$ function to inputs of
-size $n$. Similarly, we have that $\OR[n]$, $\NAND[n]$ and $\MAJ[n]$ are the
-restrictions of these respective functions to strings of length $n$. We let
-$\NOT: \{0,1\} \ra \{0,1\}$ be the not function, and we often identify $\NOT$
-with $\NAND[1]$. In each case we use the name of the function as the symbol
-denoting that function.
-
-As such, the standard basis $\BS$ consists of the functions $\NAND[n]$,
-$\AND[n]$, and $\OR[n]$ for every $n \in \nats$, and the majority basis is $\BM
-:= \BS \cup \{\MAJ[n] : n \in \nats\}$. We often use $\NAND[1]$ and $\NOT$
-interchangeably. We say a basis $\BB$ is \emph{symmetric} if every function in
-$\BB$ is a symmetric Boolean function.
+We recall from Section~\ref{sec:background} that the standard basis $\BS$
+consists of the functions $\NAND[n]$, $\AND[n]$, and $\OR[n]$ for every $n \in
+\nats$, and that the majority basis $\BM := \BS \cup \{\MAJ[n] : n \in \nats\}$.
+When encoding a circuit over either of these bases we abuse notation and use the
+name of the function as the symbol denoting that function (e.g.\ the function
+$\AND[n]$ is associated with the symbol $\AND[n]$).
 
 Let $a, b, r, p \in \nats$, with $p$ prime. Let $\RANK^r_p[a,b] : \{0,1\}^{[a]
   \times [b]} \rightarrow \{0,1\}$ be a matrix-invariant structured function
 with universe $[a] \uplus [b]$, such that $\RANK^r_p[a,b](M) = 1$ if, and only
-if, the matrix $M \in \{0,1\}^{[a] \times [b]}$ has rank at most $r$ over $\ff_p$
-when the entries of $M$ are interpreted as elements of $\mathbb{F}_p$. We
-identify the function $\RANK^{r}_p[a,b]$ with the symbol $\RANK^{r}_p[a,b]$.
-
+if, the matrix $M \in \{0,1\}^{[a] \times [b]}$ has rank at most $r$ over
+$\ff_p$ when the entries of $M$ are interpreted as elements of $\mathbb{F}_p$.
+We associate the function $\RANK^{r}_p[a,b]$ with the symbol $\RANK^{r}_p[a,b]$.
 Let $\RANK = \{\RANK^{r}_p[a,b] : a, b, r, p \in \nats, \text{ $p$ prime}\}$ and
-let the \emph{rank basis} be $\RB := \BM \cup \RANK$. We say a basis $\BB$ is
-\emph{matrix-symmetric} if every function in $\BB$ is symmetric or
-matrix-symmetric. It is easy to see that the standard basis, the majority basis,
-and the rank basis are all $\PT$-effective.
+let the \emph{rank basis} be $\RB := \BM \cup \RANK$. It is easy to see, given
+the encoding of the basis, that the standard, majority and rank basis are all
+$\PT$-effective.
+
+We say a basis $\BB$ is \emph{symmetric} if every function in $\BB$ is symmetric
+and we say $\BB$ is \emph{matrix-symmetric} if every function in $\BB$ is
+symmetric or matrix-symmetric. Let $T_{\rank} := \{\AND, \NAND, \OR, \MAJ,
+\RANK\}$. We say that $f \in \RB$ has \emph{type} $t \in T_{\rank}$ if $F \in
+t$.
 
 % Let $C_n$ be a $(\mathbb{B}, \tau)$-circuit and let $g$ be a gate in $C_n$. We
 % say $g$ is an \emph{\AND-gate} if $g$ is an internal gate labelled a function
@@ -1275,10 +1275,12 @@ Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
 \emph{symmetric gate} if $\Sigma(g)$ is a symmetric function, and otherwise we
 say $g$ is a \emph{non-symmetric gate} We say a gate $g \in G$ is a
 \emph{matrix-symmetric gate} if $\Sigma(g)$ is a matrix-symmetric structured
-function. We say that $g$ is an \emph{$\AND$-gate} if $\Sigma(g) := \AND[a]$ for
-some $a \in \nats$. Similarly we define an \emph{$\OR$-gates},
-\emph{$\NAND$-gate} \emph{$\NOT$-gates}, \emph{$\MAJ$-gates}, and
-\emph{$\RANK$-gates}.
+function. We say that $g$ has \emph{type} $t \in T_{\rank} \uplus \rho \uplus$
+if $g$ is an input gate and $\Sigma (g) = t$ or $g$ is an internal gate and
+$\Sigma (g)$ has type $t$. If $g$ has type $t$ we say $g$ is a $t$-gate (e.g.\
+if $g$ has type $\AND$ we call it an $\AND$-gate). It is easy to see that the
+function that maps a circuit and a gate to (a symbol denoting) the type of the
+gate is polynomial-time computable.
 
 We say $C$ is a \emph{circuit with symmetric gates} if every gate in $C$ is
 symmetric. We say $C$ is a \emph{matrix-circuit} if every gate in $C$ is
@@ -1307,8 +1309,9 @@ matrix-circuit and every non-symmetric gate is a $\RANK$-gate.
 We are now ready to state the main theorem of this paper.
 
 \begin{thm}[Main Theorem]
-  A graph property is decidable by a $P$-uniform family of transparent symmetric
-  rank-circuits if, and only if, it is definable by an $\FPR$ sentence.
+  A graph property is decidable by a $\P$-uniform family of transparent
+  symmetric rank-circuits if, and only if, it is definable by an $\FPR$
+  sentence.
 \end{thm}
 
 
@@ -1338,7 +1341,7 @@ basis of symmetric functions can be transformed in polynomial time into a family
 of symmetric circuits that decide the same language but are defined over the
 basis $\BM$. In other words, it makes no difference to the expressive power of
 such circuits whether we include \emph{all} symmetric functions in the basis or
-just $\BM$. It follows that in order to construct $P$-uniform families of
+just $\BM$. It follows that in order to construct $\P$-uniform families of
 symmetric circuits that define queires not in $\FPC$, we need to consider bases
 with non-symmetric functions.
 
@@ -1423,10 +1426,10 @@ assume this encoding below.
   Let $\BB$ be a basis of symmetric functions and let $(C_n)_{n \in \nats}$ be a
   family of symmetric circuits defined over the basis $\BB$. Then there exists a
   family of symmetric circuits $(C_n')_{n \in \nats}$ defined over $\BM$ that
-    decides the same language. Moreover, the map $C_n \mapsto C_n'$ is
-    polynomial-time computable and for each $n \in \nats$, $\vert C_n' \vert
-    \leq (5 \cdot \vert C_n \vert + 3) \cdot \vert C_n \vert$.
-  \end{thm}
+  decides the same language. Moreover, the map $C_n \mapsto C_n'$ is
+  polynomial-time computable and for each $n \in \nats$, $\vert C_n' \vert \leq
+  (5 \cdot \vert C_n \vert + 3) \cdot \vert C_n \vert$.
+\end{thm}
 
 \begin{proof}
   From $C_n$ we construct $C_n'$ as follows. For each gate $g \in C_n$ labelled
