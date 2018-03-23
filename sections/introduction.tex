@@ -118,7 +118,10 @@ $\tau$-structures are $0$-$1$-matrices.  We overcome this difficulty
 by placing a further restriction on circuits that we call
 \emph{transparency}.  Circuits satisfying this condition have the
 property that their lack of redundancy is transparent.  We explore
-this condition and its consequences in Section~\ref{sec:transparent}.
+this condition and its consequences in Section~\ref{sec:transparent},
+where we also demonstrate that something like this requrement is
+necessary.  Natural weakenings of this requirement yield circuits in
+which deciding symmetry seems hard.
 
 In the characterization of $\FPC$, the translation from formulas into
 families of circuits is easy and, indeed, standard.  In our case, we
@@ -126,14 +129,17 @@ have to show that formulas of $\FPR$ translate into uniform families of
 circuits using rank-threshold gates that are symmetric and
 transparent.  This is somewhat more involved technically and the
 details are presented in Section~\ref{sec:formulas-to-circuits}.
-Finally, with all the tools in place, the translation of such
+Finally, with all these tools in place, the translation of such
 $\PT$-uniform families of circuits into formulas of $\FPR$ given in Section~\ref{sec:circuits-to-formulas} completes
-the characterization.
+the characterization.  This still requires substantial new
+techniques.  The translation of circuits to formulas
+in~\cite{AndersonD17} relies on the fact that in order to evaluate a
+gate computing a symmetric Boolean function, it suffices to count the number
+of inputs that evaluate to true and there is a bijection between the
+orbits of a gate and tuple assignments to its support.  When counting
+is no longer sufficient, this bijection has to preserve more structure
+and demonstrating this in the case of matrices requires new insight.
 
-\begin{remark}
-G: Should we also talk about the fact that the work done in
-Section~\ref{sec:circuits-to-formulas} is also novel?
-\end{remark}
 
 \end{document}
 
