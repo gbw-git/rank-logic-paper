@@ -26,7 +26,7 @@ and Dawar~\cite{AndersonD17} below.
 \end{definition}
 
 Notice that if $\mathcal{P}$ is a supporting partition for $G$ and $P \in
-\mathcal{P}$ then $\stab([n] \setminus P) \leq \stab(\mathcal{P}) \leq G$, i.e.
+\mathcal{P}$ then $\stab([n] \setminus P) \leq \stab(\mathcal{P}) \leq G$, i.e.\
 $[n] \setminus P$ is a support for $G$.
 
 Let $\mathcal{P}, \mathcal{P}'$ be partitions of $[n]$. We say that
@@ -162,7 +162,7 @@ In this paper, unlike in the case of Anderson and Dawar \cite{AndersonD17}, we
 often wish to speak of supports and group actions on elements of the circuit
 other than gates, particularly elements of the universe or index of a gate. In
 this subsection we develop theory and terminology for dealing with group actions
-and supports in this more general settings.
+and supports in this more general setting.
 
 \begin{definition}
   Let $X$ be a set on which a left group action of $G \leq \sym_n$ is defined.
@@ -170,10 +170,10 @@ and supports in this more general settings.
   = \SP (\stab_G(x))$. Similarly we let $\| \SP_G (x) \| = \| \SP (\stab_G(x))
   \|$. We say that $x \in X$ has \emph{small support} if $\stab_G(x)$ has small
   support. We say that $X$ has small supports if each $x \in X$ has small
-  support. If $x \in X$ has small support (i.e. $\| \SP_G(x) \| < \frac{n}{2}$),
+  support. If $x \in X$ has small support (i.e.\ $\| \SP_G(x) \| < \frac{n}{2}$),
   we denote the \emph{canonical support} of $x$ by $\consp_G(x) = \consp
-  (stab_G(x))$. We refer to $\SP_G$ (resp. $\consp_G(g)$) as the canonical
-  supporting partition (resp. canonical support) of $x$ \emph{relative to $G$}.
+  (stab_G(x))$. We refer to $\SP_G$ (resp.\ $\consp_G(g)$) as the canonical
+  supporting partition (resp.\ canonical support) of $x$ \emph{relative to $G$}.
 \end{definition}
 
 If the subgroup $G \leq \sym_n$ is obvious from context we omit the subscript in
@@ -196,7 +196,7 @@ $\sym_n$ is defined, and let $x \in X_1$ and $S \subseteq X_2$. Let $\SP_S(x)$
 and $\consp_S(x)$ abbreviate $\SP_{\stab(S)}(x)$ and $\consp_{\stab(S)}(x)$,
 respectively. Similarly, we let $\orb_S(x)$ and $\stab_S(x)$ abbreviate
 $\orb_{\stab(S)}(x)$ and $\stab_{\stab(S)}(x)$, respectively. In the event that
-$S$ is a singleton we omit the set bracers in the subscript.
+$S$ is a singleton we omit the set braces in the subscript.
 
 % However, in some cases we have that a group action is only defined for some
 % subgroup of $\sym_n$ acting on a subset of gates in the circuit or elements of
@@ -209,6 +209,9 @@ $S$ is a singleton we omit the set bracers in the subscript.
   proof of Lemma~\ref{lem:support-mapping}. But I think that's the only place.
   Do you mean it would be better to just delete it and proof the result as
   needed in the proof of Lemma~\ref{lem:support-mapping}.
+
+A: I meant, isn't it a standard fact about group actions that we can
+just state without proof?
 \end{remark}
 
 \begin{lem}
@@ -272,19 +275,19 @@ constant-size canonical support. In this section we generalise the support
 theorem to $(\mathbb{B}, \rho)$-circuits with unique labels defined over
 arbitrary bases.
 
-The proof of this result follows a strategy broadly similar to the one used by
-Anderson and Dawar, and makes use of two lemmas also proved by Anderson and
-Dawar. The first of these lemmas gives us that if the index of a group $G \leq
-\sym_n$ is small then $\SP(G)$ either has very few or very many parts. The
-second lemma gives us that for $G \leq \sym_n$, if $\SP(G)$ has very few parts
+The proof of this result follows a strategy broadly similar to the one
+used in~\cite{AndersonD17}, and makes use of two lemmas also proved
+there.  The first of these lemmas gives us that if the index of a group $G \leq
+\sym_n$ is small then $\SP(G)$ either has very few or very many parts.
+The second lemma gives us that for $G \leq \sym_n$, if $\SP(G)$ has very few parts
 then it must have a single very large part (and hence a small canonical
-support). These two results allow us to conclude that a gate in a symmetric
+support).  These two results allow us to conclude that a gate in a symmetric
 circuit has a small canonical support if it has a canonical supporting partition
-with very few parts. We then prove by structural induction. In the inductive
-step, we prove that if $g$ is the first gate in the circuit with a canonical
-supporting partition with too many parts, then the size of its orbit of $g$
-would exceed the size of the entire circuit, thus allowing us to conclude the
-result by contradiction.
+with very few parts.  We then prove by structural induction that the
+canonical supporting partition of every gate has few parts.  To be
+precise, we show that if $g$ is the first gate in the circuit with a canonical
+supporting partition with too many parts, then the size of its orbit
+would exceed the bound on the size of the circuit.
 
 We begin by first building up a few observations about the size of the
 stabiliser group, and hence the orbit, of a gate. We first introduce some useful
@@ -312,7 +315,7 @@ $\sigma$ acts on $\ind(\tau, D)$ like an element of $\aut(\tau, D)$ if, and only
 if, for every pair of elements in $\ind(\tau, D)$, $\sigma$ acts like a partial
 automorphism of $\str{\tau, D}$ on this pair of elements. We then apply this
 result to circuits, proving that if $\sigma$ extends to an automorphism of the
-circuit, then $\sigma$ stabilises a gate $g$ if, and only if, $\sigma$ acts like
+circuit, then $\sigma$ fixes a gate $g$ if, and only if, $\sigma$ acts like
 a partial automorphism on the labels associated with every pair of gates in
 $H_g$. We now define what it means for a permutation to act like a partial
 automorphism and prove these two results.
@@ -473,7 +476,7 @@ domain.
   `$\Leftarrow$': Suppose for all $\vec{a}_R, \vec{b}_{R'} \in X$, $\sigma$ acts
   like a partial automorphism on $(\vec{a}_R, \vec{b}_{R'})$. We now define
   $\pi$ such that $\pi \in \aut(\tau, D)$ and $\sigma \vec{a}_R = \pi \vec{a}_R$
-  for all $\vec{a}_R \in X)$. Let $a \in D$ and $\vec{a}_R \in X$ be an element
+  for all $\vec{a}_R \in X$. Let $a \in D$ and $\vec{a}_R \in X$ be an element
   containing $a$. Let $\pi (a) = (\sigma \vec{a}_R) (\vec{a}^{-1}_R(a))$. Since
   $\sigma$ acts like a partial automorphism on all pairs of elements of $X$, the
   definition of $\pi$ is independent of the particular choice of $\vec{a}_R$ and
@@ -598,28 +601,44 @@ characterisation of the stabiliser group of a gate.
 %   and the result follows.
 % \end{proof}
 
-In the proof of the support theorem we show that if we assume a gate $g$ has a
-canonical support whose size exceeds a particular bound then the orbit of $g$
-must be larger than the entire circuit. In particular, we prove that if a set $S
-\subseteq \sym_n \times H^2_g$ is \emph{useful} and \emph{independent} then the
-size of the powerset of $S$ is a lower bound on the size of the orbit (i.e.
-$\vert \orb(g) \vert = [\sym_n : \stab_n(g)] \geq 2^S$). We then show that if a
-gate $g$ has a large canonical support, then we can can construct a set $S$ that
-satisfies these two conditions and such that $2^S$ exceeds the size of circuit,
-hence proving the result by contradiction.
 
-The idea is that each subset $R \subseteq S$ defines a permutation $\sigma_R$,
-by composing all the permutations in $R$ in some fixed order, and hence
-determines an element of the orbit $\sigma_Rg$. The `useful' condition ensures
-that if $(\sigma, h, h') \in S$ then $\sigma$ moves $g$ and the `independence'
-condition ensures all $(\sigma, h, h') \in S$, $h$, $h'$, $\sigma h$, and
-$\sigma h'$ are all fixed-points of all the other permutations that appear in
-$S$.
 
-We show in Lemma~\ref{lem:useful-independant-set} that if $S$ is useful and
-independent than for any $R \subseteq S$, $\sigma_R$ must move $g$ and,
-moreover, if $R, R' \subseteq S$ are distinct then $\sigma_Rg \neq \sigma_{R'}
-g$. We now define these terms formally and prove the result.
+In the proof of the support theorem we aim to show that if we a gate $g$ has a
+canonical support that is too big then the orbit of $g$ is also
+necessarily large.  We do this by establishing the existence of a
+large set of permutations that each take $g$ to a different gate.
+To construct this set, we define a set of triples of the form
+$(\sigma, h, h')$ where $\sigma \in \sym_n$ and $h,h' \in H_g$.  Each
+of these triples is useful (formally defined below) in a sense that
+guarantees that $\sigma$ moves $g$.  Moreover, the triples are pairwise
+independent which means that we can compose them in arbitrary
+combinations to generate new permutations moving $g$, while
+guaranteeing that each such combination gives us a different element
+in the orbit of $g$.   We now define these terms formally and prove the result.
+
+%AD: This is a more informal explanation to replace that below.  In
+%any case, the formal definition follows.
+
+% must be larger than the entire circuit. In particular, we prove that if a set $S
+% \subseteq \sym_n \times H^2_g$ is \emph{useful} and \emph{independent} then the
+% size of the powerset of $S$ is a lower bound on the size of the orbit (i.e.\
+% $\vert \orb(g) \vert = [\sym_n : \stab_n(g)] \geq 2^S$). We then show that if a
+% gate $g$ has a large canonical support, then we can can construct a set $S$ that
+% satisfies these two conditions and such that $2^S$ exceeds the size of circuit,
+% hence proving the result by contradiction.
+
+% The idea is that each subset $R \subseteq S$ defines a permutation $\sigma_R$,
+% by composing all the permutations in $R$ in some fixed order, and hence
+% determines an element of the orbit $\sigma_Rg$. The `useful' condition ensures
+% that if $(\sigma, h, h') \in S$ then $\sigma$ moves $g$ and the `independence'
+% condition ensures all $(\sigma, h, h') \in S$, $h$, $h'$, $\sigma h$, and
+% $\sigma h'$ are all fixed-points of all the other permutations that appear in
+% $S$.
+
+% We show in Lemma~\ref{lem:useful-independant-set} that if $S$ is useful and
+% independent than for any $R \subseteq S$, $\sigma_R$ must move $g$ and,
+% moreover, if $R, R' \subseteq S$ are distinct then $\sigma_Rg \neq \sigma_{R'}
+% g$. We now define these terms formally and prove the result.
 
 % the composition of all these permutations in $R$ (in some order)
 
@@ -671,11 +690,14 @@ in the proof of the support theorem.
   We have that $\sigma \in \stab_n(g)$ if, and only if, $H_g = \sigma H_g$ and
   $L(g)$ and $\sigma L(g)$ are isomorphism-equivalent. For any $R \subseteq S$
   define $\sigma_R = \Pi_{(\sigma, h, h') \in R} \sigma$ (with some arbitrary
-  order assumed on $S$). We prove that the mapping $R \mapsto \sigma_R \aut(g)$
-  is injective. Let $R$ and $Q$ be distinct subsets of $S$ and, without a loss
-  of generality, let $\vert R \vert \geq \vert Q \vert$. It is sufficient to
-  prove that $\sigma^{-1}_Q \sigma_R H_g \neq H_g$ or $\sigma^{-1}_Q \sigma_R
-  L(g)$ is not isomorphism-equivalent to $L(g)$. We prove that if $\sigma^{-1}_Q
+  order assumed on $S$). We prove that the mapping $R \mapsto \sigma_R
+  \in\aut(C)$
+  is injective. Let $R$ and $Q$ be distinct subsets of $S$ and, without loss
+  of generality, let $\vert R \vert \geq \vert Q \vert$.
+ % It is sufficient to
+ %  prove that $\sigma^{-1}_Q \sigma_R H_g \neq H_g$ or $\sigma^{-1}_Q \sigma_R
+ %  L(g)$ is not isomorphism-equivalent to $L(g)$. 
+We prove that if $\sigma^{-1}_Q
   \sigma_R H_g = H_g$ then $\sigma^{-1}_Q \sigma_R L(g)$ is not
   isomorphism-equivalent to $L(g)$.
 
@@ -782,6 +804,9 @@ size (and is in fact constant for polynomial-size circuits).
 % $L(g)$, which holds if, and only if, $\sigma \in \sortsym_$. It follows from
 % the orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n :
 % \stab_n(g)] = [\sym_n : \sortsym_D(\phi_g)]$.
+
+We are now ready to prove the support theorem for symmetric circuits
+with non-symmetric gates.
 
 \begin{thm}
   \label{thm:support-thm}
@@ -899,8 +924,8 @@ must be polynomially bounded, and so the theorem implies that there exists $k
 
 \begin{cor}
   Let $\mathcal{C} := (C_n)_{n \in \nats}$ be a polynomial-size family of
-  symmetric circuits with unique labels. The function that maps $n \mapsto
-  \SP(C_n) $ is in $O(1)$.
+  symmetric circuits with unique labels.  There is a $k$ such that
+  $\SP(C_n) \leq k$ for all $n$.
   \label{cor:constant-size-support}
 \end{cor}
 
@@ -935,7 +960,7 @@ this action is well-defined.
 
 Since we have a group action of $\stab(g)$ on $\universe{g}$, but not $\sym_n$
 on $\universe{g}$, we must speak of the support of $a \in \universe{g}$ relative
-to $\stab(g)$. We now prove an analogue of the support theorem, showing that for
+to $\stab(g)$.  We now prove an analogue of the support theorem, showing 
 that for any polynomial-size family $(C_n)_{n \in \nats}$ of symmetric circuits
 with unique labels, we have for large enough $n$ that for each $g$ in $C_n$ the
 sizes of the supports of $a \in \universe{g}$ relative to the subgroups $\stab(g)$ and

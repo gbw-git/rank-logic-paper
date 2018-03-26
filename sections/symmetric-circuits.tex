@@ -37,18 +37,19 @@ circuits beyond that of $\FPC$.
 
 
 
-As our aim is a circuit characterisation of $\FPR$, whose expressive power is
+As our ultimate aim is a circuit characterisation of $\FPR$, whose expressive power is
 strictly greater than that of $\FPC$, we need to consider gates corresponding to
 non-symmetric Boolean functions. In particular, we consider \emph{rank} gates
 whose inputs are a matrix and whose result is invariant under row and column
 permutations. To lead up to this, we first develop a general framework of
 structured Boolean functions. These are functions whose inputs naturally encode
 $\tau$-structures and where the output is invariant under the natural symmetries
-of such structures. The\emph{matrix-invariant} functions are a natural
-partiruclar case. We therefore define symmetric circuits in a general form where
+of such structures. The \emph{matrix-invariant} functions (defined
+formally below) are a natural
+particular case. We therefore define symmetric circuits in a general form where
 gates can be labelled by \emph{isomorphism-invariant} structured functions.
 
-Ultimately, our aim is replicate the results Anderson and
+Ultimately, our aim is to replicate the results Anderson and
 Dawar~\cite{AndersonD17} in this more general setting. A difficulty we face is
 that the proof methods in that paper heavily rely on the assumption that the
 Boolean functions computed by individual gates are symmetric functions. We
@@ -211,11 +212,11 @@ $\tau$-structures.
 % AD - rewrote the paragraph to reduce the use of subscripts and superscripts.
 Let $\tau := (R, S, \nu)$ be a many-sorted vocabulary. Let $D := \biguplus_{s
   \in S} D_{s} = \{(s,d) : d \in D_s\}$, be a disjoint union of non-empty sets,
-indexed by $S$. For $R_i \in R$ let $R^D_i$ denote the trivial relation over the
+indexed by $S$. For $R_i \in R$ let $R^D_i$ denote the full relation over the
 many-sorted universe $D$, i.e.\ $R^D_i := D_{a_1} \times \ldots \times
 D_{a_{r}}$, where $\nu(R_i) = (a_1, \ldots , a_{r)})$. There is an obvious
 interpretation of $\tau$ over $D$ given by assigning each sort symbol $s$ in
-$\tau$ to the set $D_s$ and each relation symbol in $\tau$ to the trivial
+$\tau$ to the set $D_s$ and each relation symbol in $\tau$ to the full
 relation over $D$. We call this \emph{the structure defined by $(\tau, D)$}, and
 denote it by $\str{\tau, D}$.
 
@@ -243,7 +244,7 @@ symbol in $\tau$ we identify $\vec{a}_R$ with $\vec{a}$.
 % GW: move sorted permutations into the background section
 For the remainder of this subsection we fix a vocabulary $\tau$ and a
 many-sorted set $D := \biguplus_{s \in S} D_{s}$. Let $X := \ind (\tau, D)$ and
-$G \leq \sym_{X}$. We note that $G$ there is an obvious group action of $G$ on
+$G \leq \sym_{X}$. We note that there is an obvious group action of $G$ on
 $X$. Let $\aut (\tau, D)$ be the automorphism group of $\str{\tau, D}$. We
 define a group action of $\aut (\tau, D)$ on $X$ for $\sigma \in \aut(\tau, D)$
 by $\sigma \cdot \vec{a}_R := (\sigma \vec{a})_R$, for all $\vec{a}_R \in X$. We
@@ -323,7 +324,7 @@ function. We say $F$ is \emph{$G$-invariant} if it is constant on $G$-equivalent
 input vectors, i.e.\ for all $G$-equivalent $f, g \in \{0,1\}^{X}$, $F(f) =
 F(g)$. We say $F$ is \emph{isomorphism-invariant} if it is $\aut(\tau,
 D)$-invariant. Note that a structured function with vocabulary $\tau$ is
-isomorphism-invariant if, and only if, it decides a property of
+isomorphism-invariant if, and only if, it determines a property of
 $\tau$-structures.
 
 At the beginning of this subsection we defined three Boolean functions with
@@ -471,8 +472,7 @@ complications.
   $Q$ as a structure $\langle G, \Omega, \Sigma, \Lambda, L \rangle$.
   \begin{itemize}
     \setlength\itemsep{0mm}
-  \item $G$ is called the set of gates of $C$ and $\vert C \vert := \vert G
-    \vert$.
+  \item $G$ is called the set of gates of $C$.% and $\vert C \vert := \vert G    \vert$.
   \item $\Omega$ is an injective function from $[n]^q$ to $G$. The gates in the
     image of $\Omega$ are called the output gates. When $q = 0$, $\Omega$ is a
     constant function mapping to a single output gate.
@@ -480,7 +480,7 @@ complications.
     \{0,1\} $ such that $\vert \Sigma^{-1} (0) \vert \leq 1$ and $\vert
     \Sigma^{-1} (1) \vert \leq 1$. Those gates mapped to $\rho \uplus \{0,1\}$
     are called input gates, with those mapped to $\rho$ called relational gates
-    and those mapped $\{0,1\}$ called constant gates. Those gates mapped to
+    and those mapped to $\{0,1\}$ called constant gates. Those gates mapped to
     $\mathbb{B}$ are called internal gates.
   \item $\Lambda$ is a sequence of injective functions $(\Lambda_{R_i})_{R_i \in
       R}$ such that $\Lambda_{R_i}$ maps each relational gate $g$ with $\Sigma
@@ -492,6 +492,16 @@ complications.
     in the image of $L(h_2)$, then $(G, W)$ is a directed acyclic graph.
   \end{itemize}
 \end{definition}
+
+The definition requires some explanation.  Each gate in $G$ computes a
+function of its inputs and the relation $W$ on $G$ is the set of
+``wires''.  That is, $W(h,g)$ indicates that the value computed at $h$
+is an input to $g$.  However, since the functions are structured, we
+need more information on the set of inputs to $g$ and this is provided
+by the labelling $L$.  $\Sigma(g)$ tells us what the function computed
+at $g$ is, and thus $\ind(\Sigma(g))$ tells us the structure on the
+inputs and $L(g)$ maps this to the set of gates that form the inputs
+to $g$.
 
 % \begin{definition}[Circuits on Structures]
 %   Let $\mathbb{B}$ be a basis of structured functions and $\tau := (R, \{s_1,
@@ -530,8 +540,10 @@ complications.
 % \end{definition}
 
 Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
-\rho)$-circuit of order $n$. The order of a circuit denotes the fact that it
-takes as input structures of size $n$. If $(C_n)_{n \in \nats}$ is a family of
+\rho)$-circuit of order $n$.  Recall that the orde of a circuit refers
+to the size of the input structures it takes.  In contrast, we define
+the \emph{size} of $C$, denoted $\vert C \vert$ to be the number of
+elements in $G$. If $(C_n)_{n \in \nats}$ is a family of
 circuits we assume that each $C_n$ is a circuit of order $n$.
 
 For a gate $g \in C$, we let the \emph{index} of $g$, denoted by $\ind(g)$, be
@@ -649,7 +661,7 @@ paper.
   % and letting $F_C (f)$ be the result of evaluating $g_{\text{out}}$.
 
   We now present a number of observations, and then combine these observations
-  to prove both directions of the hypothesis. Let $\mathcal{B}$ be a
+  to prove both directions of the lemma. Let $\mathcal{B}$ be a
   $\rho$-structure of size $n$ over the universe $[n]$. We can define a function
   $f_{\mathcal{B}} : \ind(\rho, [n]) \rightarrow {0,1}$ such that
   $f_{\mathcal{B}} (\vec{a}_R) = 1$ if, and only if, $\vec{a} \in
@@ -668,7 +680,7 @@ paper.
   Let $\mathcal{A}$ be a $\rho$-structure of size $n$ over the universe $U$, and
   let $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$. From the definition of $F_C$
   it follows that for $\gamma \in \sym_n$ we have that $F_C (f_{\gamma
-    \mathcal{A}})$ if, and only if, $C[\gamma \mathcal{A}](g_{\text{o}}) = 1$.
+    \mathcal{A}})=1$ if, and only if, $C[\gamma \mathcal{A}](g_{\text{o}}) = 1$.
 
   Let $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$ and let $\sigma \in \sym_n$
   be such that $\gamma_1 = \sigma \gamma_2$. We have that
@@ -748,9 +760,9 @@ requirement that if a gate $g$ is mapped to $g'$, then children of $g$ must be
 mapped to the children of $g'$ via some appropriate isomorphism of the structure
 associated with $g$.
 
-\begin{definition}[Automorphism]
-  let $C = \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be a
-  $(\mathbb{B},\tau)$-circuit of order $n$ computing a $q$-ary, and where
+\begin{definition}[Automorphism]\label{defn:automorphism}
+  Let $C = \langle G, \Omega, \Sigma, \Lambda, L\rangle$ be a
+  $(\mathbb{B},\tau)$-circuit of order $n$ computing a $q$-ary query, and where
   $\mathbb{B}$ is a basis of isomorphism-invariant structured functions. Let
   $\sigma \in \sym_n$ and $\pi: G \rightarrow G$ be a bijection such that
   \begin{myitemize}
@@ -778,12 +790,12 @@ We are particularly interested in circuits that have the property that
 
 It follows that for any symmetric circuit $C$ of order $n$ there is a
 homomorphism $h$ that maps $\sym_n$ to $\aut(C)$ such that if $\sigma \in
-\sym_n$ then $h(\sigma)$ is an an automorphism extending $\sigma$. Suppose $C$
+\sym_n$ then $h(\sigma)$ is an an automorphism extending $\sigma$.  Suppose $C$
 does not contain a relational gate labelled by a relation symbol with non-zero
-arity. In that case $C$ computes a constant function. As such, in this paper we
+arity.  In that case $C$ computes a constant function.  For this reason, in this paper we
 always assume a circuit contains at least one relational gate with non-zero
-arity. As such by assumption there exists a relational gate in $C$ such that
-some element of $[n]$ appears in the tuple labelling that gate. By symmetry it
+arity.  Now, by assumption there exists a relational gate in $C$ such that
+some element of $[n]$ appears in the tuple labelling that gate.  By symmetry it
 follows that every elements of $[n]$ appears in a tuple labelling a relational
 gate in $C$. It follows that no two distinct elements of $\sym_n$ agree on all
 input gates, and so the homomorphism $h$ is injective.
@@ -815,16 +827,22 @@ In order to make use of these technical tools, as well ensure the
 polynomial-time decidability of many important circuit properties, we should
 like to be able to construct a normal form analogous to rigidity and present a
 polynomial time algorithm that transforms a circuit into an equivalent circuit
-of this form. It is at this point that we arrive at the first complication
-introduced by our generalisation. Anderson and Dawar's polynomial-time
-translation makes indispensable of the polynomial-time decidability of many
-important circuit properties for circuits defined over symmetric bases. However,
+of this form.  It is at this point that we arrive at the first complication
+introduced by our generalisation. The polynomial-time
+translation in~\cite{AndersonD17} makes indispensable of the polynomial-time decidability of many
+important circuit properties for circuits defined over symmetric
+bases.  However,
 for the more general circuits discussed here, it is not known if even the most
-basic circuit properties are polynomial-time decidable. Indeed, we show in
+basic circuit properties are polynomial-time decidable.  This is
+essentially due to the requirement built in to
+Definition~\ref{defn:automorphism} that an automorphism that takes $g$
+to $g'$ must be an isomorphism between $L(g)$ and $L(g')$, which makes
+checking the condition as hard as isomorphism checking.
+Indeed, we show in
 Section~\ref{sec:transparent} that for circuits that include gates computing
 non-symmetric functions all of the relevant circuit properties of interest are
 at least as hard to decide as the graph-isomorphism problem. As such,
-constructing an analogous argument, as well as establishing the numerous other
+constructing an argument analogous to~\cite{AndersonD17}, as well as establishing the numerous other
 crucial results whose proofs rely on the polynomial-time decidability of various
 circuit properties, would be beyond the scope of this paper.
 
@@ -842,7 +860,7 @@ is still rich enough to capture $\FPR$.
 Before we can formally define \emph{transparency} we need to define the
 \emph{syntactic-equivalence} relation on the gates of a circuit. The intuition
 is that two gates in a circuit are syntactically-equivalent if the circuits
-underneath them are `hereditary equivalent', i.e.\ the two circuits underneath
+underneath them are `hereditarily equivalent', i.e.\ the two circuits underneath
 these gates are really just copies of one another.
 % In order to prove this result, Anderson and Dawar introduce the notion of a
 % \emph{rigid} circuit, proving that symmetric circuits may be
@@ -900,8 +918,8 @@ these gates are really just copies of one another.
   \Sigma(h)$ and either both $g$ and $h$ are output gates and $\Omega^{-1}(g) =
   \Omega^{-1}(h)$ or neither are output gates. Suppose $g$ and $h$ are input
   gates, then $g \equiv h$ if, and only if, both $g$ and $h$ are constant gates
-  or both are relational gates and $\Lambda(g) = \Lambda (h)$. Suppose $g$ and
-  $h$ are internal gates and and suppose we have defined the
+  or both are relational gates and $\Lambda(g) = \Lambda (h)$.  Suppose $g$ and
+  $h$ are internal gates and suppose we have defined the
   syntactic-equivalence relation for all gates of depth less than the depth of
   either $g$ or $h$. Then $g \equiv h$ if, and only if, $L(g) /_\equiv$ and
   $L(h) /_\equiv$ are isomorphism-equivalent.
@@ -912,10 +930,10 @@ these gates are really just copies of one another.
   it's very easy to prove.
 \end{drem}
 
-For a circuit $C$ of order $n$ and a gate $g$ we map think of $g$ as computing
+For a circuit $C$ of order $n$ and a gate $g$ we think of $g$ as computing
 the function that maps an input structure $\mathcal{A}$ and a bijection $\gamma$
 from the universe of $\mathcal{A}$ to $[n]$ to the evaluation $C[\gamma
-\mathcal{A}(g)$. While we would like to be able to identify gates that compute
+\mathcal{A}(g)]$. While we would like to be able to identify gates that compute
 the same function in this sense, it is not hard to show that deciding this
 equivalence relation for a given circuit is $\NP$-hard. We now show that if two
 gates are syntactically-equivalent then the functions computed at these two
@@ -978,9 +996,9 @@ permutation then the two images of each gate must be syntactically-equivalent.
 \begin{proof}
   We first note that, from the definition of an automorphism, for any gate $g$
   in $C$, $\Sigma (g) = \Sigma (\pi (g)) = \Sigma (\pi' (g))$, and either all of
-  $g$, $\pi (g)$ and $\pi (g')$ are output gates and $\pi \Omega
+  $g$, $\pi (g)$ and $\pi (g')$ are output gates and $\pi (g) = \pi \Omega
   (\Omega^{-1}(g)) = \Omega (\sigma \Omega^{-1}(g)) = \pi' \Omega
-  (\Omega^{-1})$, or none of $g$, $\pi(g)$ or $\pi' (g)$ are output gates.
+  (\Omega^{-1}(g)) = \pi'(g)$, or none of $g$, $\pi(g)$ or $\pi' (g)$ are output gates.
   
   We now prove the result by induction on depth. Suppose $g$ is a gate of depth
   $0$. Then $g$ is either a relational or constant gate. In either case $\pi (g)
@@ -1033,19 +1051,19 @@ of circuits in terms of the structure of their syntactic-equivalence classes.
     labels} if $L(g)$ is an injection. We say $g$ has \emph{unique children} if
   no two gates in $H_g$ are syntactically-equivalent. We say $g$ has
   \emph{unique labels} if $g$ has injective labels and unique children. We say
-  $C$ has \emph{injective labels} (resp. \emph{unique labels}) if every gate in
-  $C$ has injective labels (resp. unique labels). We say $C$ is
+  $C$ has \emph{injective labels} (resp.\ \emph{unique labels}) if every gate in
+  $C$ has injective labels (resp.\ unique labels). We say $C$ is
   \emph{transparent} if every gate $g$ in $C$ such that $\Sigma(g)$ is not a
   symmetric function has unique labels.
 \end{definition}
 
-It is worth noting that if a circuit has injective labels and is reduced then
+It is worth noting that if a circuit has injective labels and is reduced 
 then it has unique labels. The converse is, in general, false.
 
 There is a small technical point that needs some discussion before we continue.
 The definition of a circuit allows for the inclusion of a gate such that there
 is no path from this gate to any of the output gates. In other words, we can be
-sure, not matter the rest of the circuit, that any such gate cannot have any
+sure, no matter the rest of the circuit, that any such gate cannot have any
 effect the function computed by the circuit. We say these gates are
 \emph{redundant}.
 
@@ -1059,7 +1077,7 @@ effect the function computed by the circuit. We say these gates are
 It is easy to see that we can construct from a given circuit an equivalent
 circuit without redundant gates by simply removing all of the redundant gates.
 Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a circuit of order
-$n$ and let $g$ be a redundant circuit in $C$. It is easy to see that $g$ is not
+$n$ and let $g$ be a redundant gate in $C$.  It is easy to see that $g$ is not
 the child of a non-redundant gate, nor is it a relational or output gate. Thus
 we can define the circuit $C' := \langle G', \Omega, \restr{\Sigma}{G'},
 \Lambda, \restr{L}{G'} \rangle$, where $G' \subseteq G$ is the set of all
@@ -1148,7 +1166,7 @@ circuits with unique gates have unique extensions, but, in order to prove many
 of the results we will need later, we not only need that each automorphism is
 uniquely defined by the permutation it extends, but also that the isomorphisms
 that witness the isomorphism-equivalences, and so witness the validity of the
-automorphism, are also uniquely defined (or, at least very least, well
+automorphism, are also uniquely defined ( or, at the very least, well
 constrained) by the permutation $\sigma$. Without a sufficient constraint on the
 choice of isomorphism, testing if two gates have isomorphism-equivalent
 labellings (a requirement for computing the automorphism extending a
@@ -1157,9 +1175,9 @@ $\tau$-structures, where $\tau$ is the vocabulary of the gates in question.
 Indeed, we prove in Section~\ref{sec:transparent}, that for the class of
 circuits with unique children deciding if there is an isomorphism-equivalence
 between two gates is as hard as the graph-isomorphism problem. It follows that a
-great many important circuit properties (e.g. the orbit of a gate, symmetry of a
+great many important circuit properties (e.g.\ the orbit of a gate, symmetry of a
 circuit, etc.) for circuits with unique gates are at the very least not
-obviously polynomial-time decidable. As such, circuits with unique children,
+obviously polynomial-time decidable.  As such, circuits with unique children,
 although satisfying the requirement of having unique extensions, are
 insufficient for our purposes.
 
@@ -1362,7 +1380,7 @@ assume this encoding below.
   There is a deterministic algorithm that outputs for each symmetric function
   $F: \{0,1\}^n \rightarrow \{0,1\}$ (encoded as a binary $n$-tuple as above) a
   symmetric circuit $C$ defined over the basis $\BM$ that computes $F$.
-  Moreover, this function is computable in time polynomial in $n$ and the
+  Moreover, this algorithm runs in time polynomial in $n$ and the
   circuit $C$ has depth at most $5$, width at most $2n+2$ and size at most $5n +
   3$.
 \end{prop}
