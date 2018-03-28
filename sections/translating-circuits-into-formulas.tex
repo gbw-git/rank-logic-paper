@@ -6,8 +6,8 @@ families of circuits. In this section we show how to translate families of
 circuits into equivalent formulas -- completing the proof of the main theorem of
 this paper. More explicitly, in this section we show how to construct for every
 $P$-uniform family of transparent symmetric rank-circuits a corresponding $\FPR$
-formula defining the same query. In the first subsection we develop the theory
-needed for this construction and in the second subsection we use this theory to explicitly construct
+formula defining the same query. In Section~\ref{sec:evaluating-circuits} we develop the theory
+needed for this construction and in Section~\ref{sec:translating-formulas-to-FPR} we use this theory to explicitly construct
 the formula.
 
 % we show that for a rank gate $g$ in the circuit, the rank at $g$ depends only
@@ -20,7 +20,7 @@ the formula.
 % \cite{AndersonD17}, allows us to both define and evaluate a $P$-uniform family
 % of circuits in $\FPR$, completing the result.
 
-\subsection {Evaluating Circuits}
+\subsection {Evaluating Circuits}\label{sec:evaluating-circuits}
 In this subsection we let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ denote a
 fixed family of polynomial-size symmetric $(\RB,\rho)$-circuits with unique
 labels that compute a $q$-ary query. Let $n_0$ and $k$ be the constants in the
@@ -28,73 +28,9 @@ statement of Lemma~\ref{lem:row-column-supports}, and fix an $n > n_0$ and a
 $\rho$-structure $\mathcal{A}$ with universe $U$ of size $n$. Let $C_n = \langle
 G, \Omega, \Sigma, \Lambda, L \rangle$.
 
-Let $\gamma \in [n]^{\underline{U}}$. We first show that the evaluation of a
-gate $g$ in $C_n$ depends only on those elements $\gamma$ maps to $\consp(g)$.
-
-\begin{lem}
-	Let $g$ be a gate in $C_n$. Let $\eta \in U^{\underline{\consp(g)}}$ and
-  $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$ such that $\gamma^{-1}_1 \sim
-  \eta$ and $\eta \sim \gamma^{-1}_2$. Then $L^{\gamma_1 \mathcal{A}}(g)$ and
-  $L^{\gamma_2 \mathcal{A}}(g)$ are isomorphism-equivalent.
-	\label{lem:support-determines-evaluation}
-\end{lem}
-
-\begin{proof}
-	We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
-  \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
-  consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$ pointwise.
-  From the definition of a support, we have that $\pi g = g$, and so $L(g)$ is
-  isomorphism-equivalent to $\pi L(g)$. Thus there exists $\lambda \in \aut(g)$
-  such that such that $\pi L(g) = L(g) \lambda$, and so for all $x \in \ind(g)$,
-	\begin{align*}
-		L^{\gamma_1 \mathcal{A}}(g) (x) & = C_n[\gamma_1 \mathcal{A}](L(g)(x))                    \\
-                                    & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(x)]            \\
-                                    & = C_n[\gamma_2 \mathcal{A}][L(g)(\lambda(a,b))] \\
-                                    & = L^{\gamma_2 \mathcal{A}}(g) (\lambda (a,b)),                 
-	\end{align*}
-	and it follows that $L^{\gamma_1 \mathcal{A}}(g)$ and $L^{\gamma_2
-    \mathcal{A}}(g)$ are isomorphism-invariant.
-\end{proof}
-
-We associate with each gate $g$ in $C_n$ a set $\Gamma_g:= \{\gamma \in
-[n]^{\underline{U}} : C[\gamma \mathcal{A}](g) = 1 \}$. We also associate with
-each gate $g$ in $C_n$ a set $\EV_g \subseteq U^{\underline{\consp(g)}}$
-consisting of all assignments to the support of $g$ for which $g$ evaluates to
-true, i.e. $\EV_g := \{ \eta \in U^{\underline{\consp(g)}} : \exists \gamma \in
-\Gamma_h \, ,\eta \sim \gamma^{-1}\}$. It follows from
-Lemma~\ref{lem:support-determines-evaluation} that $\Gamma_g$ is entirely
-determined by $\EV_g$. In other words, the set of all bijections that cause $g$
-to evaluate to true is entirely determined by a set of assignments to the
-support of $g$. It is important to note that, from the support theorem and
-choice of $n$, each $\eta \in \EV_g$ has a constant-size domain, and as such
-$\EV_g$ gives us a succinct way of encoding $\Gamma_g$.
-
-In the remainder of this subsection we show how to define $\EV_g$ recursively
-for each internal gate $g$ in $C_n$, i.e. how to define $\EV_g$ given $\{EV_h :
-h \in H_g \}$. In the next subsection we show that there is a formula $\theta
-\in \FPR$ implementing this recursive definition. We then use $\theta$, and the
-fixed-point operator, to define an $\FPR$-formula $Q$ that evaluates the output
-gates of the appropriate-size circuit for a given input structure, and hence
-defines the query computed by the family $(C_n)_{n \in \nats}$. In fact, the
-recursive definition of $\EV_g$ is handled differently depending on if $g$ is a
-constant, relational, $\AND$, $\NAND$, $\OR$, or $\RANK$ gate, and so we define
-a different $\FPR$-formula in each case. We then use a disjunction over cases in
-order to define $\theta$. We note that Anderson and Dawar~\cite{AndersonD17}
-have already defined formulas of $\FPC$, and hence $\FPR$, that handle every
-case except where $g$ is a rank gate. As such, we need only consider the case
-where $g$ is a rank gate.
-
-For the remainder of the section we fix a rank gate $g$ in $C_n$. For $\gamma
-\in [n]^{\underline{U}}$ we let $L^{\gamma} = L^{\gamma \mathcal{A}}(g)$. We let
-$A \times B := \ind(g)$. We informally think of $A$ as the set indexing rows and
-$B$ as the set indexing columns. For each $h \in H_g$ we let $\row(h) :=
-L(g)^{-1}(h)(1)$ and $\column(h) := L(g)^{-1}(h)(2)$. For $a \in \universe{g}$
-we let $\consp(a) := \consp_{\spstab{g}}(a)$, $\orb(a) = \orb_{\spstab{g}}(a)$
-and $\stab(a) = \stab_{\spstab{g}}(a)$.
-
-We are often interested in the case where two injections can be combined into a
-single injection over their combined domains. We say that two $f$ and $q$
-injections are \emph{compatible} if we can define an injection over the union of
+We first introduce some notation.  We are often interested in the case where two injections can be combined into a
+single injection over their combined domains. We say that two
+injections  $f$ and $q$ are \emph{compatible} if we can define an injection over the union of
 their domains that agrees with both $f$ and $q$ on their respective domains. We
 formalise this notion in the following definition.
 
@@ -121,6 +57,90 @@ We also introduce some other notation for combining functions. Let $f: X
 \rightarrow Y$ be an injection and $q: X \rightarrow Z$ be a function. We let
 $q_f : \img(f) \rightarrow Z$ be defined by $q_f(a) := q \circ f^{-1}(a)$ for
 all $a \in \img(f)$.
+
+
+Let $\gamma \in [n]^{\underline{U}}$. We first show that the evaluation of a
+gate $g$ in $C_n$ depends only on those elements $\gamma$ maps to $\consp(g)$.
+
+\begin{lem}
+	Let $g$ be a gate in $C_n$. Let $\eta \in U^{\underline{\consp(g)}}$ and
+  $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$ such that $\gamma^{-1}_1 \sim
+  \eta$ and $\gamma^{-1}_2 \sim \eta$. Then $L^{\gamma_1 \mathcal{A}}(g)$ and
+  $L^{\gamma_2 \mathcal{A}}(g)$ are isomorphic.
+	\label{lem:support-determines-evaluation}
+\end{lem}
+
+\begin{proof}
+	We have that there exists a unique $\pi \in \sym_n$ such that $\pi \gamma_1 =
+  \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
+  consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$ pointwise.
+  From the definition of a support, we have that $\pi g = g$, and so $L(g)$ is
+  isomorphic to $\pi L(g)$. Thus there exists $\lambda \in \aut(g)$
+  such that such that $\pi L(g) = L(g) \lambda$, and so for all $x \in \ind(g)$,
+	\begin{align*}
+		L^{\gamma_1 \mathcal{A}}(g) (x) & = C_n[\gamma_1 \mathcal{A}](L(g)(x))                    \\
+                                    & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(x)]            \\
+                                    & = C_n[\gamma_2 \mathcal{A}][L(g)(\lambda(a,b))] \\
+                                    & = L^{\gamma_2 \mathcal{A}}(g) (\lambda (a,b)),                 
+	\end{align*}
+	and it follows that $L^{\gamma_1 \mathcal{A}}(g)$ and $L^{\gamma_2
+    \mathcal{A}}(g)$ are isomorphic.
+\end{proof}
+
+We associate with each gate $g$ in $C_n$ a set $\Gamma_g:= \{\gamma \in
+[n]^{\underline{U}} : C[\gamma \mathcal{A}](g) = 1 \}$. We also associate with
+each gate $g$ in $C_n$ a set $\EV_g \subseteq U^{\underline{\consp(g)}}$
+consisting of all assignments to the support of $g$ for which $g$ evaluates to
+true, i.e.\ $\EV_g := \{ \eta \in U^{\underline{\consp(g)}} : \exists \gamma \in
+\Gamma_g \, ,\eta \sim \gamma^{-1}\}$. It follows from
+Lemma~\ref{lem:support-determines-evaluation} that $\Gamma_g$ is entirely
+determined by $\EV_g$. In other words, the set of all bijections that cause $g$
+to evaluate to true is entirely determined by a set of assignments to the
+support of $g$. It is important to note that, from the support theorem and
+choice of $n$, each $\eta \in \EV_g$ has a constant-size domain, and as such
+$\EV_g$ gives us a succinct way of encoding $\Gamma_g$.
+
+In the remainder of this subsection we show how to define $\EV_g$ recursively
+for each internal gate $g$ in $C_n$, i.e.\ how to define $\EV_g$ given $\{\EV_h :
+h \in H_g \}$. In Section~\ref{sec:translating-formulas-to-FPR} we show that there is a formula $\theta
+\in \FPR$ implementing this recursive definition. We then use $\theta$, and the
+fixed-point operator, to define an $\FPR$-formula $Q$ that evaluates the output
+gates of the appropriate-size circuit for a given input structure, and hence
+defines the query computed by the family $(C_n)_{n \in \nats}$. In fact, the
+recursive definition of $\EV_g$ is handled differently depending on if $g$ is a
+constant, relational, $\AND$, $\NAND$, $\OR$, or $\RANK$ gate, and so we define
+a different $\FPR$-formula in each case. We then use a disjunction over cases in
+order to define $\theta$. We note that Anderson and Dawar~\cite{AndersonD17}
+define formulas of $\FPC$, and hence $\FPR$, that handle every
+case except where $g$ is a rank gate. As such, we need only consider
+the latter case.
+
+The argument in~\cite{AndersonD17} works by establishing a bijection
+(for any fixed $\gamma$) between the set of possible assignments to $\consp(g)$ and the orbit
+of $g$.  This bijection moreover takes $\EV_g$ to the collection of
+gates in $\orb(g)$ that evaluate to true on input
+$\gamma\mathcal{A}$.  This means that in order to count the number of
+inputs to $g$ that evaluate to true, it is enough to count $\EV_h$ for
+all children $h$ of $g$ and divide by an appropriate factor.  This has
+the advantage that the computation is then independent of any choice
+of $\gamma$ and can be done inductively on the structure of the
+circuit.  This works for all symmetric functions, where $g$ can be
+evaluated by counting the number of its children that evaluate to
+true.  For matrix-symmetric gates, we need to do more.  In particular,
+we want to use the bijections between $U^{\underline{\consp(h)}}$ and
+$\orb(h)$ to recover from $\EV_h$ information about the matrix
+structure that is input to $g$.  This involves a careful analysis of
+how permutations that move $\consp(h)$ shift the row and column
+indices in $L^{-1}(h)$.  We develop this machinery next.
+
+For the remainder of the section we fix a rank gate $g$ in $C_n$. For $\gamma
+\in [n]^{\underline{U}}$ we let $L^{\gamma} = L^{\gamma \mathcal{A}}(g)$. We let
+$A \times B := \ind(g)$. We informally think of $A$ as the set indexing rows and
+$B$ as the set indexing columns. For each $h \in H_g$ we let $\row(h) :=
+L(g)^{-1}(h)(1)$ and $\column(h) := L(g)^{-1}(h)(2)$. For $a \in \universe{g}$
+we let $\consp(a) := \consp_{\spstab{g}}(a)$, $\orb(a) = \orb_{\spstab{g}}(a)$
+and $\stab(a) = \stab_{\spstab{g}}(a)$.
+
 
 % Given an assignment $\gamma \in [n]^{\underline{U}}$, we can evaluate the
 % children of $g$ in order to form the matrix $L^{\gamma} : A \times B
@@ -203,10 +223,10 @@ all $a \in \img(f)$.
 % constant-size domain, and as such $\EV_h$ gives us a succinct way of encoding
 % $\Gamma_h$.
 
-We now show that for any $\eta \in U^{\underline{\consp(g)}}$, there is a matrix
+We now describe the construction, for any $\eta \in U^{\underline{\consp(g)}}$, of a matrix
 $M$ such that for any $\gamma \in [n]^{\underline{U}}$ with $\gamma^{-1} \sim
 \eta$, the rank of $M$ is equal to the rank of $L^{\gamma}$. This allows us to
-decide the membership of $\eta$ in $\EV_g$ where $g$ is a rank gate, i.e.
+decide the membership of $\eta$ in $\EV_g$ where $g$ is a rank gate, i.e.\
 $\Sigma(g) = \RANK^r_p$, by defining $M$ for $\eta$, computing the rank of $M$
 over the field of characteristic $p$, and then checking if this result is less
 than or equal to the threshold value $r$. We will show in the next subsection
@@ -217,7 +237,7 @@ For the remainder of the subsection we fix $\eta \in U^{\underline{\consp(g)}}$.
 For a gate $h \in H_g$, let $A_h := \{\vec{x} \in U^{\underline{\consp(h)}} :
 \eta \sim \vec{x}\}$ be the set of assignments to the support of $h$ that are
 compatible with $\eta$. We should also like to consider sets of assignments to
-the supports of elements in the universe of $g$. For each $s \in \universe{g}$
+the supports of elements in the universe of $g$.  For each $s \in \universe{g}$
 let $A_s := \{\vec{x} \in U^{\underline{\consp(s)}} : \eta \sim \vec{x}\}$.
 
 We now define the matrix $M$. We begin by defining the index sets for $M$. Let
@@ -230,6 +250,13 @@ and
 \begin{align*}
 	J := \{(j, \vec{y}): j \in C^{\min}, \vec{y} \in A_j\}. 
 \end{align*}
+The idea is that we can think of the rows and columns of $M$ as
+divided into their orbits under the action of $\stab(\consp(g))$, with
+each orbit indexed by the minimal index in $A$ (or $B$, respectively)
+that appears in it.  Within an orbit, we index the rows and colums
+instead by the elements of $A_i$ and $A_j$, implicitly using the
+bijection between these sets and the orbits of $\row(h)$ and
+$\column(h)$. 
 
 We should like to associate with each index $((i, \vec{x}), (j, \vec{y}))$ a
 gate $h$, and then somehow use the assignments $\vec{x}$ and $\vec{y}$ to
@@ -252,18 +279,19 @@ Lemma~\ref{lem:permutation-row-column}.
 
 \begin{proof}
   Let us first speak informally about what is required in the definition of
-  $\vec{c}$. The idea is to define $\vec{c}$ shifts the domain of $\vec{y}$ such
+  $\vec{c}$. The idea is to define $\vec{c}$ so that it shifts the domain of $\vec{y}$ such
   that $\vec{y}_{\vec{c}}$ is compatible with $\eta$ and $\vec{x}$. As such, we
   need to define $\vec{c}$ such that, first, $\vec{y}_{\vec{c}}$ agrees with
   $\eta$ on $\consp(g)$, second, $\vec{y}_{\vec{c}}$ and $\vec{x}$ agree on the
   intersection of $\consp(i)$ and the image of $\vec{c}$, and, third,
-  $\vec{y}_{\vec{c}}$ disagrees with $\eta$ and $\vec{x}$ outside of their
-  domains. In order to satisfy the first requirement we define $\vec{c}$ to be
-  the identity on $\consp(g)$. In order to satisfy the second requirement, we
-  define $\vec{c}$ such that whenever $\vec{x}$ and $\vec{y}$ agree, i.e. there
+  elements outside the domain of $\eta$ and $\vec{x}$ are mapped by
+  $\vec{y}_{\vec{c}}$ to elements outside of their combined range.
+  In order to satisfy the first requirement we define $\vec{c}$ to be
+  the identity on $\consp(g)$.  In order to satisfy the second requirement, we
+  define $\vec{c}$ such that whenever $\vec{x}$ and $\vec{y}$ agree, i.e.\ there
   exists $b \in \consp(i)$, $a \in \consp(j)$ such that $\vec{x}(b) =
-  \vec{y}(a)$, then then $\vec{c}$ `moves' the domain to be in accord with this
-  agreement, i.e. $\vec{c}(a) = b = \vec{x}^{-1}(\vec{y}(a))$. In order to
+  \vec{y}(a)$, then  $\vec{c}$ `moves' the domain to be in accord with this
+  agreement, i.e.\ $\vec{c}(a) = b = \vec{x}^{-1}(\vec{y}(a))$. In order to
   satisfy the third requirement we define $\vec{c}$ such that if $x \in
   \img(\vec{y})$ and $x$ is not in the image of either $\vec{x}$ or $\vec{\eta}$
   then $\vec{c}$ `moves' $\vec{y}^{-1}(x)$ outside of the domain of either
@@ -271,7 +299,7 @@ Lemma~\ref{lem:permutation-row-column}.
 
   We now define $\vec{c} \in [n]^{\underline{\consp(j)}}$ formally. Let $u_1,
   \ldots , u_k$ be the first $k$ elements of $[n] \setminus (\consp(g) \cup
-  \consp(i))$. We define a set $T$ consisting of those elements of the domain
+  \consp(i))$. 
   Let $T = \{a \in \consp(j) \setminus \consp(g) : \vec{y}(a) \in
   \vec{x}(\consp(i) \setminus \consp(g))\}$, and let $\vec{c} \in
   [n]^{\underline{\consp(j)}}$ be defined by
@@ -380,7 +408,7 @@ support of $h$. We define the matrix $M : I \times J \rightarrow \{0,1\}$ by
 	M((i , \vec{x}), (j, \vec{y})) := \vec{w} \in EV_h. 
 \end{align*}
 
-Notice that we could equivalently define $\vec{w}$ as that element of $A_h$ such
+Note that we could equivalently define $\vec{w}$ as that element of $A_h$ such
 that $\vec{w}$ is compatible with $\vec{x}$ and $\vec{y}_{\vec{c}}$. We make use
 of this observation in the next subsection.
 
@@ -404,9 +432,12 @@ of this observation in the next subsection.
 % It remains to show that $M_{~} \sim L^{\gamma}$ for some $\gamma: U
 % \rightarrow [n]$.
 
-Let $X$ be a set on which a group action of $G \leq \sym_n$ is defined, and let
-$x \in X$. In this section we we will usually take $X$ to be $A$, $B$ or $H_g$,
-and take $G$ to be $\spstab{g}$ or $\sym_n$, depending on the context. Let $f
+% Let $X$ be a set on which a group action of $G \leq \sym_n$ is defined, and let
+% $x \in X$. In this section we we will usually take $X$ to be $A$, $B$ or $H_g$,
+% and take $G$ to be $\spstab{g}$ or $\sym_n$, depending on the
+% context.
+
+Let $f
 \in U^{\underline{\consp(x)}}$ and $\gamma \in [n]^{\underline{U}}$, then we let
 $\Pi^{\gamma}_{f}$ denote any permutation in $\spstab{g}$ such that
 $\Pi^{\gamma}_f (a) = \gamma (f(a))$ for all $a \in \consp(x)$. Note that from
@@ -479,11 +510,10 @@ Let $\gamma \in [n]^{\underline{U}}$ such that $\eta \sim \gamma^{-1}$. Let
 $\alpha^{\gamma}: I \rightarrow A$ and $\beta^{\gamma}: J \rightarrow B$ be
 defined by $\alpha^{\gamma} (i, \vec{x}) := \Pi^{\gamma}_{\vec{x}}(i)$ and
 $\beta^{\gamma} (j, \vec{y}) := \Pi^{\gamma}_{\vec{y}}(j)$, respectively. We now
-prove a number of technical lemmas that will ultimately allow us to to prove
-that the matrix $M$ quotiented by some appropriate equivalence relation is
-isomorphism-equivalent to $L^{\gamma}$. We will use $\alpha^{\gamma}$ and
-$\beta^{\gamma}$ to construct the function that witnesses this
-isomorphism-equivalence. We first show that $\alpha^{\gamma}$ and
+prove a number of technical lemmas that ultimately allow us to to prove
+that the matrix $M$ quotiented by an appropriate equivalence relation is
+isomorphic to $L^{\gamma}$.  We use $\alpha^{\gamma}$ and
+$\beta^{\gamma}$ to construct the isomorphism. We first show that $\alpha^{\gamma}$ and
 $\beta^{\gamma}$ are surjective.
 
 \begin{lem} 
@@ -522,7 +552,7 @@ $\beta^{\gamma}$ are surjective.
 % \end{remark}
 
 The following lemma allows us to factor a permutation through $\alpha^{\gamma}$
-and $\beta^{\beta}$.
+and $\beta^{\gamma}$.
 
 \begin{lem}
   \label{lem:alpha-and-gamma}
@@ -579,7 +609,7 @@ and $(j, \vec{y}) \in J$, a gate $h \in H_g$ and an assignment to its support.
 We use this gate-assignment pair to define the value of the matrix at the point
 $((i, \vec{x}), (j, \vec{y}))$. The following result is used to show that
 $\alpha$ and $\beta$ can be used to determine the gate $h$, an important step in
-developing the required isomorphism-equivalence.
+developing the required isomorphism.
 
 \begin{lem}
   \label{lem:defining-h-from-IJ}
@@ -714,10 +744,10 @@ $\beta^{\gamma}$ together define a surjective homomorphism from $M$ to
 $L^{\gamma}$.
 
 \begin{thm}
-	Let $\gamma\in [n]^{\underline{U}}$ be such that $\eta \sim \gamma^{-1}$ and
-  let $(i, \vec{x})\in I$ and $(j, \vec{y})\in J$. It follows that $M((i,
-  \vec{x}), (j, \vec{y})) = L^{\gamma}(\alpha^{\gamma}(i, \vec{x}),
-  \beta^{\gamma}(j, \vec{y})$.
+  If $(i, \vec{x})\in I$;  $(j, \vec{y})\in J$, and $\gamma\in
+  [n]^{\underline{U}}$ is such that $ \gamma^{-1}
+        \sim \eta$,  then $M((i,\vec{x}), (j, \vec{y})) = L^{\gamma}(\alpha^{\gamma}(i, \vec{x}),
+  \beta^{\gamma}(j, \vec{y}))$.
 	\label{lem:ML-equal-elements}
 \end{thm}
 \begin{proof}
@@ -744,7 +774,7 @@ $L^{\gamma}$.
 \end{proof}
 
 We have shown that, but for injectivety, $\alpha^{\gamma}$ and $\beta^{\gamma}$,
-witnesses an isomorphism-equivalence between $M$ and $L^{\gamma}$. We should
+witness an isomorphism between $M$ and $L^{\gamma}$. We should
 thus like to show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are also
 injective, and hence complete the proof. However, it can be shown that
 $\alpha^{\gamma}(i, \vec{x}) = \alpha^{\gamma}(i, \vec{x}')$ if, and only if,
@@ -755,13 +785,13 @@ $\alpha^{\gamma}$ and $\beta^{\gamma}$ are not, in general, injective.
 We instead define a new matrix $M_{\equiv}$ by quotienting $M$ by an appropriate
 equivalence relation and show that the liftings of $\alpha^{\gamma}$ and
 $\beta^{\gamma}$ to the equivalence classes of $\equiv$ witness an
-isomorphism-equivalence between $M_\equiv$ and $L^{\gamma}$. We first define the
-equivalence relation.
+isomorphism between $M_\equiv$ and $L^{\gamma}$. We first define the
+equivalence relation $\equiv$.
 
 Let $s \in \universe{g}$ and let $\vec{x}, \vec{x}' \in A_s$ and we say that
 $\vec{x}$ and $\vec{x}'$ are \emph{mutually stable} on $s$ if there exists $\pi
 \in \stab(s)$ such that $\vec{x} (\id_{\consp(s)}) = \vec{x}'\pi
-\id_{\vec{\consp(s)}})$. We also say that two permutations $\sigma, \sigma' \in
+(\id_{\vec{\consp(s)}})$. We also say that two permutations $\sigma, \sigma' \in
 \spstab{g}$ are \emph{mutually stable} on $s$ if there exists $\pi \in \stab(s)$
 such that $\sigma (\id_{\consp(s)}) = \sigma' \pi (\id_{\consp(s)}) $. We note
 that mutual stability is an equivalence relation on $A_s$ (and $\spstab{g}$),
@@ -871,7 +901,7 @@ constant on classes of mutually stable assignments.
 	\label{lem:alpha-beta-mutal-equivalence}
 \end{lem}
 \begin{proof}
-	From mutual equivalence there exists $\sigma \in \stab(i)$ such that $\vec{x}'
+	From mutual stability there exists $\sigma \in \stab(i)$ such that $\vec{x}'
   = \vec{x} \sigma$. We have that $\alpha^{\gamma}(i, \vec{x})$ stabilises
   $\consp(g)$. Also, for all $a \in \consp(i)$, $\Pi^{\gamma}_{\vec{x}} (\sigma
   (a)) = \gamma (\vec{x}(\sigma (a))) = \gamma (\vec{x}'(a)) =
@@ -920,11 +950,11 @@ The following lemma gives us that $M_\equiv$ is well defined.
 	The second equality follows from Lemma \ref{lem:alpha-beta-mutal-equivalence}.
 \end{proof}
 
-We now prove the existence of the required isomorphism-equivalence.
+We now prove the  required isomorphism.
 
 \begin{thm}
 	Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Then
-  $L^{\gamma}$ is isomorphism-equivalent to $M_{\equiv}$.
+  $L^{\gamma}$ is isomorphic to $M_{\equiv}$.
 	\label{thm:LM-equivalence}
 \end{thm}
 \begin{proof}
@@ -942,7 +972,7 @@ We now prove the existence of the required isomorphism-equivalence.
 		
 	We first note that $\alpha^{\gamma}_{\equiv}$ is surjective as both
   $\alpha^{\gamma}$ (see Lemma \ref{lem:alpha-beta-surjective}) and the lifting
-  function (i.e. the quotient map from $I$ to $I_\equiv$) are surjective.
+  function (i.e.\ the quotient map from $I$ to $I_\equiv$) are surjective.
 		
 	Suppose $\alpha^{\gamma}_\equiv((i, [\vec{x}])) = \alpha^{\gamma}_\equiv((i',
   [\vec{x}']))$, and so $\Pi^{\gamma}_{\vec{x}}(i) =
@@ -1331,7 +1361,7 @@ variables is used without reference to size, it is taken to be a $k$-tuple.
 Let $s \subseteq [n]$, $X$ be a set, and $f \in X^{\underline{s}}$. Then, as
 $[n]$, and hence $s$, is an ordered set, we let $\vec{s}$ denote the $\vert s
 \vert$-tuple given by listing the elements of $s$ in order. We let $\vec{f}$
-denote a $\vert s \vert$-tuple formed by applying $f$ to $s$ in order (i.e.
+denote a $\vert s \vert$-tuple formed by applying $f$ to $s$ in order (i.e.\
 $\vec{f} := f \circ \vec{s}$).
 
 We seek to define the relation $V \subseteq [n^t] \times U^k$ in $\FPR$ such
@@ -1351,17 +1381,17 @@ Anderson and Dawar~\cite{AndersonD17}. It remains for us to define an $\FPR$
 formula $\theta_{\RANK}(\mu, \vec{x})$ such that, if $\mu$ denotes a
 $\RANK$-gate $g$ and $\vec{x}$ denotes an assignment $\vec{a}$ to the support of
 $g$, $\theta_{\RANK}(\mu, \vec{x})$ corresponds to the recursive construction of
-$\EV_g$ presented in the previous subsection. We first construct a formula
+$\EV_g$ presented in Section~\ref{sec:evaluating-circuits}.  We first construct a formula
 $\psi_M$ that defines the matrix $M$, as given in the previous subsection, for a
 given gate and assignment to the support of that gate. We then define
 $\theta_{\RANK}$, which applies the rank operator to the matrix defined by
 $\psi_M$. In order to define $\psi_M$ and $\theta_\RANK$ succinctly we first
 define a number of useful $\FPC$ formulas.
 
-We define the closed number terms $\FA{m} := (x\# (x = x))*t$ and $\FA{s} := x\#
-(x = x)$, denoting the bound on the domain of $\Phi$ and the size of the
+We define the closed number terms $\FA{m} := (\# x (x = x))*t$ and
+$\FA{s} := \# x(x = x)$, denoting the bound on the domain of $\Phi$ and the size of the
 structure over which we are working. We define two formulas that define the set
-of elements of the first and second sort of the universe of a gate $g$ (i.e. the
+of elements of the first and second sort of the universe of a gate $g$ (i.e.\ the
 set of row and column indexes).
 \begin{align*}
 	\FA{row} (\mu, \delta) :=   & \exists \nu, \epsilon \leq \FA{m} \, (\Phi_L (\mu, \delta, \epsilon, \nu)) \\
@@ -1371,7 +1401,7 @@ From Lemma~\ref{lem:computing-support-orbit-index}, and invoking the
 Immerman-Vardi theorem, there exists an $\FPC$-formula $\FA{orb}(\mu, \delta,
 \epsilon)$ such that $\mathcal{A} \models \FA{orb}[g,i, i']$ if, and only if,
 $i$ and $i'$ are in the universe of $g$ and $i \in \orb(i')$. The following
-formula allows us to defines the minimal element of this orbit
+formula allows us to define the minimal element of this orbit
 \begin{align*}
 	\FA{min-orb} (\mu, \delta) := \forall \epsilon \leq \FA{m} \, (\FA{orb} (\mu, \delta, \epsilon) \implies \delta \leq \epsilon). 
 \end{align*}
@@ -1381,10 +1411,10 @@ formula allows us to defines the minimal element of this orbit
 % \FA{agree}_s[\vec{r}, \vec{c}, \vec{a}, \vec{b}]$ if, and only if,
 % $\vec{a}_{\vec{r}} \sim \vec{b}_{\vec{c}}$.
 
-From Anderson and Dawar~\cite{AndersonD17} there is an $\FPC$-formula
+From~\cite{AndersonD17} there is an $\FPC$-formula
 $\FA{supp}$ such that $\mathcal{A} \models \FA{supp} [g, u]$ if, and only if,
-$\mathcal{A} \models \phi_G [g]$ and $u$ is in $\consp(g)$. Anderson and
-Dawar~\cite{AndersonD17} use this formula to inductively define a set of
+$\mathcal{A} \models \phi_G [g]$ and $u$ is in
+$\consp(g)$. In~\cite{AndersonD17} this formula is used to inductively define a set of
 formulas $\FA{supp}_i$ for each $i \in \nats$ such that $\mathcal{A} \models
 \FA{supp}_i[g, u]$ if, and only if, $u$ is the $i$th element of $\consp(g)$.
 
@@ -1395,7 +1425,7 @@ $\mathcal{A} \models \FA{supp}^c[g, a, u]$ if, and only if, $\mathcal{A} \models
 \phi_G [g] \land \FA{col}[g, a]$ and $u$ is in $\consp(u)$. Similarly, can
 define the formulas $\FA{supp}^r_i$ and $\FA{supp}^c_i$.
 
-From Anderson and Dawar~\cite{AndersonD17} we have an $\FPC$ formula
+From~\cite{AndersonD17} we have an $\FPC$ formula
 $\FA{agree}(\mu, \nu, \vec{x}, \vec{y})$ such that $\mathcal{A} \models
 \FA{agree}[g, h, \vec{a}, \vec{b}]$ if, and only if, $\vec{a}_{\vec{\consp}(g)}$
 is compatible with $\vec{b}_{\vec{\consp}(h)}$.
@@ -1546,7 +1576,7 @@ now define $\theta(\mu, \vec{x})$, the formula that defines the relation $V$.
 Let
 
 \begin{align*}
-	\theta (\mu, \vec{x}) := [\ifp_{V,\nu \vec{y}} \bigvee_{s \in  S \uplus \tau \uplus \{0,1\}} (\phi_s(\mu) \land \theta_s (\nu, \vec{y} ] (\mu, \vec{x}).
+	\theta (\mu, \vec{x}) := [\ifp_{V,\nu \vec{y}} \bigvee_{s \in  S \uplus \tau \uplus \{0,1\}} (\phi_s(\mu) \land \theta_s (\nu, \vec{y} ))] (\mu, \vec{x}).
 \end{align*}
 
 The following $\FPR$ formula defines the $q$-ary query computed by the circuit
@@ -1554,9 +1584,8 @@ family $\mathcal{C}$~\cite{AndersonD17}. Let
 				
 \begin{align*}
 	Q (z_1, \ldots z_q) := & \exists \vec{x} \exists \mu, \nu_1 , \ldots  \nu_q \eta_1 , \ldots , \nu_k \leq \FA{m} [\theta (\mu, \vec{x}) \land \phi_\Omega (\nu_1, \ldots \nu_q, \mu) \land \\
-                         & \bigwedge_{1 \leq i \leq k} \FA{supp}_i (\mu, \eta_i) \wedge \forall \eta (\neg \FA{supp}_i (\mu, \eta))) \land \\
-                         & \bigwedge_{1 \leq i \leq k} \bigwedge_{1 \leq j \leq q}((\FA{supp}_i (\mu, \eta_i) \land (x_i = z_j) \implies \nu_j = \eta_i) \land \\ &
-                                                                                                                                                                    \bigwedge_{1 \leq j \leq q} \bigvee_{1 \leq i \leq k} (x_i = z_j \land \FA{supp}_i (\mu, \eta_i)].
+                         & \bigwedge_{1 \leq i \leq k} \FA{supp}_i (\mu, \eta_i) \wedge \forall \eta (\neg \FA{supp}_i (\mu, \eta)) \land \\
+                         & \bigwedge_{1 \leq i \leq k} \bigwedge_{1 \leq j \leq q}(\FA{supp}_i (\mu, \eta_i) \land (x_i = z_j) \implies \nu_j = \eta_i) \land \\ &                                                                                                                                                        \bigwedge_{1 \leq j \leq q} \bigvee_{1 \leq i \leq k} (x_i = z_j \land \FA{supp}_i (\mu, \eta_i))].
 \end{align*}
 				
 This completes the proof of our main theorem.
