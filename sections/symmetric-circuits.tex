@@ -470,7 +470,7 @@ complications.
   Let $\mathbb{B}$ be a basis and $\rho$ be a relational vocabulary, we define a
   \emph{$(\mathbb{B}, \rho)$-circuit} $C$ of order $n$ computing a $q$-ary query
   $Q$ as a structure $\langle G, \Omega, \Sigma, \Lambda, L \rangle$.
-  \begin{itemize}
+  \begin{myitemize}
     \setlength\itemsep{0mm}
   \item $G$ is called the set of gates of
     $C$.% and $\vert C \vert := \vert G \vert$.
@@ -491,7 +491,7 @@ complications.
     \ind(\Sigma(g)) \rightarrow G$ such that if we define a relation $W
     \subseteq G^{2}$ by $W(h_1,h_2)$ iff $h_2$ is an internal gate and $h_1$ is
     in the image of $L(h_2)$, then $(G, W)$ is a directed acyclic graph.
-  \end{itemize}
+  \end{myitemize}
 \end{definition}
 
 The definition requires some explanation. Each gate in $G$ computes a function
@@ -997,7 +997,7 @@ permutation then the two images of each gate must be syntactically-equivalent.
   in $C$, $\Sigma (g) = \Sigma (\pi (g)) = \Sigma (\pi' (g))$, and either all of
   $g$, $\pi (g)$ and $\pi (g')$ are output gates and $\pi (g) = \pi \Omega
   (\Omega^{-1}(g)) = \Omega (\sigma \Omega^{-1}(g)) = \pi' \Omega
-  (\Omega^{-1}(g)) = \pi'(g)$, or none of $g$, $\pi(g)$ or $\pi' (g)$ are output
+  (\Omega^{-1}(g)) = \pi'(g)$, or none of $g$, $\pi(g)$ and $\pi' (g)$ are output
   gates.
   
   We now prove the result by induction on depth. Suppose $g$ is a gate of depth
