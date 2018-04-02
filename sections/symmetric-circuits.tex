@@ -472,7 +472,8 @@ complications.
   $Q$ as a structure $\langle G, \Omega, \Sigma, \Lambda, L \rangle$.
   \begin{itemize}
     \setlength\itemsep{0mm}
-  \item $G$ is called the set of gates of $C$.% and $\vert C \vert := \vert G    \vert$.
+  \item $G$ is called the set of gates of
+    $C$.% and $\vert C \vert := \vert G \vert$.
   \item $\Omega$ is an injective function from $[n]^q$ to $G$. The gates in the
     image of $\Omega$ are called the output gates. When $q = 0$, $\Omega$ is a
     constant function mapping to a single output gate.
@@ -493,15 +494,14 @@ complications.
   \end{itemize}
 \end{definition}
 
-The definition requires some explanation.  Each gate in $G$ computes a
-function of its inputs and the relation $W$ on $G$ is the set of
-``wires''.  That is, $W(h,g)$ indicates that the value computed at $h$
-is an input to $g$.  However, since the functions are structured, we
-need more information on the set of inputs to $g$ and this is provided
-by the labelling $L$.  $\Sigma(g)$ tells us what the function computed
-at $g$ is, and thus $\ind(\Sigma(g))$ tells us the structure on the
-inputs and $L(g)$ maps this to the set of gates that form the inputs
-to $g$.
+The definition requires some explanation. Each gate in $G$ computes a function
+of its inputs and the relation $W$ on $G$ is the set of ``wires''. That is,
+$W(h,g)$ indicates that the value computed at $h$ is an input to $g$. However,
+since the functions are structured, we need more information on the set of
+inputs to $g$ and this is provided by the labelling $L$. $\Sigma(g)$ tells us
+what the function computed at $g$ is, and thus $\ind(\Sigma(g))$ tells us the
+structure on the inputs and $L(g)$ maps this to the set of gates that form the
+inputs to $g$.
 
 % \begin{definition}[Circuits on Structures]
 %   Let $\mathbb{B}$ be a basis of structured functions and $\tau := (R, \{s_1,
@@ -540,11 +540,11 @@ to $g$.
 % \end{definition}
 
 Let $C = \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a $(\mathbb{B},
-\rho)$-circuit of order $n$.  Recall that the order of a circuit refers
-to the size of the input structures it takes.  In contrast, we define
-the \emph{size} of $C$, denoted $\vert C \vert$ to be the number of
-elements in $G$. If $(C_n)_{n \in \nats}$ is a family of
-circuits we assume that each $C_n$ is a circuit of order $n$.
+\rho)$-circuit of order $n$. Recall that the order of a circuit refers to the
+size of the input structures it takes. In contrast, we define the \emph{size} of
+$C$, denoted $\vert C \vert$ to be the number of elements in $G$. If $(C_n)_{n
+  \in \nats}$ is a family of circuits we assume that each $C_n$ is a circuit of
+order $n$.
 
 For a gate $g \in C$, we let the \emph{index} of $g$, denoted by $\ind(g)$, be
 $\ind(\Sigma(g))$. We define the relation $W \subseteq G^2$ by $W(h,g)$ if, and
@@ -661,19 +661,19 @@ paper.
   % and letting $F_C (f)$ be the result of evaluating $g_{\text{out}}$.
 
   We now present a number of observations, and then combine these observations
-  to prove both directions of the lemma. Let $\mathcal{B}$ be a
-  $\rho$-structure of size $n$ over the universe $[n]$. We can define a function
-  $f_{\mathcal{B}} : \ind(\rho, [n]) \rightarrow {0,1}$ such that
-  $f_{\mathcal{B}} (\vec{a}_R) = 1$ if, and only if, $\vec{a} \in
-  R^{\mathcal{B}}$. Let $f : \ind(\rho, [n]) \rightarrow \{0,1\}$. We can define
-  the $\rho$-structure $\mathcal{B}_f$ over the universe $[n]$ such that for all
-  $R \in \rho$, we have $\vec{a} \in R^{\mathcal{B}_f}$ if, and only if,
-  $f(\vec{a}_R) = 1$. It is easy to see that the functions $\mathcal{B} \mapsto
-  f_{\mathcal{B}}$ and $f \mapsto \mathcal{B}_f$ are inverse to one another, and
-  so define a bijection. Moreover, we notice that for all $\sigma \in \sym_n$ we
-  have that $f_{\sigma \mathcal{B}}(\vec{a}_R) = 1$ if, and only if, $\vec{a}
-  \in R^{\sigma \mathcal{B}}$ if, and only if, $\sigma^{-1} \vec{a} \in
-  R^{\mathcal{B}}$ if, and only if, $(f_{\mathcal{B}} \sigma^{-1})(\vec{a}_R) =
+  to prove both directions of the lemma. Let $\mathcal{B}$ be a $\rho$-structure
+  of size $n$ over the universe $[n]$. We can define a function $f_{\mathcal{B}}
+  : \ind(\rho, [n]) \rightarrow {0,1}$ such that $f_{\mathcal{B}} (\vec{a}_R) =
+  1$ if, and only if, $\vec{a} \in R^{\mathcal{B}}$. Let $f : \ind(\rho, [n])
+  \rightarrow \{0,1\}$. We can define the $\rho$-structure $\mathcal{B}_f$ over
+  the universe $[n]$ such that for all $R \in \rho$, we have $\vec{a} \in
+  R^{\mathcal{B}_f}$ if, and only if, $f(\vec{a}_R) = 1$. It is easy to see that
+  the functions $\mathcal{B} \mapsto f_{\mathcal{B}}$ and $f \mapsto
+  \mathcal{B}_f$ are inverse to one another, and so define a bijection.
+  Moreover, we notice that for all $\sigma \in \sym_n$ we have that $f_{\sigma
+    \mathcal{B}}(\vec{a}_R) = 1$ if, and only if, $\vec{a} \in R^{\sigma
+    \mathcal{B}}$ if, and only if, $\sigma^{-1} \vec{a} \in R^{\mathcal{B}}$ if,
+  and only if, $(f_{\mathcal{B}} \sigma^{-1})(\vec{a}_R) =
   f_{\mathcal{B}}(\sigma^{-1} \vec{a}_R)= 1$. It follows $f_{\sigma \mathcal{B}}
   = f_{\mathcal{B}} \sigma^{-1}$.
 
@@ -790,15 +790,15 @@ We are particularly interested in circuits that have the property that
 
 It follows that for any symmetric circuit $C$ of order $n$ there is a
 homomorphism $h$ that maps $\sym_n$ to $\aut(C)$ such that if $\sigma \in
-\sym_n$ then $h(\sigma)$ is an an automorphism extending $\sigma$.  Suppose $C$
+\sym_n$ then $h(\sigma)$ is an an automorphism extending $\sigma$. Suppose $C$
 does not contain a relational gate labelled by a relation symbol with non-zero
-arity.  In that case $C$ computes a constant function.  For this reason, in this paper we
-always assume a circuit contains at least one relational gate with non-zero
-arity.  Now, by assumption there exists a relational gate in $C$ such that
-some element of $[n]$ appears in the tuple labelling that gate.  By symmetry it
-follows that every elements of $[n]$ appears in a tuple labelling a relational
-gate in $C$. It follows that no two distinct elements of $\sym_n$ agree on all
-input gates, and so the homomorphism $h$ is injective.
+arity. In that case $C$ computes a constant function. For this reason, in this
+paper we always assume a circuit contains at least one relational gate with
+non-zero arity. Now, by assumption there exists a relational gate in $C$ such
+that some element of $[n]$ appears in the tuple labelling that gate. By symmetry
+it follows that every elements of $[n]$ appears in a tuple labelling a
+relational gate in $C$. It follows that no two distinct elements of $\sym_n$
+agree on all input gates, and so the homomorphism $h$ is injective.
 
 If this homomorphism is also surjective then we have that each element of
 $\sigma$ extends uniquely to an automorphism of the circuit. In this case we say
@@ -827,24 +827,23 @@ In order to make use of these technical tools, as well ensure the
 polynomial-time decidability of many important circuit properties, we should
 like to be able to construct a normal form analogous to rigidity and present a
 polynomial time algorithm that transforms a circuit into an equivalent circuit
-of this form.  It is at this point that we arrive at the first complication
-introduced by our generalisation. The polynomial-time
-translation in~\cite{AndersonD17} makes indispensable of the polynomial-time decidability of many
-important circuit properties for circuits defined over symmetric
-bases.  However,
-for the more general circuits discussed here, it is not known if even the most
-basic circuit properties are polynomial-time decidable.  This is
+of this form. It is at this point that we arrive at the first complication
+introduced by our generalisation. The polynomial-time translation
+in~\cite{AndersonD17} makes indispensable of the polynomial-time decidability of
+many important circuit properties for circuits defined over symmetric bases.
+However, for the more general circuits discussed here, it is not known if even
+the most basic circuit properties are polynomial-time decidable. This is
 essentially due to the requirement built in to
-Definition~\ref{defn:automorphism} that an automorphism that takes $g$
-to $g'$ must be an isomorphism between $L(g)$ and $L(g')$, which makes
-checking the condition as hard as isomorphism checking.
-Indeed, we show in
+Definition~\ref{defn:automorphism} that an automorphism that takes $g$ to $g'$
+must be an isomorphism between $L(g)$ and $L(g')$, which makes checking the
+condition as hard as isomorphism checking. Indeed, we show in
 Section~\ref{sec:transparent} that for circuits that include gates computing
 non-symmetric functions all of the relevant circuit properties of interest are
 at least as hard to decide as the graph-isomorphism problem. As such,
-constructing an argument analogous to~\cite{AndersonD17}, as well as establishing the numerous other
-crucial results whose proofs rely on the polynomial-time decidability of various
-circuit properties, would be beyond the scope of this paper.
+constructing an argument analogous to~\cite{AndersonD17}, as well as
+establishing the numerous other crucial results whose proofs rely on the
+polynomial-time decidability of various circuit properties, would be beyond the
+scope of this paper.
 
 In order to proceed we explicitly restrict our attention to a particular class
 of circuits characterised by a restriction on the children of gates labelled by
@@ -918,11 +917,11 @@ these gates are really just copies of one another.
   \Sigma(h)$ and either both $g$ and $h$ are output gates and $\Omega^{-1}(g) =
   \Omega^{-1}(h)$ or neither are output gates. Suppose $g$ and $h$ are input
   gates, then $g \equiv h$ if, and only if, both $g$ and $h$ are constant gates
-  or both are relational gates and $\Lambda(g) = \Lambda (h)$.  Suppose $g$ and
-  $h$ are internal gates and suppose we have defined the
-  syntactic-equivalence relation for all gates of depth less than the depth of
-  either $g$ or $h$. Then $g \equiv h$ if, and only if, $L(g) /_\equiv$ and
-  $L(h) /_\equiv$ are isomorphism-equivalent.
+  or both are relational gates and $\Lambda(g) = \Lambda (h)$. Suppose $g$ and
+  $h$ are internal gates and suppose we have defined the syntactic-equivalence
+  relation for all gates of depth less than the depth of either $g$ or $h$. Then
+  $g \equiv h$ if, and only if, $L(g) /_\equiv$ and $L(h) /_\equiv$ are
+  isomorphism-equivalent.
 \end{definition}
 
 \begin{drem}
@@ -930,8 +929,8 @@ these gates are really just copies of one another.
   it's very easy to prove.
 \end{drem}
 
-For a circuit $C$ of order $n$ and a gate $g$ we think of $g$ as computing
-the function that maps an input structure $\mathcal{A}$ and a bijection $\gamma$
+For a circuit $C$ of order $n$ and a gate $g$ we think of $g$ as computing the
+function that maps an input structure $\mathcal{A}$ and a bijection $\gamma$
 from the universe of $\mathcal{A}$ to $[n]$ to the evaluation $C[\gamma
 \mathcal{A}(g)]$. While we would like to be able to identify gates that compute
 the same function in this sense, it is not hard to show that deciding this
@@ -998,7 +997,8 @@ permutation then the two images of each gate must be syntactically-equivalent.
   in $C$, $\Sigma (g) = \Sigma (\pi (g)) = \Sigma (\pi' (g))$, and either all of
   $g$, $\pi (g)$ and $\pi (g')$ are output gates and $\pi (g) = \pi \Omega
   (\Omega^{-1}(g)) = \Omega (\sigma \Omega^{-1}(g)) = \pi' \Omega
-  (\Omega^{-1}(g)) = \pi'(g)$, or none of $g$, $\pi(g)$ or $\pi' (g)$ are output gates.
+  (\Omega^{-1}(g)) = \pi'(g)$, or none of $g$, $\pi(g)$ or $\pi' (g)$ are output
+  gates.
   
   We now prove the result by induction on depth. Suppose $g$ is a gate of depth
   $0$. Then $g$ is either a relational or constant gate. In either case $\pi (g)
@@ -1057,8 +1057,8 @@ of circuits in terms of the structure of their syntactic-equivalence classes.
   symmetric function has unique labels.
 \end{definition}
 
-It is worth noting that if a circuit has injective labels and is reduced 
-then it has unique labels. The converse is, in general, false.
+It is worth noting that if a circuit has injective labels and is reduced then it
+has unique labels. The converse is, in general, false.
 
 There is a small technical point that needs some discussion before we continue.
 The definition of a circuit allows for the inclusion of a gate such that there
@@ -1077,7 +1077,7 @@ effect the function computed by the circuit. We say these gates are
 It is easy to see that we can construct from a given circuit an equivalent
 circuit without redundant gates by simply removing all of the redundant gates.
 Let $C := \langle G, \Omega, \Sigma, \Lambda, L \rangle$ be a circuit of order
-$n$ and let $g$ be a redundant gate in $C$.  It is easy to see that $g$ is not
+$n$ and let $g$ be a redundant gate in $C$. It is easy to see that $g$ is not
 the child of a non-redundant gate, nor is it a relational or output gate. Thus
 we can define the circuit $C' := \langle G', \Omega, \restr{\Sigma}{G'},
 \Lambda, \restr{L}{G'} \rangle$, where $G' \subseteq G$ is the set of all
@@ -1156,9 +1156,9 @@ unique labels) has unique extensions.
   
   Let $W_t$ be the transitive closure of the relation $W$ on $C$. The inductive
   argument gives us that for all $h \in G$ if there exists an output gate $g$
-  such that $W_t(h, g)$, then $\pi (h) = h$. Since the circuit contains no
-  redundant gates, we have that $G = \bigcup_{\vec{a} \in [n]^q} \{g \in G : W_t
-  (g, \Omega(\vec{a}))\}$, and the result follows.
+  such that $W_t(h, g)$ or $h = g$, then $\pi (h) = h$. Since the circuit
+  contains no redundant gates, we have that $G = \bigcup_{\vec{a} \in [n]^q} \{g
+  \in G : W_t (g, \Omega(\vec{a}))\}$, and the result follows.
 \end{proof}
 
 We have from Proposition~\ref{prop:unique-children-unique-extensions} that
@@ -1175,9 +1175,9 @@ $\tau$-structures, where $\tau$ is the vocabulary of the gates in question.
 Indeed, we prove in Section~\ref{sec:transparent}, that for the class of
 circuits with unique children deciding if there is an isomorphism-equivalence
 between two gates is as hard as the graph-isomorphism problem. It follows that a
-great many important circuit properties (e.g.\ the orbit of a gate, symmetry of a
-circuit, etc.) for circuits with unique gates are at the very least not
-obviously polynomial-time decidable.  As such, circuits with unique children,
+great many important circuit properties (e.g.\ the orbit of a gate, symmetry of
+a circuit, etc.) for circuits with unique gates are at the very least not
+obviously polynomial-time decidable. As such, circuits with unique children,
 although satisfying the requirement of having unique extensions, are
 insufficient for our purposes.
 
