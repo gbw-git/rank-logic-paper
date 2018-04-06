@@ -15,8 +15,8 @@ say that $C$ is a directed acyclic graph, without further ordering the nodes, we
 implicitly assume that the functions in the basis $\mathbb{B}$ are
 \emph{symmetric}. That is to say $f_g$ is invariant under all permutations of
 its $m$ inputs. This unstated assumption is pervasive in circuit complexity. In
-particular, the standard Boolean basis of $\AND$, $\OR$ and $\NOT$ gates as well as bases
-with majority or threshold gates only contain symmetric functions.
+particular, the standard Boolean basis of $\AND$, $\OR$ and $\NOT$ gates as well
+as bases with majority or threshold gates only contain symmetric functions.
 
 We are interested in Boolean circuits that compute queries on structures, such
 as graphs. In the case of (undirected, loop-free) graphs on $n$ vertices, such a
@@ -35,19 +35,17 @@ contrast, we show, in this section, that adding any further symmetric functions
 to the basis does not allow us to extend the power of $\PT$-uniform symmetric
 circuits beyond that of $\FPC$.
 
-
-
-As our ultimate aim is a circuit characterisation of $\FPR$, whose expressive power is
-strictly greater than that of $\FPC$, we need to consider gates corresponding to
-non-symmetric Boolean functions. In particular, we consider \emph{rank} gates
-whose inputs are a matrix and whose result is invariant under row and column
-permutations. To lead up to this, we first develop a general framework of
-structured Boolean functions. These are functions whose inputs naturally encode
-$\tau$-structures and where the output is invariant under the natural symmetries
-of such structures. The \emph{matrix-invariant} functions (defined
-formally below) are a natural
-particular case. We therefore define symmetric circuits in a general form where
-gates can be labelled by \emph{isomorphism-invariant} structured functions.
+As our ultimate aim is a circuit characterisation of $\FPR$, whose expressive
+power is strictly greater than that of $\FPC$, we need to consider gates
+corresponding to non-symmetric Boolean functions. In particular, we consider
+\emph{rank} gates whose inputs are a matrix and whose result is invariant under
+row and column permutations. To lead up to this, we first develop a general
+framework of structured Boolean functions. These are functions whose inputs
+naturally encode $\tau$-structures and where the output is invariant under the
+natural symmetries of such structures. The \emph{matrix-invariant} functions
+(defined formally below) are a natural particular case. We therefore define
+symmetric circuits in a general form where gates can be labelled by
+\emph{isomorphism-invariant} structured functions.
 
 Ultimately, our aim is to replicate the results Anderson and
 Dawar~\cite{AndersonD17} in this more general setting. A difficulty we face is
@@ -209,23 +207,22 @@ of $\sym_A \times \sym_B$, and we say such a function is
 dealing with Boolean functions that take in strings that encode
 $\tau$-structures.
 
-% AD - rewrote the paragraph to reduce the use of subscripts and superscripts.
 Let $\tau := (R, S, \nu)$ be a many-sorted vocabulary. Let $D := \biguplus_{s
   \in S} D_{s} = \{(s,d) : d \in D_s\}$, be a disjoint union of non-empty sets,
 indexed by $S$. For $R_i \in R$ let $R^D_i$ denote the full relation over the
 many-sorted universe $D$, i.e.\ $R^D_i := D_{a_1} \times \ldots \times
 D_{a_{r}}$, where $\nu(R_i) = (a_1, \ldots , a_{r)})$. There is an obvious
 interpretation of $\tau$ over $D$ given by assigning each sort symbol $s$ in
-$\tau$ to the set $D_s$ and each relation symbol in $\tau$ to the full
-relation over $D$. We call this \emph{the structure defined by $(\tau, D)$}, and
-denote it by $\str{\tau, D}$.
+$\tau$ to the set $D_s$ and each relation symbol in $\tau$ to the full relation
+over $D$. We call this \emph{the structure defined by $(\tau, D)$}, and denote
+it by $\str{\tau, D}$.
 
 The idea is to use the tuples in the relations of this structure as an index
 set, and with the automorphisms of this structure defining a group action. Let
 the \emph{index defined by the pair $(\tau, D)$} be the set $\biguplus_{R_i\in
   R} R^{D}_i := \{ (\vec{a}, R) : \vec{a} \in R^{D}, \, R \in \tau \} $. We
 often use this set to index the input to a Boolean function, and as such we
-denote the index defined by $(\tau, D)$ by $\ind(\tau, D)$, and call $\tau$ the
+denote the index defined by $(\tau, D)$ by $\ind(\tau, D)$. We call $\tau$ the
 vocabulary and $D$ the universe of $\ind(\tau, D)$.
 
 We abbreviate $(\vec{a}, R) \in \ind(\tau, D)$ by $\vec{a}_R$, and refer to $R$
@@ -240,20 +237,27 @@ symbol in $\tau$ we identify $\vec{a}_R$ with $\vec{a}$.
 % D)$ is formally a disjoint union, and as such each tuple in this set is
 % associated with an identifiable relation symbol. We refer to $R$ as the type
 
-
-% GW: move sorted permutations into the background section
 For the remainder of this subsection we fix a vocabulary $\tau$ and a
-many-sorted set $D := \biguplus_{s \in S} D_{s}$. Let $X := \ind (\tau, D)$ and
-$G \leq \sym_{X}$. We note that there is an obvious group action of $G$ on
-$X$. Let $\aut (\tau, D)$ be the automorphism group of $\str{\tau, D}$. We
-define a group action of $\aut (\tau, D)$ on $X$ for $\sigma \in \aut(\tau, D)$
-by $\sigma \cdot \vec{a}_R := (\sigma \vec{a})_R$, for all $\vec{a}_R \in X$. We
-identify $\aut(\tau, D)$ with the subgroup of $\sym_X$ that acts equivalently on
-$X$.
+many-sorted set $D := \biguplus_{s \in S} D_{s}$, and let $X := \ind (\tau, D)$
+and $G \leq \sym_{X}$. There is an obvious group action of $G$ on $X$. Let $\aut
+(\tau, D)$ be the automorphism group of $\str{\tau, D}$. We define a group
+action of $\aut (\tau, D)$ on $X$ for $\sigma \in \aut(\tau, D)$ by $\sigma
+\cdot \vec{a}_R := (\sigma \vec{a})_R$ for all $\vec{a}_R \in X$. We identify
+$\aut(\tau, D)$ with the subgroup of $\sym_X$ that acts equivalently on $X$.
 
-We can extend the action of $G$ on $X$ to a right group action on the set of
-functions of the form $f: X \rightarrow H$, for any set $H$, defined by $(f
-\cdot \sigma)(x) := f(\sigma x)$ for all $x \in X$, $\sigma \in G$.
+Let $H$ be a set. We think of a function $f : X \rightarrow H$ as defining a
+labelling of $\str{\tau,D}$ by $H$, and we identify $f$ with this labelled
+instance of $\str{\tau, D}$. Let $f: \ind(\tau, D) \ra H$ and $g : \ind (\tau,
+D') \ra H$. We say that $f$ and $g$ are \emph{isomorphic} if there is an
+isomorphism $\pi : \str{\tau, D} \ra \str{\tau, D'}$ such that $f(\vec{a}_R) =
+g(\pi(\vec{a}_R))$ for all $\vec{a}_R \in \ind(\tau, D)$. In other words, $f$
+and $g$ are isomorphic if, and only if, they are isomorphic as (labelled)
+structures. We will often take the co-domain $H$ to be $\{0,1\}$. In this case
+$f$ and $g$ can be thought of as each defining a sub-structure of
+$\str{\tau,D}$. It is easy to see that $f$ and $g$ are isomorphic
+if, and only if, the $\tau$ structures they define are isomorphic.
+
+
 
 
 % and let $\sortsym_D := \prod_{s \in S} \sym_{D_{s}}$. We call the elements of
@@ -264,29 +268,33 @@ functions of the form $f: X \rightarrow H$, for any set $H$, defined by $(f
 % If $H$ is surjective, we say that \emph{$f$ indexes $H$ by $X$} or \emph{$f$
 % indexes $H$ by $\mathcal{D}$}.
 
-We say that two functions $f: \ind(\tau, D) \rightarrow H$ and $g: \ind(\tau,
-D') \rightarrow H$ are \emph{isomorphism-equivalent} if there exists an
-isomorphism $\pi :\str{\tau, D} \rightarrow \str{\tau, D'}$ such that
-$f(\vec{a}_R) = g(\pi \vec{a}_R)$ for all $\vec{a}_R \in \ind(\tau, D)$. It is
-easy to see that isomorphism-equivalence is an equivalence relation.
+% We say that two functions $f: \ind(\tau, D) \rightarrow H$ and $g: \ind(\tau,
+% D') \rightarrow H$ are \emph{isomorphism-equivalent} if there exists an
+% isomorphism $\pi :\str{\tau, D} \rightarrow \str{\tau, D'}$ such that
+% $f(\vec{a}_R) = g(\pi \vec{a}_R)$ for all $\vec{a}_R \in \ind(\tau, D)$. It is
+% easy to see that isomorphism-equivalence is an equivalence relation.
 
-We are often interested in the case where $X = \ind(\tau, D) = \ind(\tau, D')$.
+% We are often interested in the case where $X = \ind(\tau, D) = \ind(\tau,
+% D')$. We say that $f, g: X \rightarrow H$ are \emph{$G$-equivalent} if there
+% exists $\sigma \in G$ such that $f = g \sigma$. We note that in this case $f$
+% and $g$ are isomorphism-equivalent if, and only if, they are $\aut(\tau,
+% D)$-equivalent.
+
+% In this paper we will often take the co-domain to be $\{0,1\}$, and so have a
+% function of the form $f : X \rightarrow \{0,1\}$. In this case we may think of
+% $f$ as defining for each relation $R^D_i$ a subset of that relation, and thus
+% determining a $\tau$-structure over the universe $D$. We note that two
+% functions $f, g: X \rightarrow \{0,1\}$ are isomorphism-equivalent if, and
+% only if, the two $\tau$-structures they determine are isomorphic.
+
 We say that $f, g: X \rightarrow H$ are \emph{$G$-equivalent} if there exists
-$\sigma \in G$ such that $f = g \sigma$. We note that in this case $f$ and $g$
-are isomorphism-equivalent if, and only if, they are $\aut(\tau, D)$-equivalent.
-
-In this paper we will often take the co-domain to be $\{0,1\}$, and so have a
-function of the form $f : X \rightarrow \{0,1\}$. In this case we may think of
-$f$ as defining for each relation $R^D_i$ a subset of that relation, and thus
-determining a $\tau$-structure over the universe $D$. We note that two functions
-$f, g: X \rightarrow \{0,1\}$ are isomorphism-equivalent if, and only if, the
-two $\tau$-structures they determine are isomorphic.
+$\sigma \in G$ such that $f = g \sigma$. We note that $f$ and $g$ are isomorphic
+if, and only if, they are $\aut(\tau, D)$-equivalent.
 
 We call a function of the form $F:\{0,1\}^{X} \rightarrow \{0,1\}$ a
-\emph{$(\tau, D)$-structured function}, or just a \emph{structured function}
-when there is no need to emphasise the particular vocabulary. We note that
+\emph{$(\tau, D)$-structured function}, or just a \emph{structured function}. We note that
 $\ind(F) = \ind(\tau, D)$, justifying our choice of notation. We let \emph{the
-  vocabulary of $F$} and \emph{the universe of $F$} denote $\tau$ and $D$
+  vocabulary of $F$} and \emph{the universe of $F$} be $\tau$ and $D$,
 respectively.
 
 % It is easy to see that if $\mathcal{C}_A$ is the category with objects given
@@ -317,15 +325,14 @@ respectively.
 %   survive.
 % \end{remark}
 
-Structured functions give us a general framework for indexing the input sequence
-to a Boolean function and associating with that function an appropriate symmetry
-condition, or notion of equivalence. Let $F$ be a $(\tau, D)$-structured
-function. We say $F$ is \emph{$G$-invariant} if it is constant on $G$-equivalent
-input vectors, i.e.\ for all $G$-equivalent $f, g \in \{0,1\}^{X}$, $F(f) =
-F(g)$. We say $F$ is \emph{isomorphism-invariant} if it is $\aut(\tau,
-D)$-invariant. Note that a structured function with vocabulary $\tau$ is
-isomorphism-invariant if, and only if, it determines a property of
-$\tau$-structures.
+It is important to note that structured functions not only provide us with way
+of talking about Boolean functions that take as input (encodings of) structures,
+but their definition also suggests a natural notion of symmetry. Let $F$ be a
+$(\tau, D)$-structured function. We say $F$ is \emph{$G$-invariant} if for all
+$G$-equivalent $f, g : X \ra \{0,1\}$, $F(f) = F(g)$. We say $F$ is
+\emph{isomorphism-invariant} if $F$ is $\aut(\tau, D)$-invariant. Note that a
+structured function with vocabulary $\tau$ is isomorphism-invariant if, and only
+if, it decides a property of $\tau$-structures.
 
 At the beginning of this subsection we defined three Boolean functions with
 differently indexed inputs and corresponding symmetry conditions. We now look at
@@ -363,24 +370,23 @@ relation.
 
 % as the structured functions are rather defined over directed graphs.
 
-From the above observations, we may think of symmetric functions as
-isomorphism-invariant structured functions over the single-sorted vocabulary
-with a single unary relation. We can similarly think of matrix-invariant
-functions as isomorphism-invariant structured functions over the appropriate
-vocabulary. More formally, if the vocabulary of $F$ consists of $p$ sort symbols
-$s_1, \ldots , s_p$ and only one relation symbol with type $(s_1, \ldots, s_p)$
-and $F$ is isomorphism-invariant, then we say $F$ is \emph{sort-invariant}. If
-$p = 2$ and $F$ is sort-invariant then we say that $F$ is
-\emph{matrix-invariant}.
+We may think of symmetric functions as isomorphism-invariant structured
+functions over the single-sorted vocabulary with a single unary relation. We can
+similarly think of matrix-invariant functions as isomorphism-invariant
+structured functions over an appropriate vocabulary. More formally, if the
+vocabulary of $F$ consists of $p$ sort symbols $s_1, \ldots , s_p$ and only one
+relation symbol with type $(s_1, \ldots, s_p)$ and $F$ is isomorphism-invariant,
+then we say $F$ is \emph{sort-invariant}. If $p = 2$ and $F$ is sort-invariant
+then we say that $F$ is \emph{matrix-invariant}.
 
-In keeping with convention for Boolean functions, and for introducing simplicity
-without a loss of generality, we assume that the universe of any structured
-function is always a disjoint union of initial segments of the natural numbers,
-i.e.\ if $F$ is structured function with universe $D_{s_1} \uplus \ldots \uplus
-D_{s_p}$, then for all $s \in \{s_1 , \ldots , s_p\}$ there exists $d_s \in
-\nats$ such that $D_{s} = [d_s]$. We also assume that every $(\tau,
-D)$-structured function has the property that every $a \in D$ appears in at
-least one element of $\ind(\tau, D)$.
+In keeping with the conventions for Boolean functions we usually assume, without
+a loss of generality, that the universe of a structured function is a disjoint
+union of initial segments of the natural numbers, i.e.\ if $F$ is structured
+function with universe $D_{s_1} \uplus \ldots \uplus D_{s_p}$ then for all $s
+\in \{s_1 , \ldots , s_p\}$ there exists $d_s \in \nats$ such that $D_{s} =
+[d_s]$. We also assume that every $(\tau, D)$-structured function has the
+property that every $a \in D$ appears in at least one element of $\ind(\tau,
+D)$. 
 
 
 % Let $F$ be a $(\tau, A)$-structured function with $\tau = (\{R\}, \{1\},
@@ -773,18 +779,17 @@ associated with $g$.
     g)$, and
   \item For each pair of gates $g, h \in G$ $W(h,g)$ if and only if $W(\pi h,
     \pi g)$ and for each internal gate $g$ we have that $L(\pi g)$ and $ \pi
-    \cdot L(g)$ are isomorphism-equivalent.
+    \cdot L(g)$ are isomorphic.
   \end{myitemize}
   We call $\pi$ an \emph{automorphism} of $C$, and we say that $\sigma$
   \emph{extends to an automorphism} $\pi$. The group of automorphisms of $C$ is
   called $\aut (C)$.
 \end{definition}
-We can equally define an isomorphism between a pair of circuits $C =
-\langle G, \Omega, \Sigma, \Lambda, L\rangle$ and  $C' = \langle G',
-\Omega', \Sigma', \Lambda', L'\rangle$ as a bijection $\pi: G
-\rightarrow G'$ satisfying conditions as above.  We do not usually
-need to consider distinct, isomorphic circuits and for this reason we
-only formally define automorphsims.
+We can equally define an isomorphism between a pair of circuits $C = \langle G,
+\Omega, \Sigma, \Lambda, L\rangle$ and $C' = \langle G', \Omega', \Sigma',
+\Lambda', L'\rangle$ as a bijection $\pi: G \rightarrow G'$ satisfying
+conditions as above. We do not usually need to consider distinct, isomorphic
+circuits and for this reason we only formally define automorphsims.
 
 We are particularly interested in circuits that have the property that
 \emph{every} permutation in $\sym_n$ extends to an automorphism of the circuit.
@@ -927,12 +932,12 @@ these gates are really just copies of one another.
   $h$ are internal gates and suppose we have defined the syntactic-equivalence
   relation for all gates of depth less than the depth of either $g$ or $h$. Then
   $g \equiv h$ if, and only if, $L(g) /_\equiv$ and $L(h) /_\equiv$ are
-  isomorphism-equivalent.
+  isomorphic.
 \end{definition}
 
 % \begin{drem}
-%   Should I prove these are actually equivalence relations? I use that fact, but
-%   it's very easy to prove.
+%   Should I prove these are actually equivalence relations? I use that fact,
+%   but it's very easy to prove.
 % \end{drem}
 
 For a circuit $C$ of order $n$ and a gate $g$ we think of $g$ as computing the
@@ -1003,8 +1008,8 @@ permutation then the two images of each gate must be syntactically-equivalent.
   in $C$, $\Sigma (g) = \Sigma (\pi (g)) = \Sigma (\pi' (g))$, and either all of
   $g$, $\pi (g)$ and $\pi (g')$ are output gates and $\pi (g) = \pi \Omega
   (\Omega^{-1}(g)) = \Omega (\sigma \Omega^{-1}(g)) = \pi' \Omega
-  (\Omega^{-1}(g)) = \pi'(g)$, or none of $g$, $\pi(g)$ and $\pi' (g)$ are output
-  gates.
+  (\Omega^{-1}(g)) = \pi'(g)$, or none of $g$, $\pi(g)$ and $\pi' (g)$ are
+  output gates.
   
   We now prove the result by induction on depth. Suppose $g$ is a gate of depth
   $0$. Then $g$ is either a relational or constant gate. In either case $\pi (g)
@@ -1020,9 +1025,9 @@ permutation then the two images of each gate must be syntactically-equivalent.
   (\lambda' \vec{a}_R)$, for all $\vec{a}_R \in \ind(g)$. Thus we have that
   $L(\pi g) (\vec{a}_R) = L (\pi g) (\lambda \lambda^{-1}\vec{a}_R) \equiv
   L(\pi' g) (\lambda' \lambda^{-1}\vec{a}_R)$, for all $\vec{a}_R \in \ind(g)$,
-  and so $L(\pi g)$ is isomorphism equivalent to $L(\pi'g)$ up to
-  syntactic-equivalence. We thus have that $\pi (g) $ and $\pi' (g)$ are
-  syntactically-equivalent, and the result follows.
+  and so $L(\pi g)/_\equiv$ is isomorphic to $L(\pi'g) /_\equiv$. We thus have
+  that $\pi (g) $ and $\pi' (g)$ are syntactically-equivalent, and the result
+  follows.
 
   
   % We prove the result by induction on height. Let $g$ be a gate of height $0$.
@@ -1168,24 +1173,25 @@ unique labels) has unique extensions.
 \end{proof}
 
 We have from Proposition~\ref{prop:unique-children-unique-extensions} that
-circuits with unique gates have unique extensions, but, in order to prove many
-of the results we will need later, we not only need that each automorphism is
-uniquely defined by the permutation it extends, but also that the isomorphisms
-that witness the isomorphism-equivalences, and so witness the validity of the
-automorphism, are also uniquely defined ( or, at the very least, well
-constrained) by the permutation $\sigma$. Without a sufficient constraint on the
-choice of isomorphism, testing if two gates have isomorphism-equivalent
-labellings (a requirement for computing the automorphism extending a
-permutation) requires solving some version of the isomorphism problem for
+circuits with unique gates have unique extensions. However, in order to prove
+many of the results we will need later we not only need that each automorphism
+is uniquely determined by the permutation it extends, but also that the
+isomorphisms between the labellings of each gate that witness 
+this automorphism are also uniquely determined by the permutation -- or, at the
+very least, well constrained. Without this constraint, computing many properties
+of the circuit would involve solving some version of the isomorphism problem for
 $\tau$-structures, where $\tau$ is the vocabulary of the gates in question.
 Indeed, we prove in Section~\ref{sec:transparent}, that for the class of
-circuits with unique children deciding if there is an isomorphism-equivalence
-between two gates is as hard as the graph-isomorphism problem. It follows that a
-great many important circuit properties (e.g.\ the orbit of a gate, symmetry of
-a circuit, etc.) for circuits with unique gates are at the very least not
-obviously polynomial-time decidable. As such, circuits with unique children,
-although satisfying the requirement of having unique extensions, are
-insufficient for our purposes.
+circuits with unique children deciding if a a given a given function is in fact
+a valid circuit automorphism is at least as hard as hard as the
+graph-isomorphism problem. Moreover, we go on to show that a great many
+important circuit 
+properties (e.g.\ the orbit of a gate, symmetry of a circuit, etc.) are also at
+least as hard to decide for circuits with unique gates as the graph isomorphism
+-- and so these properties 
+are, at the very least, not obviously polynomial-time decidable. As such,
+circuits with unique children, although satisfying the requirement of having
+unique extensions, are insufficient for our purposes.
 
 % \begin{drem}
 %   G: I think the above paragraph may be getting a bit too far into the weeds.
@@ -1193,18 +1199,18 @@ insufficient for our purposes.
 
 In order to ensure a canonical choice of isomorphism we instead consider
 circuits with unique labels. It is easy to see that if $C$ has unique labels
-then $L(g)$ and $L(g')$ are isomorphism-equivalent if, and only if, $\lambda :=
-L(g')^{-1}L(g)$ is an isomorphism. In this case, rather than having to decide
-the isomorphism problem, we can decide isomorphism-equivalences by checking if a
-given candidate function is a valid isomorphism. We prove in
-Section~\ref{sec:transparent} that all of the circuit properties of interest in
-this paper are polynomial-time decidable for circuits with unique labels.
-Moreover, we show in Lemma~\ref{lem:transparent-unique} that a transparent
-circuit can be transformed into an equivalent circuit with unique labels in time
-polynomial in the size of the circuit. Since we are working with $P$-uniform
-families of transparent circuits, this fact allows us to assume, without a loss
-of generality, that transparent circuits have unique labels and so , from
-\ref{prop:unique-children-unique-extensions}, unique extensions).
+then $L(g)$ and $L(g')$ are isomorphic if, and only if, $\lambda :=
+L(g')^{-1}L(g)$ is an automorphism of $\str{g'}$ . We see that in this case the problem of
+deciding if $L(g)$ and $L(g')$ are isomorphic reduces to the problem of deciding if a given
+candidate function is a valid automorphism, a much easier problem. Indeed, we
+prove in Section~\ref{sec:transparent} that all of the circuit properties of
+interest in this paper are polynomial-time decidable for circuits with unique
+labels. Moreover, we show in Lemma~\ref{lem:transparent-unique} that a
+transparent circuit can be transformed into an equivalent circuit with unique
+labels in time polynomial in the size of the circuit. Since we are working with
+$\PT$-uniform families of transparent circuits, this fact allows us to assume,
+without a loss of generality, that transparent circuits have unique labels and
+so, from Proposition~\ref{prop:unique-children-unique-extensions}, unique extensions.
 
 % \begin{definition}
 %   We say that a circuit $C_n$ is \emph{rigid} if every equivalence class of
@@ -1237,8 +1243,8 @@ of generality, that transparent circuits have unique labels and so , from
 % Let $\MB$ be the set of all structured functions that are symmetric or
 % matrix-invariant.
 
-Before we state the main result of this paper we need to discuss the Boolean
-bases of interest in this paper and introduce some useful terminology. In most
+Before we state the main result of this paper we need to discuss some of the Boolean
+bases that will be of interest to us and introduce some useful terminology. In most
 other contexts a basis is taken to be a finite sequence of symmetric Boolean
 functions, and a binary encoding of a circuit may is given by assigning to each
 element of the basis a unique symbol, and then encoding the circuit as a
@@ -1333,7 +1339,7 @@ matrix-circuit and every non-symmetric gate is a $\RANK$-gate.
 We are now ready to state the main theorem of this paper.
 
 \begin{thm}[Main Theorem]
-  A graph property is decidable by a $\P$-uniform family of transparent
+  A graph property is decidable by a $\PT$-uniform family of transparent
   symmetric rank-circuits if, and only if, it is definable by an $\FPR$
   sentence.
 \end{thm}
@@ -1386,9 +1392,8 @@ assume this encoding below.
   There is a deterministic algorithm that outputs for each symmetric function
   $F: \{0,1\}^n \rightarrow \{0,1\}$ (encoded as a binary $n$-tuple as above) a
   symmetric circuit $C$ defined over the basis $\BM$ that computes $F$.
-  Moreover, this algorithm runs in time polynomial in $n$ and the
-  circuit $C$ has depth at most $5$, width at most $2n+2$ and size at most $5n +
-  3$.
+  Moreover, this algorithm runs in time polynomial in $n$ and the circuit $C$
+  has depth at most $5$, width at most $2n+2$ and size at most $5n + 3$.
 \end{prop}
 
 \begin{proof}

@@ -275,19 +275,18 @@ constant-size canonical support. In this section we generalise the support
 theorem to $(\mathbb{B}, \rho)$-circuits with unique labels defined over
 arbitrary bases.
 
-The proof of this result follows a strategy broadly similar to the one
-used in~\cite{AndersonD17}, and makes use of two lemmas also proved
-there.  The first of these lemmas gives us that if the index of a group $G \leq
-\sym_n$ is small then $\SP(G)$ either has very few or very many parts.
-The second lemma gives us that for $G \leq \sym_n$, if $\SP(G)$ has very few parts
-then it must have a single very large part (and hence a small canonical
-support).  These two results allow us to conclude that a gate in a symmetric
-circuit has a small canonical support if it has a canonical supporting partition
-with very few parts.  We then prove by structural induction that the
-canonical supporting partition of every gate has few parts.  To be
-precise, we show that if $g$ is the first gate in the circuit with a canonical
-supporting partition with too many parts, then the size of its orbit
-would exceed the bound on the size of the circuit.
+The proof of this result follows a strategy broadly similar to the one used
+in~\cite{AndersonD17}, and makes use of two lemmas from there. The first of
+these lemmas gives us that if the index of a group $G \leq \sym_n$ is small then
+$\SP(G)$ either has very few or very many parts. The second lemma gives us that
+for $G \leq \sym_n$, if $\SP(G)$ has very few parts then it must have a single
+very large part (and hence a small canonical support). These two results allow
+us to conclude that a gate in a symmetric circuit has a small canonical support
+if it has a canonical supporting partition with very few parts. We then prove by
+structural induction that the canonical supporting partition of every gate has
+few parts. To be precise, we show that if $g$ is the first gate in the circuit
+with a canonical supporting partition with too many parts, then the size of its
+orbit would exceed the bound on the size of the circuit.
 
 We begin by first building up a few observations about the size of the
 stabiliser group, and hence the orbit, of a gate. We first introduce some useful
@@ -301,11 +300,11 @@ However, we note that this operation does define a group action of
 $\setstab_n(H_g)$ on $\ind(g)$.
 
 Moreover, we notice that, for $\sigma \in \sym_n$, we have that $\sigma H_g =
-H_g$ and $L(g)$ is isomorphism-equivalent to $\sigma L(g)$ if, and only if,
-$\sigma \in \stab_n(g)$ if, and only if, $\sigma H_g = H_g$ and there exists
-$\pi \in \aut(g)$ such that $\sigma \cdot \vec{x} = \pi (\vec{x})$ for all
-$\vec{x} \in \ind(g)$. The final equivalence expresses the fact that $\sigma \in
-\sym_n$ fixes $g$ if, and only if, $\sigma$ acts like an element of $\aut(g)$ on
+H_g$ and $L(g)$ is isomorphic to $\sigma L(g)$ if, and only if, $\sigma \in
+\stab_n(g)$ if, and only if, $\sigma H_g = H_g$ and there exists $\pi \in
+\aut(g)$ such that $\sigma \cdot \vec{a}_R = \pi (\vec{a}_R)$ for all $\vec{a}_R
+\in \ind(g)$. The final equivalence expresses the fact that $\sigma \in \sym_n$
+fixes $g$ if, and only if, $\sigma$ acts like an element of $\aut(g)$ on
 $\ind(g)$.
 
 We now use this observation to establish a useful characterisation of the
@@ -315,10 +314,10 @@ $\sigma$ acts on $\ind(\tau, D)$ like an element of $\aut(\tau, D)$ if, and only
 if, for every pair of elements in $\ind(\tau, D)$, $\sigma$ acts like a partial
 automorphism of $\str{\tau, D}$ on this pair of elements. We then apply this
 result to circuits, proving that if $\sigma$ extends to an automorphism of the
-circuit, then $\sigma$ fixes a gate $g$ if, and only if, $\sigma$ acts like
-a partial automorphism on the labels associated with every pair of gates in
-$H_g$. We now define what it means for a permutation to act like a partial
-automorphism and prove these two results.
+circuit, then $\sigma$ fixes a gate $g$ if, and only if, $\sigma$ acts like a
+partial automorphism on the labels associated with every pair of gates in $H_g$.
+We now define what it means for a permutation to act like a partial automorphism
+and prove these two results.
 
 % $to act like a partial automorphism, and then show that $\sigma$ acts like a
 % partial automorphism on every pair of elements if, and only if, $\sigma$ acts
@@ -509,9 +508,8 @@ characterisation of the stabiliser group of a gate.
 \begin{lem}
   Let $C$ be a symmetric circuit of order $n$ with injective labels, $g$ be a
   gate in the circuit, and $\sigma \in \sym_n$. Then $\sigma \in \stab_n(g)$ if,
-  and only if, $\sigma H_g = H_g$ and $\sigma L(g)$ is isomorphism-equivalent to
-  $L(g)$ if, and only if, for all $h, h' \in H_g$, $(h, h')$ is compatible with
-  $\sigma$.
+  and only if, $\sigma H_g = H_g$ and $\sigma L(g)$ is isomorphic to $L(g)$ if,
+  and only if, for all $h, h' \in H_g$, $(h, h')$ is compatible with $\sigma$.
   \label{lem:isostab-compatible}
 \end{lem}
 
@@ -520,7 +518,7 @@ characterisation of the stabiliser group of a gate.
   \begin{align*}
     & \sigma \in \stab_n\\
     & \Leftrightarrow \text{ $\sigma H_g = H_g$ and $\sigma L(g)$ is
-      isomorphism-equivalent to $L(g)$}\\
+      isomorphic to $L(g)$}\\
     & \Leftrightarrow \text{$\sigma H_g = H_g$ and $\sigma H_g$ acts like an
       element of $\aut (g)$ on $\ind(g)$} \\
     & \Leftrightarrow \text{$\sigma H_g = H_g$ and for all $\vec{a}_R,
@@ -604,28 +602,27 @@ characterisation of the stabiliser group of a gate.
 
 
 In the proof of the support theorem we aim to show that if we a gate $g$ has a
-canonical support that is too big then the orbit of $g$ is also
-necessarily large.  We do this by establishing the existence of a
-large set of permutations that each take $g$ to a different gate.
-To construct this set, we define a set of triples of the form
-$(\sigma, h, h')$ where $\sigma \in \sym_n$ and $h,h' \in H_g$.  Each
-of these triples is useful (formally defined below) in a sense that
-guarantees that $\sigma$ moves $g$.  Moreover, the triples are pairwise
-independent which means that we can compose them in arbitrary
-combinations to generate new permutations moving $g$, while
-guaranteeing that each such combination gives us a different element
-in the orbit of $g$.   We now define these terms formally and prove the result.
+canonical support that is too big then the orbit of $g$ is also necessarily
+large. We do this by establishing the existence of a large set of permutations
+that each take $g$ to a different gate. To construct this set, we define a set
+of triples of the form $(\sigma, h, h')$ where $\sigma \in \sym_n$ and $h,h' \in
+H_g$. Each of these triples is useful (formally defined below) in a sense that
+guarantees that $\sigma$ moves $g$. Moreover, the triples are pairwise
+independent which means that we can compose them in arbitrary combinations to
+generate new permutations moving $g$, while guaranteeing that each such
+combination gives us a different element in the orbit of $g$. We now define
+these terms formally and prove the result.
 
-%AD: This is a more informal explanation to replace that below.  In
-%any case, the formal definition follows.
+% AD: This is a more informal explanation to replace that below. In any case,
+% the formal definition follows.
 
-% must be larger than the entire circuit. In particular, we prove that if a set $S
-% \subseteq \sym_n \times H^2_g$ is \emph{useful} and \emph{independent} then the
-% size of the powerset of $S$ is a lower bound on the size of the orbit (i.e.\
-% $\vert \orb(g) \vert = [\sym_n : \stab_n(g)] \geq 2^S$). We then show that if a
-% gate $g$ has a large canonical support, then we can can construct a set $S$ that
-% satisfies these two conditions and such that $2^S$ exceeds the size of circuit,
-% hence proving the result by contradiction.
+% must be larger than the entire circuit. In particular, we prove that if a set
+% $S \subseteq \sym_n \times H^2_g$ is \emph{useful} and \emph{independent} then
+% the size of the powerset of $S$ is a lower bound on the size of the orbit
+% (i.e.\ $\vert \orb(g) \vert = [\sym_n : \stab_n(g)] \geq 2^S$). We then show
+% that if a gate $g$ has a large canonical support, then we can can construct a
+% set $S$ that satisfies these two conditions and such that $2^S$ exceeds the
+% size of circuit, hence proving the result by contradiction.
 
 % The idea is that each subset $R \subseteq S$ defines a permutation $\sigma_R$,
 % by composing all the permutations in $R$ in some fixed order, and hence
@@ -688,18 +685,16 @@ in the proof of the support theorem.
 \end{lem}
 \begin{proof}
   We have that $\sigma \in \stab_n(g)$ if, and only if, $H_g = \sigma H_g$ and
-  $L(g)$ and $\sigma L(g)$ are isomorphism-equivalent. For any $R \subseteq S$
-  define $\sigma_R = \Pi_{(\sigma, h, h') \in R} \sigma$ (with some arbitrary
+  $L(g)$ is isomorphic to $\sigma L(g)$. For any $R \subseteq S$ define
+  $\sigma_R = \Pi_{(\sigma, h, h') \in R} \sigma$ (with some arbitrary linear
   order assumed on $S$). We prove that the mapping $R \mapsto \sigma_R
-  \in\aut(C)$
-  is injective. Let $R$ and $Q$ be distinct subsets of $S$ and, without loss
-  of generality, let $\vert R \vert \geq \vert Q \vert$.
- % It is sufficient to
- %  prove that $\sigma^{-1}_Q \sigma_R H_g \neq H_g$ or $\sigma^{-1}_Q \sigma_R
- %  L(g)$ is not isomorphism-equivalent to $L(g)$. 
-We prove that if $\sigma^{-1}_Q
-  \sigma_R H_g = H_g$ then $\sigma^{-1}_Q \sigma_R L(g)$ is not
-  isomorphism-equivalent to $L(g)$.
+  \in\aut(C)$ is injective. Let $R$ and $Q$ be distinct subsets of $S$ and,
+  without loss of generality, let $\vert R \vert \geq \vert Q \vert$.
+  % It is sufficient to
+  % prove that $\sigma^{-1}_Q \sigma_R H_g \neq H_g$ or $\sigma^{-1}_Q \sigma_R
+  % L(g)$ is not isomorphism-equivalent to $L(g)$.
+  We prove that if $\sigma^{-1}_Q \sigma_R H_g = H_g$ then $\sigma^{-1}_Q
+  \sigma_R L(g)$ is not isomorphic to $L(g)$.
 
   Pick any $(\sigma, h, h') \in R \setminus Q \neq \emptyset$. From independence
   we have $\sigma_R h = \sigma h$, $\sigma_R h' = \sigma h'$, $\sigma_Q \sigma h
@@ -708,7 +703,7 @@ We prove that if $\sigma^{-1}_Q
   h' = \sigma h'$. Thus, since $(h, h')$ is incompatible with $\sigma$, it
   follows $(h, h')$ is incompatible with $\sigma^{-1}_Q\sigma_R$. So Lemma
   \ref{lem:isostab-compatible} gives us that $\sigma^{-1}_Q \sigma_R L(g)$ is
-  not isomorphism-equivalent to $L(g)$ and the result follows.
+  not isomorphic to $L(g)$ and the result follows.
 \end{proof}
 
 %
@@ -805,8 +800,8 @@ size (and is in fact constant for polynomial-size circuits).
 % the orbit-stabiliser theorem that $\vert \orb (g) \vert = [\sym_n :
 % \stab_n(g)] = [\sym_n : \sortsym_D(\phi_g)]$.
 
-We are now ready to prove the support theorem for symmetric circuits
-with non-symmetric gates.
+We are now ready to prove the support theorem for symmetric circuits with
+non-symmetric gates.
 
 \begin{thm}
   \label{thm:support-thm}
@@ -924,8 +919,8 @@ must be polynomially bounded, and so the theorem implies that there exists $k
 
 \begin{cor}
   Let $\mathcal{C} := (C_n)_{n \in \nats}$ be a polynomial-size family of
-  symmetric circuits with unique labels.  There is a $k$ such that
-  $\SP(C_n) \leq k$ for all $n$.
+  symmetric circuits with unique labels. There is a $k$ such that $\SP(C_n) \leq
+  k$ for all $n$.
   \label{cor:constant-size-support}
 \end{cor}
 
