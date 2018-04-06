@@ -55,9 +55,9 @@ that the proof methods in that paper heavily rely on the assumption that the
 Boolean functions computed by individual gates are symmetric functions. We
 address this difficulty in the next section.
 
-\begin{drem}
-  G: In fact, this difficulty is present throughout the paper.
-\end{drem}
+% \begin{drem}
+%   G: In fact, this difficulty is present throughout the paper.
+% \end{drem}
 
 % Boolean circuits have long acted as an alternative model from which to study
 % algorithmic complexity. A circuit is evaluated for some input binary sequence
@@ -924,10 +924,10 @@ these gates are really just copies of one another.
   isomorphism-equivalent.
 \end{definition}
 
-\begin{drem}
-  Should I prove these are actually equivalence relations? I use that fact, but
-  it's very easy to prove.
-\end{drem}
+% \begin{drem}
+%   Should I prove these are actually equivalence relations? I use that fact, but
+%   it's very easy to prove.
+% \end{drem}
 
 For a circuit $C$ of order $n$ and a gate $g$ we think of $g$ as computing the
 function that maps an input structure $\mathcal{A}$ and a bijection $\gamma$
@@ -1181,9 +1181,9 @@ obviously polynomial-time decidable. As such, circuits with unique children,
 although satisfying the requirement of having unique extensions, are
 insufficient for our purposes.
 
-\begin{drem}
-  G: I think the above paragraph may be getting a bit too far into the weeds.
-\end{drem}
+% \begin{drem}
+%   G: I think the above paragraph may be getting a bit too far into the weeds.
+% \end{drem}
 
 In order to ensure a canonical choice of isomorphism we instead consider
 circuits with unique labels. It is easy to see that if $C$ has unique labels
@@ -1447,6 +1447,7 @@ assume this encoding below.
   decides the same language. Moreover, the map $C_n \mapsto C_n'$ is
   polynomial-time computable and for each $n \in \nats$, $\vert C_n' \vert \leq
   (5 \cdot \vert C_n \vert + 3) \cdot \vert C_n \vert$.
+  \label{thm:symmetric-circuits-bound}
 \end{thm}
 
 \begin{proof}

@@ -344,12 +344,12 @@ width of $\theta$ and number of sub-formulas of $\theta$.
 \end{lem}
 \begin{proof}
   Let $\tau$ be the vocabulary of $\theta(\vec{x})$. Let $k := \width(\theta)$.
-  Suppose first that $\tau$ is empty, so
-  all of the atomic formulas in $\theta(\vec{x})$ are of the form $y_1 = y_2$,
-  where $y_1$ and $y_2$ are variables.  It can be shown that for $\vec{a} \in
-  n^k$, we can evaluate $[n] \models \theta[\alpha^{\vec{x}}_{\vec{a}}]$ in time
-  polynomial in $n^{k} \vert \cl{\theta} \vert$. Let $f : [n]^k \rightarrow
-  \{0,1\}$ be defined such that $f (\vec{a}) = 1$ if, and only if, $[n] \models
+  Suppose first that $\tau$ is empty, so all of the atomic formulas in
+  $\theta(\vec{x})$ are of the form $y_1 = y_2$, where $y_1$ and $y_2$ are
+  variables. It can be shown that for $\vec{a} \in n^k$, we can evaluate $[n]
+  \models \theta[\alpha^{\vec{x}}_{\vec{a}}]$ in time polynomial in $n^{k} \vert
+  \cl{\theta} \vert$. Let $f : [n]^k \rightarrow \{0,1\}$ be defined such that
+  $f (\vec{a}) = 1$ if, and only if, $[n] \models
   \theta[\alpha^{\vec{x}}_{\vec{a}}]$. Let $C := \langle G, \Sigma, \Omega,
   \Lambda, L \rangle$, where
   \begin{myitemize}
@@ -374,38 +374,36 @@ width of $\theta$ and number of sub-formulas of $\theta$.
   the circuit extending $\sigma$. We thus have that $C$ translates
   $\theta(\vec{x})$ for $n$.
 
-  \begin{remark}
-    G: I have removed the section where I define equality between ground
-    formulas. Do you find this adds ambiguity? I have added a little bit
-    explaining what I mean by `the matrix at this point remains unchanged'. Does
-    this help?
-  \end{remark}
+  % \begin{remark}
+  %   G: I have removed the section where I define equality between ground
+  %   formulas. Do you find this adds ambiguity? I have added a little bit
+  %   explaining what I mean by `the matrix at this point remains unchanged'.
+  %   Does
+  %   this help?
+  % \end{remark}
   
-  Suppose now $\tau$ is not empty.  We first define a transformation
-  of the formula $\theta$ to an equivalent formula $\lambda$ which has
-  the property that the \emph{natural} translation of $\lambda$ to a
-  circuit (given later) is transparent.
-Let $R \in \tau$.  We first define two helper
-  formulas. For a variable $y$ let $\op{no-op}(y) := (R(y, y) \lor (\neg R(y,
-  y)))$. For a sequence of variables $\vec{y} = (y_1, \ldots, y_m)$ let
-  $\op{tag} (\vec{y}) := (\op{no-op}(y_1) \land (\op{no-op}(y_2) \land (
-  \op{no-op}(y_2) \land ( \ldots \land (\op{no-op}(y_m)) \ldots))))$.
-  Now, let  $\lambda (\vec{x})$ be the formula constructed from $\theta(\vec{x})$ by
-  replacing each sub-formula $\psi(\vec{y})$ of the form $\rank^r_p \vec{w}
-  \vec{z} . \phi$ with the formula $\rank^r_p \vec{w}\vec{z} . ((\forall u . u =
-  u) \land \phi) \land \op{tag}(\vec{w} \cup \vec{z})$.  Since we
-  always replace a subformula $\phi$ with a logically equivalent
-  formula, it follows that $\lambda
-  (\vec{x})$ and $\theta (\vec{x})$ are equivalent. The intuition is that
-  $\op{tag}(\vec{w} \cup \vec{z})$ appends a tower of conjunctions of
-  tautologies, with each tautology referencing a unique variable from $\vec{w}
-  \cup \vec{z}$. When we construct the circuit, this tower of tautologies will
-  act to `tag' each input to the rank gate with a unique gadget. We then show
-  that the presence of these gadgets ensures that no two inputs to a rank gate
-  are syntactically-equivalent, and so the circuit is
-  transparent.
+  Suppose now $\tau$ is not empty. We first define a transformation of the
+  formula $\theta$ to an equivalent formula $\lambda$ which has the property
+  that the \emph{natural} translation of $\lambda$ to a circuit (given later) is
+  transparent. Let $R \in \tau$. We first define two helper formulas. For a
+  variable $y$ let $\op{no-op}(y) := (R(y, y) \lor (\neg R(y, y)))$. For a
+  sequence of variables $\vec{y} = (y_1, \ldots, y_m)$ let $\op{tag} (\vec{y})
+  := (\op{no-op}(y_1) \land (\op{no-op}(y_2) \land ( \op{no-op}(y_2) \land (
+  \ldots \land (\op{no-op}(y_m)) \ldots))))$. Now, let $\lambda (\vec{x})$ be
+  the formula constructed from $\theta(\vec{x})$ by replacing each sub-formula
+  $\psi(\vec{y})$ of the form $\rank^r_p \vec{w} \vec{z} . \phi$ with the
+  formula $\rank^r_p \vec{w}\vec{z} . ((\forall u . u = u) \land \phi) \land
+  \op{tag}(\vec{w} \cup \vec{z})$. Since we always replace a subformula $\phi$
+  with a logically equivalent formula, it follows that $\lambda (\vec{x})$ and
+  $\theta (\vec{x})$ are equivalent. The intuition is that $\op{tag}(\vec{w}
+  \cup \vec{z})$ appends a tower of conjunctions of tautologies, with each
+  tautology referencing a unique variable from $\vec{w} \cup \vec{z}$. When we
+  construct the circuit, this tower of tautologies will act to `tag' each input
+  to the rank gate with a unique gadget. We then show that the presence of these
+  gadgets ensures that no two inputs to a rank gate are
+  syntactically-equivalent, and so the circuit is transparent.
   
-  %We also relabel the bound variables in $\lambda(\vec{x})$ such that there
+  % We also relabel the bound variables in $\lambda(\vec{x})$ such that there
   % are
   % no two sub-formulas $\psi$ and $\psi'$ such that $\psi$ and $\psi'$ are
   % equal
@@ -459,9 +457,9 @@ Let $R \in \tau$.  We first define two helper
     $\alpha^{\vec{w}}_{\vec{a}}$ and $\alpha^{\vec{z}}_{\vec{b}}$, are
     compatible with $\beta$.
   \item If $\psi$ is of the form $Q z . \phi(\vec{y}, z)$, for $Q \in \{\forall,
-    \exists\}$, then if $Q = \forall$ we have $\Sigma (g) = \AND[n]$,
-    otherwise $\Sigma (g) = \OR[n]$. Let $L(g) : [n] \rightarrow G$ be defined
-    for $i \in [n]$ by $L(g)(i) = g_{\phi[\beta_i]}$, where $\beta_i \in
+    \exists\}$, then if $Q = \forall$ we have $\Sigma (g) = \AND[n]$, otherwise
+    $\Sigma (g) = \OR[n]$. Let $L(g) : [n] \rightarrow G$ be defined for $i \in
+    [n]$ by $L(g)(i) = g_{\phi[\beta_i]}$, where $\beta_i \in
     [n]^{\free{\psi}}$, and where both $\alpha$ and $\alpha^{z}_{i}$ are
     compatible with $\beta_i$.
   \item If $\psi$ is of the form $\phi_1 \land \phi_2$, then $\Sigma(g) =
@@ -767,7 +765,7 @@ the result.
 % We also note that $C$ has order $n$.
 \end{proof}
 
-We now use Lemma~\cite{lem:translating-FOrk} to prove that for every $\FPR$
+We now use Lemma~\ref{lem:translating-FOrk} to prove that for every $\FPR$
 formula there is a corresponding $\PT$-uniform family of transparent symmetric
 rank-circuits that decides the same query.
 
@@ -798,9 +796,9 @@ rank-circuits that decides the same query.
   $\width(\phi_n) \leq 2 \cdot \width(\phi)$, and $\phi_n(\vec{x})$ and
   $\phi(\vec{x})$ are equivalent on structures of size $n$.
 
-  \begin{remark}
-    A: Need more specific references than the above.
-  \end{remark}
+  % \begin{remark}
+  %   A: Need more specific references than the above.
+  % \end{remark}
 
   We thus derive the required $\PT$-uniform family $(\theta_n(\vec{x}))_{n \in
     \nats}$ by applying the first translation and then the second. For each $n
