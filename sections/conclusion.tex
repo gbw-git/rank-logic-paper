@@ -1,35 +1,45 @@
 \documentclass[../paper.tex]{subfiles}
 \begin{document}
+$\FPR$ is one of the most expressive logics we know that is still
+contained in $\PT$ and understanding its expressive power is an
+important question.  The main result of this paper establishes an equivalence between the
+expressive power of $\FPR$ and the computational power of uniform families
+of transparent symmetric rank-circuits.  Not only does this result establish an
+interesting characterisation of an important
+logic, but it also deepens our understanding of the connection between
+logic and circuit complexity in general and casts new light on
+foundational aspects of the circuit model.
 
-$\FPR$ is one of the two candidate logics for capturing $\PT$ an so
-understanding its expressive power is an absolutely central problem in the
-field. The main result of this paper establishes an equivalence between the
-expressive power of $\FPR$ and the computational power of $\PT$-uniform families
-of transparent symmetric rank-circuits. Not only does this result establish an
-interesting characterisation of a little-understood and crucially important
-logic, but it also further develops our understanding of the connection between
-logic and circuit complexity, allowing our understanding of $\FPR$ (and
-circuits) to benefit from ideas in both of these quite disparate fields.
+The circuit characterisation also helps emphasise certain important
+aspects of the logic.  Given that $\PT$-uniform families of invariant
+circuits (without the restriction to symmetry) express all properties
+on $\PT$, we can understand  the inability of $\FPC$ (and,
+conjecturally, $\FPR$) to express all such properties as essentially
+down to symmetry.  As with other (machine) models of computation, the
+translation to circuits exposes the inherent combinatorial structure
+of an algorithm.  In the case of logics, we find that a key property
+of this structure is its symmetry and the translation to circuits
+provides us with the tools to study it.
 
-This alternative view of the logic also helps emphasise certain characteristics
-of the logic that may be much less obvious when working with the conventional
-definition. To choose one notable example, the circuit characterisations (both
-of $\FPR$ and $\FPC$) help bring to the fore the importance of the symmetry
-properties inherent in the the syntactic structure of the logic. Indeed, we
-recall that $\PT$-uniform families of transparent invariant (rather than
-symmetric) rank-circuits and $\PT$-uniform families of invariant circuits with
-symmetric gates decide exactly those queries that are in $\PT$. In this way the
-restriction from families of invariant circuits to families of symmetric
-circuits corresponds to the restriction from $\PT$ to $\FPR$ or $\FPC$. In this
-sense, we might say that it is this underlying symmetry property of the logic,
-brought into focus by the circuit characterisation, that separates $\FPC$ from
-$\PT$, and which determines the relationship between $\FPR$ and $\PT$. In fact,
-we have that $\FPR$ captures $\PT$ if, and only if, $\PT$-uniform families of
-symmetric rank-circuits have the same computational power as $\PT$-uniform
-families of invariant rank-circuits. In this way the circuit-characterisation
-brings out this underlying symmetry property of the logic, demonstrates how
-crucial this symmetry property for understanding the logic, and then provides us
-with a framework for studying symmetry.
+% This alternative view of the logic also helps emphasise certain characteristics
+% of the logic that may be much less obvious when working with the conventional
+% definition. To choose one notable example, the circuit characterisations (both
+% of $\FPR$ and $\FPC$) help bring to the fore the importance of the symmetry
+% properties inherent in the the syntactic structure of the logic. Indeed, we
+% recall that $\PT$-uniform families of transparent invariant (rather than
+% symmetric) rank-circuits and $\PT$-uniform families of invariant circuits with
+% symmetric gates decide exactly those queries that are in $\PT$. In this way the
+% restriction from families of invariant circuits to families of symmetric
+% circuits corresponds to the restriction from $\PT$ to $\FPR$ or $\FPC$. In this
+% sense, we might say that it is this underlying symmetry property of the logic,
+% brought into focus by the circuit characterisation, that separates $\FPC$ from
+% $\PT$, and which determines the relationship between $\FPR$ and $\PT$. In fact,
+% we have that $\FPR$ captures $\PT$ if, and only if, $\PT$-uniform families of
+% symmetric rank-circuits have the same computational power as $\PT$-uniform
+% families of invariant rank-circuits. In this way the circuit-characterisation
+% brings out this underlying symmetry property of the logic, demonstrates how
+% crucial this symmetry property for understanding the logic, and then provides us
+% with a framework for studying symmetry.
 
 % This illustrates just one important way in which this circuit characterisation
 % aids in our understanding of $\FPR$, and perhaps in our understanding of
@@ -42,178 +52,128 @@ with a framework for studying symmetry.
 % $\FPR$ captures $\PT$ in a slightly informal way as, `Does symmetry matter for
 % rank-circuits?'.
 
-However, much of the contribution of this paper is not in the main result
-itself, but rather in the entirely novel framework for circuits and the numerous
-new results that we needed to develop in order to prove the main result of this
-paper. As such, we shall briefly review some of these contributions, placing an
-emphasis both on the nature of these contributions and on the necessity of their
-introduction. Indeed, it would seem at first glance that generalising Anderson
-and Dawar's circuit characterisation of $\FPC$ to $\FPR$ should be a simple
-matter of extending the model so as to allow circuits to be defined over bases
-that includes rank-threshold functions -- and perhaps extending a few key
-results and definitions as needed. We showed in
-Theorem~\ref{thm:symmetric-circuits-bound} that, in fact, we cannot increase the
-expressive power of the model by adding symmetric functions to the basis, and so
-the addition of non-symmetric functions to the basis seems almost unavoidable.
-However, while the inclusion of rank-threshold functions in the basis may seem
-benign, it in fact violates a near-ubiquitous assumption in circuit complexity,
-namely that the basis over which the circuit is defined must consist of
-symmetric functions. While this assumption is usually not stated, the fact that
-the circuit is taken to be a directed acyclic graph means that there is no order
-(or any structure at all) on the inputs of each gate, an assumption which only
-makes sense if it is assumed that the evaluation of each gate is invariant under
-any ordering of its inputs -- which is to say the basis must be symmetric.
-However, we found that in Anderson and Dawar's case this assumption pervades not
-just their definition of a circuit, but also the central ideas of their paper,
-including their definition of a circuit automorphism and of a symmetric circuit,
-as well as almost all of the key results and techniques they use to establish
-their characterisation.
+Still, the most significant contribution of this paper is not in the main result
+but in the techniques that are developed to establish it, and we
+highlight some of these now.  The
+conclusion of~\cite{AndersonD17} says that the support theorem is
+``largely agnostic to the particular [\ldots] basis'', suggesting that
+it could be easily adapted to include other gates.  This turns out to
+have been a misjudgment.  Attempting to prove the support theorem for
+a basis that includes rank threshold gates showed us the extent to
+which both the proof of the theorem and, more broadly, the definitions
+of circuit classes, rest heavily on the assumption that all functions
+computed by gates are symmetric.  Thus, in order to define what the
+``symmetry'' condition might mean for circuits that include rank
+threshold gates, we radically generalise the circuit framework to allow
+for gates that take structured inputs (rather than sets of $0$s
+and $1$s) and are invariant under isomorphisms.  This leads to a
+refined notion of circuit automorphism, which allows us to formulate a
+notion of symmetry and prove a version of the support theorem.  Again,
+in that proof, substantial new methods are required.
 
-As such, in order to include rank-threshold functions in the basis we needed to
-construct a new framework for circuits as well as develop novel approaches and
-techniques in order to work with these circuits. We began by generalising the
-notion of a symmetric function, introducing isomorphism-invariant structured
-functions. These functions take in structures encoded and strings and are
-invariant under isomorphism, rather than under arbitrary permutations of the
-string. It is easy to see that rank-threshold functions are
-isomorphism-invariant. We defined a basis to be a set of isomorphism-invariant
-functions, and extended the circuit model, adding to each gate in the circuit a
-structure on its input gates in accord with the isomorphism-invariant structured
-function labelling that gate. Rather than a gate being invariant under arbitrary
-permutations of its input gates, a gate in this circuit should be invariant
-under permutations of its input gate that form a (labelled) isomorphism. We
-extended the notion of an automorphism to reflect this and defined what it means
-for a circuit to be symmetric.
+% itself, but rather in the entirely novel framework for circuits and the numerous
+% new results that we needed to develop in order to prove the main result of this
+% paper. As such, we shall briefly review some of these contributions, placing an
+% emphasis both on the nature of these contributions and on the necessity of their
+% introduction. Indeed, it would seem at first glance that generalising Anderson
+% and Dawar's circuit characterisation of $\FPC$ to $\FPR$ should be a simple
+% matter of extending the model so as to allow circuits to be defined over bases
+% that includes rank-threshold functions -- and perhaps extending a few key
+% results and definitions as needed. We showed in
+% Theorem~\ref{thm:symmetric-circuits-bound} that, in fact, we cannot increase the
+% expressive power of the model by adding symmetric functions to the basis, and so
+% the addition of non-symmetric functions to the basis seems almost unavoidable.
+% However, while the inclusion of rank-threshold functions in the basis may seem
+% benign, it in fact violates a near-ubiquitous assumption in circuit complexity,
+% namely that the basis over which the circuit is defined must consist of
+% symmetric functions. While this assumption is usually not stated, the fact that
+% the circuit is taken to be a directed acyclic graph means that there is no order
+% (or any structure at all) on the inputs of each gate, an assumption which only
+% makes sense if it is assumed that the evaluation of each gate is invariant under
+% any ordering of its inputs -- which is to say the basis must be symmetric.
+% However, we found that in Anderson and Dawar's case this assumption pervades not
+% just their definition of a circuit, but also the central ideas of their paper,
+% including their definition of a circuit automorphism and of a symmetric circuit,
+% as well as almost all of the key results and techniques they use to establish
+% their characterisation.
 
-While we have generalised a few results for this framework, including the
-support theorem, it is important to note that a number of crucial counting
-techniques and polynomial-time algorithms for circuits are either not easy to
-generalise or otherwise resist generalisation entirely. This follows from the
-fact that a circuit automorphism needs to preserve more structure when acting on
-non-symmetric gates than when acting on symmetric gates. As a result, while many
-symmetry-related circuit properties are polynomial-time decidable for circuits
-with symmetric gates, we have shown that these same properties are at least as
-hard as the graph-isomorphism for circuits with non-symmetric gates. This is a
-problem as the polynomial-time decidability of these properties is essential for
-our translation from circuits into formulas.
-
-% used throughout this paper, and is needed in order to apply the support
-% theorem or reason about orbits, we need to
-
-% for are we have shown that many natural circuit properties which are known to
-% be polynomial-time decidable for circuits over symmetric bases are at least as
-% hard to decide for circuits over non-symmetric bases as the graph isomorphism
-% problem.
-
-% This follows from in a rather subtle way from the fact that
-% syntactic-equivalence for symmetric gates requires nothing more than checking
-% if two quotiented sets are equal, while syntactic-equivalence between
-% non-symmetric gates involves checking if two quotiented structures are equal.
-% As such, while determining many
-
-% While for circuits with functions into the basis. In Anderson and Dawar's case
-% establishing the image of a gate under the action of an automorphism is
-% entirely determined by the
-
-% In particular, in order to define the translation from families of circuits to
-% formulas we need that a number However, in order to prove this result we need
-% to be able to compute in polynomial-time many basic symmetry-related
-% properties of the circuit, and most of these properties reference the
-% existence of an isomorphism between the structures associated with each gate.
-% We show in Section~\ref{sec:transparent} that, in fact, deciding many of these
-% properties for (general) rank-circuits is at least as hard as the
-% graph-isomorphism problem. Importantly, the circuits studied by Anderson and
-% Dawar have all of the relevant algorithmic, as in this case the isomorphism
-% problems that arises reduces to set-equivalence, which is obviously
-% polynomial-time decidable.
-
-% In partoTo be more procides This is a problem, as these algorithmic properties
-% are needed throughout the paper
-
-% In particular, while almost all of the relevant properties are polynomial-time
-% decidable for circuits with symmetric gates, enabling a in polynomial-time
-% transformed into a normal form with unique extensions. Moreover, this normal
-% form also many other crucial algorithmic properties needed to prove the main
-% result, particularly the ability to compute the action of a permutation on a
-% circuit, in polynomial-time. We showed in Section~\ref{} that these useful
-% algorithmic properties are not (necessarily) preserved by the generalisation.
-% In particular, we showed that none of these properties are polynomial-time
-% decidable for rank-circuits (or any class of circuits over a non-symmetric
-% basis) unless the graph isomorphism is in $\PT$.
-
-% In order to prove our main result we $\PT$-uniform families of symmetric
-% rank-circuits into equivalent formulas of $\FPR$ and visa
-
-% Dawar. However, However, It would be natural to take symmetric rank-circuits
-% as the natural generalisation of Anderson and Dawar's symmetric circuits and
-% aim to prove an equivalence between the expressive power $\FPR$ and the
-% computational power of $\PT$-uniform families symmetric rank-circuits.
-% However, in order to prove this result we need to be able to compute in
-% polynomial-time many basic symmetry-related properties of the circuit, and
-% most of these properties reference the existence of an isomorphism between the
-% structures associated with each gate. We show in Section~\ref{sec:transparent}
-% that, in fact, deciding many of these properties for (general) rank-circuits
-% is at least as hard as the graph-isomorphism problem. Importantly, the
-% circuits studied by Anderson and Dawar have all of the relevant algorithmic,
-% as in this case the isomorphism problems that arises reduces to
-% set-equivalence, which is obviously polynomial-time decidable.
-
-% In order to ensure
+% As such, in order to include rank-threshold functions in the basis we needed to
+% construct a new framework for circuits as well as develop novel approaches and
+% techniques in order to work with these circuits. We began by generalising the
+% notion of a symmetric function, introducing isomorphism-invariant structured
+% functions. These functions take in structures encoded and strings and are
+% invariant under isomorphism, rather than under arbitrary permutations of the
+% string. It is easy to see that rank-threshold functions are
+% isomorphism-invariant. We defined a basis to be a set of isomorphism-invariant
+% functions, and extended the circuit model, adding to each gate in the circuit a
+% structure on its input gates in accord with the isomorphism-invariant structured
+% function labelling that gate. Rather than a gate being invariant under arbitrary
+% permutations of its input gates, a gate in this circuit should be invariant
+% under permutations of its input gate that form a (labelled) isomorphism. We
+% extended the notion of an automorphism to reflect this and defined what it means
+% for a circuit to be symmetric.
 
 
-% when we introduce rank-gates this isomorphism problem that computing the
-% action of an automorphism, or showing that a circuit is symmetric, or
-% computing a great number of important properties is at least as hard for
-% rank-circuits as the graph-isomorphism problem.
+While the new framework allows us to reproduce some results such as
+the support theorem, something is lost in the generalisation.  When
+our basis contains only symmetric functions, important properties of
+a circuit, including the symmetry of the circuit itself, are easily
+decidable.  In the new framework, checking circuit automorphism
+requires checking isomorphism of structured inputs to gates and codes
+hard problems.  For this reason, we imposed a further restriction to
+the circuits in the form of \emph{transparency}.  But, it should be
+clear that this is a restriction only in the broader framework.  All
+symmetric circuits with only symmetric gates are transparent.  Thus,
+transparent, symmetric circuits are still a generalisation of those
+considered in~\cite{AndersonD17}.  
+
+The condition of transparency makes the translation of uniform circuit
+families into formulas of logic (which is the difficult direction of
+our characterisation) possible, but it complicates the other direction.
+Indeed, the natural translation of formulas of $\FPR$ into uniform
+circuit families yields circuits which are symmetric, but not
+transparent.  This problem is addressed by introducing gadgets in the
+translation---which for ease of exposition, we did in formulas of
+$\FOrk$ which are then translated into circuits in the natural way.
+Thus, the restriction to transparent circuits is sufficient to get
+both directions of the characterisation.  Moreover, we argue that
+something like it is necessary in order to avoid having to solve hard
+isomorphism problems in the translation.
+
+% While we have generalised a few results for this framework, including the
+% support theorem, it is important to note that a number of crucial counting
+% techniques and polynomial-time algorithms for circuits are either not easy to
+% generalise or otherwise resist generalisation entirely. This follows from the
+% fact that a circuit automorphism needs to preserve more structure when acting on
+% non-symmetric gates than when acting on symmetric gates. As a result, while many
+% symmetry-related circuit properties are polynomial-time decidable for circuits
+% with symmetric gates, we have shown that these same properties are at least as
+% hard as the graph-isomorphism for circuits with non-symmetric gates. This is a
+% problem as the polynomial-time decidability of these properties is essential for
+% our translation from circuits into formulas.
 
 
-% to be able to apply the support theorem to circuits, and so needed a normal
-% form for circuits with unique extensions, and we also needed to ensure that a
-% number of basic circuit properties, and particularly those relating to
-% symmetry, are polynomial-time decidable to circuits as well as compute a
-% number of basic circuit properties in polynomial-time. This is not a problem
-% for Anderson and Dawar, as all of the relevant circuit properties are
-% polynomial-time decidable for symmetric-circuits with symmetric gates.
-% Moreover, can be easily transformed into a normal form that has unique
-% extensions (allowing for the application of the support theorem) and all of
-% the nessasary circuit-properties are
-
-% apply the support theorem, a crucial step in out proof, and in order to
-
-% the introduction of structured functions complicates the analysis of such
-% circuits. As we showed in Section~\ref{sec:transparent}, most of the
-% properties of these rank-circuits are at least as hard to decide as the graph
-% isomorphism problem. This poses a problem as the approach we take (and the
-% approach Anderson and Dawar take) to proving this characterisation make
-% repeated use of the polynomial-time decidability of these properties. Indeed,
-% the two key results for translating $\PT$-uniform circuit families into
-% equivalent formulas, the support theorem and the inductive evaluation of a
-% gate (see Section~\ref{sec:circuits-to-formulas}), make use of polynomial-time
-% algorithms for transforming a circuit into an equivalent circuit with unique
-% labels, as well as for deciding if a circuit is symmetric, computing orbits,
-% and deciding syntactic-equivalence.
-
-As such, instead of working with general rank-circuits we have restricted our
-attention to \emph{transparent} circuits, and proved our characterisation in
-terms of $\PT$-uniform families of transparent symmetric rank-circuits. As we
-have shown in Section~\ref{sec:transparent}, all of the relevant properties are
-polynomial-time decidable for transparent circuits. Since all circuits with
-symmetric gates are transparent, we might think of transparent circuits as an
-alternative, more `algorithmically accessible', generalisation of the circuits
-studied by Anderson and Dawar. However, while this restriction to transparent
-circuits aids in our translation from circuits to formulas, it complicates our
-translation in the other direction. Indeed, it is not hard to see that the
-conventional approach for translating formulas of $\FO$ (or $\FPC$, or other
-extensions of $\FO$) into $\PT$-uniform families of circuits does not, in
-general, produce a family of transparent circuits. In order to address this we
-defined a novel translation from formulas of $\FPR$ into equivalent
-$\PT$-uniform families of transparent symmetric rank-circuits. This translation
-is defined in two steps. First, we defined a translation from $\FPR$ to
-$\PT$-uniform families of bounded-width formulas of $\FOrk$ and, second, we
-defined a translation from these families of formulas into $\PT$-uniform
-families of transparent symmetric rank-circuits. This translation, along with
-the main result of the paper, gives us an equivalence between the expressive
-power of three formalisms, which we summarise as follows:
+% As such, instead of working with general rank-circuits we have restricted our
+% attention to \emph{transparent} circuits, and proved our characterisation in
+% terms of $\PT$-uniform families of transparent symmetric rank-circuits. As we
+% have shown in Section~\ref{sec:transparent}, all of the relevant properties are
+% polynomial-time decidable for transparent circuits. Since all circuits with
+% symmetric gates are transparent, we might think of transparent circuits as an
+% alternative, more `algorithmically accessible', generalisation of the circuits
+% studied by Anderson and Dawar. However, while this restriction to transparent
+% circuits aids in our translation from circuits to formulas, it complicates our
+% translation in the other direction. Indeed, it is not hard to see that the
+% conventional approach for translating formulas of $\FO$ (or $\FPC$, or other
+% extensions of $\FO$) into $\PT$-uniform families of circuits does not, in
+% general, produce a family of transparent circuits. In order to address this we
+% defined a novel translation from formulas of $\FPR$ into equivalent
+% $\PT$-uniform families of transparent symmetric rank-circuits. This translation
+% is defined in two steps. First, we defined a translation from $\FPR$ to
+% $\PT$-uniform families of bounded-width formulas of $\FOrk$ and, second, we
+% defined a translation from these families of formulas into $\PT$-uniform
+% families of transparent symmetric rank-circuits. This translation, along with
+% the main result of the paper, gives us an equivalence between the expressive
+% power of three formalisms, which we summarise as follows:
 
 % \begin{center}
 %   \begin{tikzcd}
@@ -223,46 +183,58 @@ power of three formalisms, which we summarise as follows:
 %   \end{tikzcd}
 % \end{center}
 
+In short, we can represent the proof of our characterisation through
+the three equivalences in this triangle.
+
 \begin{center}
   \begin{tikzcd}
-    \FPR \ar[r, equal] \ar[dr, equal] & \parbox{0.35\textwidth}{$\PT$-uniform
+    \FPR \ar[r, equal] \ar[dr, equal] & \parbox{0.35\textwidth}{Uniform
       families of
-      bounded-width $\FOrk$-formulas}  \ar[d, equal]\\
-    & \parbox{0.38\textwidth}{$\PT$-uniform families of transparent symmetric
+      bounded-width $\FOrk$ formulas}  \ar[d, equal]\\
+    & \parbox{0.38\textwidth}{Uniform families of transparent symmetric
       rank-circuits}
   \end{tikzcd}
 \end{center}
 
+This highlights another interesting aspect of our result.  The first
+translation, of $\FPR$ to uniform families of $\FOrk$ formulas was
+given in~\cite{Dawar09logicswith} and used there to establish arity
+lower bounds.  However, this was for a weaker version of the rank
+logic rather than the strictly more expressive one defined by
+Gr\"{a}del and Pakusa~\cite{GradelP15a}.  The fact that we can
+complete the cycle of equivalences with the more powerful logic
+demonstrates that the definition of Gr\"{a}del and Pakusa is the
+``right'' formulation of $\FPR$.
 
-We already have a very similar result from from Anderson and
-Dawar~\cite{AndersonD17} and Otto~\cite{Otto1996}:
+% We already have a very similar result from from Anderson and
+% Dawar~\cite{AndersonD17} and Otto~\cite{Otto1996}:
 
-\begin{center}
-  \begin{tikzcd}
-    \FPC \ar[r, equal] \ar[dr, equal] & \parbox{0.35\textwidth}{$\PT$-uniform
-      families of
-      bounded-width $\FOc$-formulas}  \ar[d, equal]\\
-    & \parbox{0.35\textwidth}{$\PT$-uniform families of symmetric circuits with
-      symmetric gates}
-  \end{tikzcd}
-\end{center}
+% \begin{center}
+%   \begin{tikzcd}
+%     \FPC \ar[r, equal] \ar[dr, equal] & \parbox{0.35\textwidth}{$\PT$-uniform
+%       families of
+%       bounded-width $\FOc$-formulas}  \ar[d, equal]\\
+%     & \parbox{0.35\textwidth}{$\PT$-uniform families of symmetric circuits with
+%       symmetric gates}
+%   \end{tikzcd}
+% \end{center}
 
-These two sets of equivalences each give us three distinct formalisms equivalent
-to $\FPR$ and $\FPC$, respectively. Importantly, each of these three formalisms
-for $\FPC$ may be extended by a rank in quite distinct ways. We can extend
-$\FOc$ by rank quantifiers and define $\FOrk$, we can add rank gates to
-symmetric circuits with symmetric gates and define transparent symmetric
-rank-circuits, and we can extend $\FPC$ by a rank operator and define $\FPR$. We
-might expect these three quite different extensions to result in three
-formalisms with quite different expressive power. However, the main result of
-this paper along with the translation we discussed above, gives us that these
-three extensions are indeed all equivalent. This provides evidence in favour of
-the proposition that $\FPR$ is indeed the canonical, and most natural, extension
-of $\FPC$. This is in contrast with the other rank logic in the literature, the
-one introduced by Dawar et al.~\cite{Dawar09logicswith}, which was shown by
-Gr\"{a}del and Pakusa~\cite{GradelP15a} to be strictly less expressive than
-$\FPR$, and hence less expressive than $\PT$-uniform families of bounded-width
-$\FOrk$ and $\PT$-uniform families of transparent symmetric rank-circuits.
+% These two sets of equivalences each give us three distinct formalisms equivalent
+% to $\FPR$ and $\FPC$, respectively. Importantly, each of these three formalisms
+% for $\FPC$ may be extended by a rank in quite distinct ways. We can extend
+% $\FOc$ by rank quantifiers and define $\FOrk$, we can add rank gates to
+% symmetric circuits with symmetric gates and define transparent symmetric
+% rank-circuits, and we can extend $\FPC$ by a rank operator and define $\FPR$. We
+% might expect these three quite different extensions to result in three
+% formalisms with quite different expressive power. However, the main result of
+% this paper along with the translation we discussed above, gives us that these
+% three extensions are indeed all equivalent. This provides evidence in favour of
+% the proposition that $\FPR$ is indeed the canonical, and most natural, extension
+% of $\FPC$. This is in contrast with the other rank logic in the literature, the
+% one introduced by Dawar et al.~\cite{Dawar09logicswith}, which was shown by
+% Gr\"{a}del and Pakusa~\cite{GradelP15a} to be strictly less expressive than
+% $\FPR$, and hence less expressive than $\PT$-uniform families of bounded-width
+% $\FOrk$ and $\PT$-uniform families of transparent symmetric rank-circuits.
 
 % the cononical nature of the extension from $\FPC$ to $\FPR$. This suggests
 % that the definition of $\FPR$ is indeed natural.
@@ -316,31 +288,40 @@ $\FOrk$ and $\PT$-uniform families of transparent symmetric rank-circuits.
 % that $\FPR$, rather than the rank logic of Dawar et al., should be considered
 % the appropriate extension of $\FPC$ by rank.
 
-\subsection{Future Work}
-We have shown that $\FPR$ has the same expressive power as $\PT$-uniform
-families of transparent symmetric rank-circuits. It is easy to see that
-$\PT$-uniform families of symmetric rank-circuits must be at least as powerful
-as $\PT$-uniform families of transparent symmetric rank-circuits. It is natural
-to ask if these two formalisms actually have the same expressive power or
-whether the transparency restriction does indeed restrict the expressive power
-of the model. It is worth noting that if families of symmetric rank-circuits and
-families of transparent symmetric-rank circuits do not have the same expressive
-power then $\FPR$ does not capture $\PT$.
+\subsection*{Future Work}
+There are many directions of work suggested by the methods and results
+developed in this paper.  First of all, there is the question of
+transparency.  We introduce it as a technical device that enables our
+characterisation to go through.  Could it be dispensed with?  Or are $\PT$-uniform
+families of transparent symmetric rank-circuits strictly weaker than
+families without the restriction of transparency?  Of course a
+positive answer to the latter question would require separating $\FPR$
+from $\PT$.
 
-In this paper we have developed a framework for working with circuits over
-non-symmetric bases. In fact, the first time we explicitly use make any
-reference to linear algebra is in the proof of
-Lemma~\ref{lem:rank-triple-equivilence}, right towards the end of the paper. It
-would be natural to ask if our circuit characterisation of $\FPR$ can be
-generalised in order to develop similar characterisations of other logics. It
-might be good idea to start with some other extension of $\FP$ by some operator
-and try to develop a similar circuit characterisation in terms $\PT$-uniform
-transparent symmetric circuits over an appropriate basis. There are numerous
-logics that are similar in definition to $\FPR$ but which are not known to have
-the same expressive power as $\FPR$, for example $\FP$ extended by an operator
-that expresses the solubility of systems of equations over rings (rather than
-fields). A first step might be to develop a circuit characterisation of one of
-these logics.
+The framework we have developed for  working with circuits with
+structured inputs is very general and not specific to rank gates.
+Indeed, the first use we make of linear algebra is in the proof of
+Lemma~\ref{lem:rank-triple-equivilence}.  It would be interesting to
+apply this framework to other logics.  It appears to be as general a way of
+extending the power of circuits as Lindstr\"om quantifiers are in the
+context of logic.  We would like to develop this link
+further, perhaps for specific quantifiers such as $\FP$ extended by an operator
+that expresses the solubility of systems of equations over rings as in~\cite{DGHKP}
+
+% In this paper we have developed a framework for working with circuits over
+% non-symmetric bases. In fact, the first time we explicitly use make any
+% reference to linear algebra is in the proof of
+% Lemma~\ref{lem:rank-triple-equivilence}, right towards the end of the paper. It
+% would be natural to ask if our circuit characterisation of $\FPR$ can be
+% generalised in order to develop similar characterisations of other logics. It
+% might be good idea to start with some other extension of $\FP$ by some operator
+% and try to develop a similar circuit characterisation in terms $\PT$-uniform
+% transparent symmetric circuits over an appropriate basis. There are numerous
+% logics that are similar in definition to $\FPR$ but which are not known to have
+% the same expressive power as $\FPR$, for example $\FP$ extended by an operator
+% that expresses the solubility of systems of equations over rings (rather than
+% fields). A first step might be to develop a circuit characterisation of one of
+% these logics.
 
 % If the general circuit for a strictly more powerful model then the main result
 % gives us that that $\FPR$ does not capture $\PT$. We have not proven it here,
@@ -362,49 +343,62 @@ these logics.
 % the first time we explicitly use the properties of the rank function is in the
 % proof of Lemma~\ref{}, right towards the end of the paper.
 
-While we have developed a new and much more general circuit framework we have
-not developed any approaches for proving lower bounds. As a first step out might
-try to prove lower bounds for symmetric circuits with gates with bounded fan-in.
+At the moment, we have little by way of methods for proving
+inexpressibility results for $\FPR$, whether we look at it as a logic
+or in the circuit model.  The logical formulation lays emphasis
+on some parameters (the number of variables, the arity of the
+operators, etc.) which we can treat as resources against which to
+prove lower bounds.  On the other hand, the circuit model brings to
+the fore other, more combinatorial, parameters.  One such is the
+fan-in of gates and a promising and novel approach is to try and prove lower bounds for symmetric circuits with gates with bounded fan-in.
 We might ask if it is possible to compute $\AND[3]$ using a symmetric circuit
-with gates that have fan-in two.
+with gates that have fan-in two.  Perhaps we could also combine the
+circuit view with lower-bound methods from logic, such as pebble games.
+ Dawar~\cite{Dawar2016} has shownn how the bijection games of
+ Hella~\cite{Hella19961} can be used directly to prove lower
+ bounds for symmetric without reference to the logic.  We also have pebble
+ games for $\FPR$~\cite{DawarH2012}, and it would be interesting to
+ know if we can use these on circuits and how the combinatorial
+ parameters of the circuit interact with the game.
 
-An alternative, and perhaps more sophisticated, approach would be to try and use
-pebble games, a standard tool for proving inexpressibility results in logic, to
-directly prove lower bounds on circuits. Dawar~\cite{Dawar2016} has shown, via a
-circuit-based argument, that the pebble games of Hella~\cite{Hella19961} can
-played directly on symmetric circuits with symmetric gates without any need to
-reference the logic. Dawar and Holm~\cite{DawarH2012} have defined a similar
-pebble game for $\FPR$, and it would be interesting to know if an analogous
-result can be established, allowing us play this pebble game directly on
-symmetric rank-circuits and use it to prove lower bounds for these circuits.
+Finally, we note that some of the interesting directions on the
+interplay between logic and symmetric circuits raised
+in~\cite{AndersonD17} remain relevant.  Can we relax the symmetry
+condition to something in between requiring invariance of the circuit
+under the full symmetric group (the case of symmetric circuits) and
+requiring no invariance condition at all?  Can such restricted
+symmetries give rise to interesting logics in between $\FPR$ and
+$\PT$?  It also remains a challenge to find a circuit characterisation
+of  $\CPTC$.  Could the general framework for non-symmetric gates we
+have developed here help in this respect?
 
-We have shown that the $\PT$-uniform families of transparent symmetric
-rank-circuits (resp. circuits with symmetric gates) have the same expressive
-power as $\FPR$ (resp. $\FPC$), but we recall that if we remove the symmetry
-restriction these circuit models express exactly those queries in $\PT$. A
-natural next step, also suggested by Anderson and Dawar, would be try and weaken
-the symmetry condition. One way this might be done would be to require that only
-permutations from a particular subgroup of the symmetric group extend to
-automorphisms of the circuit. It is easy to see that if we take this subgroup to
-be the trivial subgroup then this nullifies the the symmetry requirement, and
-the circuit model has the same expressive power as $\PT$, while if we take this
-subgroup to be the entire symmetric group then we get back the full symmetry
-requirement and hence our model has the same expressive power as the logic. As
-such, this approach can be used to interpolate between the logic and $\PT$.
+% We have shown that the $\PT$-uniform families of transparent symmetric
+% rank-circuits (resp. circuits with symmetric gates) have the same expressive
+% power as $\FPR$ (resp. $\FPC$), but we recall that if we remove the symmetry
+% restriction these circuit models express exactly those queries in $\PT$. A
+% natural next step, also suggested by Anderson and Dawar, would be try and weaken
+% the symmetry condition. One way this might be done would be to require that only
+% permutations from a particular subgroup of the symmetric group extend to
+% automorphisms of the circuit. It is easy to see that if we take this subgroup to
+% be the trivial subgroup then this nullifies the the symmetry requirement, and
+% the circuit model has the same expressive power as $\PT$, while if we take this
+% subgroup to be the entire symmetric group then we get back the full symmetry
+% requirement and hence our model has the same expressive power as the logic. As
+% such, this approach can be used to interpolate between the logic and $\PT$.
 
-There is a rather easy way to develop a circuit characterisation for any logic
-or complexity class with complete problems under first-order reductions. All
-that is required is to extend the basis with the family of functions that decide
-a complete problem and consider $\PT$-uniform families of transparent symmetric
-circuits over this basis. We did not take this approach in our characterisation
-of $\FPR$, preferring to use a more `natural' basis that more closely resembles
-the actual definition of the logic. We should like to ask if there is a similar
-circuit characterisation of $\CPTC$. One might start with bounded-rank fragments
-of $\CPTC$ and see if these programs can be translated into circuits. We should
-note that it does seem as though the symmetry inherent in $\CPTC$ programs is in
-some sense different from the symmetry of symmetric circuits. It might be more
-natural then to ask if $\CPTC$ can be characterised using families of circuits
-with a weakened symmetry requirement.
+% There is a rather easy way to develop a circuit characterisation for any logic
+% or complexity class with complete problems under first-order reductions. All
+% that is required is to extend the basis with the family of functions that decide
+% a complete problem and consider $\PT$-uniform families of transparent symmetric
+% circuits over this basis. We did not take this approach in our characterisation
+% of $\FPR$, preferring to use a more `natural' basis that more closely resembles
+% the actual definition of the logic. We should like to ask if there is a similar
+% circuit characterisation of $\CPTC$. One might start with bounded-rank fragments
+% of $\CPTC$ and see if these programs can be translated into circuits. We should
+% note that it does seem as though the symmetry inherent in $\CPTC$ programs is in
+% some sense different from the symmetry of symmetric circuits. It might be more
+% natural then to ask if $\CPTC$ can be characterised using families of circuits
+% with a weakened symmetry requirement.
 
 
 % The most obvious next step would be to try and develop a (natural) circuit
